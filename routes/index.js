@@ -19,14 +19,20 @@ router.get('/search', function(req, res, next) {
 //Query: durée, région
 //Response: [roadtrips]
 router.get('/roadtrips', function(req, res, next) {
-  
+    if (!req.query.region) {
+        res.json({ result: false })
+    } else {
+        res.json({ result: true, experiences: [{ name: 'vinot varlot' }] });
+    }
 })
 
 //Ajout d'expérience au road planner
 //Body: experienceID (12345)
 //Response: result (true)
-router.update('/myroadplanner', function(req, res, next) {
-  
+router.put('/myroadplanner', function(req, res, next) {
+    !req.body.experienceID
+    ? res.json({ result: false })
+    : res.json({ result: true, experiences: ['12345']})
 })
 
 //Suppression d'expérience dans le road planner
@@ -75,7 +81,9 @@ router.get('/myproduct', function(req, res, next) {
 //Body: [expériences], nom, commentaires, photos, userID
 //Response: result (true), voyage
 router.post('/sharetrip', function(req, res, next){
-  
+    !req.body.experiences
+    ? res.json({ result: false }) 
+    : res.json({ result: true, roadtripID: '1234567' }) ;
 })
 
 //actualités météo

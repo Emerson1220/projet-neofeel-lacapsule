@@ -30,7 +30,7 @@ router.get('/myaccount', function(req, res, next) {
 //Modification compte personnel
 //Body: nouveau compte perso
 //Response: result (true)
-router.update('/myaccount', function(req, res, next) {
+router.put('/myaccount', function(req, res, next) {
 
 })
 
