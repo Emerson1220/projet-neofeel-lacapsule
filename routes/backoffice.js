@@ -4,7 +4,7 @@ var router = express.Router();
 //Gestion expérience ajout
 //Body: expérience
 //Response: result (true)
-router.post('/backoffice/manageexperiences', function(req, res, next) {
+router.post('/manageexperiences', function(req, res, next) {
     let name= req.body.name;
     let activity= req.body.activity;
     let category= req.body.category;
@@ -13,7 +13,7 @@ router.post('/backoffice/manageexperiences', function(req, res, next) {
     if (!name || !activity || !category ) {
         res.json({ result: false })
     } else {
-        res.json({ result: true});
+        res.json({ result: true, experience:{name: 'Vinot VArlot', activity: 'Visite vignes', category: 'gastronomie'}});
     }
 })
 
@@ -29,7 +29,17 @@ router.get('/manageexperiences', function(req, res, next) {
 //Response: result (true), expérience
 router.put('/manageexperiences', function(req, res, next) {
 
-})
+    let experienceID = req.body.experienceID;
+    let name= req.body.name;
+    let activity= req.body.activity;
+    let category= req.body.category;
+
+    if (!experienceID || !name || !activity || !category ){
+      res.json({result: false})
+    } else {
+      res.json({ result: true, experience:{experienceID: '123', name: 'Vinot VArlot', activity: 'Visite vignes', category: 'gastronomie'}});
+    }
+    })
 
 //Gestion expérience Delete
 //Query: expérienceID
