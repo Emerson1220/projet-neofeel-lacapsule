@@ -25,7 +25,7 @@ router.get('/roadtrips', function(req, res, next) {
 //Ajout d'expérience au road planner
 //Body: experienceID (12345)
 //Response: result (true)
-router.update('/myroadplanner', function(req, res, next) {
+router.put('/myroadplanner', function(req, res, next) {
   
 })
 
