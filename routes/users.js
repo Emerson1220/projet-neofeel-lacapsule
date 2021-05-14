@@ -7,30 +7,63 @@ router.get('/', function(req, res, next) {
 });
 
 //Inscription client (Sign up)
-//Body: firstname, lastname, pseudo, password, email
+//Body: firstName, lastName, pseudo, password, email
 //Response: result (true), { pseudo, token, firstName, lastName, email }
 router.post('/signup', function(req, res, next) {
+let firstName = req.body.firstName;
+let pseudo = req.body.pseudo;
+let email = req.body.email;
 
+if (!email || !firstName || !pseudo){
+
+  res.json({result: false})
+} else {
+  res.json({result: true, user: { pseudo: 'pim', firstName: 'Pierre', email: 'pierre@gmail.com'} });
+}
 })
 
 //Connexion client (sign in)
 //Body: email, password
 //Response: result (true), { pseudo, token, firstName, lastName, email }
 router.post('/signin', function(req, res, next) {
-
+let password = req.body.password;
+let email = req.body.email;
+if (!email || !password){
+  res.json({result: false})
+} else {
+  res.json({ result: true, user: { pseudo: 'pim', firstName: 'Pierre',lastName: 'ferrand', email: 'pierre@gmail.com'} })
+}
 })
 
-//Accès compte personnel
+
+// Accés compte personnel
 //Query: token
-//Response: result (true), user
+//Response: result (true), user: {{ pseudo, firstName, lastName, email }}
 router.get('/myaccount', function(req, res, next) {
 
+let token = req.query.token;
+
+if (!token ){
+  res.json({result: false})
+} else {
+  res.json({ result: true, user: { pseudo: 'pim', firstName: 'Pierre',lastName: 'ferrand', email: 'pierre@gmail.com'} })
+}
 })
 
 //Modification compte personnel
-//Body: nouveau compte perso
-//Response: result (true)
-router.update('/myaccount', function(req, res, next) {
+//Body: firstName , email
+//Response: result (true), nouveau firstName, nouveau email
+router.put('/myaccount', function(req, res, next) {
+  
+let firstName =req.body.firstName;
+let email= req.body.email;
+
+if (!firstName || !email ){
+  res.json({result: false})
+} else {
+  res.json({ result: true, user: { pseudo: 'pim', firstName: 'Charles',lastName: 'ferrand', email: 'charles@gmail.com'} })
+}
+
 
 })
 

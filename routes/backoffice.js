@@ -18,7 +18,7 @@ router.get('/manageexperiences', function(req, res, next) {
 //Gestion expérience ajout
 //Body: expérienceID
 //Response: result (true), expérience
-router.update('/manageexperiences', function(req, res, next) {
+router.put('/manageexperiences', function(req, res, next) {
 
 })
 
