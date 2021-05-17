@@ -43,3 +43,25 @@
     transform: rotate(360deg);
   }
 }
+/* CSS NAVBAR _______________________*/
+
+
+
+
+
+.devenezPartenaireButton{
+  
+background-color: #e06868;
+
+  color: #ffffff;
+  font-weight: 700;
+  font-family: "Inter-Bold", "Inter", sans-serif;
+width: 200px;
+height: 50px;
+border-radius: 5px;
+}
+
+.listNav{
+  color: #106271;
+  
+}
