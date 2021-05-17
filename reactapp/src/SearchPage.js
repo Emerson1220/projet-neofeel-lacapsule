@@ -1,43 +1,62 @@
 import React, { useState } from 'react';
+import France from '@svg-maps/france.regions';
+import { SVGMap } from 'react-svg-map';
+import 'react-svg-map/lib/index.css'
+import { Modal, Button } from 'antd';
 
 const SearchPage = () => {
-    //TODO: fetch agglom de régions depuis BDD
+    //TODO: fetch agglom de régions depuis BDD, liste de tags
 
     //STATE HOOKS
-    const [region, setRegion] = useState('');
-    const [tripType, setTripType] = useState('');
+    const [visible, setVisible] = useState(false);
+    const [selection, setSelection] = useState('all');
+
+    //FUNCTIONS
+    const showModal = () => {
+        console.log('click')
+        setVisible(!visible);
+    };
+
+    const handleCancel = () => {
+        setVisible(false);
+        setSelection('all');
+    };
+
+    let modal;
+    if(selection === 'all') {
+        modal = 
+            <div style={ styles.selectionContent }>
+                <button style={ styles.button } onClick={ ()=>setSelection('region') }>Choisir un région</button>
+                <button style={ styles.button } onClick={ ()=>setSelection('trips') }>Parcourir nos voyages recommendés</button>
+            </div>
+    } else if (selection === 'region') {
+        modal =
+            <div>
+                <SVGMap map={ France }/>
+            </div>
+    } else if (selection === 'trips') {
+        modal =
+            <div style={ styles.feelingContainer }>
+            <button style={ styles.feeling }>Loisirs</button>
+            <button style={ styles.feeling }>Gastronomie</button>
+            <button style={ styles.feeling }>Nature</button>
+            <button style={ styles.feeling }>Aventure</button>
+            <button style={ styles.feeling }>Aventure</button>
+            </div>
+    }
     
     return (
         <div style={ styles.container }>
-            <div style={ styles.searchbar }>
-            <select value={ region }
-            onChange={ (e)=>setRegion(e.target.value) }
-            style={ styles.input }
+            <Button style={ styles.button } onClick={ ()=>showModal() }>GO</Button>        
+            <Modal
+            title='Allons-y!'
+            centered={ true }
+            visible={ visible }
+            footer={ null }
+            onCancel={ ()=>handleCancel() }
             >
-                <option value='' disabled>Choisissez votre région. . .</option>
-                <option value="Alsace">Alsace</option>
-                <option value="Ile-de-France">Ile-de-France</option>
-                <option value="Aveyron">Aveyron</option>
-                <option value="Pyrénées">Pyrénées</option>
-            </select>
-            <h3 style={ styles.label }>OU</h3>
-            <select value={ tripType }
-            onChange={ (e)=>setTripType( e.target.value) }
-            style={ styles.input }>
-                <option value='' disabled>Voir un de nos voyages recommendés. . .</option>
-                <option value="vinobles de bordeaux">Vinobles de Bordeaux</option>
-                <option value="randonees gorges">Randoneés dans les Gorges du Tarn</option>
-            </select>
-            <button 
-            name="search"
-            type="submit"
-            style={ styles.button }
-            hoverBackground="rgb(0, 119, 255)"
-            pressedBackground="rgb(0, 136, 255)"
-            >
-                Neofeel t'emporte!
-            </button>
-            </div>
+                { modal }
+            </Modal>
         </div>
     )
 };
@@ -50,22 +69,18 @@ let styles = {
         height: '100vh',
         alignItems: 'center'
     },
-    searchbar: {
-        width: '50%',
+    selectionContent: {
         display: 'flex',
         flexDirection: 'column',
-        marginTop: '10%',
-        backgroundColor: 'rgba(16, 98, 113, 0.8)',
-        padding: '5%',
-        borderRadius: '8px',
-        boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.5)',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-around'
     },
     label: {
         alignSelf: 'center',
         color: 'white'
     },
     button: {
+        width: '60%',
         borderRadius: '8px',
         backgroundColor: 'rgb(224, 104, 104)',
         color: 'white',
@@ -78,6 +93,17 @@ let styles = {
         borderRadius: '8px',
         color: 'grey',
         padding: 10,
+    },
+    feeling: {
+        height: '100px',
+        width: '100px',
+        boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.6)',
+        margin: '5%'
+    },
+    feelingContainer: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center'
     }
 }
 

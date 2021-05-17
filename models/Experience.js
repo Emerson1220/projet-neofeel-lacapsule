@@ -36,6 +36,7 @@ const experienceSchema = mongoose.Schema({
     advantage: String,
     advantageAmount: Number,
     budget: String,
+    tags: Array
 });
 
 module.exports = mongoose.model('experiences', experienceSchema);

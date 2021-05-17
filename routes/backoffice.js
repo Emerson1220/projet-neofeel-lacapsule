@@ -65,7 +65,8 @@ router.post('/manageexperiences', async function(req, res, next) {
     creationDate: new Date(),
     advantage: req.body.advantage,
     advantageAmount: req.body.advantageAmount,
-    budget: req.body.budget
+    budget: req.body.budget,
+    tags: req.body.tags
   })
 
   let experienceSaved = await newExperience.save();
