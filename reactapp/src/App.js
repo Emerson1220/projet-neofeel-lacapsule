@@ -9,7 +9,7 @@ function App() {
       <Router>
         <Switch>
           <Route component={ScreenHome} path="/" exact />
-          <Route component={ScreenConnexion} path="/connexion"  />
+          {/* <Route component={ScreenConnexion} path="/connexion"  />
           <Route component={ScreenSearch} path="/recherche"  />                    
           <Route component={ScreenInfo} path="/info"  />
           <Route component={ScreenPartner} path="/partenaire"  />
@@ -17,7 +17,7 @@ function App() {
           <Route component={ScreenTrips} path="/voyages"  />
           <Route component={ScreenProfil} path="/profil"  />
           <Route component={ScreenBasket} path="/panier"  />
-          <Route component={ScreenSuggestion} path="/suggestion"  />
+          <Route component={ScreenSuggestion} path="/suggestion"  /> */}
           
         </Switch>
       </Router>
