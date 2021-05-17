@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import France from '@svg-maps/france.regions';
 import { SVGMap } from 'react-svg-map';
 import 'react-svg-map/lib/index.css'
@@ -12,7 +12,14 @@ const SearchModal = () => {
     const [visible, setVisible] = useState(false);
     const [selection, setSelection] = useState('all');
     const [region, setRegion] = useState(null);
-    const [activity, setActivity] = useState(null);
+    const [activities, setActivities] = useState([]);
+    const [regionHover, setRegionHover] = useState(false);
+    const [activityHover, setActivityHover] = useState(false);
+
+    //EFFECT HOOKS
+    useEffect(()=> {
+        console.log(activities)
+    }, [activities])
 
     //FUNCTIONS
     //modal
@@ -23,7 +30,7 @@ const SearchModal = () => {
     const handleCancel = () => {
         setSelection('all');
         setRegion(null);
-        setActivity(null)
+        setActivities([])
         setVisible(false);
     };
 
@@ -34,24 +41,69 @@ const SearchModal = () => {
 
     //voyages
     const filterTrips = (e) => {
-        setActivity(e.target.value)
+        let temp = [...activities];
+        let index = temp.findIndex(f => f === e)
+        index > -1 ? temp.splice(index, 1) : temp.push(e);
+        setActivities(temp);
     }
 
+    //CONTENT TREATMENT
+    let activityList = [
+        { name: 'Loisirs', id: 'loisirs', picto: '/images/pictos/loisirs-8.png'},
+        { name: 'Gastronomie', id: 'gastronomie', picto: '/images/pictos/gastronomie-8.png'},
+        { name: 'Musée', id: 'musee', picto: '/images/pictos/musee-8.png'},
+        { name: 'Patrimoine', id: 'patrimoine', picto: '/images/pictos/patrimoine-8.png'},
+        { name: 'Oénologie', id: 'oenologie', picto: '/images/pictos/oenologie-8.png'},
+        { name: 'Hébergement insolite', id: 'hebergement-insolite', picto: '/images/pictos/hebergement-insolite-8.png'}
+    ]
+
+    let activityCards = activityList.map((e,i) => {
+        return activities.find(f => f === e.id) 
+        ? 
+        <Button
+        key={ i }
+        style={ Object.assign({...styles.feeling}, { border: 'solid rgb(224, 104, 104) 2px' }) }
+        onClick={ ()=>filterTrips(e.id) } >
+            <img style={ styles.picto } src={ e.picto } alt={ e.name }/>
+        </Button>
+        : 
+        <Button
+        key={ i }
+        style={ styles.feeling }
+        onClick={ ()=>filterTrips(e.id) }>
+            <img style={ styles.picto } src={ e.picto } alt={ e.name }/>
+        </Button>
+    })
+
     let selected = <h3>Allons-y!</h3>;
-    if (region || activity) {
-        region && !activity ? selected = <h3>{ region }</h3> : selected = <h3>{ activity }</h3> ;
-    }
+    if (region) {
+        selected = <h3>{ region }</h3>
+    };
+
 
     let modalContent;
     if(selection === 'all') {
         modalContent = 
             <div style={ styles.selectionContent }>
-                <Button style={ styles.button } onClick={ ()=>setSelection('region') }>Choisir un région</Button>
-                <Button style={ styles.button } onClick={ ()=>setSelection('trips') }>Parcourir nos voyages recommendés</Button>
+                <Button
+                style={ regionHover ? styles.buttonHover : styles.button }
+                onClick={ ()=>setSelection('region') }
+                onMouseEnter={ ()=>setRegionHover(true) }
+                onMouseLeave={ ()=>setRegionHover(false) }>
+                    <h2 style={ styles.buttonText }>Choisir une région</h2>
+                </Button>
+                <Button
+                style={ activityHover ? styles.buttonHover : styles.button }
+                onClick={ ()=>setSelection('trips') }
+                onMouseEnter={ ()=>setActivityHover(true) }
+                onMouseLeave={ ()=>setActivityHover(false) }>
+                    <h2 style={ styles.buttonText }>Parcourir nos voyages<br/> recommendés</h2>
+                </Button>
             </div>
     } else if (selection === 'region') {
         modalContent =
             <div>
+                { selected }
                 <SVGMap
                 map={ France }
                 onLocationClick={ (e)=>selectLocation(e) }
@@ -59,18 +111,16 @@ const SearchModal = () => {
             </div>
     } else if (selection === 'trips') {
         modalContent =
+        <div>
+            <h3>Quoi comme voyages?</h3>
             <div style={ styles.feelingContainer }>
-            <Button style={ styles.feeling } onClick={ (e)=>filterTrips(e.target.value) } value="loisirs">Loisirs</Button>
-            <Button style={ styles.feeling } onClick={ (e)=>filterTrips(e.target.value) } value="gastronomie">Gastronomie</Button>
-            <Button style={ styles.feeling } onClick={ (e)=>filterTrips(e.target.value) } value="nature">Nature</Button>
-            <Button style={ styles.feeling } onClick={ (e)=>filterTrips(e.target.value) } value="aventure">Aventure</Button>
-            <Button style={ styles.feeling } onClick={ (e)=>filterTrips(e.target.value) } value="vin">Dégustations de vin</Button>
+                { activityCards }
             </div>
+        </div>
     }
     
     return (
         <div style={ styles.container }>
-            <Button style={ styles.button } onClick={ ()=>showModal() }>GO</Button>        
             <Modal
             title=''
             centered={ true }
@@ -78,7 +128,8 @@ const SearchModal = () => {
             footer={ null }
             onCancel={ ()=>handleCancel() }
             bodyStyle={ styles.modal }
-            >  
+            closable={ false }
+            >
                 { modalContent }
             </Modal>
         </div>
@@ -103,14 +154,28 @@ let styles = {
         alignSelf: 'center',
         color: 'white'
     },
-    Button: {
-        width: '60%',
-        borderRadius: '8px',
+    button: {
+        width: '75%',
+        height: '130px',
         backgroundColor: 'rgb(224, 104, 104)',
         color: 'white',
-        fontSize: '16px',
-        padding: 10,
-        marginTop: '3%',
+        border: 'none',
+        margin: '2%',
+    },
+    buttonHover: {
+        width: '80%',
+        height: '130px',
+        color: 'white',
+        border: 'none',
+        margin: '2%',
+        backgroundColor: "rgba(224, 104, 104, 0.8)",
+    },
+    buttonText: {
+        color: 'white',
+        whiteSpace: 'wrap'
+    },
+    picto: {
+        height: '100%'
     },
     input: {
         width: '70%',
@@ -119,12 +184,14 @@ let styles = {
         padding: 10,
     },
     feeling: {
-        height: '110px',
-        width: '110px',
+        height: '100px',
+        width: '100px',
         boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.6)',
         margin: '5%',
-        textAlign: 'center',
-        whiteSpace: 'wrap'
+        whiteSpace: 'wrap',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     feelingContainer: {
         display: 'flex',
@@ -133,7 +200,7 @@ let styles = {
     },
     modal: {
         backgroundColor: 'rgba(244, 244, 246, 0.5)',
-        borderRadius: '15px'
+        borderRadius: '15px',
     }
 }
 

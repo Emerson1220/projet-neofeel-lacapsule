@@ -21,8 +21,6 @@ function App() {
           <Route component={ScreenProfil} path="/profil"  />
           <Route component={ScreenBasket} path="/panier"  />
           <Route component={ScreenSuggestion} path="/suggestion"  /> */}
-          <Route component={SearchModal} path="/searchpage"  /> */}
-
         </Switch>
       </Router>
 
