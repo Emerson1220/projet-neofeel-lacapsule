@@ -43,3 +43,40 @@
     transform: rotate(360deg);
   }
 }
+/* CSS NAVBAR _______________________*/
+
+
+
+.h1-montserrat {
+  width: auto; /* 366px */
+  height: auto; /* 58px */
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  color: #106271;
+  font-weight: 700;
+  font-family: "Inter-Bold", "Inter", sans-serif;
+  font-size: 48px;
+}
+
+.devenezPartenaireButton{
+  
+background-color: #e06868;
+overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+line-height: 1.2;
+  color: #ffffff;
+  font-weight: 700;
+  font-family: "Inter-Bold", "Inter", sans-serif;
+width: 150px;
+height: 50px;
+top: 40px;
+border-radius: 5px;
+}
+
+.listNav{
+  color: #106271;
+  margin: 0px 0px;
+}

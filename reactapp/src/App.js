@@ -1,10 +1,14 @@
 import './App.css';
-import SearchPage from './SearchPage';
-
+import Nav from './Nav'
 function App() {
   return (
-    <SearchPage></SearchPage>
+    // <SearchPage></SearchPage>
 
+    
+      <Nav>
+
+      </Nav>
+    
   );
 }
 
