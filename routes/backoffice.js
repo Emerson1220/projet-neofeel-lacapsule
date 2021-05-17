@@ -16,23 +16,30 @@ router.post('/manageexperiences', async function(req, res, next) {
     city: req.body.city,
     country: req.body.country
   }
-  let partner = new User({
+  let newPartner = new User({
     firstName: req.body.partnerFirstName,
     lastName: req.body.partnerLastName,
     pseudo: req.body.partnerPseudo,
     email: req.body.partnerEmail,
     token: uid2(32),
     password: 'partner',
-    address: address,
     category: 'partner',
     avatar: '/images/avatar.png',
+    creationDate: new Date(),
+    phone: req.body.partnerPhone,
+    facebook: req.body.partnerFacebook,
+    website: req.body.partnerWebsite
     });
 
+    let partnerSaved = await newPartner.save();
+    partnerSaved.addresses.push(address);
+    partnerSaved = await partnerSaved.save();
+
   let description = {
-    title: req.body.title,
-    content: req.body.content,
-    review: req.body.review,
-    tips: req.body.tips,
+    title: req.body.descriptionTitle,
+    content: req.body.descriptionContent,
+    review: req.body.descriptionReview,
+    tips: req.body.descriptionTips,
     partnerTips: req.body.partnerTips,
     partnerLogo: req.body.partnerLogo,
     imagesUrl: req.body.imagesUrl,
@@ -45,17 +52,32 @@ router.post('/manageexperiences', async function(req, res, next) {
     longitude: req.body.longitude
   };
 
-  let experience = new Experience({
-    name: req.body.name,
-    
+  let newExperience = new Experience({
+    name: req.body.experienceName,
+    partner: partnerSaved._id,
+    region: req.body.region,
+    activityType: req.body.activityType,
+    activityCategory: req.body.activityCategory,
+    activityFeeling: req.body.activityFeeling,
+    activityTime: req.body.activityTime,
+    description: description,
+    coordinate: coordinate,
+    creationDate: new Date(),
+    advantage: req.body.advantage,
+    advantageAmount: req.body.advantageAmount,
+    budget: req.body.budget
   })
 
+  let experienceSaved = await newExperience.save();
 
-    if (!name || !activity || !category ) {
-        res.json({ result: false })
-    } else {
-        res.json({ result: true, experience:{name: 'Vinot VArlot', activity: 'Visite vignes', category: 'gastronomie'}});
-    }
+  experienceSaved
+  ? res.json({ result: true, experience: experienceSaved, partner: partnerSaved })
+  : res.json({ result: false }) ;
+    // if (!name || !activity || !category ) {
+    //     res.json({ result: false })
+    // } else {
+    //     res.json({ result: true, experience:{name: 'Vinot VArlot', activity: 'Visite vignes', category: 'gastronomie'}});
+    // }
 })
 
 //Générer la liste
