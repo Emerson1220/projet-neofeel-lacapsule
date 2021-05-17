@@ -12,8 +12,9 @@
     "ejs": "~2.6.1",
     "express": "^4.16.4",
     "http-errors": "~1.6.3",
-    "jest": "^26.6.3",
+    "mongoose": "^5.12.9",
     "morgan": "~1.9.1",
+    "react-router-dom": "^5.2.0",
     "supertest": "^6.1.3"
   }
 }
