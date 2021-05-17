@@ -8,7 +8,7 @@ import { Button } from 'antd';
 function Nav() {
 
     return (
-        <nav style={{ width: '100vh', display: 'flex', flexDirection: 'row' }}>
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
             <div>
                 <img
                     width={'332px'}
@@ -43,7 +43,7 @@ function Nav() {
                 <h3 style={{color: '#106271' }}>Connexion</h3>
             </div>
 
-        </nav>
+        </div>
     )
 }
 export default Nav;
