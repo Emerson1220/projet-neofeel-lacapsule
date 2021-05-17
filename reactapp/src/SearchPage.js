@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import France from '@svg-maps/france.regions';
 import { SVGMap } from 'react-svg-map';
 import 'react-svg-map/lib/index.css'
 import { Modal, Button } from 'antd';
+import { parse } from 'svgson'
 
 const SearchPage = () => {
     //TODO: fetch agglom de régions depuis BDD, liste de tags
@@ -10,10 +11,14 @@ const SearchPage = () => {
     //STATE HOOKS
     const [visible, setVisible] = useState(false);
     const [selection, setSelection] = useState('all');
+    const [region, setRegion] = useState(null);
+
+    //REFERENCE HOOKS
+    const locationRef = useRef();
 
     //FUNCTIONS
+    //modal
     const showModal = () => {
-        console.log('click')
         setVisible(!visible);
     };
 
@@ -21,6 +26,13 @@ const SearchPage = () => {
         setVisible(false);
         setSelection('all');
     };
+
+    //map
+    const selectLocation = (e) => {
+        locationRef.current.focus();
+        console.log(locationRef)
+        // setRegion(locationRef.current.id)
+    }
 
     let modal;
     if(selection === 'all') {
@@ -32,7 +44,9 @@ const SearchPage = () => {
     } else if (selection === 'region') {
         modal =
             <div>
-                <SVGMap map={ France }/>
+                <SVGMap
+                map={ France }
+                onLocationClick={ (e)=>selectLocation(e) }/>
             </div>
     } else if (selection === 'trips') {
         modal =
@@ -95,10 +109,11 @@ let styles = {
         padding: 10,
     },
     feeling: {
-        height: '100px',
-        width: '100px',
+        height: '110px',
+        width: '110px',
         boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.6)',
-        margin: '5%'
+        margin: '5%',
+        textAlign: 'center'
     },
     feelingContainer: {
         display: 'flex',
