@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ScreenHome from './ScreenHome';
 function App() {
   return (
+    // <SearchPage></SearchPage>
+
     
       <Router>
         <Switch>
