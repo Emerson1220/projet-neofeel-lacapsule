@@ -58,9 +58,16 @@ function ScreenHome() {
                         </div>
                     </div>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center', paddingTop: '44%', paddingRight: '6%' }}>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
+                    justifyContent: 'center',
+                    paddingTop: '44%',
+                    paddingRight: '2%'
+                }}>
                     <h1 style={{ color: '#FFF', paddingRight: '1%' }}>Découvrez la France autrement...</h1>
-                    <RedButton transparent={true} title="Commencer l'aventure..." size="small" length="medium" onSelect={() => showModal()} />
+                    <RedButton title="Commencer l'aventure..." size="small" onSelect={() => showModal()} />
                 </div>
             </div>
             <SearchModal visible={visible} showModal={() => showModal()} />
