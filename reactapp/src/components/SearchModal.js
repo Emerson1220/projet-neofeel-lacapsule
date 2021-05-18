@@ -6,8 +6,6 @@ import { Modal, Button } from 'antd';
 
 
 const SearchModal = () => {
-    //TODO: fetch agglom de régions depuis BDD, liste de tags
-
     //STATE HOOKS
     const [visible, setVisible] = useState(false);
     const [selection, setSelection] = useState('all');
@@ -47,7 +45,7 @@ const SearchModal = () => {
         setActivities(temp);
     }
 
-    //CONTENT TREATMENT
+    //DISPLAY TREATMENT
     let activityList = [
         { name: 'Loisirs', id: 'loisirs', picto: '/images/pictos/loisirs-8.png'},
         { name: 'Gastronomie', id: 'gastronomie', picto: '/images/pictos/gastronomie-8.png'},
@@ -121,6 +119,7 @@ const SearchModal = () => {
     
     return (
         <div style={ styles.container }>
+            <Button onClick={ ()=>showModal() }></Button>
             <Modal
             title=''
             centered={ true }

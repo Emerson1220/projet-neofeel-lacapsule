@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.css';
+import '../App.css';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
-import Nav from './Nav'
+import Nav from '../components/Nav'
 
 
 function ScreenHome() {
