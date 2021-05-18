@@ -2,9 +2,6 @@ import './App.css';
 import Nav from './Nav'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
-import ScreenHome from './ScreenHome';
-import ScreenRoadPlanner from './screens/ScreenRoadPlanner';
-
 function App() {
   return (
     
@@ -14,8 +11,7 @@ function App() {
       <Router>
         <Switch>
           <Route component={ScreenHome} path="/" exact />
-          <Route component={ScreenRoadPlanner} path="/roadPlanner"  />
-          {/* <Route component={ScreenConnexion} path="/connexion"  />
+          <Route component={ScreenConnexion} path="/connexion"  />
           <Route component={ScreenSearch} path="/recherche"  />                    
           <Route component={ScreenInfo} path="/info"  />
           <Route component={ScreenPartner} path="/partenaire"  />
@@ -23,7 +19,7 @@ function App() {
           <Route component={ScreenTrips} path="/voyages"  />
           <Route component={ScreenProfil} path="/profil"  />
           <Route component={ScreenBasket} path="/panier"  />
-          <Route component={ScreenSuggestion} path="/suggestion"  /> */}
+          <Route component={ScreenSuggestion} path="/suggestion"  />
         </Switch>
       </Router>
 
