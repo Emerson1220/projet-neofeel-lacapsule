@@ -1,9 +1,6 @@
 import './App.css';
-<<<<<<< HEAD
 import './Home.css';
 import Nav from './components/Nav'
-=======
->>>>>>> e745803a642acb93826b8d59a8d9cae78ee9da80
 
 //REACT ROUTER
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';

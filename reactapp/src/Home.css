@@ -30,3 +30,26 @@
       color: #106271;
       
     }
+
+    body{
+      background: url(./BanniereHome.jpg);
+    
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-size: auto auto;
+height: 100%;
+min-height: 100%;
+max-height: 100%;
+width: 100%;
+background-size: 100% 100%;
+background-position: center;
+
+background-size: cover;
+background-Repeat: no-repeat;
+max-width: 100%;
+min-width: 100%;
+top: 0;
+left: 0;
+padding: 0;
+margin: 0;
+    }
