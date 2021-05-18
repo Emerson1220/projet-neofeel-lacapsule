@@ -11,7 +11,6 @@ import RedButton from './RedButton';
 
 //REDUX
 import { connect } from 'react-redux';
-import { json } from 'body-parser';
 
 
 const SearchModal = (props) => {
@@ -28,29 +27,35 @@ const SearchModal = (props) => {
 
     //FUNCTIONS
 
-    //FUNCTION ON CLICK REGION 
+    //select region
     var selectRegion = async () => {
-        const saveRegion = await fetch('/search', {
+        let saveRegion = await fetch('/searchregions', {
         method: 'POST',
         header:{'Content-Type': 'application/x-www-form-urlencoded'},
         body : `region=${props.region}`
     })
-}
+    }
+
+    //select activities
     var selectActivity = async () => {
-        const saveActivity = await fetch('/search', {
+        let rawResponse = await fetch('/searchtrips', {
             method: 'POST',
             header:{'Content-Type': 'application/x-www-form-urlencoded'},
             body : `activities=${JSON.stringify(props.activities)}`
-        })
+        });
+        let response = await rawResponse.json();
+        console.log(response);
     }
 
     //get list activity options from back
     const getOptions = async () => {
         let rawResponse = await fetch('/activities');
         let response = await rawResponse.json();
+        console.log(response.data)
         setOptions(response.data);
     } 
 
+    //close modal
     const handleCancel = () => {
         setSelection('all');
         setRegion(null);
@@ -60,11 +65,11 @@ const SearchModal = (props) => {
 
     //map
     const selectLocation = (e) => {
-        setRegion(e.target.getAttribute('name'));
-        props.onRegionClick(e.target.getAttribute('name'));
+        setRegion({ name: e.target.getAttribute('name'), id: e.target.getAttribute('id') });
+        props.onRegionClick(e.target.getAttribute('id'));
     };
 
-    //voyages
+    //manage list of activities
     const filterTrips = (e) => {
         let temp = [...activities];
         let index = temp.findIndex(f => f === e)
@@ -74,15 +79,6 @@ const SearchModal = (props) => {
     }
 
     //DISPLAY TREATMENT
-    let activityList = [
-        { name: 'Loisirs', id: 'loisirs', picto: '/images/pictos/loisirs-8.png'},
-        { name: 'Gastronomie', id: 'gastronomie', picto: '/images/pictos/gastronomie-8.png'},
-        { name: 'Musée', id: 'musee', picto: '/images/pictos/musee-8.png'},
-        { name: 'Patrimoine', id: 'patrimoine', picto: '/images/pictos/patrimoine-8.png'},
-        { name: 'Oénologie', id: 'oenologie', picto: '/images/pictos/oenologie-8.png'},
-        { name: 'Hébergement insolite', id: 'hebergement-insolite', picto: '/images/pictos/hebergement-insolite-8.png'}
-    ]
-
     let activityCards = options.map((e,i) => {
         return activities.find(f => f === e) 
         ? 
@@ -103,8 +99,8 @@ const SearchModal = (props) => {
 
     let selected = <h3>Choisissez votre destination</h3>;
     let selectButton;
-    if (region  ) {
-        selected = <h3>{ region }</h3>
+    if (region) {
+        selected = <h3>{ region.name }</h3>
         selectButton = <RedButton title="Allons-y!" size="small" onSelect={()=> selectRegion()} />
     }else if (activities.length > 0){
         selected = <h3>{ region }</h3>
@@ -158,6 +154,7 @@ const SearchModal = (props) => {
             onCancel={ ()=>handleCancel() }
             bodyStyle={ styles.modal }
             maskStyle={ styles.modalMask }
+            width={ selection === 'trips' ? "54%" : "520px" }
             >
                 { modalContent }
             </Modal>
@@ -199,7 +196,7 @@ let styles = {
         height: '100px',
         width: '100px',
         boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.6)',
-        margin: '5%',
+        margin: '2%',
         whiteSpace: 'wrap',
         display: 'flex',
         justifyContent: 'center',
@@ -220,8 +217,14 @@ let styles = {
     activityModal: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
-    }
+        alignItems: 'center',
+    },
+    tripsModal: {
+        backgroundColor: 'rgba(244, 244, 246, 0.5)',
+        borderRadius: '15px',
+        minWidth: '70%',
+        maxHeight: '50%'
+    },
 }
 
 function mapDispatchToProps(dispatch) {
@@ -231,6 +234,9 @@ function mapDispatchToProps(dispatch) {
         },
         onActivityClick: function(activities) {
             dispatch({ type: 'selectActivities', activities: activities })
+        },
+        onSearch: function(data) {
+            dispatch({ type: 'search', experiences: data })
         }
     }
 }
