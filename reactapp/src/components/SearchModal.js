@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
+//MAP
 import France from '@svg-maps/france.regions';
 import { SVGMap } from 'react-svg-map';
-import 'react-svg-map/lib/index.css'
+import '../styles/map.css'
+
+//UI
 import { Modal, Button } from 'antd';
 import RedButton from './RedButton';
+
+//REDUX
+import { connect } from 'react-redux';
 
 
 const SearchModal = (props) => {
@@ -12,12 +19,7 @@ const SearchModal = (props) => {
     const [region, setRegion] = useState(null);
     const [activities, setActivities] = useState([]);
 
-    useEffect(()=> {
-        console.log(selection)
-    }, [selection])
-
     //FUNCTIONS
-
     const handleCancel = () => {
         setSelection('all');
         setRegion(null);
@@ -28,6 +30,7 @@ const SearchModal = (props) => {
     //map
     const selectLocation = (e) => {
         setRegion(e.target.getAttribute('name'));
+        props.onRegionClick(e.target.getAttribute('name'));
     };
 
     //voyages
@@ -36,6 +39,7 @@ const SearchModal = (props) => {
         let index = temp.findIndex(f => f === e)
         index > -1 ? temp.splice(index, 1) : temp.push(e);
         setActivities(temp);
+        props.onActivityClick(temp)
     }
 
     //DISPLAY TREATMENT
@@ -66,11 +70,11 @@ const SearchModal = (props) => {
         </Button>
     })
 
-    let selected = <h3>Choissisez votre destination</h3>;
-    let selectRegionButton;
-    if (region) {
+    let selected = <h3>Choisissez votre destination</h3>;
+    let selectButton;
+    if (region || activities.length > 0) {
         selected = <h3>{ region }</h3>
-        selectRegionButton = <RedButton title="Allons-y!" size="small"/>
+        selectButton = <RedButton title="Allons-y!" size="small"/>
     };
 
 
@@ -97,15 +101,16 @@ const SearchModal = (props) => {
                 map={ France }
                 onLocationClick={ (e)=>selectLocation(e) }
                 />
-            { selectRegionButton }
+            { selectButton }
             </div>
     } else if (selection === 'trips') {
         modalContent =
-        <div>
+        <div style={ styles.activityModal }>
             <h3>Sélectionnez vos envies</h3>
             <div style={ styles.feelingContainer }>
                 { activityCards }
             </div>
+            { selectButton }
         </div>
     }
     
@@ -118,6 +123,7 @@ const SearchModal = (props) => {
             footer={ null }
             onCancel={ ()=>handleCancel() }
             bodyStyle={ styles.modal }
+            maskStyle={ styles.modalMask }
             >
                 { modalContent }
             </Modal>
@@ -152,6 +158,9 @@ let styles = {
         color: 'grey',
         padding: 10,
     },
+    selectButton: {
+        alignSelf: 'center'
+    },
     feeling: {
         height: '100px',
         width: '100px',
@@ -170,7 +179,34 @@ let styles = {
     modal: {
         backgroundColor: 'rgba(244, 244, 246, 0.5)',
         borderRadius: '15px',
+    },
+    modalMask: {
+        backgroundColor: "rgba(133, 187, 197, 0.6)"
+    },
+    activityModal: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
     }
 }
 
-export default SearchModal;
+function mapDispatchToProps(dispatch) {
+    return {
+        onRegionClick: function(region) {
+            dispatch({ type: 'selectRegion', region: region })
+        },
+        onActivityClick: function(activities) {
+            dispatch({ type: 'selectActivities', activities: activities })
+        }
+    }
+}
+
+function mapStateToProps(state) {
+    console.log(state);
+    return { activities: state.activities, region: state.region }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SearchModal);

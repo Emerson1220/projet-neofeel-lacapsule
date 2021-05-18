@@ -1,15 +1,26 @@
 import './App.css';
+<<<<<<< HEAD
 import './Home.css';
 import Nav from './components/Nav'
+=======
+>>>>>>> e745803a642acb93826b8d59a8d9cae78ee9da80
 
+//REACT ROUTER
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+//pages
 import ScreenHome from './screens/ScreenHome';
-import SearchModal from './components/SearchModal'
+
+//REDUX
+import region from './reducers/region.reducer';
+import activities from './reducers/activities.reducer';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers }  from 'redux';
+
+const store = createStore(combineReducers({ region, activities }));
+
 function App() {
   return (
-    // <SearchPage></SearchPage>
-
-    
+    <Provider store={ store }>
       <Router>
         <Switch>
           <Route component={ScreenHome} path="/" exact />
@@ -22,9 +33,9 @@ function App() {
           <Route component={ScreenProfil} path="/profil"  />
           <Route component={ScreenBasket} path="/panier"  />
           <Route component={ScreenSuggestion} path="/suggestion"  /> */}
-          <Route component={SearchModal} path="/searchpage"  />
         </Switch>
       </Router>
+    </Provider>
 
   );
 }

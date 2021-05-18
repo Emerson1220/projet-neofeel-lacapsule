@@ -15,6 +15,7 @@ const RedButton = (props) => {
             color: 'white',
             border: 'none',
             margin: '2%',
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)'
         }        
         styles.buttonHover = {
             width: '30%',
@@ -22,6 +23,7 @@ const RedButton = (props) => {
             color: 'white',
             border: 'none',
             margin: '2%',
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)'
         }
     };
 
@@ -33,6 +35,7 @@ const RedButton = (props) => {
             border: 'none',
             margin: '2%',
             backgroundColor: "rgba(224, 104, 104, 0.8)",
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)'
         }
         styles.button = {
             height: '130px',
@@ -41,6 +44,7 @@ const RedButton = (props) => {
             border: 'none',
             margin: '2%',
             backgroundColor: "rgba(224, 104, 104, 1)",
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)'
         }
     } else if (props.size === 'small') {
         styles.button = {
@@ -49,6 +53,7 @@ const RedButton = (props) => {
             color: 'white',
             border: 'none',
             margin: '2%',
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)'
         }
         styles.buttonHover = {
             width: '40%',
@@ -56,6 +61,7 @@ const RedButton = (props) => {
             border: 'none',
             margin: '2%',
             backgroundColor: "rgba(224, 104, 104, 0.8)",
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)'
         }
     }
 
@@ -66,6 +72,7 @@ const RedButton = (props) => {
             color: 'white',
             border: 'none',
             margin: '2%',
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)'
         }
         styles.buttonHover = {
             width: '160px',
@@ -73,6 +80,8 @@ const RedButton = (props) => {
             border: 'none',
             margin: '2%',
             backgroundColor: "rgba(224, 104, 104, 0.8)",
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)'
+
         }
     } else if (props.length === 'medium') {
         styles.button = {
@@ -81,6 +90,7 @@ const RedButton = (props) => {
             color: 'white',
             border: 'none',
             margin: '2%',
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)'
         }
         styles.buttonHover = {
             width: '290px',
@@ -88,6 +98,7 @@ const RedButton = (props) => {
             border: 'none',
             margin: '2%',
             backgroundColor: "rgba(224, 104, 104, 0.8)",
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)'
         }
     }
 
@@ -114,6 +125,7 @@ const styles = {
         color: 'white',
         border: 'none',
         margin: '2%',
+        boxShadow: '2px, 2px, 2px rgba(0, 0, 0, 0.5)'
     },
     buttonHover: {
         width: '40%',

@@ -66,3 +66,5 @@ typings/
 
 # production
 /reactapp/build
+
+/reactapp/src/ScreenHome.js
