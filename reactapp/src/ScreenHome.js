@@ -56,15 +56,6 @@ function ScreenHome() {
 
                     </div>
                 </div>
-                {/* <div className ="cards">
-                    <article className="card">                       
-                        <img src="/images/ALSA-CYCLO-TOURS-6-min.jpg" alt="Alsa Cyclo Tours"></img>
-                    </article>
-                    <article className="card">
-                        <img src="/images/domaines-schlumberger-entree-min.jpg.webp" alt="Alsa Cyclo Tours"></img>
-                    </article>
-                </div> */}
-
             </div>
         </div>
 
