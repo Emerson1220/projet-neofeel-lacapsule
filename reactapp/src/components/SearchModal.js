@@ -241,7 +241,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return { activities: state.activities, region: state.region }
 }
 
