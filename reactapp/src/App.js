@@ -6,11 +6,12 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ScreenHome from './screens/ScreenHome';
 
 //REDUX
-// import <reducername> from './<reducername>.reducer';
-import {Provider} from 'react-redux';
-import {createStore, combineReducers}  from 'redux';
+import region from './reducers/region.reducer';
+import activities from './reducers/activities.reducer';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers }  from 'redux';
 
-const store = createStore(combineReducers({}));
+const store = createStore(combineReducers({ region, activities }));
 
 function App() {
   return (

@@ -58,10 +58,6 @@ function ScreenHome() {
                 </div>
             </div>
         </div>
-
-
-
-
     )
 }
 
