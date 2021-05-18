@@ -1,22 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../App.css';
+import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import Nav from '../components/Nav'
-
-import RedButton from '../components/RedButton'
-import SearchModal from '../components/SearchModal'
+import { icons } from 'antd/lib/image/PreviewGroup';
 
 /* FUNCTION HOME PAGE */
 function ScreenHome() {
-    //STATE HOOKS
-    const [visible, setVisible] = useState(false);
-
-    //FUNCTIONS
-    //modal
-    const showModal = () => {
-        setVisible(!visible);
-    };
-
     return (
         <div style={{ display: "flex", flexDirection: 'column', height: '100%' }}>
             <Nav />
@@ -55,17 +45,18 @@ function ScreenHome() {
                         </div>
                         <div style={{paddingTop:'1%'}}>
                             <Link to ={'/info'}>
-                            <RedButton transparent={ true } title="Le Concept" size="small" length="short" />
+                            <Button className='ensavoirplusButton' > Le Concept   </Button>
                             </Link>
                         </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end', paddingBottom: '3%', paddingRight:'2%' }}>
                     <h2 style={{ color: '#FFF', paddingRight: '1%' }}>Découvrez la France autrement...</h2>
-                        <RedButton transparent={ true } title="Commencer l'aventure..." size="small" length="medium" onSelect={ ()=>showModal() }/>
+                        <Button className='ensavoirplusButton' >Commencer l'aventure... </Button>
+                        
+
                     </div>
                 </div>
             </div>
-            <SearchModal visible={ visible } showModal={ ()=>showModal() }/>
         </div>
 
 
