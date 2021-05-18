@@ -12,9 +12,11 @@ const SearchModal = () => {
     const [selection, setSelection] = useState('all');
     const [region, setRegion] = useState(null);
     const [activities, setActivities] = useState([]);
-    const [regionHover, setRegionHover] = useState(false);
     const [activityHover, setActivityHover] = useState(false);
-    const [selectRegionHover, setSelectRegionHover] = useState(false);
+
+    useEffect(()=> {
+        console.log(selection)
+    }, [selection])
 
     //FUNCTIONS
     //modal
@@ -74,13 +76,7 @@ const SearchModal = () => {
     let selectRegionButton;
     if (region) {
         selected = <h3>{ region }</h3>
-        selectRegionButton = <RedButton title="Allons-y!"/>               
-        // <Button
-        // style={ selectRegionButton ? styles.buttonHover : styles.button }
-        // onMouseEnter={ ()=>setRegionHover(true) }
-        // onMouseLeave={ ()=>setRegionHover(false) }>
-        //     <h2 style={ styles.buttonText }>Allons-y!</h2>
-        // </Button>
+        selectRegionButton = <RedButton title="Allons-y!" size="small"/>
     };
 
 
@@ -88,20 +84,23 @@ const SearchModal = () => {
     if(selection === 'all') {
         modalContent = 
             <div style={ styles.selectionContent }>
-                <Button
-                style={ regionHover ? styles.buttonHover : styles.button }
-                onClick={ ()=>setSelection('region') }
-                onMouseEnter={ ()=>setRegionHover(true) }
-                onMouseLeave={ ()=>setRegionHover(false) }>
-                    <h2 style={ styles.buttonText }>Découvrir une région</h2>
-                </Button>
-                <Button
+                <RedButton
+                title="Découvrir une région"
+                size="large"
+                onSelect={ ()=>setSelection('region') }
+                />
+                <RedButton
+                title="Parcourir nos suggestions de voyage"
+                size="large"
+                onSelect={ ()=>setSelection('trips') }
+                />
+                {/* <Button
                 style={ activityHover ? styles.buttonHover : styles.button }
                 onClick={ ()=>setSelection('trips') }
                 onMouseEnter={ ()=>setActivityHover(true) }
                 onMouseLeave={ ()=>setActivityHover(false) }>
                     <h2 style={ styles.buttonText }>Parcourir nos suggestions<br/>to voyage</h2>
-                </Button>
+                </Button> */}
             </div>
     } else if (selection === 'region') {
         modalContent =
