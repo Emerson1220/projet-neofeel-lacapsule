@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 import Nav from '../components/Nav'
+
 import RedButton from '../components/RedButton'
 import SearchModal from '../components/SearchModal'
 
@@ -54,13 +55,13 @@ function ScreenHome() {
                         </div>
                         <div style={{paddingTop:'1%'}}>
                             <Link to ={'/info'}>
-                            <RedButton title="Le Concept" size="small" length="short" />
+                            <RedButton transparent={ true } title="Le Concept" size="small" length="short" />
                             </Link>
                         </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end', paddingBottom: '3%', paddingRight:'2%' }}>
                     <h2 style={{ color: '#FFF', paddingRight: '1%' }}>Découvrez la France autrement...</h2>
-                        <RedButton title="Commencer l'aventure..." size="small" length="medium" onSelect={ ()=>showModal() }/>
+                        <RedButton transparent={ true } title="Commencer l'aventure..." size="small" length="medium" onSelect={ ()=>showModal() }/>
                     </div>
                 </div>
             </div>

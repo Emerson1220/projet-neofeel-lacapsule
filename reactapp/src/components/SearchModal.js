@@ -109,6 +109,7 @@ const SearchModal = () => {
                 <SVGMap
                 map={ France }
                 onLocationClick={ (e)=>selectLocation(e) }
+                locationClassName=''
                 />
             { selectRegionButton }
             </div>
