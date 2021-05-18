@@ -1,9 +1,6 @@
 import './App.css';
-import Nav from './components/Nav'
+import Nav from './Nav'
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import ScreenHome from './screens/ScreenHome';
-import SearchModal from './components/SearchModal'
 function App() {
   return (
     // <SearchPage></SearchPage>
@@ -21,7 +18,6 @@ function App() {
           <Route component={ScreenProfil} path="/profil"  />
           <Route component={ScreenBasket} path="/panier"  />
           <Route component={ScreenSuggestion} path="/suggestion"  /> */}
-          <Route component={SearchModal} path="/searchpage"  />
         </Switch>
       </Router>
 
