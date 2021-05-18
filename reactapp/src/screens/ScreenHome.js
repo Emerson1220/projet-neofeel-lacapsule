@@ -10,7 +10,7 @@ function ScreenHome() {
     return (
         <div style={{ display: "flex", flexDirection: 'column', height: '100%' }}>
             <Nav />
-            <div style={{ display: "flex", flexDirection: 'column', height: '100%' }} >
+            <div style={{ display: "flex", flexDirection: 'column', flexGrow: 3 }} >
                 <div style={{
                     backgroundImage: `url("images/BanniereHome.jpg")`,
                     backgroundPosition: 'center',
