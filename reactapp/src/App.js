@@ -1,4 +1,6 @@
 import './App.css';
+import './Home.css';
+import Nav from './components/Nav'
 
 //REACT ROUTER
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';

@@ -8,7 +8,7 @@ import { Button } from 'antd';
 function Nav() {
 
     return (
-        <div style={{ width: '100%', height: '80px', display: 'flex', flexDirection: 'row', border: 2, borderColor: 'red', justifyContent: 'space-between' }}>
+        <div style={{ width: '100%', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor:'#FFF' }}>
             <div style={{ display: 'flex', height: '100%', alignItems: 'center', marginLeft: '1%' }}>
                 <Link style={{ height: '100%' }} to={'/'}>
                     <img
@@ -45,7 +45,7 @@ function Nav() {
                 <Link to={'/partenaire'}>
                     <Button className='devenezPartenaireButton' > Devenez Partenaire </Button>
                 </Link>
-                <div className='listNav' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginLeft: '11%', marginTop: '6%', marginBottom: 0, height: '100%' }}>
+                <div className='listNav' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginLeft: '11%', marginTop: '3%', marginBottom: 0, height: '100%' }}>
                     <Link to={'/roadPlanner'}>
                         <h4 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Mon Voyage</h4>
                     </Link>
