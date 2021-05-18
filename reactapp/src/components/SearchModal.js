@@ -11,6 +11,7 @@ import RedButton from './RedButton';
 
 //REDUX
 import { connect } from 'react-redux';
+import { json } from 'body-parser';
 
 
 const SearchModal = (props) => {
@@ -20,6 +21,24 @@ const SearchModal = (props) => {
     const [activities, setActivities] = useState([]);
 
     //FUNCTIONS
+
+//FUNCTION ON CLICK REGION 
+var selectRegion = async () => {
+const saveRegion = await fetch('/search', {
+    method: 'POST',
+    header:{'Content-Type': 'application/x-www-form-urlencoded'},
+    body : `region=${props.region}`
+})
+}
+var selectActivity = async () => {
+    const saveActivity = await fetch('/search', {
+        method: 'POST',
+        header:{'Content-Type': 'application/x-www-form-urlencoded'},
+        body : `activities=${JSON.stringify(props.activities)}`
+    })
+    }
+
+
     const handleCancel = () => {
         setSelection('all');
         setRegion(null);
@@ -72,9 +91,12 @@ const SearchModal = (props) => {
 
     let selected = <h3>Choisissez votre destination</h3>;
     let selectButton;
-    if (region || activities.length > 0) {
+    if (region  ) {
         selected = <h3>{ region }</h3>
-        selectButton = <RedButton title="Allons-y!" size="small"/>
+        selectButton = <RedButton title="Allons-y!" size="small" onSelect={()=> selectRegion()} />
+    }else if (activities.length > 0){
+        selected = <h3>{ region }</h3>
+        selectButton = <RedButton title="Allons-y!" size="small" onSelect={()=> selectActivity()}/>
     };
 
 
