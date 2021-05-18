@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Nav from './Nav'
 import { icons } from 'antd/lib/image/PreviewGroup';
 
-
+/* FUNCTION HOME PAGE */
 function ScreenHome() {
     return (
         <div style={{ display: "flex", flexDirection: 'column', height: '100%' }}>
