@@ -25,33 +25,35 @@ const SearchModal = (props) => {
         getOptions();
     }, [])
 
-    //FUNCTIONS
+    useEffect(()=> {
+        console.log({experiences: props.experiences})
+    }, [props.experiences])
 
+    //FUNCTIONS
     //select region
     var selectRegion = async () => {
         let saveRegion = await fetch('/searchregions', {
-        method: 'POST',
-        header:{'Content-Type': 'application/x-www-form-urlencoded'},
-        body : `region=${props.region}`
-    })
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body : `region=${props.region}`
+        })
     }
 
     //select activities
     var selectActivity = async () => {
         let rawResponse = await fetch('/searchtrips', {
             method: 'POST',
-            header:{'Content-Type': 'application/x-www-form-urlencoded'},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body : `activities=${JSON.stringify(props.activities)}`
         });
         let response = await rawResponse.json();
-        console.log(response);
+        props.onSearch(response.data)
     }
 
     //get list activity options from back
     const getOptions = async () => {
         let rawResponse = await fetch('/activities');
         let response = await rawResponse.json();
-        console.log(response.data)
         setOptions(response.data);
     } 
 
@@ -242,6 +244,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+    console.log(state)
     return { activities: state.activities, region: state.region }
 }
 

@@ -9,10 +9,8 @@ const Experience = require('../models/Experience');
 //Response: result (true), expériences ['Vinot varlot']
 router.post('/searchregions', async function(req, res, next) {
     try {
-        console.log(req.body)
         let experiences = await Experience.find({ regionCode: req.body.region });
-        console.log(experiences);
-        res.json({ result: true, data: experiences})
+        res.json({ result: true, data: experiences })
     } catch (err) {
         console.log(err)
         res.json({ result: 'false',  error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
@@ -21,15 +19,13 @@ router.post('/searchregions', async function(req, res, next) {
 
 router.post('/searchtrips', async function(req, res, next) {
     try {
-        console.log(req.body)
-        let a = req.body.activities;
+        let a = JSON.parse(req.body.activities);
+        let experiences = [];
         for (let i=0 ; i<a.length ; i++) {
             let response = await Experience.find({ tags: a[i] });
-            console.log({ response: response })
-            experiences = [...experiences, response];
+            experiences = experiences.concat(response);
         }
-        console.log(experiences);
-        res.json({ result: true, data: experiences})
+        res.json({ result: true, data: experiences })
     } catch (err) {
         console.log(err)
         res.json({ result: 'false', error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
