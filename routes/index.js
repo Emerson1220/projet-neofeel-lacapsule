@@ -9,14 +9,13 @@ router.get('/search', async function(req, res, next) {
     try {
         let experiences = [];
         if (req.body.region) {
-            experiences = await Experience.find({ region: req.body.region });
+            experiences = await Experience.find({ region: req.query.region });
+        }   else if (req.body.activities) {
+            req.body.activities.forEach(e => {
+                let temp = await Experience.find({ tags: e });
+                experiences = [...experiences, temp];
+            })
         }
-        //  else if (req.body.activities) {
-        //     req.body.activities.forEach(e => {
-        //         let temp = await Experience.find({ tags: e });
-        //         experiences = [...experiences, temp];
-        //     })
-        // }
     res.json({ result: true, experiences: experiences})
     } catch (err) {
         console.log(err)

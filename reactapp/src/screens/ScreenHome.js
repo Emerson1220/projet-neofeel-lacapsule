@@ -54,13 +54,13 @@ function ScreenHome() {
                         </div>
                         <div style={{paddingTop:'1%'}}>
                             <Link to ={'/info'}>
-                            <RedButton transparent={ true } title="Le Concept" size="small" length="short" />
+                            <RedButton title="Le Concept" size="small" />
                             </Link>
                         </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end', paddingBottom: '3%', paddingRight:'2%' }}>
                     <h2 style={{ color: '#FFF', paddingRight: '1%' }}>Découvrez la France autrement...</h2>
-                        <RedButton transparent={ true } title="Commencer l'aventure..." size="small" length="medium" onSelect={ ()=>showModal() }/>
+                        <RedButton title="Commencer l'aventure..." size="small" onSelect={ ()=>showModal() }/>
                     </div>
                 </div>
             </div>
