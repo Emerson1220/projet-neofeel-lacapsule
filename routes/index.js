@@ -11,12 +11,13 @@ router.get('/search', async function(req, res, next) {
         if (req.body.region) {
             experiences = await Experience.find({ region: req.query.region });
         }   else if (req.body.activities) {
-            req.body.activities.forEach(e => {
-                let temp = await Experience.find({ tags: e });
-                experiences = [...experiences, temp];
-            })
+            let a = req.query.activities;
+            // for (let i=0 ; i<a.length ; i++) {
+                let experiences = await Experience.find({ tags: a });
+                // experiences = [...experiences, temp];
+            // }
         }
-    res.json({ result: true, experiences: experiences})
+        res.json({ result: true, experiences: experiences})
     } catch (err) {
         console.log(err)
         res.json({ result: 'false', error: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
