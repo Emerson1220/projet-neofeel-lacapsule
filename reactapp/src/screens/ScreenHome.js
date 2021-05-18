@@ -7,7 +7,11 @@ import Nav from './Nav'
 import { icons } from 'antd/lib/image/PreviewGroup';
 =======
 import Nav from '../components/Nav'
+<<<<<<< HEAD
 >>>>>>> 1c5f088062bdd816541a4e77f4ec3466f3083756:reactapp/src/screens/ScreenHome.js
+=======
+import RedButton from '../components/RedButton'
+>>>>>>> test
 
 
 function ScreenHome() {

@@ -9,33 +9,82 @@ const RedButton = (props) => {
 
     //DISPLAY MANAGEMENT
     if (props.transparent) {
-        Object.assign({ ...styles.button }, { backgroundColor: 'rgba(224, 104, 104, 0.7)' })
-    }
+        styles.button = {
+            width: '30%',
+            backgroundColor: 'rgba(224, 104, 104, 0.7)',
+            color: 'white',
+            border: 'none',
+            margin: '2%',
+        }        
+        styles.buttonHover = {
+            width: '30%',
+            backgroundColor: 'rgba(224, 104, 104, 0.9)',
+            color: 'white',
+            border: 'none',
+            margin: '2%',
+        }
+    };
+
     if(props.size === "large") {
-        Object.assign({ ...styles.button }, { height: '130px' })
+        styles.buttonHover = {
+            height: '130px',
+            width: '75%',
+            color: 'white',
+            border: 'none',
+            margin: '2%',
+            backgroundColor: "rgba(224, 104, 104, 0.8)",
+        }
+        styles.button = {
+            height: '130px',
+            width: '75%',
+            color: 'white',
+            border: 'none',
+            margin: '2%',
+            backgroundColor: "rgba(224, 104, 104, 1)",
+        }
+    } else if (props.size === 'small') {
+        styles.button = {
+            width: '30%',
+            backgroundColor: 'rgb(224, 104, 104)',
+            color: 'white',
+            border: 'none',
+            margin: '2%',
+        }
+        styles.buttonHover = {
+            width: '40%',
+            color: 'white',
+            border: 'none',
+            margin: '2%',
+            backgroundColor: "rgba(224, 104, 104, 0.8)",
+        }
+    }
+
+    let title = <h2 style={ styles.buttonText }>{ props.title }</h2>;
+    if (props.title.split(' ').length > 3) {
+        title = <h2 style={ styles.buttonText }>{ props.title.split(' ').slice(0, 3).join(' ')}<br/>{ props.title.split(' ').slice(3).join(' ')}</h2>
     }
 
     return(
     <Button
     style={ hover ? styles.buttonHover : styles.button }
     onMouseEnter={ ()=>setHover(true) }
-    onMouseLeave={ ()=>setHover(false) }>
-        <h2 style={ styles.buttonText }>{ props.title }</h2>
+    onMouseLeave={ ()=>setHover(false) }
+    onClick={ ()=>props.onSelect() }>
+        { title }
     </Button>
     )
 }
 
 const styles = {
     button: {
-        width: '75%',
-        height: '130px',
+        width: '30%',
         backgroundColor: 'rgb(224, 104, 104)',
         color: 'white',
         border: 'none',
         margin: '2%',
     },
     buttonHover: {
-        width: '80%',
+        width: '40%',
         color: 'white',
         border: 'none',
         margin: '2%',
@@ -43,7 +92,8 @@ const styles = {
     },
     buttonText: {
         color: 'white',
-        whiteSpace: 'wrap'
+        whiteSpace: 'wrap',
+        flexWrap: 'wrap'
     }
 };
 
