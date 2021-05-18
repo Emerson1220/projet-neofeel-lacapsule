@@ -45,13 +45,9 @@
 }
 /* CSS NAVBAR _______________________*/
 
-
-
-
-
 .devenezPartenaireButton{
   
-background-color: #e06868;
+background-color: #106271;
 
   color: #ffffff;
   font-weight: 700;
@@ -78,4 +74,22 @@ border-radius: 5px;
 .listNav{
   color: #106271;
   
+}
+
+/* CSS CARDS_________________________________*/
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15%, 1fr));
+  grid-gap: 10px;
+}
+
+.card {
+
+    display: grid;
+    grid-template-rows: max-content 100px 1fr;
+}
+.card img {
+  object-fit: cover;
+  width: 100%;
+  height:80%;
 }

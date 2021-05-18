@@ -11,8 +11,7 @@ function ScreenRoadPlanner() {
             <Nav />
                 <div style={ styles.container }>
                     <div style={{ textAlign:'center' }} >
-                        <img style={{ width:'80%', height:'auto' }} src="images/photo-526x360.png" alt="list" />
-                        <img style={{ width:'40%', height:'auto', marginTop:'1rem' }} src="images/photo-526x360.png" alt="list" />
+                        <img style={{ width:'auto', height:'auto' }} src="images/photo-526x360.png" alt="list" />
                     </div>
 
                     <div style={ styles.row }>
@@ -65,75 +64,20 @@ function ScreenRoadPlanner() {
                                                 <li><i style={ styles.icons_fa }/> Temps</li>
                                                 <li><i style={ styles.icons_fa }/> 2 heures</li>
                                             </ul>
+                                            <div style={ styles.liste_price_item }>
+                                                <p>Prix</p>
+                                                <h2>80 <span>€</span></h2>
+                                            </div>
                                         </div>
-                                        <div style={ styles.liste_price_item }>
-                                            <p>Prix</p>
-                                            <h2>80 <span>€</span></h2>
-                                        </div>
-
                                     </div>
                                 </div> {/* End -> Card expérience */}
-
-                                <div style={ styles.single_destinations}> {/* Card expérience */}
-                                    <div style={ styles.image_card }>
-                                        <img style={ styles.image } src="images/photo-526x360.png" alt="list" />
-                                    </div>
-                                    <div style={ styles.detail_card }>
-                                        <div>
-                                            <h3><Link style={ styles.h3 } to="/">Activité</Link></h3>
-                                            <h4><Link style={ styles.h4 } to="/">Nom du partenaire</Link></h4>
-                                        </div>
-                                        <div style={ styles.display_inline}>
-                                            <p style={{ color: '#e06868', marginBottom: '8px'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />Région</p>
-                                            <h4 ><Link style={ styles.h4 }  to="/">Ville</Link></h4>
-                                        </div>
-                                        {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
-                                        <div style={ styles.liste_price }>
-                                            <ul style={ styles.liste_price_content, styles.liste_price_li }>
-                                                <li><i style={ styles.icons_fa }/> Temps</li>
-                                                <li><i style={ styles.icons_fa }/> 2 heures</li>
-                                            </ul>
-                                        </div>
-                                        <div style={ styles.liste_price_item }>
-                                            <p>Prix</p>
-                                            <h2>80 <span>€</span></h2>
-                                        </div>
-
-                                    </div>
-                                </div> {/* End -> Card expérience */}
-
-                                <div style={ styles.single_destinations}> {/* Card expérience */}
-                                    <div style={ styles.image_card }>
-                                        <img style={ styles.image } src="images/photo-526x360.png" alt="list" />
-                                    </div>
-                                    <div style={ styles.detail_card }>
-                                        <div>
-                                            <h3><Link style={ styles.h3 } to="/">Activité</Link></h3>
-                                            <h4><Link style={ styles.h4 } to="/">Nom du partenaire</Link></h4>
-                                        </div>
-                                        <div style={ styles.display_inline}>
-                                            <p style={{ color: '#e06868', marginBottom: '8px'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />Région</p>
-                                            <h4 ><Link style={ styles.h4 }  to="/">Ville</Link></h4>
-                                        </div>
-                                        {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
-                                        <div style={ styles.liste_price }>
-                                            <ul style={ styles.liste_price_content, styles.liste_price_li }>
-                                                <li><i style={ styles.icons_fa }/> Temps</li>
-                                                <li><i style={ styles.icons_fa }/> 2 heures</li>
-                                            </ul>
-                                        </div>
-                                        <div style={ styles.liste_price_item }>
-                                            <p>Prix</p>
-                                            <h2>80 <span>€</span></h2>
-                                        </div>
-
-                                    </div>
-                                </div> {/* End -> Card expérience */}
-
-
 
                                 
                             </div> {/* End -> Container -> Card expérience */}
+
+                            
+
+                            
                             <div style={ styles.text_align_center}> {/* Pagination */}
                                 <div style={ Object.assign(styles.display_inline, styles.pagination) }>
                                     <ul>
@@ -160,8 +104,7 @@ let styles = {
     container: {
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)', 
-        paddingBTop: '1rem',       
+        gridTemplateColumns: 'repeat(2, 1fr)',        
         paddingright: '15px',
         paddingleft: '15px',
         marginright: 'auto',
@@ -180,11 +123,13 @@ let styles = {
         flexWrap: 'wrap',
         marginRight: '-15px',
         marginLeft: '-15px',
-        // padding: '2rem',
+        padding: '2rem',
     },
 
     col_xl_9:{
         position: 'relative',
+        // flex: '0 0 75%',
+        // maxWidth: '75%',
         width: '100%',
         minHeight: '1px',
         paddingRight: '15px',
@@ -238,6 +183,22 @@ let styles = {
         textTransform: 'none',
     },
 
+    // icons_fa_1:{
+    //     display: 'inline-block',
+    //     font: 'normal normal normal 14px/1 FontAwesome',
+    //     fontSize: 'inherit',
+    //     textRendering: 'auto',
+    //     color: '#f3941e',
+    // },
+
+    // icons_fa_2:{
+    //     display: 'inline-block',
+    //     font: 'normal normal normal 14px/1 FontAwesome',
+    //     fontSize: 'inherit',
+    //     textRendering: 'auto',
+    //     color: '#d4d4d4',
+    // },
+
     // CARD - TITLE//
 
     h3:{
@@ -260,8 +221,10 @@ let styles = {
         gridTemplateColumns: 'repeat(1, 1fr)',        
         boxSizing: 'border-box',
         outline: 'none',
+        // width:'60%',
         paddingLeft: '1rem',
         paddingRight: '1rem',
+        // margin: '1rem',
 
     },
 
@@ -370,6 +333,11 @@ let styles = {
         lineHeight: '40px',
         margin: '0 5px', 
     },
+
+
+
+
+
 
     }        
     

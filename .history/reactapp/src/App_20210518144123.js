@@ -1,10 +1,13 @@
 import './App.css';
+import Nav from './Nav'
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
+import ScreenHome from './ScreenHome';
 import ScreenRoadPlanner from './screens/ScreenRoadPlanner';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ScreenHome from './screens/ScreenHome';
-import SearchModal from './components/SearchModal';
+import SearchModal from './components/SearchModal'
 function App() {
   return (
     

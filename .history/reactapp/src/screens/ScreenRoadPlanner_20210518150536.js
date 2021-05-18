@@ -6,21 +6,16 @@ import Nav from '../components/Nav'
 
 function ScreenRoadPlanner() {
 
-    return (	
-    <div>
-            <Nav />
+    return (	<div style={{ paddingTop:'120px' }}>
+
                 <div style={ styles.container }>
-                    <div style={{ textAlign:'center' }} >
-                        <img style={{ width:'80%', height:'auto' }} src="images/photo-526x360.png" alt="list" />
-                        <img style={{ width:'40%', height:'auto', marginTop:'1rem' }} src="images/photo-526x360.png" alt="list" />
-                    </div>
 
                     <div style={ styles.row }>
 
-                        <div style={ styles.col_xl_9}>                           
+                        <div style={ styles.col_xl_9 }>                           
                             <div style={{ marginBottom:'40px' }}> {/* Filters */}
 
-                                <div style={ styles.row_filters }>
+                                <div style={ styles.row }>
                                     <div style={ styles.col_xl_3 }>
                                         <label style={ styles.single_input_wrap }>
                                             <i style={ styles.icons_la }/> 
@@ -45,104 +40,53 @@ function ScreenRoadPlanner() {
                             </div> {/* End -> ButtonFilters */}
                             
                             <div style={ styles.experiences_list_area }> {/* Container -> Card expérience */}
-
                                 <div style={ styles.single_destinations}> {/* Card expérience */}
                                     <div style={ styles.image_card }>
-                                        <img style={ styles.image } src="images/photo-526x360.png" alt="list" />
+                                        <img style={ styles.image }src="images/photo-526x360.png" alt="list" />
                                     </div>
                                     <div style={ styles.detail_card }>
                                         <div>
-                                            <h3><Link style={ styles.h3 } to="/">Activité</Link></h3>
-                                            <h4><Link style={ styles.h4 } to="/">Nom du partenaire</Link></h4>
-                                        </div>
-                                        <div style={ styles.display_inline}>
-                                            <p style={{ color: '#e06868', marginBottom: '8px'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />Région</p>
-                                            <h4 ><Link style={ styles.h4 }  to="/">Ville</Link></h4>
-                                        </div>
-                                        {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
-                                        <div style={ styles.liste_price }>
-                                            <ul style={ styles.liste_price_content, styles.liste_price_li }>
-                                                <li><i style={ styles.icons_fa }/> Temps</li>
-                                                <li><i style={ styles.icons_fa }/> 2 heures</li>
-                                            </ul>
-                                        </div>
-                                        <div style={ styles.liste_price_item }>
-                                            <p>Prix</p>
-                                            <h2>80 <span>€</span></h2>
+                                            <i style={ styles.icons_fa_1  }/>
+                                            <i style={ styles.icons_fa_1 } />
+                                            <i style={ styles.icons_fa_1  } />
+                                            <i style={ styles.icons_fa_1  } />
+                                            <i style={ styles.icons_fa_2  } />
+                                            <span>4.0</span>
                                         </div>
 
-                                    </div>
-                                </div> {/* End -> Card expérience */}
-
-                                <div style={ styles.single_destinations}> {/* Card expérience */}
-                                    <div style={ styles.image_card }>
-                                        <img style={ styles.image } src="images/photo-526x360.png" alt="list" />
-                                    </div>
-                                    <div style={ styles.detail_card }>
                                         <div>
-                                            <h3><Link style={ styles.h3 } to="/">Activité</Link></h3>
-                                            <h4><Link style={ styles.h4 } to="/">Nom du partenaire</Link></h4>
+                                            <h3><Link style={ styles.h3 } to="/">Nom du partenaire</Link></h3>
+                                            <h3><Link style={ styles.h4 } to="/">Activité</Link></h3>
                                         </div>
-                                        <div style={ styles.display_inline}>
-                                            <p style={{ color: '#e06868', marginBottom: '8px'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />Région</p>
-                                            <h4 ><Link style={ styles.h4 }  to="/">Ville</Link></h4>
-                                        </div>
-                                        {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
+
+                                        <p style={{ color: '#e06868', marginBottom: '8px'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />Région</p>
+                                        <h4 ><Link style={ styles.h4 }  to="/">Ville</Link></h4>
+                                        <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p>
+                                        
                                         <div style={ styles.liste_price }>
                                             <ul style={ styles.liste_price_content, styles.liste_price_li }>
                                                 <li><i style={ styles.icons_fa }/> Temps</li>
-                                                <li><i style={ styles.icons_fa }/> 2 heures</li>
+                                                <li><i style={ styles.icons_fa }/> 4.3</li>
                                             </ul>
+                                            <div style={ styles.liste_price_item }>
+                                                <p>Prix</p>
+                                                <h2>80 <span>€</span></h2>
+                                            </div>
                                         </div>
-                                        <div style={ styles.liste_price_item }>
-                                            <p>Prix</p>
-                                            <h2>80 <span>€</span></h2>
-                                        </div>
-
                                     </div>
                                 </div> {/* End -> Card expérience */}
-
-                                <div style={ styles.single_destinations}> {/* Card expérience */}
-                                    <div style={ styles.image_card }>
-                                        <img style={ styles.image } src="images/photo-526x360.png" alt="list" />
-                                    </div>
-                                    <div style={ styles.detail_card }>
-                                        <div>
-                                            <h3><Link style={ styles.h3 } to="/">Activité</Link></h3>
-                                            <h4><Link style={ styles.h4 } to="/">Nom du partenaire</Link></h4>
-                                        </div>
-                                        <div style={ styles.display_inline}>
-                                            <p style={{ color: '#e06868', marginBottom: '8px'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />Région</p>
-                                            <h4 ><Link style={ styles.h4 }  to="/">Ville</Link></h4>
-                                        </div>
-                                        {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
-                                        <div style={ styles.liste_price }>
-                                            <ul style={ styles.liste_price_content, styles.liste_price_li }>
-                                                <li><i style={ styles.icons_fa }/> Temps</li>
-                                                <li><i style={ styles.icons_fa }/> 2 heures</li>
-                                            </ul>
-                                        </div>
-                                        <div style={ styles.liste_price_item }>
-                                            <p>Prix</p>
-                                            <h2>80 <span>€</span></h2>
-                                        </div>
-
-                                    </div>
-                                </div> {/* End -> Card expérience */}
-
-
-
-                                
                             </div> {/* End -> Container -> Card expérience */}
+
+                            
                             <div style={ styles.text_align_center}> {/* Pagination */}
                                 <div style={ Object.assign(styles.display_inline, styles.pagination) }>
                                     <ul>
-                                        <li><a style={ styles.pagination_li } href="#"><i    /></a></li>
-                                        <li><a style={ styles.pagination_li } href="#">1</a></li>
-                                        <li><a style={ styles.pagination_li } href="#">2</a></li>
-                                        <li><a style={ styles.pagination_li } href="#">3</a></li>
-                                        <li><a style={ styles.pagination_li } href="#">4</a></li>
-                                        <li><a style={ styles.pagination_li } href="#"><i /></a></li>
+                                        <li><a style={ styles.pagination_ul } href="#"><i    /></a></li>
+                                        <li><a style={ styles.pagination_ul } href="#">1</a></li>
+                                        <li><a style={ styles.pagination_ul } href="#">2</a></li>
+                                        <li><a style={ styles.pagination_ul } href="#">3</a></li>
+                                        <li><a style={ styles.pagination_ul } href="#">4</a></li>
+                                        <li><a style={ styles.pagination_ul } href="#"><i /></a></li>
                                     </ul>                          
                                 </div>
                             </div>{/* End -> Pagination */}
@@ -159,9 +103,6 @@ let styles = {
 
     container: {
         width: '100%',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)', 
-        paddingBTop: '1rem',       
         paddingright: '15px',
         paddingleft: '15px',
         marginright: 'auto',
@@ -175,16 +116,10 @@ let styles = {
         marginLeft: '-15px',
     },
 
-    row_filters:{
-        display: 'flex',
-        flexWrap: 'wrap',
-        marginRight: '-15px',
-        marginLeft: '-15px',
-        // padding: '2rem',
-    },
-
     col_xl_9:{
         position: 'relative',
+        flex: '0 0 75%',
+        maxWidth: '75%',
         width: '100%',
         minHeight: '1px',
         paddingRight: '15px',
@@ -238,6 +173,22 @@ let styles = {
         textTransform: 'none',
     },
 
+    icons_fa_1:{
+        display: 'inline-block',
+        font: 'normal normal normal 14px/1 FontAwesome',
+        fontSize: 'inherit',
+        textRendering: 'auto',
+        color: '#f3941e',
+    },
+
+    icons_fa_2:{
+        display: 'inline-block',
+        font: 'normal normal normal 14px/1 FontAwesome',
+        fontSize: 'inherit',
+        textRendering: 'auto',
+        color: '#d4d4d4',
+    },
+
     // CARD - TITLE//
 
     h3:{
@@ -256,13 +207,8 @@ let styles = {
     // CARD - CSS //
 
     experiences_list_area:{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(1, 1fr)',        
         boxSizing: 'border-box',
         outline: 'none',
-        paddingLeft: '1rem',
-        paddingRight: '1rem',
-
     },
 
     single_destinations:{
@@ -274,7 +220,6 @@ let styles = {
         borderRadius: '7px',
         position: 'relative',
         overflow: 'hidden',
-        margin: '.5rem',
     },
 
     image_card:{
@@ -291,15 +236,13 @@ let styles = {
 
     image:{
         width: '100%',
-        height: '70%',
+        height: '100%',
         objectFit: 'cover',
         objectPosition: 'center center',
         borderRadius: '5px',
     },
 
     detail_card:{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',        
         flex: '0 0 70%',
         padding: '22px 15px',
         background: '#ffffff',
@@ -355,10 +298,10 @@ let styles = {
     pagination:{
         display: 'inline-block',
         textAlign: 'center',   
-        marginTop: '.5rem',    
+        marginTop: '1.5rem',    
     },
 
-    pagination_li:{
+    pagination_ul:{
         lineHeight: '43px',
         border: '2px solid #CFD3DE',
         borderRadius: '50%',
@@ -371,7 +314,23 @@ let styles = {
         margin: '0 5px', 
     },
 
+
+
+
+
+
     }        
     
+
+
+
+
+
+
+
+
+
+
+
 
 export default ScreenRoadPlanner;

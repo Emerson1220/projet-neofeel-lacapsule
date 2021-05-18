@@ -160,8 +160,7 @@ let styles = {
     container: {
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)', 
-        paddingBTop: '1rem',       
+        gridTemplateColumns: 'repeat(2, 1fr)',        
         paddingright: '15px',
         paddingleft: '15px',
         marginright: 'auto',
@@ -180,7 +179,7 @@ let styles = {
         flexWrap: 'wrap',
         marginRight: '-15px',
         marginLeft: '-15px',
-        // padding: '2rem',
+        padding: '2rem',
     },
 
     col_xl_9:{

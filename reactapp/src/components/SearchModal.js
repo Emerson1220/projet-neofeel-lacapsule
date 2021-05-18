@@ -3,35 +3,26 @@ import France from '@svg-maps/france.regions';
 import { SVGMap } from 'react-svg-map';
 import 'react-svg-map/lib/index.css'
 import { Modal, Button } from 'antd';
+import RedButton from './RedButton';
 
 
-const SearchModal = () => {
-    //TODO: fetch agglom de régions depuis BDD, liste de tags
-
+const SearchModal = (props) => {
     //STATE HOOKS
-    const [visible, setVisible] = useState(false);
     const [selection, setSelection] = useState('all');
     const [region, setRegion] = useState(null);
     const [activities, setActivities] = useState([]);
-    const [regionHover, setRegionHover] = useState(false);
-    const [activityHover, setActivityHover] = useState(false);
 
-    //EFFECT HOOKS
     useEffect(()=> {
-        console.log(activities)
-    }, [activities])
+        console.log(selection)
+    }, [selection])
 
     //FUNCTIONS
-    //modal
-    const showModal = () => {
-        setVisible(!visible);
-    };
 
     const handleCancel = () => {
         setSelection('all');
         setRegion(null);
         setActivities([])
-        setVisible(false);
+        props.showModal();
     };
 
     //map
@@ -47,7 +38,7 @@ const SearchModal = () => {
         setActivities(temp);
     }
 
-    //CONTENT TREATMENT
+    //DISPLAY TREATMENT
     let activityList = [
         { name: 'Loisirs', id: 'loisirs', picto: '/images/pictos/loisirs-8.png'},
         { name: 'Gastronomie', id: 'gastronomie', picto: '/images/pictos/gastronomie-8.png'},
@@ -75,9 +66,11 @@ const SearchModal = () => {
         </Button>
     })
 
-    let selected = <h3>Allons-y!</h3>;
+    let selected = <h3>Choissisez votre destination</h3>;
+    let selectRegionButton;
     if (region) {
         selected = <h3>{ region }</h3>
+        selectRegionButton = <RedButton title="Allons-y!" size="small"/>
     };
 
 
@@ -85,20 +78,16 @@ const SearchModal = () => {
     if(selection === 'all') {
         modalContent = 
             <div style={ styles.selectionContent }>
-                <Button
-                style={ regionHover ? styles.buttonHover : styles.button }
-                onClick={ ()=>setSelection('region') }
-                onMouseEnter={ ()=>setRegionHover(true) }
-                onMouseLeave={ ()=>setRegionHover(false) }>
-                    <h2 style={ styles.buttonText }>Choisir une région</h2>
-                </Button>
-                <Button
-                style={ activityHover ? styles.buttonHover : styles.button }
-                onClick={ ()=>setSelection('trips') }
-                onMouseEnter={ ()=>setActivityHover(true) }
-                onMouseLeave={ ()=>setActivityHover(false) }>
-                    <h2 style={ styles.buttonText }>Parcourir nos voyages<br/> recommendés</h2>
-                </Button>
+                <RedButton
+                title="Découvrir une région"
+                size="large"
+                onSelect={ ()=>setSelection('region') }
+                />
+                <RedButton
+                title="Parcourir nos suggestions de voyage"
+                size="large"
+                onSelect={ ()=>setSelection('trips') }
+                />
             </div>
     } else if (selection === 'region') {
         modalContent =
@@ -108,11 +97,12 @@ const SearchModal = () => {
                 map={ France }
                 onLocationClick={ (e)=>selectLocation(e) }
                 />
+            { selectRegionButton }
             </div>
     } else if (selection === 'trips') {
         modalContent =
         <div>
-            <h3>Quoi comme voyages?</h3>
+            <h3>Sélectionnez vos envies</h3>
             <div style={ styles.feelingContainer }>
                 { activityCards }
             </div>
@@ -124,11 +114,10 @@ const SearchModal = () => {
             <Modal
             title=''
             centered={ true }
-            visible={ visible }
+            visible={ props.visible }
             footer={ null }
             onCancel={ ()=>handleCancel() }
             bodyStyle={ styles.modal }
-            closable={ false }
             >
                 { modalContent }
             </Modal>
@@ -153,26 +142,6 @@ let styles = {
     label: {
         alignSelf: 'center',
         color: 'white'
-    },
-    button: {
-        width: '75%',
-        height: '130px',
-        backgroundColor: 'rgb(224, 104, 104)',
-        color: 'white',
-        border: 'none',
-        margin: '2%',
-    },
-    buttonHover: {
-        width: '80%',
-        height: '130px',
-        color: 'white',
-        border: 'none',
-        margin: '2%',
-        backgroundColor: "rgba(224, 104, 104, 0.8)",
-    },
-    buttonText: {
-        color: 'white',
-        whiteSpace: 'wrap'
     },
     picto: {
         height: '100%'

@@ -160,8 +160,7 @@ let styles = {
     container: {
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)', 
-        paddingBTop: '1rem',       
+        gridTemplateColumns: 'repeat(2, 1fr)',        
         paddingright: '15px',
         paddingleft: '15px',
         marginright: 'auto',

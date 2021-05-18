@@ -1,4 +1,5 @@
 import './App.css';
+import Nav from './Nav'
 
 import ScreenRoadPlanner from './screens/ScreenRoadPlanner';
 

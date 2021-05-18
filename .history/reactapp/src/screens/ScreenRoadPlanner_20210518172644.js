@@ -161,7 +161,7 @@ let styles = {
         width: '100%',
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)', 
-        paddingBTop: '1rem',       
+        paddingBottom: '1rem',       
         paddingright: '15px',
         paddingleft: '15px',
         marginright: 'auto',

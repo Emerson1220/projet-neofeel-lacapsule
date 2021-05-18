@@ -18,7 +18,7 @@ function ScreenRoadPlanner() {
                     <div style={ styles.row }>
 
                         <div style={ styles.col_xl_9}>                           
-                            <div style={{ marginBottom:'40px' }}> {/* Filters */}
+                            <div> {/* Filters */}
 
                                 <div style={ styles.row_filters }>
                                     <div style={ styles.col_xl_3 }>
@@ -160,8 +160,7 @@ let styles = {
     container: {
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)', 
-        paddingBTop: '1rem',       
+        gridTemplateColumns: 'repeat(2, 1fr)',        
         paddingright: '15px',
         paddingleft: '15px',
         marginright: 'auto',
@@ -180,7 +179,7 @@ let styles = {
         flexWrap: 'wrap',
         marginRight: '-15px',
         marginLeft: '-15px',
-        // padding: '2rem',
+        padding: '2rem',
     },
 
     col_xl_9:{

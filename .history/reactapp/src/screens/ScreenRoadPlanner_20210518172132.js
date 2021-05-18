@@ -11,7 +11,7 @@ function ScreenRoadPlanner() {
             <Nav />
                 <div style={ styles.container }>
                     <div style={{ textAlign:'center' }} >
-                        <img style={{ width:'80%', height:'auto' }} src="images/photo-526x360.png" alt="list" />
+                        <img style={{ width:'70%', height:'auto' }} src="images/photo-526x360.png" alt="list" />
                         <img style={{ width:'40%', height:'auto', marginTop:'1rem' }} src="images/photo-526x360.png" alt="list" />
                     </div>
 
@@ -160,8 +160,7 @@ let styles = {
     container: {
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)', 
-        paddingBTop: '1rem',       
+        gridTemplateColumns: 'repeat(2, 1fr)',        
         paddingright: '15px',
         paddingleft: '15px',
         marginright: 'auto',
@@ -180,11 +179,13 @@ let styles = {
         flexWrap: 'wrap',
         marginRight: '-15px',
         marginLeft: '-15px',
-        // padding: '2rem',
+        padding: '2rem',
     },
 
     col_xl_9:{
         position: 'relative',
+        // flex: '0 0 75%',
+        // maxWidth: '75%',
         width: '100%',
         minHeight: '1px',
         paddingRight: '15px',
@@ -238,6 +239,22 @@ let styles = {
         textTransform: 'none',
     },
 
+    // icons_fa_1:{
+    //     display: 'inline-block',
+    //     font: 'normal normal normal 14px/1 FontAwesome',
+    //     fontSize: 'inherit',
+    //     textRendering: 'auto',
+    //     color: '#f3941e',
+    // },
+
+    // icons_fa_2:{
+    //     display: 'inline-block',
+    //     font: 'normal normal normal 14px/1 FontAwesome',
+    //     fontSize: 'inherit',
+    //     textRendering: 'auto',
+    //     color: '#d4d4d4',
+    // },
+
     // CARD - TITLE//
 
     h3:{
@@ -260,8 +277,10 @@ let styles = {
         gridTemplateColumns: 'repeat(1, 1fr)',        
         boxSizing: 'border-box',
         outline: 'none',
+        // width:'60%',
         paddingLeft: '1rem',
         paddingRight: '1rem',
+        // margin: '1rem',
 
     },
 
@@ -370,6 +389,11 @@ let styles = {
         lineHeight: '40px',
         margin: '0 5px', 
     },
+
+
+
+
+
 
     }        
     
