@@ -5,31 +5,27 @@ const Experience = require('../models/Experience');
 //Recherche expériences
 //Query: région (Alsace), catégorie (gastronomie)
 //Response: result (true), expériences ['Vinot varlot']
-router.get('/search', async function(req, res, next) {
+router.post('/search', async function(req, res, next) {
     try {
         let experiences = [];
         if (req.body.region) {
-            experiences = await Experience.find({ region: req.query.region });
+            experiences = await Experience.find({ region: req.body.region });
         }   else if (req.body.activities) {
-            req.body.activities.forEach(e => {
-                let temp = await Experience.find({ tags: e });
-                experiences = [...experiences, temp];
-            })
+            let a = req.body.activities;
+            for (let i=0 ; i<a.length ; i++) {
+                experiences = await Experience.find({ tags: a[i] });
+            }
         }
-    res.json({ result: true, experiences: experiences})
+        res.json({ result: true, experiences: experiences})
     } catch (err) {
         console.log(err)
         res.json({ result: 'false', error: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
     }
+})
 
-    // let region = req.query.region;
-    // let category = req.query.category;
-
-    // if (!region && !category) {
-    //     res.json({ result: false })
-    // } else {
-    //     res.json({ result: true, experiences: [{ name: 'vinot varlot' }] });
-    // }
+router.get('/activities', async function(req, res, next) {
+    let aggregate = Experience.aggregate();
+    aggregate.group({ id: '$tags' })
 })
 
 //Suggestions de voyage
