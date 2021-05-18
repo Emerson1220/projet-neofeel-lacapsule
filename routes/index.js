@@ -1,18 +1,35 @@
 var express = require('express');
 var router = express.Router();
+const Experience = require('../models/Experience');
 
 //Recherche expériences
 //Query: région (Alsace), catégorie (gastronomie)
 //Response: result (true), expériences ['Vinot varlot']
-router.get('/search', function(req, res, next) {
-    let region = req.query.region;
-    let category = req.query.category;
-
-    if (!region && !category) {
-        res.json({ result: false })
-    } else {
-        res.json({ result: true, experiences: [{ name: 'vinot varlot' }] });
+router.get('/search', async function(req, res, next) {
+    try {
+        let experiences = [];
+        if (req.body.region) {
+            experiences = await Experience.find({ region: req.query.region });
+        }   else if (req.body.activities) {
+            req.body.activities.forEach(e => {
+                let temp = await Experience.find({ tags: e });
+                experiences = [...experiences, temp];
+            })
+        }
+    res.json({ result: true, experiences: experiences})
+    } catch (err) {
+        console.log(err)
+        res.json({ result: 'false', error: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
     }
+
+    // let region = req.query.region;
+    // let category = req.query.category;
+
+    // if (!region && !category) {
+    //     res.json({ result: false })
+    // } else {
+    //     res.json({ result: true, experiences: [{ name: 'vinot varlot' }] });
+    // }
 })
 
 //Suggestions de voyage
