@@ -1,23 +1,26 @@
 import React from 'react';
 import '../App.css';
+import '../Home.css';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import Nav from '../components/Nav'
 import { icons } from 'antd/lib/image/PreviewGroup';
 
 /* FUNCTION HOME PAGE */
+
 function ScreenHome() {
     return (
         <div style={{ display: "flex", flexDirection: 'column', height: '100%' }}>
             <Nav />
-            <div style={{ display: "flex", flexDirection: 'column', height: '100%' }} >
+            <div style={{ display: "flex", flexDirection: 'column', height: '100%'}} >
                 <div style={{
                     backgroundImage: `url("images/BanniereHome.jpg")`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(2, 1fr)',
+                    gridTemplateColumns: 'repeat(2, 1fr)'
+                    
 
                 }} >
                     <div style={{
@@ -58,10 +61,6 @@ function ScreenHome() {
                 </div>
             </div>
         </div>
-
-
-
-
     )
 }
 

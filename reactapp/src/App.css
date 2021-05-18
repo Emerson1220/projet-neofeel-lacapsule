@@ -43,53 +43,5 @@
     transform: rotate(360deg);
   }
 }
-/* CSS NAVBAR _______________________*/
 
-.devenezPartenaireButton{
-  
-background-color: #106271;
 
-  color: #ffffff;
-  font-weight: 700;
-  font-family: "Inter-Bold", "Inter", sans-serif;
-width: 200px;
-height: 50px;
-border-radius: 5px;
-}
-
-.ensavoirplusButton{
-  
-  background-color: rgba(224, 104, 104, 0.8);
-  
-    color: #ffffff;
-    font-weight: 700;
-    font-family: "Inter-Bold", "Inter", sans-serif;
-  width: 100%;
-  height: 30px;
-  
-  border-radius: 5px;
-  
-  }
-
-.listNav{
-  color: #106271;
-  
-}
-
-/* CSS CARDS_________________________________*/
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15%, 1fr));
-  grid-gap: 10px;
-}
-
-.card {
-
-    display: grid;
-    grid-template-rows: max-content 100px 1fr;
-}
-.card img {
-  object-fit: cover;
-  width: 100%;
-  height:80%;
-}
