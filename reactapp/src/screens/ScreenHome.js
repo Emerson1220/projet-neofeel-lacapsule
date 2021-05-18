@@ -1,52 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../App.css';
-import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import Nav from '../components/Nav'
+
 import RedButton from '../components/RedButton'
+import SearchModal from '../components/SearchModal'
 
-
+/* FUNCTION HOME PAGE */
 function ScreenHome() {
+    //STATE HOOKS
+    const [visible, setVisible] = useState(false);
+
+    //FUNCTIONS
+    //modal
+    const showModal = () => {
+        setVisible(!visible);
+    };
+
     return (
-        <div style={{ display: "flex", flexDirection: 'column' }}>
+        <div style={{ display: "flex", flexDirection: 'column', height: '100%' }}>
             <Nav />
             <div style={{ display: "flex", flexDirection: 'column', height: '100%' }} >
                 <div style={{
                     backgroundImage: `url("images/BanniereHome.jpg")`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat'
+                    backgroundRepeat: 'no-repeat',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(2, 1fr)',
+
                 }} >
                     <div style={{
-                        width: '34%',
-                        height: '280px',
+                        width: '70%',
+                        height: '100%',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: 'rgba(16, 98, 113, 0.3)'
+                        backgroundColor: 'rgba(16, 98, 113, 0.3)',
+
                     }}>
-                        <h5 style={{ color: '#FFF', marginLeft:'6%', marginRight:'3%' }}>
+                        <h5 style={{ color: '#FFF', marginLeft: '6%', marginRight: '3%' }}>
                             Neofeel développe une tendance innovante du tourisme éthique.
                             L’esprit libre, profitez de notre carnet d’adresses variées.
                         </h5>
-                        <div style={{ display: 'flex', flexDirection: 'row', height: '35%', width: '80%', justifyContent: 'space-around', alignItems:'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'row', height: '35%', width: '80%', justifyContent: 'space-around', alignItems: 'center' }}>
                             <img
-                                style={{ height: '55%', width: '36%', borderRadius: 3 }}
+                                style={{ height: '45%', width: 'auto', borderRadius: 3, marginRight: '3%' }}
                                 src='/images/neopassRecto.png'
                             />
                             <h6 style={{ color: '#FFF' }}>
-                                Bénéficiez d’avantages <br />particuliers avec le Neopass
+                                Bénéficiez d’avantages <br />particuliers avec le Neopass...
                             </h6>
                         </div>
-                        <div>
-                        <Button className='ensavoirplusButton' > En savoir plus.. </Button>
+                        <div style={{paddingTop:'1%'}}>
+                            <Link to ={'/info'}>
+                            <RedButton transparent={ true } title="Le Concept" size="small" length="short" />
+                            </Link>
                         </div>
-
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end', paddingBottom: '3%', paddingRight:'2%' }}>
+                    <h2 style={{ color: '#FFF', paddingRight: '1%' }}>Découvrez la France autrement...</h2>
+                        <RedButton transparent={ true } title="Commencer l'aventure..." size="small" length="medium" onSelect={ ()=>showModal() }/>
                     </div>
                 </div>
-
             </div>
+            <SearchModal visible={ visible } showModal={ ()=>showModal() }/>
         </div>
 
 
