@@ -25,7 +25,11 @@ router.post('/search', async function(req, res, next) {
 
 router.get('/activities', async function(req, res, next) {
     let aggregate = Experience.aggregate();
-    aggregate.group({ id: '$tags' })
+    aggregate.unwind('tags');
+    aggregate.group({ _id: '$tags' });
+    let data = await aggregate.exec();
+    let activities = data.map(e => e._id)
+    res.json({ result: true, data: activities });
 })
 
 //Suggestions de voyage

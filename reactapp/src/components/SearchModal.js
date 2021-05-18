@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 //MAP
 import France from '@svg-maps/france.regions';
@@ -19,25 +19,37 @@ const SearchModal = (props) => {
     const [selection, setSelection] = useState('all');
     const [region, setRegion] = useState(null);
     const [activities, setActivities] = useState([]);
+    const [options, setOptions] = useState([]);
+
+    //EFFECT HOOKS
+    useEffect(()=> {
+        getOptions();
+    }, [])
 
     //FUNCTIONS
 
-//FUNCTION ON CLICK REGION 
-var selectRegion = async () => {
-const saveRegion = await fetch('/search', {
-    method: 'POST',
-    header:{'Content-Type': 'application/x-www-form-urlencoded'},
-    body : `region=${props.region}`
-})
-}
-var selectActivity = async () => {
-    const saveActivity = await fetch('/search', {
+    //FUNCTION ON CLICK REGION 
+    var selectRegion = async () => {
+        const saveRegion = await fetch('/search', {
         method: 'POST',
         header:{'Content-Type': 'application/x-www-form-urlencoded'},
-        body : `activities=${JSON.stringify(props.activities)}`
+        body : `region=${props.region}`
     })
+}
+    var selectActivity = async () => {
+        const saveActivity = await fetch('/search', {
+            method: 'POST',
+            header:{'Content-Type': 'application/x-www-form-urlencoded'},
+            body : `activities=${JSON.stringify(props.activities)}`
+        })
     }
 
+    //get list activity options from back
+    const getOptions = async () => {
+        let rawResponse = await fetch('/activities');
+        let response = await rawResponse.json();
+        setOptions(response.data);
+    } 
 
     const handleCancel = () => {
         setSelection('all');
@@ -71,21 +83,21 @@ var selectActivity = async () => {
         { name: 'Hébergement insolite', id: 'hebergement-insolite', picto: '/images/pictos/hebergement-insolite-8.png'}
     ]
 
-    let activityCards = activityList.map((e,i) => {
-        return activities.find(f => f === e.id) 
+    let activityCards = options.map((e,i) => {
+        return activities.find(f => f === e) 
         ? 
         <Button
         key={ i }
         style={ Object.assign({...styles.feeling}, { border: 'solid rgb(224, 104, 104) 2px' }) }
-        onClick={ ()=>filterTrips(e.id) } >
-            <img style={ styles.picto } src={ e.picto } alt={ e.name }/>
+        onClick={ ()=>filterTrips(e) } >
+            <img style={ styles.picto } src={ `images/pictos/${e}-8.png` } alt={ e }/>
         </Button>
         : 
         <Button
         key={ i }
         style={ styles.feeling }
-        onClick={ ()=>filterTrips(e.id) }>
-            <img style={ styles.picto } src={ e.picto } alt={ e.name }/>
+        onClick={ ()=>filterTrips(e) }>
+            <img style={ styles.picto } src={ `images/pictos/${e}-8.png` } alt={ e }/>
         </Button>
     })
 
@@ -224,7 +236,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    console.log(state);
     return { activities: state.activities, region: state.region }
 }
 
