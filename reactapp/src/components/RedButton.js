@@ -59,6 +59,38 @@ const RedButton = (props) => {
         }
     }
 
+    if (props.length === 'short' ) {
+        styles.button = {
+            width: '150px',
+            backgroundColor: 'rgb(224, 104, 104)',
+            color: 'white',
+            border: 'none',
+            margin: '2%',
+        }
+        styles.buttonHover = {
+            width: '160px',
+            color: 'white',
+            border: 'none',
+            margin: '2%',
+            backgroundColor: "rgba(224, 104, 104, 0.8)",
+        }
+    } else if (props.length === 'medium') {
+        styles.button = {
+            width: '280px',
+            backgroundColor: 'rgb(224, 104, 104)',
+            color: 'white',
+            border: 'none',
+            margin: '2%',
+        }
+        styles.buttonHover = {
+            width: '290px',
+            color: 'white',
+            border: 'none',
+            margin: '2%',
+            backgroundColor: "rgba(224, 104, 104, 0.8)",
+        }
+    }
+
     let title = <h2 style={ styles.buttonText }>{ props.title }</h2>;
     if (props.title.split(' ').length > 3) {
         title = <h2 style={ styles.buttonText }>{ props.title.split(' ').slice(0, 3).join(' ')}<br/>{ props.title.split(' ').slice(3).join(' ')}</h2>
@@ -77,7 +109,7 @@ const RedButton = (props) => {
 
 const styles = {
     button: {
-        width: '30%',
+        width: '120px',
         backgroundColor: 'rgb(224, 104, 104)',
         color: 'white',
         border: 'none',

@@ -6,29 +6,23 @@ import { Modal, Button } from 'antd';
 import RedButton from './RedButton';
 
 
-const SearchModal = () => {
+const SearchModal = (props) => {
     //STATE HOOKS
-    const [visible, setVisible] = useState(false);
     const [selection, setSelection] = useState('all');
     const [region, setRegion] = useState(null);
     const [activities, setActivities] = useState([]);
-    const [activityHover, setActivityHover] = useState(false);
 
     useEffect(()=> {
         console.log(selection)
     }, [selection])
 
     //FUNCTIONS
-    //modal
-    const showModal = () => {
-        setVisible(!visible);
-    };
 
     const handleCancel = () => {
         setSelection('all');
         setRegion(null);
         setActivities([])
-        setVisible(false);
+        props.showModal();
     };
 
     //map
@@ -94,13 +88,6 @@ const SearchModal = () => {
                 size="large"
                 onSelect={ ()=>setSelection('trips') }
                 />
-                {/* <Button
-                style={ activityHover ? styles.buttonHover : styles.button }
-                onClick={ ()=>setSelection('trips') }
-                onMouseEnter={ ()=>setActivityHover(true) }
-                onMouseLeave={ ()=>setActivityHover(false) }>
-                    <h2 style={ styles.buttonText }>Parcourir nos suggestions<br/>to voyage</h2>
-                </Button> */}
             </div>
     } else if (selection === 'region') {
         modalContent =
@@ -124,11 +111,10 @@ const SearchModal = () => {
     
     return (
         <div style={ styles.container }>
-            <Button onClick={ ()=>showModal() }>GO</Button>
             <Modal
             title=''
             centered={ true }
-            visible={ visible }
+            visible={ props.visible }
             footer={ null }
             onCancel={ ()=>handleCancel() }
             bodyStyle={ styles.modal }
@@ -156,26 +142,6 @@ let styles = {
     label: {
         alignSelf: 'center',
         color: 'white'
-    },
-    button: {
-        width: '75%',
-        height: '130px',
-        backgroundColor: 'rgb(224, 104, 104)',
-        color: 'white',
-        border: 'none',
-        margin: '2%',
-    },
-    buttonHover: {
-        width: '80%',
-        height: '130px',
-        color: 'white',
-        border: 'none',
-        margin: '2%',
-        backgroundColor: "rgba(224, 104, 104, 0.8)",
-    },
-    buttonText: {
-        color: 'white',
-        whiteSpace: 'wrap'
     },
     picto: {
         height: '100%'
