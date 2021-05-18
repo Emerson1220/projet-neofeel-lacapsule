@@ -3,6 +3,7 @@ import France from '@svg-maps/france.regions';
 import { SVGMap } from 'react-svg-map';
 import 'react-svg-map/lib/index.css'
 import { Modal, Button } from 'antd';
+import RedButton from './RedButton';
 
 
 const SearchModal = () => {
@@ -13,11 +14,7 @@ const SearchModal = () => {
     const [activities, setActivities] = useState([]);
     const [regionHover, setRegionHover] = useState(false);
     const [activityHover, setActivityHover] = useState(false);
-
-    //EFFECT HOOKS
-    useEffect(()=> {
-        console.log(activities)
-    }, [activities])
+    const [selectRegionHover, setSelectRegionHover] = useState(false);
 
     //FUNCTIONS
     //modal
@@ -73,9 +70,17 @@ const SearchModal = () => {
         </Button>
     })
 
-    let selected = <h3>Allons-y!</h3>;
+    let selected = <h3>Choissisez votre destination</h3>;
+    let selectRegionButton;
     if (region) {
         selected = <h3>{ region }</h3>
+        selectRegionButton = <RedButton title="Allons-y!"/>               
+        // <Button
+        // style={ selectRegionButton ? styles.buttonHover : styles.button }
+        // onMouseEnter={ ()=>setRegionHover(true) }
+        // onMouseLeave={ ()=>setRegionHover(false) }>
+        //     <h2 style={ styles.buttonText }>Allons-y!</h2>
+        // </Button>
     };
 
 
@@ -88,14 +93,14 @@ const SearchModal = () => {
                 onClick={ ()=>setSelection('region') }
                 onMouseEnter={ ()=>setRegionHover(true) }
                 onMouseLeave={ ()=>setRegionHover(false) }>
-                    <h2 style={ styles.buttonText }>Choisir une région</h2>
+                    <h2 style={ styles.buttonText }>Découvrir une région</h2>
                 </Button>
                 <Button
                 style={ activityHover ? styles.buttonHover : styles.button }
                 onClick={ ()=>setSelection('trips') }
                 onMouseEnter={ ()=>setActivityHover(true) }
                 onMouseLeave={ ()=>setActivityHover(false) }>
-                    <h2 style={ styles.buttonText }>Parcourir nos voyages<br/> recommendés</h2>
+                    <h2 style={ styles.buttonText }>Parcourir nos suggestions<br/>to voyage</h2>
                 </Button>
             </div>
     } else if (selection === 'region') {
@@ -106,11 +111,12 @@ const SearchModal = () => {
                 map={ France }
                 onLocationClick={ (e)=>selectLocation(e) }
                 />
+            { selectRegionButton }
             </div>
     } else if (selection === 'trips') {
         modalContent =
         <div>
-            <h3>Quoi comme voyages?</h3>
+            <h3>Sélectionnez vos envies</h3>
             <div style={ styles.feelingContainer }>
                 { activityCards }
             </div>
@@ -119,7 +125,7 @@ const SearchModal = () => {
     
     return (
         <div style={ styles.container }>
-            <Button onClick={ ()=>showModal() }></Button>
+            <Button onClick={ ()=>showModal() }>GO</Button>
             <Modal
             title=''
             centered={ true }
@@ -127,7 +133,6 @@ const SearchModal = () => {
             footer={ null }
             onCancel={ ()=>handleCancel() }
             bodyStyle={ styles.modal }
-            closable={ false }
             >
                 { modalContent }
             </Modal>
