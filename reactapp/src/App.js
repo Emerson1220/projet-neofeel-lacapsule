@@ -1,16 +1,20 @@
 import './App.css';
 
+import ScreenRoadPlanner from './screens/ScreenRoadPlanner';
+
 //REACT ROUTER
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //pages
 import ScreenHome from './screens/ScreenHome';
 
 //REDUX
-// import <reducername> from './<reducername>.reducer';
-import {Provider} from 'react-redux';
-import {createStore, combineReducers}  from 'redux';
+import region from './reducers/region.reducer';
+import activities from './reducers/activities.reducer';
+import experiences from './reducers/experiences.reducer'
+import { Provider } from 'react-redux';
+import { createStore, combineReducers }  from 'redux';
 
-const store = createStore(combineReducers({}));
+const store = createStore(combineReducers({ region, activities, experiences }));
 
 function App() {
   return (
@@ -18,6 +22,7 @@ function App() {
       <Router>
         <Switch>
           <Route component={ScreenHome} path="/" exact />
+          <Route component={ScreenRoadPlanner} path="/roadPlanner"  />
           {/* <Route component={ScreenConnexion} path="/connexion"  />
           <Route component={ScreenSearch} path="/recherche"  />                    
           <Route component={ScreenInfo} path="/info"  />

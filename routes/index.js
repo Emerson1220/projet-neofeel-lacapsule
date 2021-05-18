@@ -1,17 +1,48 @@
 var express = require('express');
 var router = express.Router();
 
+//MODELS
+const Experience = require('../models/Experience');
+
 //Recherche expériences
 //Query: région (Alsace), catégorie (gastronomie)
 //Response: result (true), expériences ['Vinot varlot']
-router.get('/search', function(req, res, next) {
-    let region = req.query.region;
-    let category = req.query.category;
+router.post('/searchregions', async function(req, res, next) {
+    try {
+        let experiences = await Experience.find({ regionCode: req.body.region });
+        res.json({ result: true, data: experiences })
+    } catch (err) {
+        console.log(err)
+        res.json({ result: 'false',  error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
+    }
+})
 
-    if (!region && !category) {
-        res.json({ result: false })
-    } else {
-        res.json({ result: true, experiences: [{ name: 'vinot varlot' }] });
+router.post('/searchtrips', async function(req, res, next) {
+    try {
+        let a = JSON.parse(req.body.activities);
+        let experiences = [];
+        for (let i=0 ; i<a.length ; i++) {
+            let response = await Experience.find({ tags: a[i] });
+            experiences = experiences.concat(response);
+        }
+        res.json({ result: true, data: experiences })
+    } catch (err) {
+        console.log(err)
+        res.json({ result: 'false', error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
+    }
+})
+
+router.get('/activities', async function(req, res, next) {
+    try {
+        let aggregate = Experience.aggregate();
+        aggregate.unwind('tags');
+        aggregate.group({ _id: '$tags' });
+        let data = await aggregate.exec();
+        let activities = data.map(e => e._id)
+        res.json({ result: true, data: activities });
+    } catch(err) {
+        console.log(err);
+        res.json({ result: false, error: err })
     }
 })
 

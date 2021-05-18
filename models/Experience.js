@@ -20,11 +20,13 @@ const coordinateSchema = mongoose.Schema({
 
 const experienceSchema = mongoose.Schema({
     name: String,
+    subtitle: String,
     partner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
     },
     region: String,
+    regionCode: String,
     address: addressSchema,
     activityType: String,
     activityCategory: String,

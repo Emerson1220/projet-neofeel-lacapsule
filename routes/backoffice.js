@@ -52,10 +52,17 @@ router.post('/manageexperiences', async function(req, res, next) {
     longitude: req.body.longitude
   };
 
+  let regionCode = '';
+  if (req.body.region === 'Alsace-Vosges') {
+    regionCode = 'ges';
+  }
+
   let newExperience = new Experience({
     name: req.body.experienceName,
+    subtitle: req.body.experienceSubtitle,
     partner: partnerSaved._id,
     region: req.body.region,
+    regionCode: regionCode,
     activityType: req.body.activityType,
     activityCategory: req.body.activityCategory,
     activityFeeling: req.body.activityFeeling,
