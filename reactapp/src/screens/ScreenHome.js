@@ -6,6 +6,7 @@ import Nav from '../components/Nav'
 import RedButton from '../components/RedButton'
 import SearchModal from '../components/SearchModal'
 
+/* FUNCTION HOME PAGE */
 function ScreenHome() {
     //STATE HOOKS
     const [visible, setVisible] = useState(false);

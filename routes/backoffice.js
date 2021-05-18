@@ -54,6 +54,7 @@ router.post('/manageexperiences', async function(req, res, next) {
 
   let newExperience = new Experience({
     name: req.body.experienceName,
+    subtitle: req.body.experienceSubtitle,
     partner: partnerSaved._id,
     region: req.body.region,
     activityType: req.body.activityType,
