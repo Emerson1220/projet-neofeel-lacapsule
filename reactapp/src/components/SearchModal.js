@@ -25,10 +25,6 @@ const SearchModal = (props) => {
         getOptions();
     }, [])
 
-    useEffect(()=> {
-        console.log({experiences: props.experiences})
-    }, [props.experiences])
-
     //FUNCTIONS
     //select region
     var selectRegion = async () => {
