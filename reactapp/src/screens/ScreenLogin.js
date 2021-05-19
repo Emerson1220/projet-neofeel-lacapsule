@@ -1,42 +1,15 @@
 import React, { useState } from 'react';
+
+//COMPONENTS
 import Nav from '../components/Nav'
-
-const SignUp = () => {
-    return (
-        <div>
-        <div>
-            <input type="text" name="firstName" placeholder="prénom"></input>
-            <input type="text" name="lastName" placeholder="nom"></input>
-            <input type="text" name="pseudo" placeholder="pseudo"></input>
-            <input type="text" name="email" placeholder="adresse mail"></input>
-            <input type="text" name="password" placeholder="mot de passe"></input>
-        </div>
-        <div>
-            <button>S'inscrire avec Google</button>
-            <button>S'inscrire avec Facebook</button>
-        </div>
-        </div>
-    )
-};
-
-const SignIn = () => {
-    return (
-        <div>
-            <div>
-                <input type="text" name="email" placeholder="adresse mail"></input>
-                <input type="text" name="password" placeholder="mot de passe"></input>
-            </div>
-            <div>
-                <button>S'inscrire avec Google</button>
-                <button>S'inscrire avec Facebook</button>
-            </div>
-        </div>
-    )
-}
+import SignIn from '../components/SignIn'
+import SignUp from '../components/SignUp'
+//UI
+import RedButton from '../components/RedButton'
 
 const ScreenLogin = () => {
     //STATE HOOKS
-    const [display, setDisplay] = useState('signin')
+    const [display, setDisplay] = useState('signin');
 
     let input = <SignIn />
     if (display === "signup") {
@@ -46,18 +19,45 @@ const ScreenLogin = () => {
         <div>
             <Nav></Nav>
             <div style={ styles.container }>
-                { input }
+                <div style={ styles.box }>
+                <div style={ styles.switchContainer }>
+                    <RedButton title='Se connecter' size="short" onSelect={ ()=>setDisplay('signin') } />
+                    <RedButton title="S'inscrire" size="short" onSelect={ ()=>setDisplay('signup') } />
+                </div>
+                <div style={ styles.inputContainer }>
+                    { input }
+                </div>
+                </div>
             </div>
         </div>
     )
 }
 
-styles = {
+let styles = {
     container: {
         height: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    box: {
+        backgroundColor: 'rgba(16, 98, 113, 0.7)',
+        borderRadius: '5px'
+    },
+    switch: {
+        color: 'rgba(224, 104, 104, 0.8)',
+    },
+    switchContainer: {
+        width: '102%',
+        display: 'flex',
+        justifyContent: 'end',
+        marginLeft: '1%',
+        marginTop: '1%',
+        paddingTop: '1%',
+        paddingRight: '4%'
+    },
+    inputContainer: {
+        padding: '10%',
     }
 }
 
