@@ -18,3 +18,16 @@ left: 0;
 padding: 0;
 margin: 0;
   }
+
+.categorieSelect {
+  display :flex; 
+  width: auto; 
+  height: auto; 
+  padding: 5px;
+  border: rgba(224, 104, 104, 1);
+  border-radius:4px; 
+  margin-right: 5px; 
+  background-color: rgba(224, 104, 104, 1) ; 
+  align-items: center ;
+  
+}
