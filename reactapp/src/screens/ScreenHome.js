@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
-import '../Home.css';
+import '../styles/Home.css';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import Nav from '../components/Nav'
@@ -23,7 +23,7 @@ function ScreenHome() {
     return (
 
 
-        <div style={{ display: "flex", flexDirection: 'column', height: '100vh' }}>
+        <div className="home" style={{ display: "flex", flexDirection: 'column', height: '100vh' }}>
             <Nav />
             <div style={{
                 display: "flex", flexDirection: 'column', height: '100vh ', display: 'grid',
@@ -46,7 +46,7 @@ function ScreenHome() {
                         </h2>
                         <div style={{ display: 'flex', flexDirection: 'row', height: '35%', width: '80%', justifyContent: 'space-around', alignItems: 'center' }}>
                             <img
-                                style={{ height: '45%', width: 'auto', borderRadius: 3, marginRight: '3%' }}
+                                style={{ height: '45%', width: 'auto', borderRadius: 5, marginRight: '3%' }}
                                 src='/images/neopassRecto.png'
                             />
                             <h3 style={{ color: '#FFF' }}>

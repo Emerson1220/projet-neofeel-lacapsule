@@ -31,8 +31,8 @@
       
     }
 
-    body{
-      background: url(./BanniereHome.jpg);   
+    .home{
+      background: url(../BanniereHome.jpg);   
     background-position-x: 0%;
     background-position-y: 0%;
     background-size: auto auto;

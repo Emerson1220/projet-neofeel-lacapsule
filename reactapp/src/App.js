@@ -23,14 +23,14 @@ function App() {
           <Route component={ ScreenHome } path="/" exact />
           <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
           <Route component={ ScreenLogin } path="/connexion"  />
-          {/*<Route component={ScreenSearch} path="/recherche"  />                    
-          <Route component={ScreenInfo} path="/info"  />
+          <Route component={ScreenSearch} path="/recherche"  />                    
+          {/* <Route component={ScreenInfo} path="/info"  />
           <Route component={ScreenPartner} path="/partenaire"  />
           <Route component={ScreenRoadPlanner} path="/roadPlanner"  />
           <Route component={ScreenTrips} path="/voyages"  />
           <Route component={ScreenProfil} path="/profil"  />
           <Route component={ScreenBasket} path="/panier"  />
-          <Route component={ScreenSuggestion} path="/suggestion"  /> */}
+          <Route component={ScreenSuggestion} path="/suggestion"  /> */} 
         </Switch>
       </Router>
     </Provider>
