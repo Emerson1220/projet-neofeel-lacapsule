@@ -23,7 +23,7 @@ router.post('/searchtrips', async function(req, res, next) {
         let a = JSON.parse(req.body.activities);
         let experiences = [];
         for (let i=0 ; i<a.length ; i++) {
-            let response = await Experience.find({ tags: a[i] });
+            let response = await Experience.find({ tags: a[i] }).populate('partner').exec();
             experiences = experiences.concat(response);
         }
         res.json({ result: true, data: experiences })
