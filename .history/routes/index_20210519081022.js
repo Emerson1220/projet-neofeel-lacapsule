@@ -44,7 +44,7 @@ router.get('/roadtrips', function(req, res, next) {
 //Response: result (true)
 router.put('/myroadplanner', function(req, res, next) {
 
-    var newRoadTrip = new newRoadTripModel({
+    var newExperience = new roadPlannerModel({
         experienceName: req.body.name,
         experienceImg: req.body.img
 
@@ -58,7 +58,7 @@ router.put('/myroadplanner', function(req, res, next) {
       }
     
       res.json({result})
-
+      
     // Route test
     // !req.body.experienceID
     // ? res.json({ result: false })
@@ -68,8 +68,8 @@ router.put('/myroadplanner', function(req, res, next) {
 //Suppression d'expérience dans le road planner
 //Body: experienceID (12345)
 //Response: result (true)
-router.delete('/myroadplanner/:experiences', function(req, res, next) {
-
+router.delete('/myroadplanner', function(req, res, next) {
+  
 })
 
 //Affichage du road planner
