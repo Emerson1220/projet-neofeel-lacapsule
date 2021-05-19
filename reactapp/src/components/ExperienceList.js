@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 const ExperienceList = () => {
 
+
+
     return (
         <div style={styles.experiences_list_area}> {/* Container -> Card expérience */}
 
@@ -64,6 +66,10 @@ const ExperienceList = () => {
         </div>
     )
 }
+
+
+
+
 
 let styles = {
        // CSS - ICONS //
