@@ -1,31 +1,49 @@
 var express = require('express');
 var router = express.Router();
+
+//MODELS
 const Experience = require('../models/Experience');
 
 //Recherche expériences
 //Query: région (Alsace), catégorie (gastronomie)
 //Response: result (true), expériences ['Vinot varlot']
-router.post('/search', async function(req, res, next) {
+router.post('/searchregions', async function(req, res, next) {
     try {
-        let experiences = [];
-        if (req.body.region) {
-            experiences = await Experience.find({ region: req.body.region });
-        }   else if (req.body.activities) {
-            let a = req.body.activities;
-            for (let i=0 ; i<a.length ; i++) {
-                experiences = await Experience.find({ tags: a[i] });
-            }
-        }
-        res.json({ result: true, experiences: experiences})
+        let experiences = await Experience.find({ regionCode: req.body.region });
+        res.json({ result: true, data: experiences })
     } catch (err) {
         console.log(err)
-        res.json({ result: 'false', error: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
+        res.json({ result: 'false',  error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
+    }
+})
+
+router.post('/searchtrips', async function(req, res, next) {
+    try {
+        let a = JSON.parse(req.body.activities);
+        let experiences = [];
+        for (let i=0 ; i<a.length ; i++) {
+            let response = await Experience.find({ tags: a[i] });
+            experiences = experiences.concat(response);
+        }
+        res.json({ result: true, data: experiences })
+    } catch (err) {
+        console.log(err)
+        res.json({ result: 'false', error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
     }
 })
 
 router.get('/activities', async function(req, res, next) {
-    let aggregate = Experience.aggregate();
-    aggregate.group({ id: '$tags' })
+    try {
+        let aggregate = Experience.aggregate();
+        aggregate.unwind('tags');
+        aggregate.group({ _id: '$tags' });
+        let data = await aggregate.exec();
+        let activities = data.map(e => e._id)
+        res.json({ result: true, data: activities });
+    } catch(err) {
+        console.log(err);
+        res.json({ result: false, error: err })
+    }
 })
 
 //Suggestions de voyage

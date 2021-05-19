@@ -32,8 +32,7 @@
     }
 
     body{
-      background: url(./BanniereHome.jpg);
-    
+      background: url(./BanniereHome.jpg);   
     background-position-x: 0%;
     background-position-y: 0%;
     background-size: auto auto;
@@ -43,7 +42,6 @@ max-height: 100%;
 width: 100%;
 background-size: 100% 100%;
 background-position: center;
-
 background-size: cover;
 background-Repeat: no-repeat;
 max-width: 100%;

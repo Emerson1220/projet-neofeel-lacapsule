@@ -10,10 +10,11 @@ import ScreenHome from './screens/ScreenHome';
 //REDUX
 import region from './reducers/region.reducer';
 import activities from './reducers/activities.reducer';
+import experiences from './reducers/experiences.reducer'
 import { Provider } from 'react-redux';
 import { createStore, combineReducers }  from 'redux';
 
-const store = createStore(combineReducers({ region, activities }));
+const store = createStore(combineReducers({ region, activities, experiences }));
 
 function App() {
   return (
