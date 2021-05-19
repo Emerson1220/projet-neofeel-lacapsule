@@ -28,11 +28,13 @@ const SearchModal = (props) => {
     //FUNCTIONS
     //select region
     var selectRegion = async () => {
-        let saveRegion = await fetch('/searchregions', {
+        let rawResponse = await fetch('/searchregions', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body : `region=${props.region}`
         })
+        let response = await rawResponse.json();
+        
     }
 
     //select activities

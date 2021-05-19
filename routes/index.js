@@ -3,6 +3,7 @@ var router = express.Router();
 
 //MODELS
 const Experience = require('../models/Experience');
+const Roadtrip = require('../models/Roadtrip');
 
 //Recherche expériences
 //Query: région (Alsace), catégorie (gastronomie)
@@ -13,7 +14,7 @@ router.post('/searchregions', async function(req, res, next) {
         res.json({ result: true, data: experiences })
     } catch (err) {
         console.log(err)
-        res.json({ result: 'false',  error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
+        res.json({ result: false,  error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
     }
 })
 
@@ -28,7 +29,7 @@ router.post('/searchtrips', async function(req, res, next) {
         res.json({ result: true, data: experiences })
     } catch (err) {
         console.log(err)
-        res.json({ result: 'false', error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
+        res.json({ result: false, error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
     }
 })
 
@@ -60,10 +61,13 @@ router.get('/roadtrips', function(req, res, next) {
 //Ajout d'expérience au road planner
 //Body: experienceID (12345)
 //Response: result (true)
-router.put('/myroadplanner', function(req, res, next) {
-    !req.body.experienceID
+router.put('/myroadplanner', async function(req, res, next) {
+    let roadtrip = await Roadtrip.findById(req.body.roadtripID);
+    roadtrip.experiences.push(req.body.experienceID);
+    let roadtripSaved = await roadtrip.save();
+    !roadtripSaved
     ? res.json({ result: false })
-    : res.json({ result: true, experiences: ['12345']})
+    : res.json({ result: true, roadtrip: roadtrip, saved: roadtripSaved })
 })
 
 //Suppression d'expérience dans le road planner
@@ -83,29 +87,34 @@ router.get('/myroadplanner', function(req, res, next) {
 //Sauvegarder le road planner
 //Body: [experienceID]
 //Response: result (true)
-router.post('/myroadplanner', function(req, res, next) {
-  
+router.post('/myroadplanner', async function(req, res, next) {
+    let roadplanner = new Roadtrip({
+        experiences: []
+    })
+
+    await roadplanner.save();
+    res.json({ result: true, roadplanner: roadplanner })
 })
 
 //Visualisation des avantages
 //Body: [experienceID]
 //Response: result (true), [avantages], montant
 router.get('/avantages', function(req, res, next) {
-  
+
 })
 
 //Achat de NEOPASS
 //Body: userId (12345), productID (12345)
 //Response: result (true), { order }
 router.post('/confirm', function(req, res, next) {
-  
+
 })
 
 //Détails du NEOPASS
 //Query: productID
 //Response: result (true), product (neopass (region))
 router.get('/myproduct', function(req, res, next) {
-  
+
 })
 
 //Partage de voyage
