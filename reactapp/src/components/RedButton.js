@@ -17,9 +17,7 @@ const RedButton = (props) => {
             margin: '2%',
             backgroundColor: "rgba(224, 104, 104, 1)",
             boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)',
-            borderRadius: '7px',
-            transform: `scale(1.05)`
-            
+            borderRadius: '7px'
         }
         styles.buttonHover = {
             height: '100px',
@@ -28,7 +26,8 @@ const RedButton = (props) => {
             margin: '2%',
             backgroundColor: "rgba(224, 104, 104, 0.8)",
             boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)',
-            borderRadius: '7px'
+            borderRadius: '7px',
+            transform: `scale(1.05)`
         }
         styles.buttonText = {
             color: 'white',

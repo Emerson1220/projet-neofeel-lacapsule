@@ -7,6 +7,7 @@ import ScreenHome from './screens/ScreenHome';
 import ScreenRoadPlanner from './screens/ScreenRoadPlanner';
 import ScreenSuggestion from './screens/ScreenSuggestions';
 import ScreenSearch from './screens/ScreenSearch'
+import ScreenLogin from './screens/ScreenLogin'
 //REDUX
 import region from './reducers/region.reducer';
 import activities from './reducers/activities.reducer';
@@ -23,8 +24,8 @@ function App() {
         <Switch>
           <Route component={ ScreenHome } path="/" exact />
           <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
-          {/* <Route component={ ScreenLogin } path="/connexion"  />  */}
-          <Route component={ScreenSearch} path="/recherche"  />                    
+          <Route component={ ScreenLogin } path="/connexion"  />
+          <Route component={ ScreenSearch } path="/recherche"  />                    
           {/* <Route component={ScreenInfo} path="/info"  />
           <Route component={ScreenPartner} path="/partenaire"  />
           <Route component={ScreenRoadPlanner} path="/roadPlanner"  />

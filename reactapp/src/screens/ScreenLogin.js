@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Nav from '../components/Nav'
 import SignIn from '../components/SignIn'
 import SignUp from '../components/SignUp'
+
 //UI
 import RedButton from '../components/RedButton'
 
@@ -42,7 +43,8 @@ let styles = {
     },
     box: {
         backgroundColor: 'rgba(16, 98, 113, 0.7)',
-        borderRadius: '5px'
+        borderRadius: '5px',
+        width: '30vw'
     },
     switch: {
         color: 'rgba(224, 104, 104, 0.8)',
