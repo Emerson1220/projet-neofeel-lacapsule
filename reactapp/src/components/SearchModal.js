@@ -34,7 +34,7 @@ const SearchModal = (props) => {
             body : `region=${props.region}`
         })
         let response = await rawResponse.json();
-        
+        props.onSearch(response.data);
     }
 
     //select activities

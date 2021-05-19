@@ -23,7 +23,7 @@ function App() {
           <Route component={ ScreenHome } path="/" exact />
           <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
           <Route component={ ScreenLogin } path="/connexion"  />
-          <Route component={ScreenSearch} path="/recherche"  />                    
+          {/* <Route component={ScreenSearch} path="/recherche"  />                     */}
           {/* <Route component={ScreenInfo} path="/info"  />
           <Route component={ScreenPartner} path="/partenaire"  />
           <Route component={ScreenRoadPlanner} path="/roadPlanner"  />
