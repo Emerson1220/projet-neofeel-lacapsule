@@ -1,25 +1,13 @@
 import './App.css';
-<<<<<<< HEAD
-
 import ScreenRoadPlanner from './screens/ScreenRoadPlanner';
-=======
-import './Home.css';
-import Nav from './components/Nav'
->>>>>>> 226429b1e3bf26e583289198810faba17ff09bff
 
 //REACT ROUTER
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //pages
 import ScreenHome from './screens/ScreenHome';
-<<<<<<< HEAD
-import SearchModal from './components/SearchModal';
-function App() {
-  return (
-    
-    
-    
-    // <SearchPage></SearchPage>
-=======
+import ScreenSearch from './screens/ScreenSearch';
+
+
 
 //REDUX
 import region from './reducers/region.reducer';
@@ -32,14 +20,13 @@ const store = createStore(combineReducers({ region, activities }));
 function App() {
   return (
     <Provider store={ store }>
->>>>>>> 226429b1e3bf26e583289198810faba17ff09bff
       <Router>
         <Switch>
           <Route component={ScreenHome} path="/" exact />
           <Route component={ScreenRoadPlanner} path="/roadPlanner"  />
-          {/* <Route component={ScreenConnexion} path="/connexion"  />
+          {/* <Route component={ScreenConnexion} path="/connexion"  /> */}
           <Route component={ScreenSearch} path="/recherche"  />                    
-          <Route component={ScreenInfo} path="/info"  />
+          {/* <Route component={ScreenInfo} path="/info"  />
           <Route component={ScreenPartner} path="/partenaire"  />
           <Route component={ScreenRoadPlanner} path="/roadPlanner"  />
           <Route component={ScreenTrips} path="/voyages"  />
