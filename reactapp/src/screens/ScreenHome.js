@@ -69,7 +69,7 @@ function ScreenHome() {
                     paddingRight: '2%'
                 }}>
                     <h1 style={{ color: '#FFF', paddingRight: '1%' }}>Découvrez la France autrement...</h1>
-                    <RedButton title="Commencer l'aventure..." size="small" onSelect={() => showModal()} />
+                    <RedButton title="Commencer l'aventure" size="small" onSelect={() => showModal()} />
                 </div>
             </div>
             <SearchModal visible={visible} showModal={() => showModal()} />
