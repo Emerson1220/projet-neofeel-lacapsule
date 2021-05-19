@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const roadtripSchema = mongoose.Schema({
     name: String,
-    experiences : {
+    experiences : [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Experiences'
-    },
+        ref: 'experiences'
+    }],
     images: Array,
     comments: Array,
     creationDate : Date
