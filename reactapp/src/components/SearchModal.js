@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
+
+//MAP
 import France from '@svg-maps/france.regions';
 import { SVGMap } from 'react-svg-map';
-import 'react-svg-map/lib/index.css'
+import '../styles/map.css'
+
+//UI
 import { Modal, Button } from 'antd';
 import RedButton from './RedButton';
+
+//REDUX
+import { connect } from 'react-redux';
 
 
 const SearchModal = (props) => {
@@ -11,13 +18,42 @@ const SearchModal = (props) => {
     const [selection, setSelection] = useState('all');
     const [region, setRegion] = useState(null);
     const [activities, setActivities] = useState([]);
+    const [options, setOptions] = useState([]);
 
+    //EFFECT HOOKS
     useEffect(()=> {
-        console.log(selection)
-    }, [selection])
+        getOptions();
+    }, [])
 
     //FUNCTIONS
+    //select region
+    var selectRegion = async () => {
+        let saveRegion = await fetch('/searchregions', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body : `region=${props.region}`
+        })
+    }
 
+    //select activities
+    var selectActivity = async () => {
+        let rawResponse = await fetch('/searchtrips', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body : `activities=${JSON.stringify(props.activities)}`
+        });
+        let response = await rawResponse.json();
+        props.onSearch(response.data)
+    }
+
+    //get list activity options from back
+    const getOptions = async () => {
+        let rawResponse = await fetch('/activities');
+        let response = await rawResponse.json();
+        setOptions(response.data);
+    } 
+
+    //close modal
     const handleCancel = () => {
         setSelection('all');
         setRegion(null);
@@ -27,50 +63,46 @@ const SearchModal = (props) => {
 
     //map
     const selectLocation = (e) => {
-        setRegion(e.target.getAttribute('name'));
+        setRegion({ name: e.target.getAttribute('name'), id: e.target.getAttribute('id') });
+        props.onRegionClick(e.target.getAttribute('id'));
     };
 
-    //voyages
+    //manage list of activities
     const filterTrips = (e) => {
         let temp = [...activities];
         let index = temp.findIndex(f => f === e)
         index > -1 ? temp.splice(index, 1) : temp.push(e);
         setActivities(temp);
+        props.onActivityClick(temp)
     }
 
     //DISPLAY TREATMENT
-    let activityList = [
-        { name: 'Loisirs', id: 'loisirs', picto: '/images/pictos/loisirs-8.png'},
-        { name: 'Gastronomie', id: 'gastronomie', picto: '/images/pictos/gastronomie-8.png'},
-        { name: 'Musée', id: 'musee', picto: '/images/pictos/musee-8.png'},
-        { name: 'Patrimoine', id: 'patrimoine', picto: '/images/pictos/patrimoine-8.png'},
-        { name: 'Oénologie', id: 'oenologie', picto: '/images/pictos/oenologie-8.png'},
-        { name: 'Hébergement insolite', id: 'hebergement-insolite', picto: '/images/pictos/hebergement-insolite-8.png'}
-    ]
-
-    let activityCards = activityList.map((e,i) => {
-        return activities.find(f => f === e.id) 
+    let activityCards = options.map((e,i) => {
+        return activities.find(f => f === e) 
         ? 
         <Button
         key={ i }
         style={ Object.assign({...styles.feeling}, { border: 'solid rgb(224, 104, 104) 2px' }) }
-        onClick={ ()=>filterTrips(e.id) } >
-            <img style={ styles.picto } src={ e.picto } alt={ e.name }/>
+        onClick={ ()=>filterTrips(e) } >
+            <img style={ styles.picto } src={ `images/pictos/${e}-8.png` } alt={ e }/>
         </Button>
         : 
         <Button
         key={ i }
         style={ styles.feeling }
-        onClick={ ()=>filterTrips(e.id) }>
-            <img style={ styles.picto } src={ e.picto } alt={ e.name }/>
+        onClick={ ()=>filterTrips(e) }>
+            <img style={ styles.picto } src={ `images/pictos/${e}-8.png` } alt={ e }/>
         </Button>
     })
 
-    let selected = <h3>Choissisez votre destination</h3>;
-    let selectRegionButton;
+    let selected = <h3>Choisissez votre destination</h3>;
+    let selectButton;
     if (region) {
+        selected = <h3>{ region.name }</h3>
+        selectButton = <RedButton title="Allons-y!" size="small" onSelect={()=> selectRegion()} />
+    }else if (activities.length > 0){
         selected = <h3>{ region }</h3>
-        selectRegionButton = <RedButton title="Allons-y!" size="small"/>
+        selectButton = <RedButton title="Allons-y!" size="small" onSelect={()=> selectActivity()}/>
     };
 
 
@@ -96,16 +128,18 @@ const SearchModal = (props) => {
                 <SVGMap
                 map={ France }
                 onLocationClick={ (e)=>selectLocation(e) }
+                locationClassName=''
                 />
-            { selectRegionButton }
+            { selectButton }
             </div>
     } else if (selection === 'trips') {
         modalContent =
-        <div>
+        <div style={ styles.activityModal }>
             <h3>Sélectionnez vos envies</h3>
             <div style={ styles.feelingContainer }>
                 { activityCards }
             </div>
+            { selectButton }
         </div>
     }
     
@@ -118,6 +152,8 @@ const SearchModal = (props) => {
             footer={ null }
             onCancel={ ()=>handleCancel() }
             bodyStyle={ styles.modal }
+            maskStyle={ styles.modalMask }
+            width={ selection === 'trips' ? "54%" : "520px" }
             >
                 { modalContent }
             </Modal>
@@ -152,11 +188,14 @@ let styles = {
         color: 'grey',
         padding: 10,
     },
+    selectButton: {
+        alignSelf: 'center'
+    },
     feeling: {
         height: '100px',
         width: '100px',
         boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.6)',
-        margin: '5%',
+        margin: '2%',
         whiteSpace: 'wrap',
         display: 'flex',
         justifyContent: 'center',
@@ -170,7 +209,43 @@ let styles = {
     modal: {
         backgroundColor: 'rgba(244, 244, 246, 0.5)',
         borderRadius: '15px',
+    },
+    modalMask: {
+        backgroundColor: "rgba(133, 187, 197, 0.6)"
+    },
+    activityModal: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    tripsModal: {
+        backgroundColor: 'rgba(244, 244, 246, 0.5)',
+        borderRadius: '15px',
+        minWidth: '70%',
+        maxHeight: '50%'
+    },
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        onRegionClick: function(region) {
+            dispatch({ type: 'selectRegion', region: region })
+        },
+        onActivityClick: function(activities) {
+            dispatch({ type: 'selectActivities', activities: activities })
+        },
+        onSearch: function(data) {
+            dispatch({ type: 'search', experiences: data })
+        }
     }
 }
 
-export default SearchModal;
+function mapStateToProps(state) {
+    console.log(state)
+    return { activities: state.activities, region: state.region }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SearchModal);

@@ -2,9 +2,13 @@ var express = require('express');
 var router = express.Router();
 const Experience = require('../models/Experience');
 
+//MODELS
+const Experience = require('../models/Experience');
+
 //Recherche expériences
 //Query: région (Alsace), catégorie (gastronomie)
 //Response: result (true), expériences ['Vinot varlot']
+<<<<<<< HEAD
 router.post('/search', async function(req, res, next) {
     try {
         let experiences = [];
@@ -20,6 +24,44 @@ router.post('/search', async function(req, res, next) {
     } catch (err) {
         console.log(err)
         res.json({ result: 'false', error: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
+=======
+router.post('/searchregions', async function(req, res, next) {
+    try {
+        let experiences = await Experience.find({ regionCode: req.body.region });
+        res.json({ result: true, data: experiences })
+    } catch (err) {
+        console.log(err)
+        res.json({ result: 'false',  error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
+    }
+})
+
+router.post('/searchtrips', async function(req, res, next) {
+    try {
+        let a = JSON.parse(req.body.activities);
+        let experiences = [];
+        for (let i=0 ; i<a.length ; i++) {
+            let response = await Experience.find({ tags: a[i] });
+            experiences = experiences.concat(response);
+        }
+        res.json({ result: true, data: experiences })
+    } catch (err) {
+        console.log(err)
+        res.json({ result: 'false', error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
+    }
+})
+
+router.get('/activities', async function(req, res, next) {
+    try {
+        let aggregate = Experience.aggregate();
+        aggregate.unwind('tags');
+        aggregate.group({ _id: '$tags' });
+        let data = await aggregate.exec();
+        let activities = data.map(e => e._id)
+        res.json({ result: true, data: activities });
+    } catch(err) {
+        console.log(err);
+        res.json({ result: false, error: err })
+>>>>>>> adfae8b34a9166b60c5b13a538e17e09fbd53f8a
     }
 })
 

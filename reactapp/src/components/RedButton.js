@@ -7,87 +7,53 @@ const RedButton = (props) => {
     //STATE HOOKS
     const [hover, setHover] = useState(false);
 
-    //DISPLAY MANAGEMENT
-    if (props.transparent) {
-        styles.button = {
-            width: '30%',
-            backgroundColor: 'rgba(224, 104, 104, 0.7)',
-            color: 'white',
-            border: 'none',
-            margin: '2%',
-        }        
-        styles.buttonHover = {
-            width: '30%',
-            backgroundColor: 'rgba(224, 104, 104, 0.9)',
-            color: 'white',
-            border: 'none',
-            margin: '2%',
-        }
-    };
 
+    //DISPLAY MANAGEMENT
     if(props.size === "large") {
         styles.buttonHover = {
-            height: '130px',
+            height: '100px',
             width: '75%',
-            color: 'white',
             border: 'none',
             margin: '2%',
             backgroundColor: "rgba(224, 104, 104, 0.8)",
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)',
+            borderRadius: '7px'
         }
         styles.button = {
-            height: '130px',
+            height: '100px',
             width: '75%',
-            color: 'white',
             border: 'none',
             margin: '2%',
             backgroundColor: "rgba(224, 104, 104, 1)",
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)',
+            borderRadius: '7px',
+            transform: `scale(1.05)`
+
+        };
+        styles.buttonText = {
+            color: 'white',
+            whiteSpace: 'wrap',
+            flexWrap: 'wrap',
+            padding: 0,
+            lineHeight: '1.6rem',
+            fontSize: '0.8rem',
+            fontWeight: 'bold'
         }
     } else if (props.size === 'small') {
         styles.button = {
-            width: '30%',
             backgroundColor: 'rgb(224, 104, 104)',
-            color: 'white',
             border: 'none',
             margin: '2%',
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)',
+            borderRadius: '7px'
         }
         styles.buttonHover = {
-            width: '40%',
-            color: 'white',
             border: 'none',
             margin: '2%',
             backgroundColor: "rgba(224, 104, 104, 0.8)",
-        }
-    }
-
-    if (props.length === 'short' ) {
-        styles.button = {
-            width: '150px',
-            backgroundColor: 'rgb(224, 104, 104)',
-            color: 'white',
-            border: 'none',
-            margin: '2%',
-        }
-        styles.buttonHover = {
-            width: '160px',
-            color: 'white',
-            border: 'none',
-            margin: '2%',
-            backgroundColor: "rgba(224, 104, 104, 0.8)",
-        }
-    } else if (props.length === 'medium') {
-        styles.button = {
-            width: '280px',
-            backgroundColor: 'rgb(224, 104, 104)',
-            color: 'white',
-            border: 'none',
-            margin: '2%',
-        }
-        styles.buttonHover = {
-            width: '290px',
-            color: 'white',
-            border: 'none',
-            margin: '2%',
-            backgroundColor: "rgba(224, 104, 104, 0.8)",
+            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.1)',
+            borderRadius: '7px',
+            transform: `scale(1.05)`
         }
     }
 
@@ -109,24 +75,27 @@ const RedButton = (props) => {
 
 const styles = {
     button: {
-        width: '120px',
         backgroundColor: 'rgb(224, 104, 104)',
-        color: 'white',
         border: 'none',
         margin: '2%',
+        boxShadow: '2px, 2px, 2px rgba(0, 0, 0, 0.5)',
+        borderRadius: '5px'
     },
     buttonHover: {
-        width: '40%',
-        color: 'white',
         border: 'none',
         margin: '2%',
         backgroundColor: "rgba(224, 104, 104, 0.8)",
+        borderRadius: '5px',
+        transform: `scale(1.05)`
     },
     buttonText: {
         color: 'white',
         whiteSpace: 'wrap',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        padding: 0,
+        lineHeight: '1.6rem',
+        fontSize: '0.8rem',
     }
-};
+}
 
 export default RedButton;
