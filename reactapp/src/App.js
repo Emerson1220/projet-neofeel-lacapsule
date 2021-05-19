@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //pages
 import ScreenHome from './screens/ScreenHome';
 import ScreenRoadPlanner from './screens/ScreenRoadPlanner';
-
+import ScreenSuggestion from './screens/ScreenSuggestions';
 import ScreenSearch from './screens/ScreenSearch'
 //REDUX
 import region from './reducers/region.reducer';
@@ -23,15 +23,15 @@ function App() {
         <Switch>
           <Route component={ ScreenHome } path="/" exact />
           <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
-          {/* <Route component={ ScreenLogin } path="/connexion"  /> */}
+          {/* <Route component={ ScreenLogin } path="/connexion"  />  */}
           <Route component={ScreenSearch} path="/recherche"  />                    
           {/* <Route component={ScreenInfo} path="/info"  />
           <Route component={ScreenPartner} path="/partenaire"  />
           <Route component={ScreenRoadPlanner} path="/roadPlanner"  />
           <Route component={ScreenTrips} path="/voyages"  />
           <Route component={ScreenProfil} path="/profil"  />
-          <Route component={ScreenBasket} path="/panier"  />
-          <Route component={ScreenSuggestion} path="/suggestion"  /> */} 
+          <Route component={ScreenBasket} path="/panier"  /> */}
+          <Route component={ScreenSuggestion} path="/suggestion"  />  
         </Switch>
       </Router>
     </Provider>
