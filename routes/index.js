@@ -43,9 +43,26 @@ router.get('/roadtrips', function(req, res, next) {
 //Body: experienceID (12345)
 //Response: result (true)
 router.put('/myroadplanner', function(req, res, next) {
-    !req.body.experienceID
-    ? res.json({ result: false })
-    : res.json({ result: true, experiences: ['12345']})
+
+    var newExperience = new roadPlannerModel({
+        experienceName: req.body.name,
+        experienceImg: req.body.img
+
+      })
+    
+      var experienceSave = await newExperience.save()
+    
+      var result = false
+      if(experienceSave.experienceName){
+        result = true
+      }
+    
+      res.json({result})
+      
+    // Route test
+    // !req.body.experienceID
+    // ? res.json({ result: false })
+    // : res.json({ result: true, experiences: ['12345']})
 })
 
 //Suppression d'expérience dans le road planner
