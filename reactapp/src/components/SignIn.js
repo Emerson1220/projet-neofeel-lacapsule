@@ -1,13 +1,26 @@
 import React, { useState} from 'react';
+
+//UI
 import { Input, Checkbox } from 'antd';
 import RedButton from '../components/RedButton'
 
-const SignIn = () => {
+//REDUX
+import { connect } from 'react-redux';
+
+//COOKIE MANAGEMENT
+import Cookie from 'universal-cookie';
+
+const SignIn = (props) => {
+    //STATE HOOKS
     const [data, setData] = useState({
         email: '',
         password: ''
     })
     const [isChecked, setIsChecked] = useState(false);
+    const [error, setError] = useState('');
+
+    //COOKIE MANAGEMENT
+    const cookies = new Cookie();
 
     const signinUser = async() => {
         let rawResponse = await fetch('/users/signin', {
@@ -16,13 +29,21 @@ const SignIn = () => {
             body: `email=${data.email}&password=${data.password}`
         });
         let response = await rawResponse.json();
-        if (response.result)
+        if (response.result === true) {
+            props.onSigninClick({ token: response.token, pseudo: response.pseudo });
+            if (isChecked) {
+                cookies.set('token', response.token, { path: '/', maxAge: 604800 })
+            }
+        } else {
+            setError(response.message);
+        }
     };
 
     return (
         <div style={ styles.container }>
             <h2 style={ styles.title }>Se connecter</h2>
             <div style={ styles.column }>
+                <p style={{ color: 'white', maxWidth: '100%'}}>{ error }</p>
                 <Input
                 type="text"
                 name="email"
@@ -85,8 +106,19 @@ let styles = {
     },
     checkContainer: {
         display: 'flex',
-        alignSelf: 'start'
+        alignSelf: 'start',
+        marginBottom: '2%'
     }
 }
 
-export default SignIn;
+function mapDispatchToProps(dispatch) {
+    return {
+        onSigninClick: function(data) {
+            dispatch({ type: 'signin', user: data })
+        }
+    }
+}
+export default connect(
+    null,
+    mapDispatchToProps
+)(SignIn);

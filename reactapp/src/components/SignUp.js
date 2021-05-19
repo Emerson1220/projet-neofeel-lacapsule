@@ -26,13 +26,13 @@ const SignUp = (props) => {
     const cookies = new Cookie();
 
     const createUser = async() => {
-        let userString = JSON.stringify(user);
         let rawResponse = await fetch('/users/signup', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `user=${userString}`
+            body: `firstName=${user.firstName}&lastName=${user.lastName}&email=${user.email}&password=${user.password}&pseudo=${user.pseudo}`
         })
         let response = await rawResponse.json();
+        console.log(response);
         if (response.result === true) {
             props.onSignupClick({ token: response.token, pseudo: response.pseudo });
             if (isChecked) {
@@ -45,12 +45,9 @@ const SignUp = (props) => {
 
     return (
         <div style={ styles.container }>
-            <div>
-
-            </div>
             <h2 style={ styles.title }>S'inscrire</h2>
             <div style={ styles.column }>
-                <p>{ error }</p>
+                <p style={{ color: 'white' }}>{ error }</p>
                 <Input
                 type="text"
                 name="firstName"
@@ -92,7 +89,7 @@ const SignUp = (props) => {
                     style={ styles.checkbox } />
                     <span style={{ color: 'white', whiteSpace: 'nowrap' }}>Rester connecter</span>
                 </div>
-                <RedButton title="créer mon compte" size="short" />
+                <RedButton title="créer mon compte" size="short" onSelect={ ()=>createUser() } />
             </div>
             <div style={ styles.row }>
                 <button style={ styles.button }>S'inscrire avec Google</button>
@@ -136,7 +133,8 @@ let styles = {
     },
     checkContainer: {
         display: 'flex',
-        alignSelf: 'start'
+        alignSelf: 'start',
+        marginBottom: '2%'
     }
 }
 

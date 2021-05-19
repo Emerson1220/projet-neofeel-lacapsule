@@ -15,7 +15,6 @@ router.get('/', function(req, res, next) {
 //Response: result (true), { pseudo, token, firstName, lastName, email }
 router.post('/signup', async function(req, res, next) {
   try {  
-    // let user = JSON.parse(req.body);
     let user = req.body;
 
     const cost = 10;
@@ -43,7 +42,7 @@ router.post('/signup', async function(req, res, next) {
         keyMessage = "L'adresse mail"
       }
       let value = Object.values(err.keyValue)[0]
-      res.json({ result: false, error: err.code, message: `${keyMessage} ${value} exist déjà.`})
+      res.json({ result: false, error: err.code, message: `${keyMessage} ${value} exist déjà. Veuillez vérifier les informations saisies.`})
     } else {
       res.json({ result: false, error: err })
     }
