@@ -45,7 +45,7 @@ const SignIn = (props) => {
 
         //Facebook/Google logins
         const responseFacebook = async(res) => {
-            let rawResponse = await fetch(`/users/auth/facebook/signup/${res.accessToken}`);
+            let rawResponse = await fetch(`/users/auth/facebook/signin/${res.accessToken}`);
             let response = await rawResponse.json();
             if (response.result === true) {
                 props.onSigninClick({ token: response.token });
