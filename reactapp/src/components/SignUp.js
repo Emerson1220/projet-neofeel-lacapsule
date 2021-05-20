@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
+import '../styles/Home.css'
+import '../styles/login.css'
 
 //REDUX
 import { connect } from 'react-redux';
 
 //UI
-import { Input, Checkbox } from 'antd';
+import { Input, Checkbox, Divider } from 'antd';
 import RedButton from '../components/RedButton';
 
 //COOKIE MANAGEMENT
 import Cookie from 'universal-cookie';
+
+//PLUGINS
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login'
 
 const SignUp = (props) => {
     //STATE HOOKS
@@ -22,9 +28,12 @@ const SignUp = (props) => {
     const [isChecked, setIsChecked] = useState(false);
     const [error, setError] = useState('');
 
+
     //COOKIE MANAGEMENT
     const cookies = new Cookie();
 
+    //FUNCTIONS
+    //signin request
     const createUser = async() => {
         let rawResponse = await fetch('/users/signup', {
             method: 'POST',
@@ -34,12 +43,39 @@ const SignUp = (props) => {
         let response = await rawResponse.json();
         console.log(response);
         if (response.result === true) {
-            props.onSignupClick({ token: response.token, pseudo: response.pseudo });
+            props.onSignupClick({ token: response.token });
             if (isChecked) {
                 cookies.set('token', response.token, { path: '/', maxAge: 604800 })
             }
         } else {
             setError(response.message);
+        }
+    }
+
+    //Facebook/Google logins
+    const responseFacebook = async(res) => {
+        let rawResponse = await fetch(`/users/auth/facebook/signup/${res.accessToken}`);
+        let response = await rawResponse.json();
+        if (response.result === true) {
+            props.onSignupClick({ token: response.token });
+            if (isChecked) {
+                cookies.set('token', response.token, { path: '/', maxAge: 604800 })
+            }
+        } else {
+            setError(response.message);
+        }
+    }
+
+    const responseGoogle = async (res) => {
+        let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
+        let response = await rawResponse.json();
+        if (response.result === true) {
+            props.onSignupClick({ token: response.token });
+            if (isChecked) {
+                cookies.set('token', response.token, { path: '/', maxAge: 604800 })
+            }
+        } else {
+            setError(response.message)
         }
     }
 
@@ -90,10 +126,26 @@ const SignUp = (props) => {
                     <span style={{ color: 'white', whiteSpace: 'nowrap' }}>Rester connecter</span>
                 </div>
                 <RedButton title="créer mon compte" size="short" onSelect={ ()=>createUser() } />
+                <Divider style={ styles.divider }>OU</Divider>
             </div>
-            <div style={ styles.row }>
-                <button style={ styles.button }>S'inscrire avec Google</button>
-                <button style={ styles.button }>S'inscrire avec Facebook</button>
+            <div style={ styles.buttonContainer }>
+                    <FacebookLogin
+                    appId='509585980227274'
+                    fields="name, email, picture"
+                    textButton="S'inscrire avec Facebook"
+                    callback={ responseFacebook }
+                    language="fr-FR"
+                    size="small"
+                    icon="fa-facebook"
+                    className="facebook"
+                    />
+                    <GoogleLogin
+                    clientId="884422014939-bu63e3eoqfgv1vrmsn01qd0ukfl2uumf.apps.googleusercontent.com"
+                    buttonText="S'inscrire avec Google"
+                    onSuccess={ responseGoogle }
+                    onFailure={ responseGoogle }
+                    cookiePolicy={'single_host_origin'}
+                    />
             </div>
         </div>
     )
@@ -135,6 +187,15 @@ let styles = {
         display: 'flex',
         alignSelf: 'start',
         marginBottom: '2%'
+    },
+    buttonContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        height: '20%'
+    },
+    divider: {
+        color: 'white'
     }
 }
 

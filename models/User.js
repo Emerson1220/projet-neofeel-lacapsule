@@ -7,7 +7,6 @@ const userSchema = mongoose.Schema({
     pseudo: {
         type: String,
         unique: true,
-        required: true
     },
     email: {
         type: String,
@@ -15,10 +14,7 @@ const userSchema = mongoose.Schema({
         required: true
     },
     token: String,
-    password: {
-        type: String,
-        required: true
-    },
+    password: String,
     roadtrips: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'roadtrips'

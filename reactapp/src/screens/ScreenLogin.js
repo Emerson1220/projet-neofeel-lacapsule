@@ -17,7 +17,7 @@ const ScreenLogin = () => {
         input = <SignUp />
     }
     return (
-        <div>
+        <div className="home">
             <Nav></Nav>
             <div style={ styles.container }>
                 <div style={ styles.box }>
@@ -42,7 +42,7 @@ let styles = {
         justifyContent: 'center'
     },
     box: {
-        backgroundColor: 'rgba(16, 98, 113, 0.7)',
+        backgroundColor: 'rgba(16, 98, 113, 0.9)',
         borderRadius: '5px',
         width: '30vw'
     },

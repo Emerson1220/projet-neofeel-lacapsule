@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 
 function ScreenSuggestions () {
- return (
-     <p>suggestions</p>
- )
+    return (
+    <p>suggestions</p>
+    )
 
 }
 

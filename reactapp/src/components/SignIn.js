@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
 
 //UI
-import { Input, Checkbox } from 'antd';
+import { Input, Checkbox, Divider } from 'antd';
 import RedButton from '../components/RedButton'
 
 //REDUX
@@ -9,6 +9,10 @@ import { connect } from 'react-redux';
 
 //COOKIE MANAGEMENT
 import Cookie from 'universal-cookie';
+
+//PLUGINS
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login'
 
 const SignIn = (props) => {
     //STATE HOOKS
@@ -39,6 +43,33 @@ const SignIn = (props) => {
         }
     };
 
+        //Facebook/Google logins
+        const responseFacebook = async(res) => {
+            let rawResponse = await fetch(`/users/auth/facebook/signup/${res.accessToken}`);
+            let response = await rawResponse.json();
+            if (response.result === true) {
+                props.onSigninClick({ token: response.token });
+                if (isChecked) {
+                    cookies.set('token', response.token, { path: '/', maxAge: 604800 })
+                }
+            } else {
+                setError(response.message);
+            }
+        }
+    
+        const responseGoogle = async (res) => {
+            let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
+            let response = await rawResponse.json();
+            if (response.result === true) {
+                props.onSigninClick({ token: response.token });
+                if (isChecked) {
+                    cookies.set('token', response.token, { path: '/', maxAge: 604800 })
+                }
+            } else {
+                setError(response.message)
+            }
+        }
+
     return (
         <div style={ styles.container }>
             <h2 style={ styles.title }>Se connecter</h2>
@@ -63,10 +94,26 @@ const SignIn = (props) => {
                     <span style={{ color: 'white', whiteSpace: 'nowrap' }}>Rester connecter</span>
                 </div>
                 <RedButton title="Connexion" size="short" onSelect={ ()=>signinUser() }/>
+                <Divider style={ styles.divider }>OU</Divider>
             </div>
-            <div style={ styles.row }>
-                <button style={ styles.button }>S'inscrire avec Google</button>
-                <button style={ styles.button }>S'inscrire avec Facebook</button>
+            <div style={ styles.buttonContainer }>
+                    <FacebookLogin
+                    appId='509585980227274'
+                    fields="name, email, picture"
+                    textButton="Se connecter avec Facebook"
+                    callback={ responseFacebook }
+                    language="fr-FR"
+                    size="small"
+                    icon="fa-facebook"
+                    className="facebook"
+                    />
+                    <GoogleLogin
+                    clientId="884422014939-bu63e3eoqfgv1vrmsn01qd0ukfl2uumf.apps.googleusercontent.com"
+                    buttonText="Se connecter avec Google"
+                    onSuccess={ responseGoogle }
+                    onFailure={ responseGoogle }
+                    cookiePolicy={ 'single_host_origin' }
+                    />
             </div>
         </div>
     )
@@ -108,6 +155,15 @@ let styles = {
         display: 'flex',
         alignSelf: 'start',
         marginBottom: '2%'
+    },
+    buttonContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        height: '20%'
+    },
+    divider: {
+        color: 'white'
     }
 }
 
