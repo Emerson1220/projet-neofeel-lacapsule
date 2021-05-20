@@ -176,7 +176,7 @@ router.post('/sharetrip', function(req, res, next){
 //Query: coordonées
 //Response: result (true), météo
 router.get('/weather', function(req, res, next) {
-  
+
 })
 
 
