@@ -22,8 +22,8 @@ const ScreenLogin = () => {
             <div style={ styles.container }>
                 <div style={ styles.box }>
                 <div style={ styles.switchContainer }>
-                    <RedButton title='Se connecter' size="short" onSelect={ ()=>setDisplay('signin') } />
-                    <RedButton title="S'inscrire" size="short" onSelect={ ()=>setDisplay('signup') } />
+                    <RedButton title='Se connecter' onSelect={ ()=>setDisplay('signin') } />
+                    <RedButton title="S'inscrire" onSelect={ ()=>setDisplay('signup') } />
                 </div>
                 <div style={ styles.inputContainer }>
                     { input }

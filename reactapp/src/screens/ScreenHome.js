@@ -17,7 +17,7 @@ function ScreenHome(props) {
     console.log(props)
     //STATE HOOKS
     const [visible, setVisible] = useState(false);
-    const [activitySearch, setActivitySearch] = useState(false);
+    const [search, setSearch] = useState(false);
 
     //FUNCTIONS
     //modal
@@ -26,12 +26,12 @@ function ScreenHome(props) {
     };
 
     const searchTrips = () => {
-        setActivitySearch(true);
+        setSearch(true);
     }
 
-    if (props.region) {
+    if (props.region && search) {
         return <Redirect to='/recherche' />
-    } else if (activitySearch) {
+    } else if (props.activities.length > 0 && search) {
         return <Redirect to='/suggestions' />
     } else {
         return (
@@ -67,7 +67,7 @@ function ScreenHome(props) {
                             </div>
                             <div style={{ paddingTop: '1%' }}>
                                 <Link to={'/info'}>
-                                    <RedButton transparent={true} title="Le Concept" size="small" length="short" />
+                                    <RedButton transparent={true} title="Le Concept" />
                                 </Link>
                             </div>
                         </div>
@@ -81,7 +81,7 @@ function ScreenHome(props) {
                         paddingRight: '2%'
                     }}>
                         <h1 style={{ color: '#FFF', paddingRight: '1%' }}>Découvrez la France autrement...</h1>
-                        <RedButton title="Commencer l'aventure" size="small" onSelect={() => showModal()} />
+                        <RedButton title="Commencer l'aventure" onSelect={() => showModal()} />
                     </div>
                 </div>
                 <SearchModal visible={visible} showModal={() => showModal()} searchTrips={ ()=>searchTrips() }/>
