@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import { Button } from 'antd';
 
 //COMPONENTS
 import Nav from '../components/Nav'
+import Map from '../components/Map';
 
 //REDUX
 import { connect } from 'react-redux';
@@ -43,9 +44,12 @@ function ScreenRoadPlanner(props) {
     <div>
             <Nav />
                 <div style={ styles.container }>
-                    <div>
-                        <img style={ styles.map } src="images/photo-526x360.png" alt="list" />
-                    </div>
+
+                <div style={{ display: 'flex', justifyContent: 'center', width: '60%' }}>
+                    <Map></Map>
+                    {/* <img style={ styles.map } src="images/photo-526x360.png" alt="list" /> */}
+                </div>
+
 
                     <div style={ styles.row }>
 
