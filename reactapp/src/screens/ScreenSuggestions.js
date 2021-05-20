@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 
-function ScreenSuggestions () {
+const ScreenSuggestions =  () => {
     return (
     <p>suggestions</p>
     )
 
 }
 
-export default ScreenSuggestions
+export default ScreenSuggestions;
