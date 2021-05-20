@@ -46,6 +46,7 @@ const SearchModal = (props) => {
         });
         let response = await rawResponse.json();
         props.onSearch(response.data)
+        props.searchTrips(true);
     }
 
     //get list activity options from back

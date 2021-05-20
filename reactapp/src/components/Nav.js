@@ -8,7 +8,7 @@ import { Button, Badge } from 'antd';
 //REDUX
 import { connect } from 'react-redux';
 
-function Nav() {
+function Nav(props) {
 
     return (
         <div style={{ width: '100%', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor:'#FFF' }}>
@@ -52,9 +52,11 @@ function Nav() {
                     <Button className='devenezPartenaireButton' > Devenez Partenaire </Button>
                 </Link>
                 <div className='listNav' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginLeft: '11%', marginTop: '3%', marginBottom: 0, height: '100%' }}>
+                    <Badge count={ props.roadplanner.length }>
                         <Link to={'/roadPlanner'}>
                             <h4 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Mon Voyage</h4>
                         </Link>
+                    </Badge>
                     <Link to={'/recherche'}>
                         <h4 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Recherche</h4>
                     </Link>

@@ -73,14 +73,6 @@ const Map = (props) => {
     //création nouveau voyage avec expérience choisie
     const createRoadtrip = async(experience) => {
         if (props.token) {
-            // let data = {
-            //     token: props.token,
-            //     name: 'Mon Voyage en Alsace',
-            //     region: props.region,
-            //     regionCode: 'ges',
-            //     experience: experience._id
-            // };
-            // data = JSON.stringify(data);
             let rawResponse = await fetch('/myroadplanner', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -89,8 +81,6 @@ const Map = (props) => {
         }
         props.onAddExperience(experience);
     }
-
-
 
     let openModal = [];
     if (experience !== {}) {
@@ -217,7 +207,13 @@ const Map = (props) => {
     )
 }
 
-
+function mapDispatchToProps(dispatch) {
+    return {
+        onAddExperience: function(experience) {
+            dispatch({ type: 'addExperience', experience: experience })
+        }
+    }
+}
 
 function mapStateToProps(state) {
     console.log(state)
@@ -226,7 +222,8 @@ function mapStateToProps(state) {
 
 export default connect(
     mapStateToProps,
-    null)(Map);
+    mapDispatchToProps)
+    (Map);
 
 
 let styles = {
