@@ -52,7 +52,7 @@ const ExperienceList = (props) => {
                 <div key={i} style={styles.experiences_list_area}> {/* Container -> Card expérience */}
                     <div style={styles.single_destinations}> {/* Card expérience */}
                         <div style={styles.image_card}>
-                            <img style={styles.image} src="images/photo-526x360.png" alt="list" />
+                            <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
                         </div>
                         <div style={styles.detail_card}>
                             <div>
