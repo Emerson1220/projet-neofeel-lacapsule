@@ -1,9 +1,12 @@
 import React from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
-import { Button } from 'antd';
 
+//UI
+import { Button, Badge } from 'antd';
 
+//REDUX
+import { connect } from 'react-redux';
 
 function Nav() {
 
@@ -14,7 +17,7 @@ function Nav() {
                     <img
 
                         height={'90%'}
-                        src="/images/LOGO.png" />
+                        src="/images/LOGO.png" alt="logo"/>
                 </Link>
 
                 <div style={{ display: "flex", flexDirection: 'column', height: '90%', justifyContent: 'space-around', }}>
@@ -23,21 +26,24 @@ function Nav() {
                             height={'100%'}
                             style={{ marginLeft: '10px',padding: 0 }}
                             src="/images/facebookColor.png"
+                            alt='picto facebook'
                         />
                     </a>
                     <a style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center'}} href="https://www.youtube.com/channel/UCHdHavcCfpXR8wLhgK3t0qQ">
                         <img
                             height={'100%'}
                             style={{ marginLeft: '10px', color: '#FF0000' }}
-                            src="/images/youtubeColor.png" />
+                            src="/images/youtubeColor.png"
+                            alt="picto youtube"
+                        />
                     </a>
-
-
                     <a style={{height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center'}} href="https://www.instagram.com/neofeeltravel/">
                         <img
                             height={'100%'}
                             style={{ marginLeft: '10px' }}
-                            src="/images/instagramColor.png" />
+                            src="/images/instagramColor.png"
+                            alt="picto instagram"
+                        />
                     </a>
                 </div>
             </div>
@@ -46,9 +52,9 @@ function Nav() {
                     <Button className='devenezPartenaireButton' > Devenez Partenaire </Button>
                 </Link>
                 <div className='listNav' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginLeft: '11%', marginTop: '3%', marginBottom: 0, height: '100%' }}>
-                    <Link to={'/roadPlanner'}>
-                        <h4 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Mon Voyage</h4>
-                    </Link>
+                        <Link to={'/roadPlanner'}>
+                            <h4 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Mon Voyage</h4>
+                        </Link>
                     <Link to={'/recherche'}>
                         <h4 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Recherche</h4>
                     </Link>
@@ -60,4 +66,14 @@ function Nav() {
         </div>
     )
 }
-export default Nav;
+
+function mapStateToProps(state) {
+    return {
+        roadplanner: state.roadplanner
+    }
+} 
+
+export default connect(
+    mapStateToProps,
+    null
+)(Nav);

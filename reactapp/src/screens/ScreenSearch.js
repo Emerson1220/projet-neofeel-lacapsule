@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import '../styles/search.css';
 import Nav from '../components/Nav'
@@ -20,21 +20,30 @@ const { Option } = Select;
 
 
 function ScreenSearch(props) {
+    //STATE HOOKS
+    const [region, setRegion] = useState(props.region)
+    const [display, setDisplay] = useState('map');
 
-    const [region, setRegion] = useState('ges')
+    useEffect(()=>{
+        selectRegion();
+    }, [])
 
+    //FUNCTIONS
+    //get experiences
     var selectRegion = async () => {
-        let rawResponse = await fetch('/searchregions', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `region=${region}`
-        })
-        let response = await rawResponse.json();
-        props.onSearch(response.data)
+        if (region !== 'none') {
+            let rawResponse = await fetch('/searchregions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `region=${region}`
+            })
+            let response = await rawResponse.json();
+            props.onSearch(response.data)
+        }
     }
 
     
-
+    //display toggles
     function OnclickMap() {
         setDisplay('map');
     }
@@ -42,7 +51,6 @@ function ScreenSearch(props) {
         setDisplay('ExperienceList')
     }
 
-    const [display, setDisplay] = useState('map');
     let displaySelection;
     if (display === 'map') {
         displaySelection =
@@ -64,7 +72,7 @@ function ScreenSearch(props) {
                     <Select showSearch
                         style={{ width: '40%' }}
                         value={region}
-                        onChange={(e) => setRegion(e.target.value)}
+                        onChange={(e) => setRegion(e)}
                         placeholder="Recherche (Région)"
 
                         filterOption={(input, option) =>
@@ -108,9 +116,14 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        region: state.region
+    }
+}
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(ScreenSearch);
 

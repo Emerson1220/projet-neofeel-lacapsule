@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Nav from '../components/Nav';
-import { Divider, Table } from 'antd';
+import { Divider, Modal } from 'antd';
 import RedButton from '../components/RedButton'
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js'
 
 const ScreenBasket =  () => {
     const stripe= useStripe();
@@ -85,9 +85,9 @@ const ScreenBasket =  () => {
                     },
                 }}
                 />
-                <RedButton
-                title="Payer avec Stripe" />
-                </form>
+                <button type="submit">Payer avec Stripe
+                </button>                
+            </form>
             </div>
 
             </div>

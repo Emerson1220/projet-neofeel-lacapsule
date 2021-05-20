@@ -73,14 +73,14 @@ const Map = (props) => {
     //création nouveau voyage avec expérience choisie
     const createRoadtrip = async(experience) => {
         if (props.token) {
-            let data = {
-                token: props.token,
-                name: 'Mon Voyage en Alsace',
-                region: props.region,
-                regionCode: 'ges',
-                experience: experience._id
-            };
-            data = JSON.stringify(data);
+            // let data = {
+            //     token: props.token,
+            //     name: 'Mon Voyage en Alsace',
+            //     region: props.region,
+            //     regionCode: 'ges',
+            //     experience: experience._id
+            // };
+            // data = JSON.stringify(data);
             let rawResponse = await fetch('/myroadplanner', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -140,7 +140,7 @@ const Map = (props) => {
                     </div>
 
                 </div>
-            </div> {/* End -> Card expérience */}
+            </div>
         </div>
     }
 
@@ -269,7 +269,6 @@ let styles = {
         outline: 'none',
         paddingLeft: '1rem',
         paddingRight: '1rem',
-
     },
 
     single_destinations: {
