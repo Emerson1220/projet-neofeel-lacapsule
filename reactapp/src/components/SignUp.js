@@ -43,7 +43,7 @@ const SignUp = (props) => {
         let response = await rawResponse.json();
         console.log(response);
         if (response.result === true) {
-            props.onSignupClick({ token: response.token });
+            props.onSignupClick(response.token);
             if (isChecked) {
                 cookies.set('token', response.token, { path: '/', maxAge: 604800 })
             }
@@ -58,7 +58,7 @@ const SignUp = (props) => {
         let response = await rawResponse.json();
         console.log(response)
         if (response.result === true) {
-            props.onSignupClick({ token: response.token });
+            props.onSignupClick(response.token);
             if (isChecked) {
                 cookies.set('token', response.token, { path: '/', maxAge: 604800 })
             }
@@ -71,7 +71,7 @@ const SignUp = (props) => {
         let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
         let response = await rawResponse.json();
         if (response.result === true) {
-            props.onSignupClick({ token: response.token });
+            props.onSignupClick(response.token);
             if (isChecked) {
                 cookies.set('token', response.token, { path: '/', maxAge: 604800 })
             }

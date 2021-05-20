@@ -36,8 +36,46 @@ const ExperienceList = (props) => {
         setVoyageSelect(value)
     };
 
-    const chooseTrip = (id) => {
+    const chooseExperience = async(experience) => {
+        console.log(voyageSelect[0])
+        if (voyageSelect[0] === 'new') {
+            createRoadtrip(experience);
+        } else {
+            addExperience(experience);
+        }
+    }
 
+    //ajout d'expérience à un voyage existant
+    const addExperience = async(experience) => {
+        let rawResponse = await fetch('/myroadplanner', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `roadtripID=${voyageSelect}&experienceID=${experience._id}`
+        })
+        let response = await rawResponse.json();
+        if (response.result === true) {
+            props.onAddExperience(response.roadtrip);
+        }
+    };
+
+    //création nouveau voyage avec expérience choisie
+    const createRoadtrip = async(experience) => {
+        if (props.token) {
+            let data = {
+                token: props.token,
+                name: 'Mon Voyage en Alsace',
+                region: props.region,
+                regionCode: 'ges',
+                experience: experience._id
+            };
+            data = JSON.stringify(data);
+            let rawResponse = await fetch('/myroadplanner', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `token=${props.token}&name=Mon Voyage en Alsace&region=${props.region}&regionCode=ges&experience=${experience._id}`
+            })
+        }
+        props.onAddExperience(experience);
     }
     /* MAP SUR EXPERIENCES LIST ___________*/
     var ExperienceListing = [];
@@ -56,8 +94,8 @@ const ExperienceList = (props) => {
                         </div>
                         <div style={styles.detail_card}>
                             <div>
-                                <h3><Link style={styles.h3} to="/">{experience.name}</Link></h3>
-                                <h4><Link style={styles.h4} to="/">{experience.subtitle}</Link></h4>
+                                <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
+                                <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
 
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
@@ -87,7 +125,8 @@ const ExperienceList = (props) => {
                                 onChange={ onChange }
                                 />
                                 <RedButton
-                                title="+"/>
+                                title="+"
+                                onSelect={ ()=>chooseExperience(experience) }/>
                             </div>
 
                         </div>
@@ -103,15 +142,22 @@ const ExperienceList = (props) => {
     )
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        onAddExperience: function(experience) {
+            dispatch({ type: 'addExperience', experience: experience })
+        }
+    }
+}
 
 function mapStateToProps(state) {
     console.log(state)
-    return { experiences: state.experiences, region: state.region }
+    return { experiences: state.experiences, region: state.region, token: state.token, roadplanner: state.roadplanner }
 }
 
 export default connect(
     mapStateToProps,
-    null)(ExperienceList);
+    mapDispatchToProps)(ExperienceList);
 
 
 

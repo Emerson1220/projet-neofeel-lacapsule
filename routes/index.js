@@ -4,6 +4,7 @@ var router = express.Router();
 //MODELS
 const Experience = require('../models/Experience');
 const Roadtrip = require('../models/Roadtrip');
+const User = require('../models/User');
 
 //get experiences par région
 router.post('/searchregions', async function(req, res, next) {
@@ -106,24 +107,39 @@ router.delete('/myroadplanner/:roadtripID/:experienceID', async function(req, re
 //Affichage du road planner
 //Query: roadtripID (12345)
 //Response: result(true), roadplanner [expérience: nom, région, catégorie, activité ]
-router.get('/myroadplanner/:userID', async function(req, res, next) {
-
+router.get('/myroadplanner/:token', async function(req, res, next) {
+    let user = await User.findOne({ token: req.params.token })
+    .populate('roadtrips')
+    .exec();
+    let current = user.roadtrips.sort({ creationDate: -1 })[0];
+    res.json({ result: true, currentRoadtrip: current })
 })
 
 //Sauvegarder le road planner
 //Body: user token, trip name, trip region, trip region code
 //Response: result (true)
 router.post('/myroadplanner', async function(req, res, next) {
-    let user = await User.findOne({ token: req.body.token })
-    let roadplanner = new Roadtrip({
-        creationDate: new Date(),
-        name: req.body.name,
-        region: req.body.region,
-        regionCode: req.body.regionCode,
-        creator: user._id
-    })
-    let roadplannerSave = await roadplanner.save();
-    res.json({ result: true, roadplanner: roadplannerSave })
+   try {
+        let data = req.body
+        let user = await User.findOne({ token: data.token })
+        let roadplanner = new Roadtrip({
+            creationDate: new Date(),
+            name: data.name,
+            region: data.region,
+            regionCode: data.regionCode,
+            creator: user._id,
+            experiences: [data.experience]
+        })
+        console.log(roadplanner)
+        let roadplannerSave = await roadplanner.save();
+        user.roadtrips.push(roadplannerSave._id);
+        let userSave = await user.save();
+        console.log(userSave)
+        res.json({ result: true, roadplanner: roadplannerSave })
+    } catch(err) {
+        console.log(err);
+        res.json({ result: false, error: err })
+    }
 })
 
 //Visualisation des avantages
