@@ -6,8 +6,10 @@ import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 
 //COMPONENTS
-import Nav from '../components/Nav'
+import Nav from '../components/Nav';
 import Map from '../components/Map';
+import CardRoadPlanner from '../components/CardRoadPlanner';
+
 
 //REDUX
 import { connect } from 'react-redux';
@@ -81,6 +83,8 @@ function ScreenRoadPlanner(props) {
                             </div> {/* End -> ButtonFilters */}
                             
                             <div style={ styles.experiences_list_area }> {/* Container -> Card expérience */}
+
+                                <CardRoadPlanner></CardRoadPlanner>
 
                                 <div style={ styles.single_destinations}> {/* Card expérience */}
                                     <div style={ styles.image_card }>
