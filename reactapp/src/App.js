@@ -17,11 +17,13 @@ import ScreenBasket from './screens/ScreenBasket';
 //REDUX
 import region from './reducers/region.reducer';
 import activities from './reducers/activities.reducer';
-import experiences from './reducers/experiences.reducer'
+import experiences from './reducers/experiences.reducer';
+import token from './reducers/token.reducer';
+import roadplanner from './reducers/roadplanner.reducer'
 import { Provider } from 'react-redux';
 import { createStore, combineReducers }  from 'redux';
 
-const store = createStore(combineReducers({ region, activities, experiences }));
+const store = createStore(combineReducers({ region, activities, experiences, token, roadplanner }));
 
 function App() {
   return (

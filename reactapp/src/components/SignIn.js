@@ -34,7 +34,7 @@ const SignIn = (props) => {
         });
         let response = await rawResponse.json();
         if (response.result === true) {
-            props.onSigninClick({ token: response.token, pseudo: response.pseudo });
+            props.onSigninClick(response.token);
             if (isChecked) {
                 cookies.set('token', response.token, { path: '/', maxAge: 604800 })
             }
@@ -48,7 +48,7 @@ const SignIn = (props) => {
             let rawResponse = await fetch(`/users/auth/facebook/signin/${res.accessToken}`);
             let response = await rawResponse.json();
             if (response.result === true) {
-                props.onSigninClick({ token: response.token });
+                props.onSigninClick(response.token);
                 if (isChecked) {
                     cookies.set('token', response.token, { path: '/', maxAge: 604800 })
                 }
@@ -61,7 +61,7 @@ const SignIn = (props) => {
             let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
             let response = await rawResponse.json();
             if (response.result === true) {
-                props.onSigninClick({ token: response.token });
+                props.onSigninClick(response.token);
                 if (isChecked) {
                     cookies.set('token', response.token, { path: '/', maxAge: 604800 })
                 }
@@ -170,7 +170,7 @@ let styles = {
 function mapDispatchToProps(dispatch) {
     return {
         onSigninClick: function(data) {
-            dispatch({ type: 'signin', user: data })
+            dispatch({ type: 'signin', token: data })
         }
     }
 }
