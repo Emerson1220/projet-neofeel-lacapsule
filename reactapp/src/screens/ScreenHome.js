@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import '../styles/Home.css';
 import { Link, Redirect } from 'react-router-dom';
@@ -17,21 +17,22 @@ function ScreenHome(props) {
     console.log(props)
     //STATE HOOKS
     const [visible, setVisible] = useState(false);
-    const [search, setSearch] = useState(false);
+    const [search, setSearch] = useState(null);
 
+    useEffect(() => {console.log(search)}, [search])
     //FUNCTIONS
     //modal
     const showModal = () => {
         setVisible(!visible);
     };
 
-    const searchTrips = () => {
-        setSearch(true);
-    }
+    const searchTrips = (selection) => {
+        setSearch(selection);
+    };
 
-    if (props.region && search) {
+    if (search === 'region') {
         return <Redirect to='/recherche' />
-    } else if (props.activities.length > 0 && search) {
+    } else if (search === 'trips') {
         return <Redirect to='/suggestions' />
     } else {
         return (
@@ -84,7 +85,7 @@ function ScreenHome(props) {
                         <RedButton title="Commencer l'aventure" onSelect={() => showModal()} />
                     </div>
                 </div>
-                <SearchModal visible={visible} showModal={() => showModal()} searchTrips={ ()=>searchTrips() }/>
+                <SearchModal visible={ visible } showModal={ () => showModal() } searchTrips={ ()=>searchTrips() }/>
             </div>
         )
     }

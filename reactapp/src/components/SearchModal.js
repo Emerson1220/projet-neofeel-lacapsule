@@ -36,7 +36,7 @@ const SearchModal = (props) => {
         })
         let response = await rawResponse.json();
         props.onSearch(response.data);
-        props.searchTrips(true);
+        props.searchTrips(selection);
     }
 
     //select activities
@@ -48,7 +48,7 @@ const SearchModal = (props) => {
         });
         let response = await rawResponse.json();
         props.onSearch(response.data);
-        props.searchTrips(true);
+        props.searchTrips(selection);
     }
 
     //get list activity options from back
@@ -104,10 +104,10 @@ const SearchModal = (props) => {
     let selectButton;
     if (region) {
         selected = <h3>{ region.name }</h3>
-        selectButton = <RedButton title="Allons-y!" onSelect={()=> selectRegion()} />
+        selectButton = <RedButton title="Allons-y!" onSelect={ ()=> selectRegion() } />
     }else if (activities.length > 0){
         selected = <h3>{ region }</h3>
-        selectButton = <RedButton title="Allons-y!" onSelect={()=> selectActivity()}/>
+        selectButton = <RedButton title="Allons-y!" onSelect={ ()=> selectActivity() }/>
     };
 
 
