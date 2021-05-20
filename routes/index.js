@@ -81,7 +81,7 @@ router.put('/myroadplanner', async function(req, res, next) {
 //Suppression d'expérience dans le road planner
 //Body: experienceID (12345)
 //Response: result (true)
-router.delete('/myroadplanner/:experiences', function(req, res, next) {
+router.delete('/myroadplanner/:roadtripID/:experienceID', async function(req, res, next) {
 
 })
 
