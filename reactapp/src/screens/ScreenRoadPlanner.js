@@ -1,12 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
+
+//UI
+import { Button } from 'antd';
+
+//COMPONENTS
 import Nav from '../components/Nav'
 
+//REDUX
 import { connect } from 'react-redux';
 
+function ScreenRoadPlanner(props) {
+    let roadplanner = props.roadplanner;
 
-function ScreenRoadPlanner() {
+    const deleteBDD = async(data) => {
+        let rawResponse = await fetch(`/myroadplanner/${data.roadtripID}/${data.experienceID}`);
+        let response = await rawResponse.json();
+    }
 
 
     const [experiences, setExperience] = useState([]);
@@ -348,7 +359,21 @@ let styles = {
         margin: '0 5px', 
     },
 
-    }        
-    
+}        
 
-export default ScreenRoadPlanner;
+function mapDispatchToProps(dispatch) {
+    return {
+        deleteExperience: function(data) {
+            dispatch({ type: 'deleteExperience', data: data })
+        }
+    }
+}
+
+function mapStateToProps(state) {
+    return { user: state.user, roadplanner: state.roadplanner }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ScreenRoadPlanner);

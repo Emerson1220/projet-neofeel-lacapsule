@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 //MAP
-import France from '@svg-maps/france.regions';
+import France from '@svg-maps/france.departments';
 import { SVGMap } from 'react-svg-map';
 import '../styles/map.css'
 
@@ -34,7 +34,7 @@ const SearchModal = (props) => {
             body : `region=${props.region}`
         })
         let response = await rawResponse.json();
-        
+        props.onSearch(response.data)
     }
 
     //select activities

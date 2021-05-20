@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@svg-maps/france.departments": "^1.0.1",
     "@svg-maps/france.regions": "^1.1.1",
     "@testing-library/jest-dom": "^5.12.0",
@@ -10,8 +13,12 @@
     "@testing-library/user-event": "^12.8.3",
     "antd": "^4.15.5",
     "dotenv": "^9.0.2",
+    "flat-icons": "^1.0.0",
+    "google-map-react": "^2.1.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.2.2",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -19,10 +26,11 @@
     "react-svg-map": "^2.2.0",
     "redux": "^4.1.0",
     "svgson": "^5.2.1",
+    "universal-cookie": "^4.0.4",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
