@@ -1,11 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import RedButton from './RedButton';
+import { Cascader } from 'antd'
 
 const ExperienceList = (props) => {
+    const [voyageSelect, setVoyageSelect] = useState('');
+    const options = [
+        {
+            value: 'new',
+            label: 'Nouveau voyage'
+        },
+        {
+            value: 'saved',
+            label: 'Vos voyages',
+            children: [
+                {
+                    value: 'id12345',
+                    label: 'Voyage 1'
+                },
+                {
+                    value: 'id23456',
+                    label: 'Voyage 2'
+                }
+            ]
+        }
+    ];
 
+    function displayRender(label) {
+        return label[label.length - 1];
+    }
 
+    const onChange = (value) => {
+        setVoyageSelect(value)
+    };
+
+    const chooseTrip = (id) => {
+
+    }
     /* MAP SUR EXPERIENCES LIST ___________*/
     var ExperienceListing = [];
     if (props.experiences) {
@@ -19,7 +52,7 @@ const ExperienceList = (props) => {
                 <div key={i} style={styles.experiences_list_area}> {/* Container -> Card expérience */}
                     <div style={styles.single_destinations}> {/* Card expérience */}
                         <div style={styles.image_card}>
-                            <img style={styles.image} src="images/photo-526x360.png" alt="list" />
+                            <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
                         </div>
                         <div style={styles.detail_card}>
                             <div>
@@ -45,6 +78,16 @@ const ExperienceList = (props) => {
                             <div style={styles.liste_price_item}>
                                 <p>Prix</p>
                                 <h2>{experience.budget}<span>€</span></h2>
+                            </div>
+                            <div>
+                                <Cascader
+                                options={ options }
+                                expandTrigger="hover"
+                                displayRender={ displayRender }
+                                onChange={ onChange }
+                                />
+                                <RedButton
+                                title="+"/>
                             </div>
 
                         </div>

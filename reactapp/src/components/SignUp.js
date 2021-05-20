@@ -56,6 +56,7 @@ const SignUp = (props) => {
     const responseFacebook = async(res) => {
         let rawResponse = await fetch(`/users/auth/facebook/signup/${res.accessToken}`);
         let response = await rawResponse.json();
+        console.log(response)
         if (response.result === true) {
             props.onSignupClick({ token: response.token });
             if (isChecked) {
