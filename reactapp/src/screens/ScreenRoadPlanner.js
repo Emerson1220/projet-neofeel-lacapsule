@@ -46,6 +46,23 @@ function ScreenRoadPlanner(props) {
         let response = await rawResponse.json();
     }
 
+    // let experience = [{name:"test"}, {name:"test2"}, {name3:"test3"}]
+
+    let cards = roadplanner.map((e, i)=>
+
+        <CardRoadPlanner key={i} 
+            name={e.name} 
+            activity={e.activity} 
+            activityType={e.activityType} 
+            region={e.region}
+            tags={e.tags}
+            subtitle={e.description.subtitle}
+            activityTime={e.activityTime}
+            budget={e.budget}
+            imageBannerUrl={e.description.imageBannerUrl}>
+        </CardRoadPlanner>
+    )
+    console.log(cards)
     return (	
     <div>
             <Nav />
@@ -87,41 +104,13 @@ function ScreenRoadPlanner(props) {
                             
                             <div style={ styles.experiences_list_area }> 
 
-                                {roadplanner.map((e, i)=>{
-                                    <CardRoadPlanner key={i} name={e.name}></CardRoadPlanner>
-                                })}
-
-                                <div style={ styles.single_destinations}> 
-                                    <div style={ styles.image_card }>
-                                        <img style={ styles.image } src="images/photo-526x360.png" alt="list" />
-                                    </div>
-                                    <div style={ styles.detail_card }>
-                                        <div>
-                                            <h3><Link style={ styles.h3 } to="/">Activité</Link></h3>
-                                            <h4><Link style={ styles.h4 } to="/">Nom du partenaire</Link></h4>
-                                        </div>
-                                        <div style={ styles.display_inline}>
-                                            <p style={{ color: '#e06868', marginBottom: '8px'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />Région</p>
-                                            <h4 ><Link style={ styles.h4 }  to="/">Ville</Link></h4>
-                                        </div>
-                                        <div style={ styles.liste_price }>
-                                            <ul style= { Object.assign(styles.liste_price_content, styles.liste_price_li) }>
-                                                <li><i style={ styles.icons_fa }/> Temps</li>
-                                                <li><i style={ styles.icons_fa }/> 2 heures</li>
-                                            </ul>
-                                        </div>
-                                        <div style={ styles.liste_price_item }>
-                                            <p>Prix</p>
-                                            <h2>80 <span>€</span></h2>
-                                        </div>
-
-                                    </div>
-                                </div> 
+                            {cards}
 
                                 
                             </div>
+
                             <div style={ styles.text_align_center}>
-                                <div style={ Object.assign(styles.display_inline, styles.pagination) }>
+                                <div style={ styles.pagination }>
                                     <ul style={ styles.pagination_ul}>
                                         <li><a style={ styles.pagination_li } href=""><i    /></a></li>
                                         <li><a style={ styles.pagination_li } href="">1</a></li>
@@ -382,6 +371,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+    console.log(state)
     return { user: state.user, roadplanner: state.roadplanner }
 }
 

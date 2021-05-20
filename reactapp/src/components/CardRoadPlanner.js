@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function CardRoadPlanner(props) {
+    console.log(props)
 
     const deleteBDD = async(data) => {
         let rawResponse = await fetch(`/myroadplanner/${data.roadtripID}/${data.experienceID}`);
@@ -18,12 +19,12 @@ function CardRoadPlanner(props) {
     return ( 
         <div style={ styles.single_destinations}>
             <div style={ styles.image_card }>
-                <img style={ styles.image } src="images/photo-526x360.png" alt="list" />
+                <img style={ styles.image } src={props.imageBannerUrl} alt="list" />
             </div>
             <div style={ styles.detail_card }>
                 <div>
-                    <h3><Link style={ styles.h3 } to="/">{props.name}</Link></h3>
-                    <h4><Link style={ styles.h4 } to="/">Nom du partenaire</Link></h4>
+                    <h3><Link style={ styles.h3 } to="/">{props.activity}</Link></h3>
+                    <h4><Link style={ styles.h4 } to="/">{props.name}</Link></h4>
                 </div>
                 <div style={ styles.display_inline}>
                     <p style={{ color: '#e06868', marginBottom: '8px'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />Région</p>
@@ -31,14 +32,14 @@ function CardRoadPlanner(props) {
                 </div>
                 {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
                 <div style={ styles.liste_price }>
-                    <ul style= { Object.assign(styles.liste_price_content, styles.liste_price_li) }>
+                    {/* <ul style= { Object.assign(styles.liste_price_content, styles.liste_price_li) }>
                         <li><i style={ styles.icons_fa }/> Temps</li>
-                        <li><i style={ styles.icons_fa }/> 2 heures</li>
-                    </ul>
+                        <li><i style={ styles.icons_fa }/> {props.activityTime}</li>
+                    </ul> */}
                 </div>
                 <div style={ styles.liste_price_item }>
                     <p>Prix</p>
-                    <h2>80 <span>€</span></h2>
+                    <h2>{props.budget}</h2>
                 </div>
             </div>
         </div> 
