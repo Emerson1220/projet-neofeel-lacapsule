@@ -74,7 +74,7 @@ const RedButton = (props) => {
     }
 
     let title = <h2 style={ styles.buttonText }>{ props.title }</h2>;
-    if (props.title.split(' ').length > 3) {
+    if (props.title && props.title.split(' ').length > 3) {
         title = <h2 style={ styles.buttonText }>{ props.title.split(' ').slice(0, 3).join(' ')}<br/>{ props.title.split(' ').slice(3).join(' ')}</h2>
     }
 
