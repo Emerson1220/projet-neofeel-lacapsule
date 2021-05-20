@@ -8,12 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarker } from '@fortawesome/free-solid-svg-icons'
 
 
-
-
-
-
-
-
 const LocationPin = ({ text }) => (
     <div className="pin">
         <FontAwesomeIcon  icon={faMapMarker} className="pin-icon" />
