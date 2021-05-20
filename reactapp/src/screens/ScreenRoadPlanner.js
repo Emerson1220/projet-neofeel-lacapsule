@@ -15,7 +15,11 @@ import CardRoadPlanner from '../components/CardRoadPlanner';
 import { connect } from 'react-redux';
 
 function ScreenRoadPlanner(props) {
-    let roadplanner = props.roadplanner;
+    let roadplanner = [];
+    if(props.roadplanner){
+        roadplanner = props.roadplanner
+    };
+    console.log(roadplanner)
 
     const deleteBDD = async(data) => {
         let rawResponse = await fetch(`/myroadplanner/${data.roadtripID}/${data.experienceID}`);
@@ -49,7 +53,6 @@ function ScreenRoadPlanner(props) {
 
                 <div style={{ display: 'flex', justifyContent: 'center', width: '60%' }}>
                     <Map></Map>
-                    {/* <img style={ styles.map } src="images/photo-526x360.png" alt="list" /> */}
                 </div>
 
 
@@ -80,13 +83,15 @@ function ScreenRoadPlanner(props) {
                                         </label>
                                     </div>
                                 </div>
-                            </div> {/* End -> ButtonFilters */}
+                            </div> 
                             
-                            <div style={ styles.experiences_list_area }> {/* Container -> Card expérience */}
+                            <div style={ styles.experiences_list_area }> 
 
-                                <CardRoadPlanner></CardRoadPlanner>
+                                {roadplanner.map((e, i)=>{
+                                    <CardRoadPlanner key={i} name={e.name}></CardRoadPlanner>
+                                })}
 
-                                <div style={ styles.single_destinations}> {/* Card expérience */}
+                                <div style={ styles.single_destinations}> 
                                     <div style={ styles.image_card }>
                                         <img style={ styles.image } src="images/photo-526x360.png" alt="list" />
                                     </div>
@@ -99,7 +104,6 @@ function ScreenRoadPlanner(props) {
                                             <p style={{ color: '#e06868', marginBottom: '8px'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />Région</p>
                                             <h4 ><Link style={ styles.h4 }  to="/">Ville</Link></h4>
                                         </div>
-                                        {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
                                         <div style={ styles.liste_price }>
                                             <ul style= { Object.assign(styles.liste_price_content, styles.liste_price_li) }>
                                                 <li><i style={ styles.icons_fa }/> Temps</li>
@@ -112,11 +116,11 @@ function ScreenRoadPlanner(props) {
                                         </div>
 
                                     </div>
-                                </div> {/* End -> Card expérience */}
+                                </div> 
 
                                 
-                            </div> {/* End -> Container -> Card expérience */}
-                            <div style={ styles.text_align_center}> {/* Pagination */}
+                            </div>
+                            <div style={ styles.text_align_center}>
                                 <div style={ Object.assign(styles.display_inline, styles.pagination) }>
                                     <ul style={ styles.pagination_ul}>
                                         <li><a style={ styles.pagination_li } href=""><i    /></a></li>
@@ -127,7 +131,7 @@ function ScreenRoadPlanner(props) {
                                         <li><a style={ styles.pagination_li } href=""><i /></a></li>
                                     </ul>                          
                                 </div>
-                            </div>{/* End -> Pagination */}
+                            </div>
                         </div>
                     </div>
                 </div>

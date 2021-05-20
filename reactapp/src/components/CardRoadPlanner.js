@@ -3,25 +3,14 @@ import '../App.css';
 import { Link } from 'react-router-dom';
 
 
+
 //REDUX
 import { connect } from 'react-redux';
 
 function CardRoadPlanner(props) {
 
-    let roadplanner = props.roadplanner;
-
     const deleteBDD = async(data) => {
         let rawResponse = await fetch(`/myroadplanner/${data.roadtripID}/${data.experienceID}`);
-        let response = await rawResponse.json();
-    }
-
-    const [experiences, setExperience] = useState([]);
-
-
-    var selectExperience = async (experience) => {
-        let rawResponse = await fetch('/roadtrips/60a4d8695e61b2c452d97b78', {
-            method: 'DELETE',
-        })
         let response = await rawResponse.json();
     }
 
@@ -33,7 +22,7 @@ function CardRoadPlanner(props) {
             </div>
             <div style={ styles.detail_card }>
                 <div>
-                    <h3><Link style={ styles.h3 } to="/">Activité</Link></h3>
+                    <h3><Link style={ styles.h3 } to="/">{props.name}</Link></h3>
                     <h4><Link style={ styles.h4 } to="/">Nom du partenaire</Link></h4>
                 </div>
                 <div style={ styles.display_inline}>
