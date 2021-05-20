@@ -23,9 +23,8 @@ function ScreenRoadPlanner(props) {
     <div>
             <Nav />
                 <div style={ styles.container }>
-                    <div style={{ textAlign:'center' }} >
-                        <img style={{ width:'80%', height:'auto' }} src="images/photo-526x360.png" alt="list" />
-                        <img style={{ width:'40%', height:'auto', marginTop:'1rem' }} src="images/photo-526x360.png" alt="list" />
+                    <div>
+                        <img style={ styles.map } src="images/photo-526x360.png" alt="list" />
                     </div>
 
                     <div style={ styles.row }>
@@ -74,7 +73,7 @@ function ScreenRoadPlanner(props) {
                                         </div>
                                         {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
                                         <div style={ styles.liste_price }>
-                                            <ul style={ styles.liste_price_content, styles.liste_price_li }>
+                                            <ul style= { Object.assign(styles.liste_price_content, styles.liste_price_li) }>
                                                 <li><i style={ styles.icons_fa }/> Temps</li>
                                                 <li><i style={ styles.icons_fa }/> 2 heures</li>
                                             </ul>
@@ -102,7 +101,7 @@ function ScreenRoadPlanner(props) {
                                         </div>
                                         {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
                                         <div style={ styles.liste_price }>
-                                            <ul style={ styles.liste_price_content, styles.liste_price_li }>
+                                            <ul style={ Object.assign(styles.liste_price_content, styles.liste_price_li ) }>
                                                 <li><i style={ styles.icons_fa }/> Temps</li>
                                                 <li><i style={ styles.icons_fa }/> 2 heures</li>
                                             </ul>
@@ -130,7 +129,7 @@ function ScreenRoadPlanner(props) {
                                         </div>
                                         {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
                                         <div style={ styles.liste_price }>
-                                            <ul style={ styles.liste_price_content, styles.liste_price_li }>
+                                            <ul style={ Object.assign(styles.liste_price_content, styles.liste_price_li )}>
                                                 <li><i style={ styles.icons_fa }/> Temps</li>
                                                 <li><i style={ styles.icons_fa }/> 2 heures</li>
                                             </ul>
@@ -149,13 +148,13 @@ function ScreenRoadPlanner(props) {
                             </div> {/* End -> Container -> Card expérience */}
                             <div style={ styles.text_align_center}> {/* Pagination */}
                                 <div style={ Object.assign(styles.display_inline, styles.pagination) }>
-                                    <ul>
-                                        <li><a style={ styles.pagination_li } href="#"><i    /></a></li>
-                                        <li><a style={ styles.pagination_li } href="#">1</a></li>
-                                        <li><a style={ styles.pagination_li } href="#">2</a></li>
-                                        <li><a style={ styles.pagination_li } href="#">3</a></li>
-                                        <li><a style={ styles.pagination_li } href="#">4</a></li>
-                                        <li><a style={ styles.pagination_li } href="#"><i /></a></li>
+                                    <ul style={ styles.pagination_ul}>
+                                        <li><a style={ styles.pagination_li } href=""><i    /></a></li>
+                                        <li><a style={ styles.pagination_li } href="">1</a></li>
+                                        <li><a style={ styles.pagination_li } href="">2</a></li>
+                                        <li><a style={ styles.pagination_li } href="">3</a></li>
+                                        <li><a style={ styles.pagination_li } href="">4</a></li>
+                                        <li><a style={ styles.pagination_li } href=""><i /></a></li>
                                     </ul>                          
                                 </div>
                             </div>{/* End -> Pagination */}
@@ -177,6 +176,7 @@ let styles = {
         paddingBTop: '1rem',       
         paddingright: '15px',
         paddingleft: '15px',
+        marginTop:'2rem',
         marginright: 'auto',
         marginleft: 'auto',
     },
@@ -184,16 +184,11 @@ let styles = {
     row:{
         display: 'flex',
         flexWrap: 'wrap',
-        marginRight: '-15px',
-        marginLeft: '-15px',
     },
 
     row_filters:{
         display: 'flex',
         flexWrap: 'wrap',
-        marginRight: '-15px',
-        marginLeft: '-15px',
-        // padding: '2rem',
     },
 
     col_xl_9:{
@@ -235,6 +230,18 @@ let styles = {
     text_align_center:{
         textAlign:'center',
     },
+
+    // CSS - MAP //
+
+    map:{
+        width:'50%', 
+        height:'auto', 
+        position: 'fixed',
+        top: '100px',
+        left: '10px',
+        padding:'1rem',
+    },
+
 
     // CSS - ICONS //
 
@@ -292,7 +299,7 @@ let styles = {
 
     image_card:{
         position: 'relative',
-        background: '#106271',
+        background: '#fff',
         overflow: 'hidden',
         flex: '0 0 30%',
         backgroundSize: 'cover',
@@ -304,8 +311,9 @@ let styles = {
 
     image:{
         width: '100%',
-        height: '70%',
-        objectFit: 'cover',
+        height: '100%',
+        // objectFit: 'cover',
+        objectFit: 'contains',
         objectPosition: 'center center',
         borderRadius: '5px',
     },
@@ -371,6 +379,12 @@ let styles = {
         marginTop: '.5rem',    
     },
 
+    pagination_ul:{
+        display: 'flex',
+        flexDirection: 'row',
+        listStyleType: 'none',
+    },
+
     pagination_li:{
         lineHeight: '43px',
         border: '2px solid #CFD3DE',
@@ -380,7 +394,6 @@ let styles = {
         color: '#97A1B3', 
         width: '42px',
         height: '42px',
-        lineHeight: '40px',
         margin: '0 5px', 
     },
 

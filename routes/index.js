@@ -74,7 +74,14 @@ router.get('/roadtrips/:token', async function(req, res, next) {
 //Ajout d'expérience au road planner
 //Body: experienceID (12345)
 //Response: result (true)
+
 router.put('/myroadplanner', async function(req, res, next) {
+    let roadtrip = await Roadtrip.findById(req.body.roadtripID);
+    roadtrip.experiences.push(req.body.experienceID);
+    let roadtripSaved = await roadtrip.save();
+    !roadtripSaved
+    ? res.json({ result: false })
+    : res.json({ result: true, roadtrip: roadtrip, saved: roadtripSaved })
     try {
         let roadtrip = await Roadtrip.findById(req.body.roadtripID);
         roadtrip.experiences.push(req.body.experienceID);
