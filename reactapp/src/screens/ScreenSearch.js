@@ -33,7 +33,7 @@ function ScreenSearch(props) {
         props.onSearch(response.data)
     }
 
-
+    
 
     function OnclickMap() {
         setDisplay('map');

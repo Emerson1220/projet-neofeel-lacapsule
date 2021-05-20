@@ -68,3 +68,6 @@ typings/
 /reactapp/build
 
 /reactapp/src/ScreenHome.js
+
+# Apps history
+.history

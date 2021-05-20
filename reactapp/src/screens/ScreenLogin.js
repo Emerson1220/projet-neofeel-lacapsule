@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Nav from '../components/Nav'
 import SignIn from '../components/SignIn'
 import SignUp from '../components/SignUp'
+
 //UI
 import RedButton from '../components/RedButton'
 
@@ -16,7 +17,7 @@ const ScreenLogin = () => {
         input = <SignUp />
     }
     return (
-        <div>
+        <div className="home">
             <Nav></Nav>
             <div style={ styles.container }>
                 <div style={ styles.box }>
@@ -41,8 +42,9 @@ let styles = {
         justifyContent: 'center'
     },
     box: {
-        backgroundColor: 'rgba(16, 98, 113, 0.7)',
-        borderRadius: '5px'
+        backgroundColor: 'rgba(16, 98, 113, 0.9)',
+        borderRadius: '5px',
+        width: '30vw'
     },
     switch: {
         color: 'rgba(224, 104, 104, 0.8)',
