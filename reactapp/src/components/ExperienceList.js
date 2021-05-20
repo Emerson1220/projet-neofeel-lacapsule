@@ -94,8 +94,8 @@ const ExperienceList = (props) => {
                         </div>
                         <div style={styles.detail_card}>
                             <div>
-                                <h3><Link style={styles.h3} to="/">{experience.name}</Link></h3>
-                                <h4><Link style={styles.h4} to="/">{experience.subtitle}</Link></h4>
+                                <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
+                                <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
 
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
