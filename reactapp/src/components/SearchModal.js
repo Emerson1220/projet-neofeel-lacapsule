@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 //MAP
-import France from '@svg-maps/france.departments';
+import France from '@svg-maps/france.regions';
 import { SVGMap } from 'react-svg-map';
 import '../styles/map.css'
 
@@ -130,7 +130,6 @@ const SearchModal = (props) => {
                 <SVGMap
                 map={ France }
                 onLocationClick={ (e)=>selectLocation(e) }
-                locationClassName=''
                 />
             { selectButton }
             </div>
