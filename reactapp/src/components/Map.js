@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 import '../styles/googleMap.css';
 import GoogleMapReact from 'google-map-react';
@@ -12,9 +12,11 @@ import { faMapMarker } from '@fortawesome/free-solid-svg-icons'
 
 
 
+
+
 const LocationPin = ({ text }) => (
     <div className="pin">
-        <FontAwesomeIcon icon={faMapMarker} className="pin-icon" />
+        <FontAwesomeIcon  icon={faMapMarker} className="pin-icon" />
         <p className="pin-text">{text}</p>
     </div>
 );
