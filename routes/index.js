@@ -5,9 +5,7 @@ var router = express.Router();
 const Experience = require('../models/Experience');
 const Roadtrip = require('../models/Roadtrip');
 
-//Recherche expériences
-//Query: région (Alsace), catégorie (gastronomie)
-//Response: result (true), expériences ['Vinot varlot']
+//get experiences par région
 router.post('/searchregions', async function(req, res, next) {
     try {
         let experiences = await Experience.find({ regionCode: req.body.region });
@@ -18,12 +16,13 @@ router.post('/searchregions', async function(req, res, next) {
     }
 })
 
+//get experiences par type
 router.post('/searchtrips', async function(req, res, next) {
     try {
         let a = JSON.parse(req.body.activities);
         let experiences = [];
         for (let i=0 ; i<a.length ; i++) {
-            let response = await Experience.find({ tags: a[i] });
+            let response = await Experience.find({ tags: a[i] }).populate('partner').exec();
             experiences = experiences.concat(response);
         }
         res.json({ result: true, data: experiences })
@@ -33,6 +32,7 @@ router.post('/searchtrips', async function(req, res, next) {
     }
 })
 
+//get liste des types d'activités
 router.get('/activities', async function(req, res, next) {
     try {
         let aggregate = Experience.aggregate();
@@ -47,43 +47,34 @@ router.get('/activities', async function(req, res, next) {
     }
 })
 
-//Suggestions de voyage
-//Query: durée, région
-//Response: [roadtrips]
-router.get('/roadtrips', function(req, res, next) {
-    if (!req.query.region) {
-        res.json({ result: false })
-    } else {
-        res.json({ result: true, experiences: [{ name: 'vinot varlot' }] });
+//get liste des voyages
+router.get('/roadtrips', async function(req, res, next) {
+    try {
+        let roadtrips = await Roadtrip.find();
+        res.json({ result: true, roadtrips: roadtrips })
+    } catch (err) {
+        console.log(err);
+        res.json({ result: false, error: err })
+    }
+})
+
+//Voyages utilisateur
+router.get('/roadtrips/:token', async function(req, res, next) {
+    try {
+        let user = await User.findOne({ token: req.params.token })
+        .populate('roadtrips')
+        .exec();
+        res.json({ result: true, roadtrips: user.roadtrips })
+    } catch (err) {
+        console.log(err);
+        res.json({ result: false, error: err })
     }
 })
 
 //Ajout d'expérience au road planner
 //Body: experienceID (12345)
 //Response: result (true)
-<<<<<<< HEAD
-router.put('/myroadplanner', function(req, res, next) {
 
-    var newExperience = new roadPlannerModel({
-        experienceName: req.body.name,
-        experienceImg: req.body.img
-
-      })
-    
-      var experienceSave = await newExperience.save()
-    
-      var result = false
-      if(experienceSave.experienceName){
-        result = true
-      }
-    
-      res.json({result})
-      
-    // Route test
-    // !req.body.experienceID
-    // ? res.json({ result: false })
-    // : res.json({ result: true, experiences: ['12345']})
-=======
 router.put('/myroadplanner', async function(req, res, next) {
     let roadtrip = await Roadtrip.findById(req.body.roadtripID);
     roadtrip.experiences.push(req.body.experienceID);
@@ -91,33 +82,54 @@ router.put('/myroadplanner', async function(req, res, next) {
     !roadtripSaved
     ? res.json({ result: false })
     : res.json({ result: true, roadtrip: roadtrip, saved: roadtripSaved })
->>>>>>> d1a32cc973e454ad65493af5b5bd9eef22c6a41f
+    try {
+        let roadtrip = await Roadtrip.findById(req.body.roadtripID);
+        roadtrip.experiences.push(req.body.experienceID);
+
+        let roadtripSaved = await roadtrip.save();
+        res.json({ result: true, roadtrip: roadtripSaved })
+    } catch (err) {
+        console.log(err)
+        res.json({ result: false, error: err })
+    }
 })
 
 //Suppression d'expérience dans le road planner
 //Body: experienceID (12345)
 //Response: result (true)
-router.delete('/myroadplanner', function(req, res, next) {
-  
+router.delete('/myroadplanner/:roadtripID/:experienceID', async function(req, res, next) {
+    try {
+        let roadplanner = await Roadtrip.findById(req.params.roadtripID).populate('experiences').exec();
+        roadplanner.experiences = roadplanner.experiences.filter(e => e.id !== req.params.experienceID);
+        let roadplannerSave = await roadplanner.save();
+        res.json({ result: true, roadplanner: roadplannerSave })
+    } catch (err) {
+        console.log(err)
+        res.json({ result: false, error: err })
+    }
 })
 
 //Affichage du road planner
 //Query: roadtripID (12345)
 //Response: result(true), roadplanner [expérience: nom, région, catégorie, activité ]
-router.get('/myroadplanner', function(req, res, next) {
-  
+router.get('/myroadplanner/:userID', async function(req, res, next) {
+
 })
 
 //Sauvegarder le road planner
-//Body: [experienceID]
+//Body: user token, trip name, trip region, trip region code
 //Response: result (true)
 router.post('/myroadplanner', async function(req, res, next) {
+    let user = await User.findOne({ token: req.body.token })
     let roadplanner = new Roadtrip({
-        experiences: []
+        creationDate: new Date(),
+        name: req.body.name,
+        region: req.body.region,
+        regionCode: req.body.regionCode,
+        creator: user._id
     })
-
-    await roadplanner.save();
-    res.json({ result: true, roadplanner: roadplanner })
+    let roadplannerSave = await roadplanner.save();
+    res.json({ result: true, roadplanner: roadplannerSave })
 })
 
 //Visualisation des avantages

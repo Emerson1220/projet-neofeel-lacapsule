@@ -1,35 +1,67 @@
 import React, { Component } from 'react';
+import '../App.css';
+import '../styles/googleMap.css';
 import GoogleMapReact from 'google-map-react';
- 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
- 
-class SimpleMap extends Component {
-  static defaultProps = {
-    center: {
-      lat: 59.95,
-      lng: 30.33
-    },
-    zoom: 11
-  };
- 
-  render() {
+import { connect } from 'react-redux';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMapMarker } from '@fortawesome/free-solid-svg-icons'
+
+
+
+
+
+
+const LocationPin = ({ text }) => (
+    <div className="pin">
+        <FontAwesomeIcon icon={faMapMarker} className="pin-icon" />
+        <p className="pin-text">{text}</p>
+    </div>
+);
+
+const Map = (props) => {
+    var ExperienceListingMap = [];
+    if (props.experiences) {
+
+        ExperienceListingMap = props.experiences.map((experience, i) => {
+            return (<LocationPin
+                lat={experience.coordinate.latitude}
+                lng={experience.coordinate.longitude}
+
+            />)
+    })}
+        
+
+
+    let location = {
+            address: '',
+            lat: 48.816,
+            lng: 5.806
+        }
+
     return (
-      // Important! Always set the container height explicitly
-      <div style={{ height: '100vh', width: '100%' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-          <AnyReactComponent
-            lat={59.955413}
-            lng={30.337844}
-            text="My Marker"
-          />
-        </GoogleMapReact>
-      </div>
-    );
-  }
-}
- 
-export default SimpleMap;
+            <div className="map">
+                <div className="google-map">
+                    <GoogleMapReact
+                        bootstrapURLKeys={{ key: ' AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s' }}
+                        defaultCenter={location}
+                        defaultZoom={7}
+                    >
+                        {ExperienceListingMap}
+                    </GoogleMapReact>
+                </div>
+            </div>
+
+        )
+    }
+
+
+
+    function mapStateToProps(state) {
+        console.log(state)
+        return { experiences: state.experiences, region: state.region }
+    }
+
+    export default connect(
+        mapStateToProps,
+        null)(Map);
