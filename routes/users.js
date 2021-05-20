@@ -31,7 +31,8 @@ router.post('/signup', async function(req, res, next) {
       pseudo: user.pseudo,
       email: user.email,
       password: hash,
-      token: uid2(32)
+      token: uid2(32),
+      category: 'user'
     });
 
     await newUser.save();
@@ -82,15 +83,35 @@ router.post('/signin', async function(req, res, next) {
 });
 
 router.get('/auth/facebook/signup/:accessToken', async function(req, res, next) {
-  const { data } = await axios({
-    url: 'https://graph.facebook.com/me',
-    method: 'get',
-    params: {
-      fields: ['id', 'email', 'first_name', 'last_name'].join(', '),
-      access_token: req.params.accessToken
+  try {
+    const { data } = await axios({
+      url: 'https://graph.facebook.com/me',
+      method: 'get',
+      params: {
+        fields: ['id', 'email', 'first_name', 'last_name', 'picture'].join(', '),
+        access_token: req.params.accessToken
+      }
+    });
+    console.log(data)
+    if (!data) {
+      throw 'facebook login failed'
     }
-  });
-  console.log(data)
+    
+    let user = new User({
+      firstName: data.first_name,
+      lastName: data.last_name,
+      email: data.email,
+      token: uid2(32),
+      category: 'user',
+      avatar: data.picture.data.url
+    })
+    console.log(user);
+    let newUser = await user.save();
+    res.json({ result: true, token: newUser.token })
+  } catch(err) {
+    console.log(err)
+    res.json({ result: false, error: err })
+  }
 })
 
 router.get('/auth/google/signup/:accessToken', async function(req, res, next) {
@@ -102,18 +123,19 @@ router.get('/auth/google/signup/:accessToken', async function(req, res, next) {
       audience: "884422014939-bu63e3eoqfgv1vrmsn01qd0ukfl2uumf.apps.googleusercontent.com"
     });
     res.send(ticket);
-    // const { name, email, picture } = ticket.getPayload();
-    // console.log({ name, email, picture })
-    // let user = new User({
-    //   firstName: name.split(' ')[0],
-    //   lastName: name.split(' ')[-1],
-    //   email: email,
-    //   token: uid2(32),
-    //   avatar: picture
-    // });
+    const { name, email, picture } = ticket.getPayload();
+    console.log({ name, email, picture })
+    let user = new User({
+      firstName: name.split(' ')[0],
+      lastName: name.split(' ')[-1],
+      email: email,
+      token: uid2(32),
+      avatar: picture,
+      category: 'user'
+    });
 
-    // let newUser = await user.save();
-    // res.json({ result: true, token: newUser.token })
+    let newUser = await user.save();
+    res.json({ result: true, token: newUser.token })
   } catch (err) {
     console.log(err);
     res.json({ result: false, error: err })
@@ -122,7 +144,29 @@ router.get('/auth/google/signup/:accessToken', async function(req, res, next) {
 })
 
 router.post('/auth/facebook/signin', async function(req, res, next) {
+  try {
+    const { data } = await axios({
+      url: 'https://graph.facebook.com/me',
+      method: 'get',
+      params: {
+        fields: ['email'].join(', '),
+        access_token: req.params.accessToken
+      }
+    });
+    console.log(data)
+    if (!data) {
+      throw 'facebook login failed'
+    }
 
+    let user = await User.findOne({ email: data.email })
+    if (!user) {
+      throw 'user not found'
+    }
+    res.json({ result: true, token: user.token })
+  } catch(err) {
+    console.log(err)
+    res.json({ result: false, error: err })
+  }
 })
 
 router.post('/auth/google/signin', async function(req, res, next) {

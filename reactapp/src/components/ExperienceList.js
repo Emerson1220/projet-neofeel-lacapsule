@@ -1,11 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import RedButton from './RedButton';
+import { Cascader } from 'antd'
 
 const ExperienceList = (props) => {
+    const [voyageSelect, setVoyageSelect] = useState('');
+    const options = [
+        {
+            value: 'new',
+            label: 'Nouveau voyage'
+        },
+        {
+            value: 'saved',
+            label: 'Vos voyages',
+            children: [
+                {
+                    value: 'id12345',
+                    label: 'Voyage 1'
+                },
+                {
+                    value: 'id23456',
+                    label: 'Voyage 2'
+                }
+            ]
+        }
+    ];
 
+    function displayRender(label) {
+        return label[label.length - 1];
+    }
 
+    const onChange = (value) => {
+        setVoyageSelect(value)
+    };
+
+    const chooseExperience = async(experience) => {
+        console.log(voyageSelect[0])
+        if (voyageSelect[0] === 'new') {
+            createRoadtrip(experience);
+        } else {
+            addExperience(experience);
+        }
+    }
+
+    //ajout d'expérience à un voyage existant
+    const addExperience = async(experience) => {
+        let rawResponse = await fetch('/myroadplanner', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `roadtripID=${voyageSelect}&experienceID=${experience._id}`
+        })
+        let response = await rawResponse.json();
+        if (response.result === true) {
+            props.onAddExperience(response.roadtrip);
+        }
+    };
+
+    //création nouveau voyage avec expérience choisie
+    const createRoadtrip = async(experience) => {
+        if (props.token) {
+            let data = {
+                token: props.token,
+                name: 'Mon Voyage en Alsace',
+                region: props.region,
+                regionCode: 'ges',
+                experience: experience._id
+            };
+            data = JSON.stringify(data);
+            let rawResponse = await fetch('/myroadplanner', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `token=${props.token}&name=Mon Voyage en Alsace&region=${props.region}&regionCode=ges&experience=${experience._id}`
+            })
+        }
+        props.onAddExperience(experience);
+    }
     /* MAP SUR EXPERIENCES LIST ___________*/
     var ExperienceListing = [];
     if (props.experiences) {
@@ -19,7 +90,7 @@ const ExperienceList = (props) => {
                 <div key={i} style={styles.experiences_list_area}> {/* Container -> Card expérience */}
                     <div style={styles.single_destinations}> {/* Card expérience */}
                         <div style={styles.image_card}>
-                            <img style={styles.image} src="images/photo-526x360.png" alt="list" />
+                            <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
                         </div>
                         <div style={styles.detail_card}>
                             <div>
@@ -46,6 +117,17 @@ const ExperienceList = (props) => {
                                 <p>Prix</p>
                                 <h2>{experience.budget}<span>€</span></h2>
                             </div>
+                            <div>
+                                <Cascader
+                                options={ options }
+                                expandTrigger="hover"
+                                displayRender={ displayRender }
+                                onChange={ onChange }
+                                />
+                                <RedButton
+                                title="+"
+                                onSelect={ ()=>chooseExperience(experience) }/>
+                            </div>
 
                         </div>
                     </div> {/* End -> Card expérience */}
@@ -60,15 +142,22 @@ const ExperienceList = (props) => {
     )
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        onAddExperience: function(experience) {
+            dispatch({ type: 'addExperience', experience: experience })
+        }
+    }
+}
 
 function mapStateToProps(state) {
     console.log(state)
-    return { experiences: state.experiences, region: state.region }
+    return { experiences: state.experiences, region: state.region, token: state.token, roadplanner: state.roadplanner }
 }
 
 export default connect(
     mapStateToProps,
-    null)(ExperienceList);
+    mapDispatchToProps)(ExperienceList);
 
 
 

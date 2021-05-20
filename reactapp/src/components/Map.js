@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import '../styles/googleMap.css';
 import GoogleMapReact from 'google-map-react';
@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarker } from '@fortawesome/free-solid-svg-icons'
-import { Modal } from 'antd';
+import { Modal, Cascader  } from 'antd';
+import RedButton from './RedButton';
 
 
 
@@ -14,10 +15,136 @@ import { Modal } from 'antd';
 
 
 const Map = (props) => {
-    const [experience, setExperience] = useState({})
+    const [experience, setExperience] = useState({ partner: { addresses: [{ city: '' }] }, tags: [], description: {imageBannerUrl:''} })
     const [visible, setVisible] = useState(false);
 
-    const showModal = (exp) => {        
+    const [voyageSelect, setVoyageSelect] = useState('');
+    const options = [
+        {
+            value: 'new',
+            label: 'Nouveau voyage'
+        },
+        {
+            value: 'saved',
+            label: 'Vos voyages',
+            children: [
+                {
+                    value: 'id12345',
+                    label: 'Voyage 1'
+                },
+                {
+                    value: 'id23456',
+                    label: 'Voyage 2'
+                }
+            ]
+        }
+    ];
+
+    function displayRender(label) {
+        return label[label.length - 1];
+    }
+
+    const onChange = (value) => {
+        setVoyageSelect(value)
+    };
+
+    const chooseExperience = async(experience) => {
+        console.log(voyageSelect[0])
+        if (voyageSelect[0] === 'new') {
+            createRoadtrip(experience);
+        } else {
+            addExperience(experience);
+        }
+    }
+
+    //ajout d'expérience à un voyage existant
+    const addExperience = async(experience) => {
+        let rawResponse = await fetch('/myroadplanner', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `roadtripID=${voyageSelect}&experienceID=${experience._id}`
+        })
+        let response = await rawResponse.json();
+        if (response.result === true) {
+            props.onAddExperience(response.roadtrip);
+        }
+    };
+
+    //création nouveau voyage avec expérience choisie
+    const createRoadtrip = async(experience) => {
+        if (props.token) {
+            let data = {
+                token: props.token,
+                name: 'Mon Voyage en Alsace',
+                region: props.region,
+                regionCode: 'ges',
+                experience: experience._id
+            };
+            data = JSON.stringify(data);
+            let rawResponse = await fetch('/myroadplanner', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `token=${props.token}&name=Mon Voyage en Alsace&region=${props.region}&regionCode=ges&experience=${experience._id}`
+            })
+        }
+        props.onAddExperience(experience);
+    }
+
+
+
+    let openModal = [];
+    if (experience !== {}) {
+
+        openModal = <div style={styles.experiences_list_area}> {/* Container -> Card expérience */}
+            <div style={styles.single_destinations}> {/* Card expérience */}
+                <div style={styles.image_card}>
+                    <img style={styles.image} src={experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png"} alt="list" />
+                </div>
+                <div style={styles.detail_card}>
+                    <div>
+                        <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
+                        <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
+
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                        <p style={{ color: '#e06868', marginBottom: '8px' }}><img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
+                        <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
+                        <div style={{ display: 'flex', flexWrap: 'nowrap' }}>
+                            {experience.tags.map((image, j) => {
+                                return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
+                            })}
+                        </div>
+
+                    </div>
+                    {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
+                    <div style={styles.liste_price}>
+                        <ul style={styles.liste_price_content, styles.liste_price_li}>
+                            <li><i style={styles.icons_fa} /> Temps</li>
+                            <li><i style={styles.icons_fa} /> {experience.activityTime}</li>
+                        </ul>
+                    </div>
+                    <div style={styles.liste_price_item}>
+                        <p>Prix</p>
+                        <h2>{experience.budget}</h2>
+                    </div>
+                    <div>
+                        <Cascader
+                            options={options}
+                            expandTrigger="hover"
+                            displayRender={displayRender}
+                            onChange={onChange}
+                        />
+                        <RedButton
+                            title="+"
+                            onSelect={() => chooseExperience(experience)} />
+                    </div>
+
+                </div>
+            </div> {/* End -> Card expérience */}
+        </div>
+    }
+
+    const showModal = (exp) => {
         console.log(experience)
         setExperience(exp)
         setVisible(!visible);
@@ -28,53 +155,13 @@ const Map = (props) => {
         setVisible(!visible);
     };
 
-    let openModal = [];
-    if (experience) {
-        openModal =
-            <div style={styles.experiences_list_area}> {/* Container -> Card expérience */}
-                <div style={styles.single_destinations}> {/* Card expérience */}
-                    <div style={styles.image_card}>
-                        <img style={styles.image} src="images/photo-526x360.png" alt="list" />
-                    </div>
-                    <div style={styles.detail_card}>
-                        <div>
-                            <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
-                            <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
-
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                            <p style={{ color: '#e06868', marginBottom: '8px' }}><img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
-                            <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
-                            <div style={{ display: 'flex', flexWrap: 'nowrap' }}>
-                                {experience.tags.map((image, j) => {
-                                    return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
-                                })}
-                            </div>
-
-                        </div>
-                        {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
-                        <div style={styles.liste_price}>
-                            <ul style={styles.liste_price_content, styles.liste_price_li}>
-                                <li><i style={styles.icons_fa} /> Temps</li>
-                                <li><i style={styles.icons_fa} /> {experience.activityTime}</li>
-                            </ul>
-                        </div>
-                        <div style={styles.liste_price_item}>
-                            <p>Prix</p>
-                            <h2>{experience.budget}<span>€</span></h2>
-                        </div>
-
-                    </div>
-                </div> {/* End -> Card expérience */}
-            </div>
-
-    }
 
 
-    const LocationPin = ({ text }) => (
-        <div className="pin">
+
+    const LocationPin = (props) => (
+        <div className="pin" onClick={() => props.onSelect()}>
             <FontAwesomeIcon icon={faMapMarker} className="pin-icon" />
-            <p className="pin-text">{text}</p>
+            <p className="pin-text">{props.text}</p>
         </div>
     );
 
@@ -86,7 +173,8 @@ const Map = (props) => {
         ExperienceListingMap = props.experiences.map((experience, i) => {
             return (
                 <LocationPin
-                    onClick={() => showModal(experience)}
+                    key={i}
+                    onSelect={() => showModal(experience)}
                     lat={experience.coordinate.latitude}
                     lng={experience.coordinate.longitude}
                 />
@@ -114,10 +202,14 @@ const Map = (props) => {
             </div>
             <Modal
                 title=''
+                width='90%'
                 centered={true}
-                visible={props.visible}
+                visible={visible}
                 footer={null}
+                bodyStyle={styles.modal}
+                maskStyle={styles.modalMask}
                 onCancel={() => handleCancel()}>
+
                 {openModal}
             </Modal>
         </div>
@@ -275,5 +367,12 @@ let styles = {
     },
     display_inline: {
         display: 'inline-flex',
+    },
+    modal: {
+        backgroundColor: 'rgba(244, 244, 246, 0.5)',
+        borderRadius: '15px',
+    },
+    modalMask: {
+        backgroundColor: "rgba(133, 187, 197, 0.6)"
     }
 }
