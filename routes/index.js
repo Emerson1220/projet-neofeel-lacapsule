@@ -10,7 +10,7 @@ const Roadtrip = require('../models/Roadtrip');
 //Response: result (true), expériences ['Vinot varlot']
 router.post('/searchregions', async function(req, res, next) {
     try {
-        let experiences = await Experience.find({ regionCode: req.body.region });
+        let experiences = await Experience.find({ regionCode: req.body.region }).populate('partner').exec();
         res.json({ result: true, data: experiences })
     } catch (err) {
         console.log(err)
