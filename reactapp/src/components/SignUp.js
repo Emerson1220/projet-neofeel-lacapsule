@@ -203,7 +203,7 @@ let styles = {
 function mapDispatchToProps(dispatch) {
     return {
         onSignupClick: function(data) {
-            dispatch({ type: 'signup', user: data })
+            dispatch({ type: 'signup', token: data })
         }
     }
 }
