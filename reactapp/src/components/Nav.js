@@ -9,6 +9,10 @@ import { Button, Badge } from 'antd';
 import { connect } from 'react-redux';
 
 function Nav(props) {
+    const openInNewTab = (url) => {
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+        if (newWindow) newWindow.opener = null
+    }
 
     return (
         <div style={{ width: '100%', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor:'#FFF' }}>
@@ -21,7 +25,9 @@ function Nav(props) {
                 </Link>
 
                 <div style={{ display: "flex", flexDirection: 'column', height: '90%', justifyContent: 'space-around', }}>
-                    <a style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center' }} href="https://www.facebook.com/lespritdepartage/">
+                    <a 
+                    style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center' }}
+                    onClick={ ()=>openInNewTab("https://www.facebook.com/lespritdepartage/") }>
                         <img
                             height={'100%'}
                             style={{ marginLeft: '10px',padding: 0 }}
@@ -29,7 +35,9 @@ function Nav(props) {
                             alt='picto facebook'
                         />
                     </a>
-                    <a style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center'}} href="https://www.youtube.com/channel/UCHdHavcCfpXR8wLhgK3t0qQ">
+                    <a
+                    style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center'}}
+                    onClick={ ()=>openInNewTab("https://www.youtube.com/channel/UCHdHavcCfpXR8wLhgK3t0qQ")} >
                         <img
                             height={'100%'}
                             style={{ marginLeft: '10px', color: '#FF0000' }}
@@ -37,7 +45,10 @@ function Nav(props) {
                             alt="picto youtube"
                         />
                     </a>
-                    <a style={{height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center'}} href="https://www.instagram.com/neofeeltravel/">
+                    <a
+                    style={{height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center'}}
+                    onClick={ ()=>openInNewTab("https://www.instagram.com/neofeeltravel/")}
+                    >
                         <img
                             height={'100%'}
                             style={{ marginLeft: '10px' }}
