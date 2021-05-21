@@ -22,7 +22,6 @@ const Map = (props) => {
     const [visible, setVisible] = useState(false);
     const [locations, setLocations] = useState([])
 
-    const mapRef =useRef(null);
     const google = window.google;
 
     const [voyageSelect, setVoyageSelect] = useState('');
@@ -225,8 +224,8 @@ const Map = (props) => {
                         key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s'                    }}
                     defaultZoom={7}
                     defaultCenter={ location }
-                    yesIWantToUseGoogleMapApiInternals
-                    onGoogleApiLoaded={ ({map, maps}) => apiIsLoaded(map, maps, locations) }
+                    // yesIWantToUseGoogleMapApiInternals
+                    // onGoogleApiLoaded={ ({map, maps}) => apiIsLoaded(map, maps, locations) }
                 >
                     {ExperienceListingMap}
                 </GoogleMapReact>
