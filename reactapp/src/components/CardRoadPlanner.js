@@ -15,6 +15,11 @@ function CardRoadPlanner(props) {
         let response = await rawResponse.json();
     }
 
+    var pictos = props.tags.map((image, j) => {
+        return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
+    })
+
+
 
     return ( 
         <div style={ styles.single_destinations}>
@@ -23,24 +28,30 @@ function CardRoadPlanner(props) {
             </div>
             <div style={ styles.detail_card }>
                 <div>
-                    <h3><Link style={ styles.h3 } to="/">{props.activity}</Link></h3>
+                    <h3><Link style={ styles.h3 } to="/">{props.subtitle}</Link></h3>
                     <h4><Link style={ styles.h4 } to="/">{props.name}</Link></h4>
                 </div>
-                <div style={ styles.display_inline}>
-                    <p style={{ color: '#e06868', marginBottom: '8px'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />Région</p>
-                    <h4 ><Link style={ styles.h4 }  to="/">Ville</Link></h4>
+                <div style={{ padding: '2rem' }}>
+                    <p style={{ color: '#e06868', marginToop: '2rem'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />{props.region}</p>
+                    <h4 ><Link style={ styles.h4 }  to="/">{props.city}</Link></h4>
                 </div>
-                {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
-                <div style={ styles.liste_price }>
-                    {/* <ul style= { Object.assign(styles.liste_price_content, styles.liste_price_li) }>
-                        <li><i style={ styles.icons_fa }/> Temps</li>
-                        <li><i style={ styles.icons_fa }/> {props.activityTime}</li>
-                    </ul> */}
-                </div>
-                <div style={ styles.liste_price_item }>
-                    <p>Prix</p>
-                    <h2>{props.budget}</h2>
-                </div>
+                <div style={styles.liste_price}>
+                    <div style={styles.liste_price_item}>
+                        <p>Temps</p>
+                        <h4>{props.activityTime}</h4>
+                    </div>
+                    <div style={styles.liste_price_item}>
+                        <p>Prix</p>
+                        <h4>{props.budget}</h4>
+                    </div>
+                </div> 
+                <div style={styles.liste_price}>
+                            {pictos}
+                </div> 
+
+
+
+                
             </div>
         </div> 
                                 
@@ -66,15 +77,15 @@ let styles = {
 
     // CARD - TITLE//
 
-    h3:{
-        fontWeight:'bold',
-        fontSize: '28px',
+    h3: {
+        fontWeight: 'bold',
+        fontSize: '20px',
         color: '#106271',
         textDecoration: 'none',
     },
 
-    h4:{
-        fontSize: '20px',
+    h4: {
+        // fontSize: '18px',
         color: '#e06868',
         textDecoration: 'none',
     },

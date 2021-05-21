@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 
@@ -14,12 +14,17 @@ import CardRoadPlanner from '../components/CardRoadPlanner';
 //REDUX
 import { connect } from 'react-redux';
 
+
+
 function ScreenRoadPlanner(props) {
-    let roadplanner = [];
-    if(props.roadplanner){
-        roadplanner = props.roadplanner
-    };
-    console.log(roadplanner)
+    //Etats
+    const [experienceList, setExperienceList] = useState([{ partner: { addresses: [{ city: '' }] }, tags: [], description: {imageBannerUrl:''} }])
+    const [experiences, setExperience] = useState([]);
+
+    // let roadplanner = [];
+    useEffect(() =>{
+        setExperienceList(props.roadplanner)
+},  [props.roadplanner])
 
     const deleteBDD = async(data) => {
         let rawResponse = await fetch(`/myroadplanner/${data.roadtripID}/${data.experienceID}`);
@@ -27,7 +32,6 @@ function ScreenRoadPlanner(props) {
     }
 
 
-    const [experiences, setExperience] = useState([]);
 
     //select expérience
     var selectExperience = async (experience) => {
@@ -46,9 +50,13 @@ function ScreenRoadPlanner(props) {
         let response = await rawResponse.json();
     }
 
+
     // let experience = [{name:"test"}, {name:"test2"}, {name3:"test3"}]
 
-    let cards = roadplanner.map((e, i)=>
+
+    let cards = experienceList.map((e, i)=>
+
+        
 
         <CardRoadPlanner key={i} 
             name={e.name} 
@@ -56,13 +64,19 @@ function ScreenRoadPlanner(props) {
             activityType={e.activityType} 
             region={e.region}
             tags={e.tags}
-            subtitle={e.description.subtitle}
+            subtitle={e.subtitle}
             activityTime={e.activityTime}
             budget={e.budget}
-            imageBannerUrl={e.description.imageBannerUrl}>
+            imageBannerUrl={e.description.imageBannerUrl}
+            city={e.partner.addresses[0].city}
+            tags={e.tags}>
+            
         </CardRoadPlanner>
     )
+
     console.log(cards)
+
+
     return (	
     <div>
             <Nav />
