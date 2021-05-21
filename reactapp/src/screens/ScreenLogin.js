@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
 //COMPONENTS
 import Nav from '../components/Nav'
@@ -8,7 +9,14 @@ import SignUp from '../components/SignUp'
 //UI
 import RedButton from '../components/RedButton'
 
-const ScreenLogin = () => {
+//REDUX
+import { connect } from 'react-redux';
+
+//COOKIE MANAGEMENT
+import Cookie from 'universal-cookie';
+const cookies = new Cookie();
+
+const ScreenLogin = (props) => {
     //STATE HOOKS
     const [display, setDisplay] = useState('signin');
 
@@ -16,7 +24,15 @@ const ScreenLogin = () => {
     if (display === "signup") {
         input = <SignUp />
     }
-    return (
+
+    if (cookies.get('token')) {
+        props.onSigninClick(cookies.get('token'))
+    }
+ 
+    return props.token ? (
+        <Redirect to='/profil' />
+    )
+    : (
         <div className="home">
             <Nav></Nav>
             <div style={ styles.container }>
@@ -31,7 +47,7 @@ const ScreenLogin = () => {
                 </div>
             </div>
         </div>
-    )
+    ) ;
 }
 
 let styles = {
@@ -63,4 +79,19 @@ let styles = {
     }
 }
 
-export default ScreenLogin;
+function mapStateToProps(state) {
+    return { token: state.token }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        onSigninClick: function(data) {
+            dispatch({ type: 'signin', token: data })
+        }
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ScreenLogin);

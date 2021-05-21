@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/antdmodif.css'
 import Nav from '../components/Nav';
-import { Modal, Form, Input, Divider } from 'antd';
+import { Modal, Form, Input, Divider, Button } from 'antd';
 import RedButton from '../components/RedButton'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
@@ -49,6 +49,8 @@ const ScreenBasket =  () => {
                 postal_code: paymentInfo.zipcode
             }
         };
+
+        console.log(billingDetails)
 
         let rawResponse =  await fetch('/auth/stripe', {
             method: 'post',
@@ -129,81 +131,75 @@ const ScreenBasket =  () => {
                 visible={ visible }
                 footer={ null }
                 >
-                <Form
-                layout="vertical"
-                size="medium"
-                onSubmit={ (e)=>handleSubmit(e) }
+                <form
+                style={{ display: 'flex', flexDirection: 'column' }}
+                onSubmit={ handleSubmit }
                 >
-                    <Form.Item label="Nom" name='name'>
-                        <Input
-                        name='firstName'
-                        placeholder='prénom'
-                        value={ paymentInfo.firstName }
-                        onChange={ (e)=>setPaymentInfo({ ...paymentInfo }, { firstName: e.target.value }) }>
-                        </Input>
-                        <Input
-                        name='lastname'
-                        placeholder='nom'
-                        value={ paymentInfo.lastName }
-                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { lastName: e.target.value })) }>  
-                        </Input>
-                    </Form.Item>
-                    <Form.Item label='Adresse' name='address'>
-                        <Input
-                        name="streetNumber"
-                        placeholder='n. de voie'
-                        value={ paymentInfo.streetNumber }
-                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { streetNumber: e.target.value })) }>
-                        </Input>
-                        <Input
-                        name="streetName"
-                        placeholder='libellé de voie'
-                        value={ paymentInfo.streetName }
-                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { streetName: e.target.value })) }>
-                        </Input>
-                        <Input
-                        name="city"
-                        placeholder='ville'
-                        value={ paymentInfo.city }
-                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { city: e.target.value })) }>
-                        </Input>
-                        <Input
-                        name="zipcode"
-                        placeholder='code postale'
-                        value={ paymentInfo.zipcode }
-                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { zipcode: e.target.value })) }>
-                        </Input>                        
-                        <Input
-                        name="country"
-                        placeholder='pays'
-                        value={ paymentInfo.country }
-                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { country: e.target.value })) }>
-                        </Input>                    
-                    </Form.Item>
-                    <Form.Item label='Contact'>
-                        <Input
-                        name="email"
-                        placeholder='adresse mail'
-                        value={ paymentInfo.email }
-                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { email: e.target.value })) }>
-                        </Input>                        
-                        <Input
-                        name="phone"
-                        placeholder='numéro de téléphone'
-                        value={ paymentInfo.phone }
-                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { phone: e.target.value })) }>
-                        </Input>                    
-                    </Form.Item> 
-                    <Form.Item label='Paiement'>
-                        <CardElement
-                        options={ options }
-                        />
-                        <button type='submit' disabled={ !stripe }>Confirmer</button>
-                    </Form.Item>             
-                </Form>
+                    <h3>Nom</h3>
+                    <input
+                    name='firstName'
+                    placeholder='prénom'
+                    value={ paymentInfo.firstName }
+                    onChange={ (e)=>setPaymentInfo({ ...paymentInfo }, { firstName: e.target.value }) }>
+                    </input>
+                    <input
+                    name='lastname'
+                    placeholder='nom'
+                    value={ paymentInfo.lastName }
+                    onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { lastName: e.target.value })) }>  
+                    </input>
+                    <h3>Adresse</h3>
+                    <input
+                    name="streetNumber"
+                    placeholder='n. de voie'
+                    value={ paymentInfo.streetNumber }
+                    onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { streetNumber: e.target.value })) }>
+                    </input>
+                    <input
+                    name="streetName"
+                    placeholder='libellé de voie'
+                    value={ paymentInfo.streetName }
+                    onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { streetName: e.target.value })) }>
+                    </input>
+                    <input
+                    name="city"
+                    placeholder='ville'
+                    value={ paymentInfo.city }
+                    onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { city: e.target.value })) }>
+                    </input>
+                    <input
+                    name="zipcode"
+                    placeholder='code postale'
+                    value={ paymentInfo.zipcode }
+                    onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { zipcode: e.target.value })) }>
+                    </input>                        
+                    <input
+                    name="country"
+                    placeholder='pays'
+                    value={ paymentInfo.country }
+                    onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { country: e.target.value })) }>
+                    </input> 
+                    <h3>Contact</h3>                   
+                    <input
+                    name="email"
+                    placeholder='adresse mail'
+                    value={ paymentInfo.email }
+                    onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { email: e.target.value })) }>
+                    </input>                        
+                    <input
+                    name="phone"
+                    placeholder='numéro de téléphone'
+                    value={ paymentInfo.phone }
+                    onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { phone: e.target.value })) }>
+                    </input>  
+                    <h3>Paiement</h3>                  
+                    <CardElement
+                    options={ options }
+                    />
+                    <button htmlType='submit' disabled={ !stripe }>Confirmer</button>
+                </form>
                 </Modal> 
             </div>
-
 
         </div>
     </div>
