@@ -1,29 +1,77 @@
 import React, { useState } from 'react';
+import '../styles/antdmodif.css'
 import Nav from '../components/Nav';
-import { Divider, Modal } from 'antd';
+import { Modal, Form, Input, Divider } from 'antd';
 import RedButton from '../components/RedButton'
-import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js'
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
 const ScreenBasket =  () => {
+    const [visible, setVisible] = useState(false)
+    const [paymentInfo, setPaymentInfo] = useState({});
+    const [total, setTotal] = useState(65);
+
     const stripe= useStripe();
     const elements = useElements();
 
+    const toggleModal = () => {
+        setVisible(!visible)
+    };
+    
+    const options = {
+        style: {
+        base: {
+            fontSize: '16px',
+            color: 'rgb(16, 98, 113)',
+            '::placeholder': {
+            color: 'rgb(16, 98, 113, 0.4)',
+            },
+        },
+        invalid: {
+            color: '#9e2146',
+        },
+        },
+        hidePostalCode: true
+    };
+
     const handleSubmit = async(event) => {
+        console.log('click')
         event.preventDefault();
         if (!stripe || !elements) {
             return;
         }
+
+        const billingDetails = {
+            name: `${paymentInfo.firstName} ${paymentInfo.lastName}`,
+            email: paymentInfo.email,
+            address: {
+                city: paymentInfo.city,
+                line1: `${paymentInfo.streetNumber} ${paymentInfo.streetName}`,
+                postal_code: paymentInfo.zipcode
+            }
+        };
+
+        let rawResponse =  await fetch('/auth/stripe', {
+            method: 'post',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `amount=${total*100}`
+        })
+        let response = await rawResponse.json();
+        const clientSecret = response.clientSecret;
+        console.log(response)
+        console.log(clientSecret)
+
         const cardElement = elements.getElement(CardElement);
     
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
-            card: cardElement
+            card: cardElement,
+            billing_details: billingDetails
         })
 
         if (error) {
             console.log('[error]', error)
         } else {
-            console.log('[PaymentMethod', paymentMethod)
+            console.log('[PaymentMethod]', paymentMethod)
         }
     };
 
@@ -67,29 +115,93 @@ const ScreenBasket =  () => {
             </table>
             <div style={ styles.buttonContainer }>
                 <RedButton
-                title="Payer par carte" />
+                title="Payer par carte"
+                onSelect={ ()=>toggleModal() } />
                 <form onSubmit={ handleSubmit }>
-                <CardElement
-                options={{
-                    style: {
-                    base: {
-                        fontSize: '16px',
-                        color: '#424770',
-                        '::placeholder': {
-                        color: '#aab7c4',
-                        },
-                    },
-                    invalid: {
-                        color: '#9e2146',
-                    },
-                    },
-                }}
-                />
-                <button type="submit">Payer avec Stripe
-                </button>                
+ 
             </form>
             </div>
-
+                <Modal
+                title="Checkout"
+                centered={ true }
+                closable={ false }
+                onClose={ ()=>toggleModal() }
+                visible={ visible }
+                footer={ null }
+                >
+                <Form
+                layout="vertical"
+                size="medium"
+                onSubmit={ (e)=>handleSubmit(e) }
+                >
+                    <Form.Item label="Nom" name='name'>
+                        <Input
+                        name='firstName'
+                        placeholder='prénom'
+                        value={ paymentInfo.firstName }
+                        onChange={ (e)=>setPaymentInfo({ ...paymentInfo }, { firstName: e.target.value }) }>
+                        </Input>
+                        <Input
+                        name='lastname'
+                        placeholder='nom'
+                        value={ paymentInfo.lastName }
+                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { lastName: e.target.value })) }>  
+                        </Input>
+                    </Form.Item>
+                    <Form.Item label='Adresse' name='address'>
+                        <Input
+                        name="streetNumber"
+                        placeholder='n. de voie'
+                        value={ paymentInfo.streetNumber }
+                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { streetNumber: e.target.value })) }>
+                        </Input>
+                        <Input
+                        name="streetName"
+                        placeholder='libellé de voie'
+                        value={ paymentInfo.streetName }
+                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { streetName: e.target.value })) }>
+                        </Input>
+                        <Input
+                        name="city"
+                        placeholder='ville'
+                        value={ paymentInfo.city }
+                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { city: e.target.value })) }>
+                        </Input>
+                        <Input
+                        name="zipcode"
+                        placeholder='code postale'
+                        value={ paymentInfo.zipcode }
+                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { zipcode: e.target.value })) }>
+                        </Input>                        
+                        <Input
+                        name="country"
+                        placeholder='pays'
+                        value={ paymentInfo.country }
+                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { country: e.target.value })) }>
+                        </Input>                    
+                    </Form.Item>
+                    <Form.Item label='Contact'>
+                        <Input
+                        name="email"
+                        placeholder='adresse mail'
+                        value={ paymentInfo.email }
+                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { email: e.target.value })) }>
+                        </Input>                        
+                        <Input
+                        name="phone"
+                        placeholder='numéro de téléphone'
+                        value={ paymentInfo.phone }
+                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { phone: e.target.value })) }>
+                        </Input>                    
+                    </Form.Item> 
+                    <Form.Item label='Paiement'>
+                        <CardElement
+                        options={ options }
+                        />
+                        <button type='submit' disabled={ !stripe }>Confirmer</button>
+                    </Form.Item>             
+                </Form>
+                </Modal> 
             </div>
 
 
@@ -119,7 +231,9 @@ const styles = {
         flexDirection: 'column',
         marginRight: '4%',
         backgroundColor: 'rgba(16, 98, 113, 0.7)',
-        borderRadius: '8px'
+        borderRadius: '8px',
+        position: 'relative',
+        overflow: 'hidden'
     },
     buttonContainer: {
         alignSelf: 'flex-end',
@@ -144,5 +258,10 @@ const styles = {
     neopassContainer: {
         display: 'flex',
         justifyContent: 'space-around'
+    },
+    formItem: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between'
     }
 }

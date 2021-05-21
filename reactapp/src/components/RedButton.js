@@ -13,9 +13,10 @@ const RedButton = (props) => {
     return(
     <button
     style={ hover ? styles.buttonHover : styles.button }
+    disabled={ props.disabled ? props.disabled : false }
     onMouseEnter={ ()=>setHover(true) }
     onMouseLeave={ ()=>setHover(false) }
-    onClick={ ()=>props.onSelect() }>
+    onClick={ props.onSelect ? ()=>props.onSelect() : null }>
         { title }
     </button>
     )

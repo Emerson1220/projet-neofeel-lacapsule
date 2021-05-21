@@ -29,27 +29,26 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const store = createStore(combineReducers({ region, activities, experiences, token, roadplanner }));
 
-const stripePromise = loadStripe('')
+const stripePromise = loadStripe('pk_test_51ItWKHK4yUyeZ8DTbPXklGpEqt6WL7YLvokEzbudM7jHc8Z72swBjC0aY38j3STBcWqWNsdRGWOKnDCyZsWoXQkr00SfyDo7CD')
 
 function App() {
   return (
     <Provider store={ store }>
       <Elements stripe={ stripePromise }>
-      <Router>
-        <Switch>
-          <Route component={ ScreenHome } path="/" exact />
-          <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
-          <Route component={ ScreenLogin } path="/connexion"  />
-          <Route component={ ScreenSearch } path="/recherche"  />                    
-          <Route component={ ScreenInfo } path="/info"  />
-          <Route component={ ScreenPartner } path="/partenaire"  />
-          <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
-          {/* <Route component={ ScreenTrips } path="/voyages"  /> */}
-          <Route component={ ScreenProfile } path="/profil"  />
-          <Route component={ ScreenBasket } path="/panier"  />
-          <Route component={ScreenSuggestions} path="/suggestions"  />  
-        </Switch>
-      </Router>
+        <Router>
+          <Switch>
+            <Route component={ ScreenHome } path="/" exact />
+            <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
+            <Route component={ ScreenLogin } path="/connexion"  />
+            <Route component={ ScreenSearch } path="/recherche"  />                    
+            <Route component={ ScreenInfo } path="/info"  />
+            <Route component={ ScreenPartner } path="/partenaire"  />
+            <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
+            <Route component={ ScreenProfile } path="/profil"  />
+            <Route component={ ScreenBasket } path="/panier"  />
+            <Route component={ScreenSuggestions} path="/suggestions"  />  
+          </Switch>
+        </Router>
       </Elements>
     </Provider>
 
