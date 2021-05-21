@@ -66,13 +66,10 @@ function ScreenSearch(props) {
             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '50%', marginTop: '2%', flexDirection: 'row' }} >
                     <div className='categorieSelect'>
-<<<<<<< HEAD
-                        <FontAwesomeIcon onClick={() => OnclickMap()} icon={faMapMarked} style={{ cursor: 'pointer', height: '25px', width: 'auto', marginRight: '8px', color: 'white' }} />
-                        <FontAwesomeIcon onClick={() => OnclickExperienceList()} icon={faListOl} style={{ cursor: 'pointer', height: '25px', width: 'auto', marginRight: '8px', color: 'white' }} />
-=======
+
                         <FontAwesomeIcon onClick={() => OnclickMap()} icon={faMapMarked} style={{ color: '#fff', cursor: 'pointer', height: '25px', width: 'auto', marginRight: '8px' }} />
                         <FontAwesomeIcon onClick={() => OnclickExperienceList()} icon={faListOl} style={{ color: '#fff', cursor: 'pointer', height: '25px', width: 'auto', marginRight: '8px' }} />
->>>>>>> emerson
+
                     </div>
                     <Select showSearch
                         style={{ width: '40%' }}
