@@ -180,7 +180,8 @@ const ExperienceList = (props) => {
                                 title="+"
                                 onSelect={ ()=>chooseExperience(experience) }/>
                             </div>
-                                                        <div style={styles.liste_price_item}>
+
+                            <div style={styles.liste_price_item}>
                                 <p>Prix</p>
                                 <h2>{experience.budget}</h2>
                             </div>
@@ -188,7 +189,6 @@ const ExperienceList = (props) => {
 
                             </div>
                             <div style={ styles.buttonContainer }>
-
                         </div>
                     </div> */}
 
@@ -228,6 +228,7 @@ const ExperienceList = (props) => {
                             </div> 
                             <div style={{ textAlign: 'center', marginTop:'1rem' }}>
                                 <h4 style={styles.h4}>Ajouter cette experience à votre voyage</h4>
+
                                 <Cascader
                                 options={ options }
                                 expandTrigger="hover"
@@ -422,9 +423,8 @@ let styles = {
         whiteSpace: 'wrap',
         zIndex:'10',
         marginTop: '-3rem',
-
-
     },
+    
     display_inline: {
         display: 'inline-flex',
     },

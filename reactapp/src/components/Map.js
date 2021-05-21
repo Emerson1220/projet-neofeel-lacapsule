@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
 import '../styles/googleMap.css';
-import GoogleMapReact from 'google-map-react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+
+//MAP
+import GoogleMapReact from 'google-map-react';
+
+//REDUX
+import { connect } from 'react-redux';
+
+//UI
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarker } from '@fortawesome/free-solid-svg-icons'
 import { Modal, Cascader  } from 'antd';
 import RedButton from './RedButton';
-
-
-
-
 
 
 const Map = (props) => {
@@ -173,19 +176,56 @@ const Map = (props) => {
         })
     }
 
-    let location = {
-        address: '',
-        lat: 48.816,
-        lng: 5.806
+    //fit map to markers
+    const getMapBounds = (map, maps, locations) => {
+        const bounds = new maps.LatLngBounds();
+
+        locations.forEach((location) => {
+            bounds.extend(
+                new maps.LatLng(location.latitude, location.longitude)
+            );
+        })
+        return bounds;
+    };
+
+    const bindResizeListener = (map, maps, bounds) => {
+        maps.event.addDomListenerOnce(map, 'idle', () => {
+            maps.event.addDomListener(window, 'resize', () => {
+                map.fitBounds(bounds)
+            })
+        })
+    };
+
+    const apiIsLoaded = (map, maps, locations) => {
+        if (map) {
+            const bounds = getMapBounds(map, maps, location);
+            map.fitBounds(bounds);
+            bindResizeListener(map, maps, bounds)
+        }
     }
+
+    let locations = props.experiences.map(e => 
+        {
+            return {
+            lat: e.coordinate.latitude, lng: e.coordinate.longitude
+        } 
+        })
+    // let location = {
+    //     address: '',
+    //     lat: 48.816,
+    //     lng: 5.806
+    // }
 
     return (
         <div className="map">
             <div className="google-map">
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: ' AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s' }}
-                    defaultCenter={location}
+                    bootstrapURLKeys={{ 
+                        key: ' AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s',
+                        language: 'fr'
+                    }}
                     defaultZoom={7}
+                    onGoogleApiLoaded={ ({map, maps}) => apiIsLoaded(map, maps, locations) }
                 >
                     {ExperienceListingMap}
                 </GoogleMapReact>
