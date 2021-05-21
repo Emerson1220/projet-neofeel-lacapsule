@@ -222,11 +222,11 @@ const Map = (props) => {
             <div className="google-map">
                 <GoogleMapReact
                     bootstrapURLKeys={{ 
-                        key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s'                    }}
+                        key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s'}}
                     defaultZoom={7}
                     defaultCenter={ location }
-                    yesIWantToUseGoogleMapApiInternals
-                    onGoogleApiLoaded={ ({map, maps}) => apiIsLoaded(map, maps, locations) }
+                    // yesIWantToUseGoogleMapApiInternals
+                    // onGoogleApiLoaded={ ({map, maps}) => apiIsLoaded(map, maps, locations) }
                 >
                     {ExperienceListingMap}
                 </GoogleMapReact>

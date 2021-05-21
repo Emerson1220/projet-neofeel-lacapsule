@@ -58,7 +58,7 @@ function ScreenHome(props) {
                             </h2>
                             <div style={{ display: 'flex', flexDirection: 'row', height: '35%', width: '80%', justifyContent: 'space-around', alignItems: 'center' }}>
                                 <img
-                                    style={{ height: '45%', width: 'auto', borderRadius: 5, marginRight: '3%' }}
+                                    style={{ height: '45%', width: 'auto', borderRadius: 15, marginRight: '3%' }}
                                     src='/images/neopassRecto.png'
                                     alt='neopass'
                                 />

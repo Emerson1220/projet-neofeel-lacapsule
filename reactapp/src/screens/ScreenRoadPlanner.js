@@ -355,18 +355,12 @@ let styles = {
         color: '#01B9B7',
         marginRight: '5px',
     },
-    
-    liste_price_item: {
-        paddingLeft: '10%',
-        borderLeft: '1px solid #CFD3DE',
-        paddingTop: '0',
-        width: '45%'
-    },
 
-    liste_temps_item: {
-        paddingRight: '10%',
-        paddingTop: '0',
-        width: '45%'
+    liste_price_item:{
+        paddingLeft: '30px',
+        marginLeft: '20px',
+        borderLeft: '1px solid #CFD3DE',
+        paddingTop: '0',    
     },
 
     // PAGINATION - CSS //
