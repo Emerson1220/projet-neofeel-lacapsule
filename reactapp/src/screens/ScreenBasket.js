@@ -259,5 +259,6 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between'
-    }
+    },
+    
 }
