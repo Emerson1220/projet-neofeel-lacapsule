@@ -1,0 +1,28 @@
+.activitySelect {
+    display :flex; 
+    width: auto; 
+    height: auto; 
+    padding: 10px;
+    border: rgba(224, 104, 104, 1);
+    border-radius:4px; 
+    margin: 5px; 
+    background-color: rgba(219, 217, 217, 0.7) ; 
+    align-items: center ;
+    
+  
+    
+    
+  }
+
+  .tripSelect{
+    display:flex;
+    border: 2px solid rgba(80, 80, 80, 0.7); 
+    padding: 10px;
+  }
+
+  .margeTitle{
+    color:rgb(255, 255, 255);
+    font-size: 200%;
+  }
+
+  
