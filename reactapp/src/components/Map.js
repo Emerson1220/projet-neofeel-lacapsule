@@ -1,22 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../App.css';
 import '../styles/googleMap.css';
-import GoogleMapReact from 'google-map-react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+
+//MAP
+import GoogleMapReact from 'google-map-react';
+
+//REDUX
+import { connect } from 'react-redux';
+
+//UI
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarker } from '@fortawesome/free-solid-svg-icons'
 import { Modal, Cascader  } from 'antd';
 import RedButton from './RedButton';
 
 
-
-
-
-
 const Map = (props) => {
     const [experience, setExperience] = useState({ partner: { addresses: [{ city: '' }] }, tags: [], description: {imageBannerUrl:''} })
     const [visible, setVisible] = useState(false);
+    const [locations, setLocations] = useState([])
+
+    const google = window.google;
 
     const [voyageSelect, setVoyageSelect] = useState('');
     const options = [
@@ -84,54 +90,50 @@ const Map = (props) => {
 
     let openModal = [];
     if (experience !== {}) {
-
-        openModal = <div style={styles.experiences_list_area}> {/* Container -> Card expérience */}
-            <div style={styles.single_destinations}> {/* Card expérience */}
-                <div style={styles.image_card}>
-                    <img style={styles.image} src={experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png"} alt="list" />
+        openModal = 
+        <div style={styles.single_destinations}> 
+        <div style={styles.image_card}>
+            <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
+        </div>
+        <div style={{ width: '100%',backgroundColor: 'white',display:'flex', flexWrap:'nowrap', padding:'1rem'}}>
+            {experience.tags.map((image, j) => {
+                return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
+            }) }
+        </div>
+            <div style={styles.detail_title_location}>
+                <div>
+                    <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
+                    <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
                 </div>
-                <div style={styles.detail_card}>
-                    <div>
-                        <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
-                        <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
-
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                        <p style={{ color: '#e06868', marginBottom: '8px' }}><img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
-                        <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
-                        <div style={{ display: 'flex', flexWrap: 'nowrap' }}>
-                            {experience.tags.map((image, j) => {
-                                return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
-                            })}
-                        </div>
-
-                    </div>
-                    {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
-                    <div style={styles.liste_price}>
-                        <ul style={styles.liste_price_content, styles.liste_price_li}>
-                            <li><i style={styles.icons_fa} /> Temps</li>
-                            <li><i style={styles.icons_fa} /> {experience.activityTime}</li>
-                        </ul>
-                    </div>
-                    <div style={styles.liste_price_item}>
-                        <p>Prix</p>
-                        <h2>{experience.budget}</h2>
-                    </div>
-                    <div>
-                        <Cascader
-                            options={options}
-                            expandTrigger="hover"
-                            displayRender={displayRender}
-                            onChange={onChange}
-                        />
-                        <RedButton
-                            title="+"
-                            onSelect={() => chooseExperience(experience)} />
-                    </div>
-
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
+                    <p style={{ color: '#e06868', marginBottom: '8px' }}>
+                    <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
+                    <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
                 </div>
             </div>
+        <div style={styles.detail_card}>
+                <div style={styles.liste_temps_item}>
+                    <p>Temps</p>
+                    <h2>{experience.activityTime}</h2>
+                </div>
+                <div style={styles.liste_price_item}>
+                    <p>Prix</p>
+                    <h2>{experience.budget}</h2>
+                </div>
         </div>
+        <div style={{ textAlign: 'center', marginTop:'1rem', alignSelf: 'center', width: '100%' }}>
+            <h4 style={styles.h4}>Ajouter cette experience à votre voyage</h4>
+            <Cascader
+            options={ options }
+            expandTrigger="hover"
+            displayRender={ displayRender }
+            onChange={ onChange }
+            />
+            <RedButton
+            title="+"
+            onSelect={ ()=>chooseExperience(experience) }/>
+        </div>
+    </div>
     }
 
     const showModal = (exp) => {
@@ -173,6 +175,37 @@ const Map = (props) => {
         })
     }
 
+    //fit map to markers
+    const getMapBounds = (locations) => {
+        const bounds = new google.maps.LatLngBounds();
+
+        locations.forEach((location) => {
+            bounds.extend( new google.maps.LatLng(location.latitude, location.longitude));
+        })
+        return bounds;
+    };
+
+    const bindResizeListener = (map, maps, bounds) => {
+        maps.event.addDomListenerOnce(map, 'idle', () => {
+            maps.event.addDomListener(window, 'resize', () => {
+                map.fitBounds(bounds)
+            })
+        })
+    };
+
+    const apiIsLoaded = (map, maps, locations) => {
+        if (map) {
+            const bounds = getMapBounds(locations);
+            map.fitBounds(bounds);
+            bindResizeListener(map, maps, bounds)
+        }
+    }
+    useEffect(() => {
+        let locationsArray = props.experiences.map(e => ({ lat: e.coordinate.latitude, lng: e.coordinate.longitude }))
+        setLocations(locationsArray)
+    }, [props.experiences]);
+
+
     let location = {
         address: '',
         lat: 48.816,
@@ -183,19 +216,22 @@ const Map = (props) => {
         <div className="map">
             <div className="google-map">
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: ' AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s' }}
-                    defaultCenter={location}
+                    bootstrapURLKeys={{ 
+                        key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s'}}
                     defaultZoom={7}
+                    defaultCenter={ location }
+                    // yesIWantToUseGoogleMapApiInternals
+                    // onGoogleApiLoaded={ ({map, maps}) => apiIsLoaded(map, maps, locations) }
                 >
                     {ExperienceListingMap}
                 </GoogleMapReact>
             </div>
             <Modal
                 title=''
-                width='90%'
                 centered={true}
                 visible={visible}
                 footer={null}
+                closable={ false }
                 bodyStyle={styles.modal}
                 maskStyle={styles.modalMask}
                 onCancel={() => handleCancel()}>
@@ -229,7 +265,10 @@ export default connect(
 let styles = {
     // CSS - ICONS //
 
-    icons_la: {
+
+    // CSS - ICONS //
+
+    icons_la:{
         display: 'inline-block',
         position: 'absolute',
         top: '17px',
@@ -246,29 +285,30 @@ let styles = {
 
     h3: {
         fontWeight: 'bold',
-        fontSize: '28px',
+        fontSize: '20px',
         color: '#106271',
         textDecoration: 'none',
     },
 
     h4: {
-        fontSize: '20px',
+        // fontSize: '18px',
         color: '#e06868',
         textDecoration: 'none',
     },
 
     // CARD - CSS //
 
-    experiences_list_area: {
+    experiences_list_area:{
         display: 'grid',
-        gridTemplateColumns: 'repeat(1, 1fr)',
+        gridTemplateColumns: 'repeat(1, 1fr)',        
         boxSizing: 'border-box',
         outline: 'none',
         paddingLeft: '1rem',
         paddingRight: '1rem',
+
     },
 
-    single_destinations: {
+    single_destinations:{
         display: 'flex',
         flexWrap: 'wrap',
         margin: '0 0 30px 0',
@@ -277,51 +317,54 @@ let styles = {
         borderRadius: '7px',
         position: 'relative',
         overflow: 'hidden',
-        margin: '.5rem',
+        // maxHeight: '400px'
     },
 
-    image_card: {
+    image_card:{
         position: 'relative',
-        background: '#106271',
+        background: '#fff',
         overflow: 'hidden',
-        flex: '0 0 30%',
+        // flex: '0 0 30%',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
-        minHeight: '200px',
+        // minHeight: '200px',
+        maxHeight: '30%',
         borderRadius: '5px',
     },
 
-    image: {
+    image:{
         width: '100%',
-        height: '70%',
-        objectFit: 'cover',
+        height: '100%',
+        // objectFit: 'cover',
+        objectFit: 'contains',
         objectPosition: 'center center',
         borderRadius: '5px',
     },
 
-    detail_card: {
+    detail_card:{
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        flex: '0 0 70%',
+        gridTemplateColumns: 'repeat(2, 1fr)',        
+        // flex: '0 0 70%',
         padding: '22px 15px',
         background: '#ffffff',
+        width: '100%'
     },
 
-    card_content: {
+    card_content:{
         marginBottom: '15px',
         color: '#bcbcbc',
         hyphens: 'auto',
     },
 
-    liste_price: {
+    liste_price:{
         marginTop: '20px',
         display: 'flex',
         boxSizing: 'border-box',
         outline: 'none',
     },
 
-    liste_price_li: {
+    liste_price_li:{
         margin: '0 10px',
         fontSize: '14px',
         listStyle: 'none',
@@ -329,15 +372,15 @@ let styles = {
     },
 
 
-    liste_price_content: {
+    liste_price_content:{
         float: 'left',
-        marginTop: '20px',
+        marginTop: '20px',  
         margin: '0',
         padding: '0',
-        display: 'inline-block',
+        display: 'inline-block',      
     },
 
-    icons_fa: {
+    icons_fa:{
         display: 'inline-block',
         font: 'normal normal normal 14px/1 FontAwesome',
         fontSize: 'inherit',
@@ -347,26 +390,30 @@ let styles = {
     },
 
     liste_price_item: {
-        paddingLeft: '30px',
-        marginLeft: '20px',
+        paddingLeft: '10%',
         borderLeft: '1px solid #CFD3DE',
         paddingTop: '0',
+        width: '45%'
+    },
+
+    liste_temps_item: {
+        paddingRight: '10%',
+        paddingTop: '0',
+        width: '45%'
     },
 
     picto: {
-        height: '40px',
-        width: '40px',
-        margin: '2%',
+        height: '80px',
+        width: '80px',
+        marginRight: '1%',
         whiteSpace: 'wrap',
-
-
-    },
-    display_inline: {
-        display: 'inline-flex',
+        zIndex:'10',
+        marginTop: '-3rem',
     },
     modal: {
         backgroundColor: 'rgba(244, 244, 246, 0.5)',
         borderRadius: '15px',
+        height: '70%'
     },
     modalMask: {
         backgroundColor: "rgba(133, 187, 197, 0.6)"

@@ -112,6 +112,7 @@ let styles = {
         position: 'relative',
         overflow: 'hidden',
         margin: '.5rem',
+        maxHeight: '400px'
     },
 
     image_card:{

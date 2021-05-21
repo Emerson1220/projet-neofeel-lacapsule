@@ -51,17 +51,17 @@ function Nav(props) {
                 <Link to={'/partenaire'}>
                     <Button className='devenezPartenaireButton' > Devenez Partenaire </Button>
                 </Link>
-                <div className='listNav' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginLeft: '11%', marginTop: '3%', marginBottom: 0, height: '100%' }}>
-                    <Badge count={ props.roadplanner.length }>
-                        <Link to={'/roadPlanner'}>
-                            <h4 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Mon Voyage</h4>
+                <div className='listNav' style={{ display: 'flex', alignItems: 'center',justifyContent:'flex-end', flexDirection: 'row', marginLeft: '11%', marginBottom: 0, height: '100%', width:'100%' }}>
+                    <Badge count={ props.roadplanner.length } >
+                        <Link to={'/roadPlanner'}  >
+                            <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Mon Voyage</h2>
                         </Link>
                     </Badge>
-                    <Link to={'/recherche'}>
-                        <h4 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Recherche</h4>
+                    <Link to={'/recherche'} style={{ marginRight:'3%', marginLeft:'3%'}}>
+                        <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Recherche</h2>
                     </Link>
-                    <Link to={'/connexion'}>
-                        <h4 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Connexion</h4>
+                    <Link to={'/connexion'} style={{ marginRight:'3%'}}>
+                        <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Connexion</h2>
                     </Link>
                 </div>
             </div>
