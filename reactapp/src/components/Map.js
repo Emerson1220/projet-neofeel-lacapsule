@@ -198,7 +198,7 @@ const Map = (props) => {
 
     const apiIsLoaded = (map, maps, locations) => {
         if (map) {
-            const bounds = getMapBounds(map, maps, location);
+            const bounds = getMapBounds(map, maps, locations);
             map.fitBounds(bounds);
             bindResizeListener(map, maps, bounds)
         }
