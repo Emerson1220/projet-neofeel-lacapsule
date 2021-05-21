@@ -7,6 +7,7 @@ import { Cascader } from 'antd'
 
 const ExperienceList = (props) => {
     const [voyageSelect, setVoyageSelect] = useState('');
+
     const options = [
         {
             value: 'new',
@@ -81,43 +82,94 @@ const ExperienceList = (props) => {
     var ExperienceListing = [];
     if (props.experiences) {
         ExperienceListing = props.experiences.map((experience, i) => {
-            var picto = experience.tags.map((image, j) => {
+            var pictos = experience.tags.map((image, j) => {
                 return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
             })
             return (
 
+                //Container
+                <div key={i} style={styles.experiences_list_area}> 
 
-                <div key={i} style={styles.experiences_list_area}> {/* Container -> Card expérience */}
-                    <div style={styles.single_destinations}> {/* Card expérience */}
+
+
+                    {/* Card 1 */}
+                    <div style={styles.single_destinations}> 
                         <div style={styles.image_card}>
                             <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
                         </div>
+                        <div style={{ width: '100%',backgroundColor: 'white',display:'flex', flexWrap:'nowrap', padding:'1rem'}}>
+                            {pictos}
+                        </div>
                         <div style={styles.detail_card}>
-                            <div>
-                                <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
-                                <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
-
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
-                                <p style={{ color: '#e06868', marginBottom: '8px' }}><img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
-                                <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
-                                <div style={{display:'flex', flexWrap:'nowrap'}}>
-                                    {picto}
+                            <div style={styles.detail_title_location}>
+                                <div>
+                                    <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
+                                    <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
                                 </div>
-
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
+                                    <p style={{ color: '#e06868', marginBottom: '8px' }}>
+                                    <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
+                                    <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
+                                </div>
                             </div>
-                            {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
                             <div style={styles.liste_price}>
-                                <ul style={styles.liste_price_content, styles.liste_price_li}>
-                                    <li><i style={styles.icons_fa} /> Temps</li>
-                                    <li><i style={styles.icons_fa} /> {experience.activityTime}</li>
-                                </ul>
+                                <div style={styles.liste_price_item}>
+                                    <p>Temps</p>
+                                    <h2>{experience.activityTime}</h2>
+                                </div>
+                                <div style={styles.liste_price_item}>
+                                    <p>Prix</p>
+                                    <h2>{experience.budget}</h2>
+                                </div>
+                            </div> 
+                            <div style={{ textAlign: 'center', marginTop:'1rem' }}>
+                                <h4 style={styles.h4}>Ajouter cette experience à votre voyage</h4>
+                                <Cascader
+                                options={ options }
+                                expandTrigger="hover"
+                                displayRender={ displayRender }
+                                onChange={ onChange }
+                                />
+                                <RedButton
+                                title="+"
+                                onSelect={ ()=>chooseExperience(experience) }/>
                             </div>
-                            <div style={styles.liste_price_item}>
-                                <p>Prix</p>
-                                <h2>{experience.budget}<span>€</span></h2>
+                        </div>
+                    </div>
+
+
+                    {/* Card 2 */}
+                    {/* <div style={styles.single_destinations}> 
+                        <div style={styles.image_card}>
+                            <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
+                        </div>
+                        <div style={{ width: '100%',backgroundColor: 'white',display:'flex', flexWrap:'nowrap', padding:'1rem'}}>
+                            {picto}
+                        </div>
+                        <div style={styles.detail_card}>
+                            <div style={styles.detail_title_location}>
+                                <div>
+                                    <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
+                                    <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
+                                    <p style={{ color: '#e06868', marginBottom: '8px' }}>
+                                    <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
+                                    <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
+                                </div>
                             </div>
-                            <div>
+                            <div style={styles.liste_price}>
+                                <div style={styles.liste_price_item}>
+                                    <p>Temps</p>
+                                    <h2>{experience.activityTime}</h2>
+                                </div>
+                                <div style={styles.liste_price_item}>
+                                    <p>Prix</p>
+                                    <h2>{experience.budget}</h2>
+                                </div>
+                            </div> 
+                            <div style={{ textAlign: 'center', marginTop:'1rem' }}>
+                                <h4 style={styles.h4}>Ajouter cette experience à votre voyage</h4>
                                 <Cascader
                                 options={ options }
                                 expandTrigger="hover"
@@ -129,8 +181,69 @@ const ExperienceList = (props) => {
                                 onSelect={ ()=>chooseExperience(experience) }/>
                             </div>
 
+                            <div style={styles.liste_price_item}>
+                                <p>Prix</p>
+                                <h2>{experience.budget}</h2>
+                            </div>
+                            <div>
+
+                            </div>
+                            <div style={ styles.buttonContainer }>
                         </div>
-                    </div> {/* End -> Card expérience */}
+                    </div> */}
+
+
+
+                    {/* Card 3 */}
+                    {/* <div style={styles.single_destinations}> 
+                        <div style={styles.image_card}>
+                            <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
+                        </div>
+                        <div style={{ width: '100%',backgroundColor: 'white',display:'flex', flexWrap:'nowrap', padding:'1rem'}}>
+                            {picto}
+                        </div>
+                        <div style={styles.detail_card}>
+                            <div style={styles.detail_title_location}>
+                                <div>
+                                    <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
+                                    <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
+                                </div>
+
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
+                                    <p style={{ color: '#e06868', marginBottom: '8px' }}>
+                                    <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
+                                    <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
+                                </div>
+                            </div>
+                            <div style={styles.liste_price}>
+                                <div style={styles.liste_price_item}>
+                                    <p>Temps</p>
+                                    <h2>{experience.activityTime}</h2>
+                                </div>
+
+                                <div style={styles.liste_price_item}>
+                                    <p>Prix</p>
+                                    <h2>{experience.budget}</h2>
+                                </div>
+                            </div> 
+                            <div style={{ textAlign: 'center', marginTop:'1rem' }}>
+                                <h4 style={styles.h4}>Ajouter cette experience à votre voyage</h4>
+
+                                <Cascader
+                                options={ options }
+                                expandTrigger="hover"
+                                displayRender={ displayRender }
+                                onChange={ onChange }
+                                />
+                                <RedButton
+                                title="Ajouter"
+                                onSelect={ ()=>chooseExperience(experience) }/>
+                            </div>
+                        </div>
+                    </div> */}
+
+
+
                 </div>
             )
         })
@@ -182,13 +295,13 @@ let styles = {
 
     h3: {
         fontWeight: 'bold',
-        fontSize: '28px',
+        fontSize: '20px',
         color: '#106271',
         textDecoration: 'none',
     },
 
     h4: {
-        fontSize: '20px',
+        // fontSize: '18px',
         color: '#e06868',
         textDecoration: 'none',
     },
@@ -197,12 +310,19 @@ let styles = {
 
     experiences_list_area: {
         display: 'grid',
-        gridTemplateColumns: 'repeat(1, 1fr)',
+        //Old card
+        // gridTemplateColumns: 'repeat(1, 1fr)',
         boxSizing: 'border-box',
         outline: 'none',
-        paddingLeft: '1rem',
-        paddingRight: '1rem',
+        paddingLeft: '7rem',
+        paddingRight: '7rem',
+        //New card
+        gridTemplateColumns: 'repeat(3, 1fr)',
+    },
 
+    detail_title_location: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
     },
 
     single_destinations: {
@@ -221,7 +341,8 @@ let styles = {
         position: 'relative',
         background: '#106271',
         overflow: 'hidden',
-        flex: '0 0 30%',
+        //old
+        // flex: '0 0 30%',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
@@ -231,17 +352,23 @@ let styles = {
 
     image: {
         width: '100%',
-        height: '70%',
+        maxHeight: '300px',
         objectFit: 'cover',
         objectPosition: 'center center',
         borderRadius: '5px',
+        zIndex: '10',
     },
 
     detail_card: {
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        flex: '0 0 70%',
-        padding: '22px 15px',
+        //old
+        // gridTemplateColumns: 'repeat(2, 1fr)',
+        // padding: '22px 15px',
+        //New
+        padding: '0 1rem 1rem 1rem',
+        gridTemplateColumns: '2fr, 1fr',
+        //old
+        flex: '0 0 100%',
         background: '#ffffff',
     },
 
@@ -264,7 +391,6 @@ let styles = {
         listStyle: 'none',
         display: 'inline-block',
     },
-
 
     liste_price_content: {
         float: 'left',
@@ -291,14 +417,21 @@ let styles = {
     },
 
     picto: {
-        height: '40px',
-        width: '40px',
-        margin: '2%',
+        height: '80px',
+        width: '80px',
+        marginRight: '1%',
         whiteSpace: 'wrap',
-
-
+        zIndex:'10',
+        marginTop: '-3rem',
     },
+    
     display_inline: {
         display: 'inline-flex',
+    },
+
+    buttonContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
     }
 }

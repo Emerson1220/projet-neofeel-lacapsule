@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 
@@ -14,8 +14,17 @@ import CardRoadPlanner from '../components/CardRoadPlanner';
 //REDUX
 import { connect } from 'react-redux';
 
+
+
 function ScreenRoadPlanner(props) {
-    let roadplanner = props.roadplanner;
+    //Etats
+    const [experienceList, setExperienceList] = useState([{ partner: { addresses: [{ city: '' }] }, tags: [], description: {imageBannerUrl:''} }])
+    const [experiences, setExperience] = useState([]);
+
+    // let roadplanner = [];
+    useEffect(() =>{
+        setExperienceList(props.roadplanner)
+},  [props.roadplanner])
 
     const deleteBDD = async(data) => {
         let rawResponse = await fetch(`/myroadplanner/${data.roadtripID}/${data.experienceID}`);
@@ -23,7 +32,6 @@ function ScreenRoadPlanner(props) {
     }
 
 
-    const [experiences, setExperience] = useState([]);
 
     //select expérience
     var selectExperience = async (experience) => {
@@ -42,6 +50,33 @@ function ScreenRoadPlanner(props) {
         let response = await rawResponse.json();
     }
 
+
+    // let experience = [{name:"test"}, {name:"test2"}, {name3:"test3"}]
+
+
+    let cards = experienceList.map((e, i)=>
+
+        
+
+        <CardRoadPlanner key={i} 
+            name={e.name} 
+            activity={e.activity} 
+            activityType={e.activityType} 
+            region={e.region}
+            tags={e.tags}
+            subtitle={e.subtitle}
+            activityTime={e.activityTime}
+            budget={e.budget}
+            imageBannerUrl={e.description.imageBannerUrl}
+            city={e.partner.addresses[0].city}
+            tags={e.tags}>
+            
+        </CardRoadPlanner>
+    )
+
+    console.log(cards)
+
+
     return (	
     <div>
             <Nav />
@@ -49,14 +84,28 @@ function ScreenRoadPlanner(props) {
 
                 <div style={{ display: 'flex', justifyContent: 'center', width: '60%' }}>
                     <Map></Map>
-                    {/* <img style={ styles.map } src="images/photo-526x360.png" alt="list" /> */}
                 </div>
+
+
+
 
 
                     <div style={ styles.row }>
 
                         <div style={ styles.col_xl_9}>                           
                             <div style={{ marginBottom:'40px' }}> {/* Filters */}
+
+                            <div style={ styles.avantage}>
+                                <h3 style={{color:'#fff'}}>Vous avez cumulé<span> 100€</span> d'avantages dans votre séléction</h3>
+                                <ul>
+                                    <li>Mes avantages</li>
+                                    <li>Mes avantages</li>
+                                    <li>Mes avantages</li>
+                                    <li>Mes avantages</li>
+                                </ul>
+                                <button style={{backgroundColor:'#106271'}}>Achetez votre Neopass</button>
+                            </div>
+
 
                                 <div style={ styles.row_filters }>
                                     <div style={ styles.col_xl_3 }>
@@ -80,44 +129,17 @@ function ScreenRoadPlanner(props) {
                                         </label>
                                     </div>
                                 </div>
-                            </div> {/* End -> ButtonFilters */}
+                            </div> 
                             
-                            <div style={ styles.experiences_list_area }> {/* Container -> Card expérience */}
+                            <div style={ styles.experiences_list_area }> 
 
-                                <CardRoadPlanner></CardRoadPlanner>
-
-                                <div style={ styles.single_destinations}> {/* Card expérience */}
-                                    <div style={ styles.image_card }>
-                                        <img style={ styles.image } src="images/photo-526x360.png" alt="list" />
-                                    </div>
-                                    <div style={ styles.detail_card }>
-                                        <div>
-                                            <h3><Link style={ styles.h3 } to="/">Activité</Link></h3>
-                                            <h4><Link style={ styles.h4 } to="/">Nom du partenaire</Link></h4>
-                                        </div>
-                                        <div style={ styles.display_inline}>
-                                            <p style={{ color: '#e06868', marginBottom: '8px'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />Région</p>
-                                            <h4 ><Link style={ styles.h4 }  to="/">Ville</Link></h4>
-                                        </div>
-                                        {/* <p style={ styles.card_content } >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p> */}
-                                        <div style={ styles.liste_price }>
-                                            <ul style= { Object.assign(styles.liste_price_content, styles.liste_price_li) }>
-                                                <li><i style={ styles.icons_fa }/> Temps</li>
-                                                <li><i style={ styles.icons_fa }/> 2 heures</li>
-                                            </ul>
-                                        </div>
-                                        <div style={ styles.liste_price_item }>
-                                            <p>Prix</p>
-                                            <h2>80 <span>€</span></h2>
-                                        </div>
-
-                                    </div>
-                                </div> {/* End -> Card expérience */}
+                            {cards}
 
                                 
-                            </div> {/* End -> Container -> Card expérience */}
-                            <div style={ styles.text_align_center}> {/* Pagination */}
-                                <div style={ Object.assign(styles.display_inline, styles.pagination) }>
+                            </div>
+
+                            <div style={ styles.text_align_center}>
+                                <div style={ styles.pagination }>
                                     <ul style={ styles.pagination_ul}>
                                         <li><a style={ styles.pagination_li } href=""><i    /></a></li>
                                         <li><a style={ styles.pagination_li } href="">1</a></li>
@@ -127,7 +149,7 @@ function ScreenRoadPlanner(props) {
                                         <li><a style={ styles.pagination_li } href=""><i /></a></li>
                                     </ul>                          
                                 </div>
-                            </div>{/* End -> Pagination */}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -367,6 +389,19 @@ let styles = {
         margin: '0 5px', 
     },
 
+    avantage:{
+        // border: '2px solid #CFD3DE',
+        background: '#e06868',
+        // borderRadius: '5%',
+        textAlign: 'center',
+        color: '#fff', 
+        width: '100%',
+        // height: '42px',
+        marginBottom: '1rem', 
+        padding: '.5rem',
+        // position: 'fixed',
+    },
+
 }        
 
 function mapDispatchToProps(dispatch) {
@@ -378,6 +413,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+    console.log(state)
     return { user: state.user, roadplanner: state.roadplanner }
 }
 

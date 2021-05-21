@@ -126,7 +126,7 @@ const SignUp = (props) => {
                     style={ styles.checkbox } />
                     <span style={{ color: 'white', whiteSpace: 'nowrap' }}>Rester connecter</span>
                 </div>
-                <RedButton title="créer mon compte" size="short" onSelect={ ()=>createUser() } />
+                <RedButton title="créer mon compte" onSelect={ ()=>createUser() } />
                 <Divider style={ styles.divider }>OU</Divider>
             </div>
             <div style={ styles.buttonContainer }>

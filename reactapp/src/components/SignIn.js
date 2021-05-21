@@ -93,7 +93,7 @@ const SignIn = (props) => {
                     style={ styles.checkbox } />
                     <span style={{ color: 'white', whiteSpace: 'nowrap' }}>Rester connecter</span>
                 </div>
-                <RedButton title="Connexion" size="short" onSelect={ ()=>signinUser() }/>
+                <RedButton title="Connexion" onSelect={ ()=>signinUser() }/>
                 <Divider style={ styles.divider }>OU</Divider>
             </div>
             <div style={ styles.buttonContainer }>

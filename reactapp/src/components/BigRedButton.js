@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css';
 
-const RedButton = (props) => {
+const BigRedButton = (props) => {
     //STATE HOOKS
     const [hover, setHover] = useState(false);
 
@@ -23,6 +23,8 @@ const RedButton = (props) => {
 
 const styles = {
     button: {
+        height: '100px',
+        width: '75%',
         backgroundColor: 'rgb(224, 104, 104)',
         border: 'none',
         margin: '2%',
@@ -30,6 +32,8 @@ const styles = {
         borderRadius: '5px'
     },
     buttonHover: {
+        height: '100px',
+        width: '75%',
         border: 'none',
         margin: '2%',
         backgroundColor: "rgba(224, 104, 104, 0.8)",
@@ -40,12 +44,12 @@ const styles = {
         color: 'white',
         whiteSpace: 'nowrap',
         flexWrap: 'nowrap',
-        padding: 6,
+        padding: 0,
         margin: 0,
         lineHeight: '1.6rem',
-        fontSize: '0.9rem',
+        fontSize: '0.8rem',
         fontWeight: 'bold'
     }
 }
 
-export default RedButton;
+export default BigRedButton;

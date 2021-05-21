@@ -9,42 +9,302 @@ const ScreenPartner = () => {
     return (
         <div>
             <Nav />
-            <div style={{
-                display: "flex", flexDirection: 'column', height: '100vh', width: '100%',
-            }} >
-                <div style={{ display: 'flex', backgroundColor: 'rgba(224, 104, 104, 0.8)', margin: '1%', padding: ' 4px', width: ' 25%', justifyContent: 'center', borderRadius: ' 10px' }}>
-                    <h1 style={{ color: '#FFF' }}> Les Coccinelles</h1>
+
+            <div style={ styles.container}>
+                <div style={ styles.gallery}>
+                    <div style={ styles.gallery_container}>
+                        <div>
+                            <div style={ styles.gallery_area}>
+                                    {/* gallery-item */}
+                                    <div style={ styles.gallery_item_video}>
+                                        <div style={ styles.tp_gallery_item_img}>
+                                            <a href="#" data-effect="mfp-zoom-in">
+                                                <img style={ styles.tp_gallery_item_img} src="images/photo-526x360.png" alt="image" />
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    {/* gallery-item */}
+                                    <div style={ styles.gallery_item_video}>
+                                        <div style={ styles.tp_gallery_item_img}>
+                                            <a href="#" data-effect="mfp-zoom-in">
+                                                <img style={ styles.tp_gallery_item_img} src="images/photo-526x360.png" alt="image" />
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    {/* gallery-item */}
+                                    <div style={ styles.gallery_item_video}>
+                                        <div style={ styles.tp_gallery_item_img}>
+                                            <a href="#" data-effect="mfp-zoom-in">
+                                                <img style={ styles.tp_gallery_item_img} src="images/photo-526x360.png" alt="image" />
+                                            </a>
+                                        </div>
+                                    </div>
+                            </div>
+
+                                <div style={ styles.row}>
+                                    <div style={styles.information_col_3}>
+                                        <div style={{boxSizing:'border-box', outline:'none'}}>
+                                            <p style={{color:'#fff'}}><i className="fa fa-map-marker" />Region</p>
+                                            <h4 style={styles.h4}>Ville</h4>
+                                            <h4 style={styles.h4}>Durée</h4>
+                                            <div style={{margin:'1rem'}}>
+                                                <a style={{marginRight:'1rem'}} href="#">Tags 1</a>
+                                                <a style={{marginRight:'1rem'}} href="#">Tags 2</a>
+                                                <a style={{marginRight:'1rem'}} href="#">Tags 3</a>
+                                                <a style={{marginRight:'1rem'}} href="#">Tags 4</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-xl-9 col-lg-8">
+                                        <div className="book-list-warp">
+                                            <p className="book-list-content">Title</p>
+                                            <div className="tp-price-meta">
+                                                <p>Prix</p>
+                                                <h2>775</h2>
+                                            </div>
+                                        </div>
+                                        <ul className="tp-list-meta border-tp-solid">
+                                            <li className="ml-0"><i className="fa fa-calendar-o" /> info 1</li>
+                                            <li><i className="fa fa-clock-o" /> info 2</li>
+                                            <li><i className="fa fa-users" />info 3</li>
+                                            <li><i className="fa fa-snowflake-o" /> info 4</li>
+                                            <li><i className="fa fa-star" /> info 5</li>
+                                        </ul>
+                                    </div>  
+                                </div>
+
+                        </div>
+                    </div>
                 </div>
-
-                <div style={{
-                    display: 'grid',
-                    grid: 'auto-flow dense / 1fr 2fr',
-                    
-                    
-
-                }}>
-                    <div style={{ flexDirection: 'column', alignItems: 'center', borderRadius:'10px', margin:'2%' }}>
-                        <img display='flex' width='100%' src='../images/domaines-schlumberger-entree-min.jpg.webp' />
+                <div className="container">
+                    <div className="row">
+                    <div className="col-lg-8">
+                        <div className="tour-details-wrap">
+                        <h4 className="single-page-small-title">Write A Review</h4>
+                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
+                        <div className="host-area">
+                            <div className="single-host-wrap text-center">
+                            <div className="thumb">
+                                <img src= "" alt="photo partenaire" />
+                            </div>
+                            <h4>Nom du partenaire</h4>
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
+                            <a className="btn btn-yellow" href="#">Contacter le partenaire</a>
+                            </div>
+                        </div>
+                        <div className="service-location-map">
+                            <h4 className="single-page-small-title">Localisation</h4>
+                            <div className="service-location-map">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d649788.5753409272!2d-0.5724199684037448!3d52.92186340524542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604d94c3b82ab%3A0x62077a554c8e9a8e!2sPetty%20France%2C%20Westminster%2C%20London%2C%20UK!5e0!3m2!1sen!2sbd!4v1572346566908!5m2!1sen!2sbd" />
+                            </div>
+                        </div>
+                        <div className="comments-area tour-details-review-area">
+                            <h4 className="comments-title">Commentaires</h4>
+                            <ul className="comment-list mb-0">
+                            <li>
+                                <div className="single-comment-wrap">
+                                <div className="thumb">
+                                    <img src="assets/img/client/2.png" alt="img" />
+                                </div>
+                                <div className="content">
+                                    <h4 className="title">Tyler Bailey</h4>
+                                    <span className="date">13 August 2019</span>
+                                    <div className="tp-review-meta">
+                                    <i className="ic-yellow fa fa-star" />
+                                    <i className="ic-yellow fa fa-star" />
+                                    <i className="ic-yellow fa fa-star" />
+                                    <i className="ic-yellow fa fa-star" />
+                                    <i className="ic-yellow fa fa-star" />
+                                    </div>
+                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
+                                </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div className="single-comment-wrap">
+                                <div className="thumb">
+                                    <img src="assets/img/client/3.png" alt="img" />
+                                </div>
+                                <div className="content">
+                                    <h4 className="title">Eliza Jordan</h4>
+                                    <span className="date">17 SEP 2019</span>
+                                    <div className="tp-review-meta">
+                                    <i className="ic-yellow fa fa-star" />
+                                    <i className="ic-yellow fa fa-star" />
+                                    <i className="ic-yellow fa fa-star" />
+                                    <i className="ic-yellow fa fa-star" />
+                                    <i className="ic-yellow fa fa-star" />
+                                    </div>
+                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
+                                </div>
+                                </div>
+                            </li>
+                            </ul>
+                            <div className="btn-wrapper text-right mt-3">
+                            <a className="btn-read-more" href="#"><span>Plus de commentaires<i className="la la-arrow-right" /></span></a>
+                            </div>
+                        </div>
+                        <div className="location-review-area">
+                            <form className="tp-form-wrap bg-gray tp-form-wrap-one">
+                            <div className="row">
+                                <div className="col-lg-6"><h4 className="single-page-small-title">Ecrire un commentaire</h4></div>
+                                <div className="col-lg-6">
+                                <div className="tp-review-meta text-lg-right">
+                                    <span className="mr-3 ml-0">Vote</span>
+                                    <i className="fa fa-star" />
+                                    <i className="fa fa-star" />
+                                    <i className="fa fa-star" />
+                                    <i className="fa fa-star" />
+                                    <i className="fa fa-star" />
+                                </div>
+                                </div>
+                                <div className="col-lg-6">
+                                <label className="single-input-wrap">
+                                    <span className="single-input-title">Nom</span>
+                                    <input type="text" />
+                                </label>
+                                </div>
+                                <div className="col-lg-6">
+                                <label className="single-input-wrap">
+                                    <span className="single-input-title">Email</span>
+                                    <input type="text" />
+                                </label>
+                                </div>
+                                <div className="col-lg-12">
+                                <label className="single-input-wrap">
+                                    <span className="single-input-title">Commentaire</span>
+                                    <textarea defaultValue={""} />
+                                </label>
+                                </div>
+                                <div className="col-12">
+                                <a className="btn btn-yellow" href="#">Envoyé</a>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                        </div>
                     </div>
-
-                    <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(224, 104, 104, 1)', opacity: 0.9, borderRadius: '10px', padding: '10px', margin:'1%' }}>
-                        <h2 style={{  }}><img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" /> Vosges-Alsace</h2>
-                        <h2 style={{ fontWeight: 'bold' }}>Review</h2>
-                        <h4>Le lieu est étonnant et le calme vraiment appréciable.<br /> Les enfants adoreront le passage suspendu entre les deux chambres du grand gîte.​</h4>
-
                     </div>
                 </div>
-                    <div style={{ display: 'flex', backgroundColor: '#106271', opacity: 0.9, borderRadius: '10px', margin: '1%' }}>
-                        <h2 style={{ padding: '10px', color: '#FFF', justifyContent: 'center' }}>Voyage insolite au cœur de l’Alsace</h2>
-                        <h5 style={{ padding: '10px', color: 'black' }}>Situés dans un éco quartier ces maisons d’architecte en bois de formes arrondies sont toutes douces et toutes rondes.<br />Perchés sur pilotis, les gîtes s’intègrent dans un paysage verdoyant, avec une vue dégagée sur le jardin. Une impression de vacances et de communion avec la nature, parfaitement situé à proximité des sites touristiques du centre Alsace, sur les contres-forts du parc naturel régional du massif des Vosges.<br />Olivier et Cindy auront grand plaisir à vous accueillir dans ces charmants gîtes tout confort au design cosy et moderne.<br />Le gîte les Coccinelles respecte son environnement et communie avec la nature.<br />Une fois l’entrée passée, vous n’en ressortirez plus. Le bois, la décoration et les courbes arrondies de l’intérieur apportent sérénité et chaleur.<br />Les enfants adoreront passer d’une chambre à l’autre par le passage suspendu.<br />Pas plus de commentaire, nous vous laissons admirer les photos et vous projeter dans cet écrin de douceur.<br />Le grand gîte d’une surface de 80m2 à une capacité de 5 personnes. Deux chambres avec lit double 160×200 et une mezzanine avec un lit 90×200 La cuisine est toute équipée et ouverte sur le séjour. La salle de bain privée est design avec douche à l’italienne. Le jardin est paysagé avec des carrés potagers et un tipi en bois pour barbecue. Il y a une terrasse couverte de 60m2 avec espace détente et jeux en bois.<br />Le petit gîte d’une surface de 40m2 à une capacité de 2 à 4 personnes Une chambre cocon pour 2 personnes en hauteur et un canapé lit confortable pour 2 personnes La cuisine équipée est ouverte sur un séjour atypique avec des murs arrondis. La salle de bain privée est design avec douche à l’italienne. Une terrasse de 20m2 avec vue sur la montagne.<br />Pour ces deux cottages, le parking est privé, l’accès à la piste cyclable est direct et le linge de lits et serviettes sont fournis.</h5>
-                    </div>
-
-
             </div>
+
+
+
+
         </div>
+
+        
 
     )
 
-}
+};
+
+
+    let styles = {
+        // CSS -  //
+    
+        container:{
+            marginTop:'2rem',
+        },
+
+        row:{
+            display:"grid",
+            gridTemplateColumns: 'repeat(2, 1fr)',
+
+            // display:'flex',
+            // flexDirection:'column',
+            // flewWrap:'wrap',
+            // marginRight:'-15px',
+            // marginLeft:'-15px',
+        },
+
+        information_col_3:{
+            position: 'relative',
+            width: '100%',
+            minHeight: '1px',
+            paddingRight: '15px',
+            paddingLeft: '15px',
+        },  
+        
+        
+        // CARD - TITLE//
+
+        h3:{
+            fontWeight:'bold',
+            fontSize: '28px',
+            color: '#fff',
+            textDecoration: 'none',
+        },
+
+        h4:{
+            fontSize: '20px',
+            color: '#fff',
+            textDecoration: 'none',
+        },
+    
+        gallery:{
+            // background:'#006271',
+            padding:'3rem',
+        },
+    
+        gallery_container:{
+            margin:'0px 40px',
+            padding:'2rem 2rem 0',
+            boxSadow:'1px 0px 45px #fff',
+            borderRadius:'25px',
+            zIndex:'1',
+            position:'relative',
+            background:'#006271',
+
+        },  
+        
+        gallery_area:{
+            display:"grid",
+            gridTemplateColumns: 'repeat(3, 1fr)',
+        },
+
+        gallery_item_img:{
+            position: 'relative',
+            marginBottom:'30px',
+            // maxWidth:'100px',
+            width: '150px',
+            height: '150px',
+            objectFit: 'cover',
+        },
+
+        tp_gallery_item_img:{
+            position: 'relative',
+            marginBottom: '30px',
+            width: '100%',
+            height: '50%%',
+            objectFit: 'cover',
+        },
+
+        // gallery_item_thumbnails:{
+        //     boxSizing:'border-box',
+        //     outline:'none',
+        // },
+
+        gallery_item_video:{
+            padding: '1rem',
+        },
+
+
+
+
+    
+    
+    };
+
+
+
+
 
 export default ScreenPartner;
+
+
+
+

@@ -22,12 +22,15 @@ import token from './reducers/token.reducer';
 import roadplanner from './reducers/roadplanner.reducer'
 import { Provider } from 'react-redux';
 import { createStore, combineReducers }  from 'redux';
-import {Elements} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
 
+//STRIPE
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 const store = createStore(combineReducers({ region, activities, experiences, token, roadplanner }));
+
 const stripePromise = loadStripe('')
+
 function App() {
   return (
     <Provider store={ store }>

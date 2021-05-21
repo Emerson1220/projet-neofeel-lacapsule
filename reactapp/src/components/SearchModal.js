@@ -8,12 +8,14 @@ import '../styles/map.css'
 //UI
 import { Modal, Button } from 'antd';
 import RedButton from './RedButton';
+import BigRedButton from './BigRedButton'
 
 //REDUX
 import { connect } from 'react-redux';
 
 
 const SearchModal = (props) => {
+    console.log(props)
     //STATE HOOKS
     const [selection, setSelection] = useState('all');
     const [region, setRegion] = useState(null);
@@ -34,7 +36,8 @@ const SearchModal = (props) => {
             body : `region=${props.region}`
         })
         let response = await rawResponse.json();
-        props.onSearch(response.data)
+        props.onSearch(response.data);
+        props.searchTrips(selection);
     }
 
     //select activities
@@ -45,7 +48,8 @@ const SearchModal = (props) => {
             body : `activities=${JSON.stringify(props.activities)}`
         });
         let response = await rawResponse.json();
-        props.onSearch(response.data)
+        props.onSearch(response.data);
+        props.searchTrips(selection);
     }
 
     //get list activity options from back
@@ -101,10 +105,10 @@ const SearchModal = (props) => {
     let selectButton;
     if (region) {
         selected = <h3>{ region.name }</h3>
-        selectButton = <RedButton title="Allons-y!" size="small" onSelect={()=> selectRegion()} />
+        selectButton = <RedButton title="Allons-y!" onSelect={ ()=> selectRegion() } />
     }else if (activities.length > 0){
         selected = <h3>{ region }</h3>
-        selectButton = <RedButton title="Allons-y!" size="small" onSelect={()=> selectActivity()}/>
+        selectButton = <RedButton title="Allons-y!" onSelect={ ()=> selectActivity() }/>
     };
 
 
@@ -112,14 +116,12 @@ const SearchModal = (props) => {
     if(selection === 'all') {
         modalContent = 
             <div style={ styles.selectionContent }>
-                <RedButton
+                <BigRedButton
                 title="Découvrir une région"
-                size="large"
                 onSelect={ ()=>setSelection('region') }
                 />
-                <RedButton
+                <BigRedButton
                 title="Parcourir nos suggestions de voyage"
-                size="large"
                 onSelect={ ()=>setSelection('trips') }
                 />
             </div>
