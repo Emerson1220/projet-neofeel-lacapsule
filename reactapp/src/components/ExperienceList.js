@@ -180,8 +180,7 @@ const ExperienceList = (props) => {
                                 title="+"
                                 onSelect={ ()=>chooseExperience(experience) }/>
                             </div>
-<<<<<<< HEAD
-                            <div style={styles.liste_price_item}>
+                                                        <div style={styles.liste_price_item}>
                                 <p>Prix</p>
                                 <h2>{experience.budget}</h2>
                             </div>
@@ -189,8 +188,7 @@ const ExperienceList = (props) => {
 
                             </div>
                             <div style={ styles.buttonContainer }>
-<<<<<<< HEAD
-=======
+
                         </div>
                     </div> */}
 
@@ -230,9 +228,6 @@ const ExperienceList = (props) => {
                             </div> 
                             <div style={{ textAlign: 'center', marginTop:'1rem' }}>
                                 <h4 style={styles.h4}>Ajouter cette experience à votre voyage</h4>
->>>>>>> emerson
-=======
->>>>>>> 3f5bc305d2c1a1dc9c027d4a50bc5a40bb30c1a3
                                 <Cascader
                                 options={ options }
                                 expandTrigger="hover"
@@ -421,18 +416,9 @@ let styles = {
     },
 
     picto: {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 3f5bc305d2c1a1dc9c027d4a50bc5a40bb30c1a3
-        height: '65px',
-        width: '65px',
-        margin: '2%',
-=======
         height: '80px',
         width: '80px',
         marginRight: '1%',
->>>>>>> emerson
         whiteSpace: 'wrap',
         zIndex:'10',
         marginTop: '-3rem',

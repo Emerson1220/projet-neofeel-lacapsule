@@ -87,10 +87,25 @@ function ScreenRoadPlanner(props) {
                 </div>
 
 
+
+
+
                     <div style={ styles.row }>
 
                         <div style={ styles.col_xl_9}>                           
                             <div style={{ marginBottom:'40px' }}> {/* Filters */}
+
+                            <div style={ styles.avantage}>
+                                <h3 style={{color:'#fff'}}>Vous avez cumulé<span> 100€</span> d'avantages dans votre séléction</h3>
+                                <ul>
+                                    <li>Mes avantages</li>
+                                    <li>Mes avantages</li>
+                                    <li>Mes avantages</li>
+                                    <li>Mes avantages</li>
+                                </ul>
+                                <button style={{backgroundColor:'#106271'}}>Achetez votre Neopass</button>
+                            </div>
+
 
                                 <div style={ styles.row_filters }>
                                     <div style={ styles.col_xl_3 }>
@@ -372,6 +387,19 @@ let styles = {
         width: '42px',
         height: '42px',
         margin: '0 5px', 
+    },
+
+    avantage:{
+        // border: '2px solid #CFD3DE',
+        background: '#e06868',
+        // borderRadius: '5%',
+        textAlign: 'center',
+        color: '#fff', 
+        width: '100%',
+        // height: '42px',
+        marginBottom: '1rem', 
+        padding: '.5rem',
+        // position: 'fixed',
     },
 
 }        
