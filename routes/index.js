@@ -6,6 +6,11 @@ const Experience = require('../models/Experience');
 const Roadtrip = require('../models/Roadtrip');
 const User = require('../models/User');
 
+//ROOT ROUTE
+router.get('/', function(req, res, next) {
+    res.send('ok')
+})
+
 //get experiences par région
 router.post('/searchregions', async function(req, res, next) {
     try {

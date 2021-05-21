@@ -7,6 +7,7 @@ import { Cascader } from 'antd'
 
 const ExperienceList = (props) => {
     const [voyageSelect, setVoyageSelect] = useState('');
+
     const options = [
         {
             value: 'new',
@@ -115,9 +116,12 @@ const ExperienceList = (props) => {
                             </div>
                             <div style={styles.liste_price_item}>
                                 <p>Prix</p>
-                                <h2>{experience.budget}<span>€</span></h2>
+                                <h2>{experience.budget}</h2>
                             </div>
                             <div>
+
+                            </div>
+                            <div style={ styles.buttonContainer }>
                                 <Cascader
                                 options={ options }
                                 expandTrigger="hover"
@@ -125,7 +129,7 @@ const ExperienceList = (props) => {
                                 onChange={ onChange }
                                 />
                                 <RedButton
-                                title="+"
+                                title="Ajouter"
                                 onSelect={ ()=>chooseExperience(experience) }/>
                             </div>
 
@@ -291,8 +295,8 @@ let styles = {
     },
 
     picto: {
-        height: '40px',
-        width: '40px',
+        height: '65px',
+        width: '65px',
         margin: '2%',
         whiteSpace: 'wrap',
 
@@ -300,5 +304,11 @@ let styles = {
     },
     display_inline: {
         display: 'inline-flex',
+    },
+
+    buttonContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
     }
 }
