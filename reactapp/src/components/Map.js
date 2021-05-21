@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../App.css';
 import '../styles/googleMap.css';
 import { Link } from 'react-router-dom';
@@ -20,6 +20,10 @@ import RedButton from './RedButton';
 const Map = (props) => {
     const [experience, setExperience] = useState({ partner: { addresses: [{ city: '' }] }, tags: [], description: {imageBannerUrl:''} })
     const [visible, setVisible] = useState(false);
+    const [locations, setLocations] = useState([])
+
+    const mapRef =useRef(null);
+    const google = window.google;
 
     const [voyageSelect, setVoyageSelect] = useState('');
     const options = [
@@ -177,13 +181,11 @@ const Map = (props) => {
     }
 
     //fit map to markers
-    const getMapBounds = (map, maps, locations) => {
-        const bounds = new maps.LatLngBounds();
+    const getMapBounds = (locations) => {
+        const bounds = new google.maps.LatLngBounds();
 
         locations.forEach((location) => {
-            bounds.extend(
-                new maps.LatLng(location.latitude, location.longitude)
-            );
+            bounds.extend( new google.maps.LatLng(location.latitude, location.longitude));
         })
         return bounds;
     };
@@ -198,33 +200,32 @@ const Map = (props) => {
 
     const apiIsLoaded = (map, maps, locations) => {
         if (map) {
-            const bounds = getMapBounds(map, maps, location);
+            const bounds = getMapBounds(locations);
             map.fitBounds(bounds);
             bindResizeListener(map, maps, bounds)
         }
     }
+    useEffect(() => {
+        let locationsArray = props.experiences.map(e => ({ lat: e.coordinate.latitude, lng: e.coordinate.longitude }))
+        setLocations(locationsArray)
+    }, [props.experiences]);
 
-    let locations = props.experiences.map(e => 
-        {
-            return {
-            lat: e.coordinate.latitude, lng: e.coordinate.longitude
-        } 
-        })
-    // let location = {
-    //     address: '',
-    //     lat: 48.816,
-    //     lng: 5.806
-    // }
+
+    let location = {
+        address: '',
+        lat: 48.816,
+        lng: 5.806
+    }
 
     return (
         <div className="map">
             <div className="google-map">
                 <GoogleMapReact
                     bootstrapURLKeys={{ 
-                        key: ' AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s',
-                        language: 'fr'
-                    }}
+                        key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s'                    }}
                     defaultZoom={7}
+                    defaultCenter={ location }
+                    yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={ ({map, maps}) => apiIsLoaded(map, maps, locations) }
                 >
                     {ExperienceListingMap}
