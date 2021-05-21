@@ -113,7 +113,7 @@ const ExperienceList = (props) => {
                                 </div>
                             </div>
                             <div style={styles.liste_price}>
-                                <div style={styles.liste_price_item}>
+                                <div style={styles.liste_temps_item}>
                                     <p>Temps</p>
                                     <h2>{experience.activityTime}</h2>
                                 </div>
@@ -137,14 +137,13 @@ const ExperienceList = (props) => {
                         </div>
                     </div>
 
-
-                    {/* Card 2 */}
-                    {/* <div style={styles.single_destinations}> 
+                                        {/* Card 1 */}
+                                        <div style={styles.single_destinations}> 
                         <div style={styles.image_card}>
                             <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
                         </div>
                         <div style={{ width: '100%',backgroundColor: 'white',display:'flex', flexWrap:'nowrap', padding:'1rem'}}>
-                            {picto}
+                            {pictos}
                         </div>
                         <div style={styles.detail_card}>
                             <div style={styles.detail_title_location}>
@@ -159,7 +158,7 @@ const ExperienceList = (props) => {
                                 </div>
                             </div>
                             <div style={styles.liste_price}>
-                                <div style={styles.liste_price_item}>
+                                <div style={styles.liste_temps_item}>
                                     <p>Temps</p>
                                     <h2>{experience.activityTime}</h2>
                                 </div>
@@ -180,27 +179,16 @@ const ExperienceList = (props) => {
                                 title="+"
                                 onSelect={ ()=>chooseExperience(experience) }/>
                             </div>
-
-                            <div style={styles.liste_price_item}>
-                                <p>Prix</p>
-                                <h2>{experience.budget}</h2>
-                            </div>
-                            <div>
-
-                            </div>
-                            <div style={ styles.buttonContainer }>
                         </div>
-                    </div> */}
+                    </div>
 
-
-
-                    {/* Card 3 */}
-                    {/* <div style={styles.single_destinations}> 
+                                        {/* Card 1 */}
+                    <div style={styles.single_destinations}> 
                         <div style={styles.image_card}>
                             <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
                         </div>
                         <div style={{ width: '100%',backgroundColor: 'white',display:'flex', flexWrap:'nowrap', padding:'1rem'}}>
-                            {picto}
+                            {pictos}
                         </div>
                         <div style={styles.detail_card}>
                             <div style={styles.detail_title_location}>
@@ -208,7 +196,6 @@ const ExperienceList = (props) => {
                                     <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
                                     <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
                                 </div>
-
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
                                     <p style={{ color: '#e06868', marginBottom: '8px' }}>
                                     <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
@@ -216,11 +203,10 @@ const ExperienceList = (props) => {
                                 </div>
                             </div>
                             <div style={styles.liste_price}>
-                                <div style={styles.liste_price_item}>
+                                <div style={styles.liste_temps_item}>
                                     <p>Temps</p>
                                     <h2>{experience.activityTime}</h2>
                                 </div>
-
                                 <div style={styles.liste_price_item}>
                                     <p>Prix</p>
                                     <h2>{experience.budget}</h2>
@@ -228,7 +214,6 @@ const ExperienceList = (props) => {
                             </div> 
                             <div style={{ textAlign: 'center', marginTop:'1rem' }}>
                                 <h4 style={styles.h4}>Ajouter cette experience à votre voyage</h4>
-
                                 <Cascader
                                 options={ options }
                                 expandTrigger="hover"
@@ -236,13 +221,11 @@ const ExperienceList = (props) => {
                                 onChange={ onChange }
                                 />
                                 <RedButton
-                                title="Ajouter"
+                                title="+"
                                 onSelect={ ()=>chooseExperience(experience) }/>
                             </div>
                         </div>
-                    </div> */}
-
-
+                    </div>
 
                 </div>
             )
@@ -383,6 +366,7 @@ let styles = {
         display: 'flex',
         boxSizing: 'border-box',
         outline: 'none',
+        justifyContent: 'center'
     },
 
     liste_price_li: {
@@ -410,10 +394,16 @@ let styles = {
     },
 
     liste_price_item: {
-        paddingLeft: '30px',
-        marginLeft: '20px',
+        paddingLeft: '10%',
         borderLeft: '1px solid #CFD3DE',
         paddingTop: '0',
+        width: '45%'
+    },
+
+    liste_temps_item: {
+        paddingRight: '10%',
+        paddingTop: '0',
+        width: '45%'
     },
 
     picto: {

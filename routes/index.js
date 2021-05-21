@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+//STRIPE
+const Stripe = require('stripe');
+const stripe = new Stripe('sk_test_51ItWKHK4yUyeZ8DTqXCM4ixI7xpzLNgd2sLglgnom7xUDNdcIpfzVgOGMhPovqQAp4ti8dLl9EgBEHyO51ONWjLg00rjQhJAvi')
 //MODELS
 const Experience = require('../models/Experience');
 const Roadtrip = require('../models/Roadtrip');
@@ -9,6 +12,22 @@ const User = require('../models/User');
 //ROOT ROUTE
 router.get('/', function(req, res, next) {
     res.send('ok')
+})
+
+//Stripe payment
+router.post('/auth/stripe', async function(req, res, next) {
+    try {
+        const { amount } = req.body;
+
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount,
+            currency: 'eur'
+        });
+
+        res.status(200).json({ clientSecret: paymentIntent.client_secret })
+    } catch (err) {
+        res.status(500).json({ statusCode: 500, message: err.message })
+    }
 })
 
 //get experiences par région
