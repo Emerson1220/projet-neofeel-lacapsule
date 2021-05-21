@@ -85,7 +85,7 @@ function ScreenHome(props) {
                         <RedButton title="Commencer l'aventure" onSelect={() => showModal()} />
                     </div>
                 </div>
-                <SearchModal visible={ visible } showModal={ () => showModal() } searchTrips={ ()=>searchTrips() }/>
+                <SearchModal visible={ visible } showModal={ () => showModal() } searchTrips={ searchTrips }/>
             </div>
         )
     }
