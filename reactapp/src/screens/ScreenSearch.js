@@ -53,13 +53,13 @@ function ScreenSearch(props) {
     }
 
     return (
-        <div className="search" style={{ display: "flex", flexDirection: 'column', height: '100vh', alignItems: 'center' }}>
+        <div className="search" style={{ height: '100vh', alignItems: 'center' }}>
             <Nav />
             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '50%', marginTop: '2%', flexDirection: 'row' }} >
                     <div className='categorieSelect'>
-                        <FontAwesomeIcon onClick={() => OnclickMap()} icon={faMapMarked} style={{ cursor: 'pointer', height: '25px', width: 'auto', marginRight: '8px' }} />
-                        <FontAwesomeIcon onClick={() => OnclickExperienceList()} icon={faListOl} style={{ cursor: 'pointer', height: '25px', width: 'auto', marginRight: '8px' }} />
+                        <FontAwesomeIcon onClick={() => OnclickMap()} icon={faMapMarked} style={{ color: '#fff', cursor: 'pointer', height: '25px', width: 'auto', marginRight: '8px' }} />
+                        <FontAwesomeIcon onClick={() => OnclickExperienceList()} icon={faListOl} style={{ color: '#fff', cursor: 'pointer', height: '25px', width: 'auto', marginRight: '8px' }} />
                     </div>
                     <Select showSearch
                         style={{ width: '40%' }}
@@ -84,10 +84,12 @@ function ScreenSearch(props) {
                     </Link>
 
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
                     {displaySelection}
                 </div>
-            </div>
+
         </div>
 
 
