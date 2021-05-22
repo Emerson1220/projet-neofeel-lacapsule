@@ -55,7 +55,6 @@ const Map = (props) => {
     };
 
     const chooseExperience = async(experience) => {
-        console.log(voyageSelect[0])
         if (voyageSelect[0] === 'new') {
             createRoadtrip(experience);
         } else {
@@ -137,7 +136,6 @@ const Map = (props) => {
     }
 
     const showModal = (exp) => {
-        console.log(experience)
         setExperience(exp)
         setVisible(!visible);
 
@@ -252,8 +250,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
-    return { experiences: state.experiences, region: state.region }
+    return { experiences: state.experiences, region: state.region, token: state.token }
 }
 
 export default connect(

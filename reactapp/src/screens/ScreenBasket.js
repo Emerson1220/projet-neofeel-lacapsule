@@ -34,7 +34,6 @@ const ScreenBasket =  () => {
     };
 
     const handleSubmit = async(event) => {
-        console.log('click')
         event.preventDefault();
         if (!stripe || !elements) {
             return;
@@ -50,8 +49,6 @@ const ScreenBasket =  () => {
             }
         };
 
-        console.log(billingDetails)
-
         let rawResponse =  await fetch('/auth/stripe', {
             method: 'post',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -59,8 +56,6 @@ const ScreenBasket =  () => {
         })
         let response = await rawResponse.json();
         const clientSecret = response.clientSecret;
-        console.log(response)
-        console.log(clientSecret)
 
         const cardElement = elements.getElement(CardElement);
     
@@ -260,5 +255,5 @@ const styles = {
         flexDirection: 'column',
         justifyContent: 'space-between'
     },
-    
+
 }

@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function CardRoadPlanner(props) {
-    console.log(props)
 
     const deleteBDD = async(data) => {
         let rawResponse = await fetch(`/myroadplanner/${data.roadtripID}/${data.experienceID}`);

@@ -41,9 +41,9 @@ const SignUp = (props) => {
             body: `firstName=${user.firstName}&lastName=${user.lastName}&email=${user.email}&password=${user.password}&pseudo=${user.pseudo}`
         })
         let response = await rawResponse.json();
-        console.log(response);
         if (response.result === true) {
-            props.onSignupClick(response.token);
+            props.onSignupClick(response.user.token);
+            props.stayLogged(response.user)
             if (isChecked) {
                 cookies.set('token', response.token, { path: '/', maxAge: 604800 })
             }
@@ -56,11 +56,11 @@ const SignUp = (props) => {
     const responseFacebook = async(res) => {
         let rawResponse = await fetch(`/users/auth/facebook/signup/${res.accessToken}`);
         let response = await rawResponse.json();
-        console.log(response)
         if (response.result === true) {
-            props.onSignupClick(response.token);
+            props.onSignupClick(response.user.token);
+            props.stayLogged(response.user)
             if (isChecked) {
-                cookies.set('token', response.token, { path: '/', maxAge: 604800 })
+                cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
             }
         } else {
             setError(response.message);
@@ -71,9 +71,10 @@ const SignUp = (props) => {
         let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
         let response = await rawResponse.json();
         if (response.result === true) {
-            props.onSignupClick(response.token);
+            props.onSignupClick(response.user.token);
+            props.stayLogged(response.user)
             if (isChecked) {
-                cookies.set('token', response.token, { path: '/', maxAge: 604800 })
+                cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
             }
         } else {
             setError(response.message)
@@ -204,7 +205,10 @@ function mapDispatchToProps(dispatch) {
     return {
         onSignupClick: function(data) {
             dispatch({ type: 'signup', token: data })
-        }
+        },
+        stayLogged: function(user) {
+            dispatch({ type: 'stayLogged', user: user })
+        },
     }
 }
 

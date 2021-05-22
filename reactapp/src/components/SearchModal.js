@@ -15,7 +15,6 @@ import { connect } from 'react-redux';
 
 
 const SearchModal = (props) => {
-    console.log(props)
     //STATE HOOKS
     const [selection, setSelection] = useState('all');
     const [region, setRegion] = useState(null);

@@ -86,7 +86,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         onSigninClick: function(data) {
-            dispatch({ type: 'signin', token: data })
+            dispatch({ type: 'signin', user: data })
         }
     }
 }
