@@ -13,6 +13,7 @@ const ScreenPartner = () => {
             <div style={ styles.container}>
                 <div style={ styles.gallery}>
                     <div style={ styles.gallery_container}>
+                    <h4 style={styles.h4}>Title</h4>
                         <div>
                             <div style={ styles.gallery_area}>
                                     {/* gallery-item */}
@@ -47,8 +48,8 @@ const ScreenPartner = () => {
                                     <div style={styles.information_col_3}>
                                         <div style={{boxSizing:'border-box', outline:'none'}}>
                                             <p style={{color:'#fff'}}><i className="fa fa-map-marker" />Region</p>
-                                            <h4 style={styles.h4}>Ville</h4>
-                                            <h4 style={styles.h4}>Durée</h4>
+                                            <h4 style={styles.h4_white}>Ville</h4>
+                                            <h4 style={styles.h4_white}>Durée</h4>
                                             <div style={{margin:'1rem'}}>
                                                 <a style={{marginRight:'1rem'}} href="#">Tags 1</a>
                                                 <a style={{marginRight:'1rem'}} href="#">Tags 2</a>
@@ -58,15 +59,13 @@ const ScreenPartner = () => {
                                         </div>
                                     </div>
 
-                                    <div className="col-xl-9 col-lg-8">
-                                        <div className="book-list-warp">
-                                            <p className="book-list-content">Title</p>
-                                            <div className="tp-price-meta">
-                                                <p>Prix</p>
-                                                <h2>775</h2>
-                                            </div>
+                                    <div style={styles.information_col_3}>
+                                        <div>
+                                            <h4 style={styles.h4_white}>Prix</h4>
+                                            <h2>775</h2>
                                         </div>
-                                        <ul className="tp-list-meta border-tp-solid">
+
+                                        <ul style={styles.infos_contents}>
                                             <li className="ml-0"><i className="fa fa-calendar-o" /> info 1</li>
                                             <li><i className="fa fa-clock-o" /> info 2</li>
                                             <li><i className="fa fa-users" />info 3</li>
@@ -79,30 +78,30 @@ const ScreenPartner = () => {
                         </div>
                     </div>
                 </div>
-                <div className="container">
+                <div style={ styles.container}>
                     <div className="row">
                     <div className="col-lg-8">
                         <div className="tour-details-wrap">
-                        <h4 className="single-page-small-title">Write A Review</h4>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
-                        <div className="host-area">
-                            <div className="single-host-wrap text-center">
-                            <div className="thumb">
-                                <img src= "" alt="photo partenaire" />
-                            </div>
-                            <h4>Nom du partenaire</h4>
+                            <h4 className="single-page-small-title">Write A Review</h4>
                             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
-                            <a className="btn btn-yellow" href="#">Contacter le partenaire</a>
+                            <div className="host-area">
+                                <div className="single-host-wrap text-center">
+                                    <div className="thumb">
+                                        <img src= "" alt="photo partenaire" />
+                                    </div>
+                                    <h4 style={styles.h4}>Nom du partenaire</h4>
+                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
+                                    <a className="btn btn-yellow" href="#">Contacter le partenaire</a>
+                                </div>
                             </div>
-                        </div>
                         <div className="service-location-map">
-                            <h4 className="single-page-small-title">Localisation</h4>
+                            <h4 style={styles.h4}>Localisation</h4>
                             <div className="service-location-map">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d649788.5753409272!2d-0.5724199684037448!3d52.92186340524542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604d94c3b82ab%3A0x62077a554c8e9a8e!2sPetty%20France%2C%20Westminster%2C%20London%2C%20UK!5e0!3m2!1sen!2sbd!4v1572346566908!5m2!1sen!2sbd" />
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d649788.5753409272!2d-0.5724199684037448!3d52.92186340524542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604d94c3b82ab%3A0x62077a554c8e9a8e!2sPetty%20France%2C%20Westminster%2C%20London%2C%20UK!5e0!3m2!1sen!2sbd!4v1572346566908!5m2!1sen!2sbd" />
                             </div>
                         </div>
                         <div className="comments-area tour-details-review-area">
-                            <h4 className="comments-title">Commentaires</h4>
+                            <h4 style={styles.h4}>Commentaires</h4>
                             <ul className="comment-list mb-0">
                             <li>
                                 <div className="single-comment-wrap">
@@ -110,7 +109,7 @@ const ScreenPartner = () => {
                                     <img src="assets/img/client/2.png" alt="img" />
                                 </div>
                                 <div className="content">
-                                    <h4 className="title">Tyler Bailey</h4>
+                                    <h4 style={styles.h4}>Tyler Bailey</h4>
                                     <span className="date">13 August 2019</span>
                                     <div className="tp-review-meta">
                                     <i className="ic-yellow fa fa-star" />
@@ -129,7 +128,7 @@ const ScreenPartner = () => {
                                     <img src="assets/img/client/3.png" alt="img" />
                                 </div>
                                 <div className="content">
-                                    <h4 className="title">Eliza Jordan</h4>
+                                    <h4 style={styles.h4}>Eliza Jordan</h4>
                                     <span className="date">17 SEP 2019</span>
                                     <div className="tp-review-meta">
                                     <i className="ic-yellow fa fa-star" />
@@ -232,16 +231,29 @@ const ScreenPartner = () => {
         
         // CARD - TITLE//
 
-        h3:{
+        h3_white:{
             fontWeight:'bold',
             fontSize: '28px',
             color: '#fff',
             textDecoration: 'none',
         },
 
-        h4:{
+        h4_white:{
             fontSize: '20px',
             color: '#fff',
+            textDecoration: 'none',
+        },
+
+        h3:{
+            fontWeight:'bold',
+            fontSize: '28px',
+            color: '#106271',
+            textDecoration: 'none',
+        },
+
+        h4:{
+            fontSize: '20px',
+            color: '#106271',
             textDecoration: 'none',
         },
     
@@ -290,6 +302,11 @@ const ScreenPartner = () => {
 
         gallery_item_video:{
             padding: '1rem',
+        },
+
+        infos_contents:{
+            paddingTop: '24px',
+            orderTop: '1px solid #CFD3DE',
         },
 
 

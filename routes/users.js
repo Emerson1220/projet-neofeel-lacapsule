@@ -36,7 +36,7 @@ router.post('/signup', async function(req, res, next) {
     });
 
     await newUser.save();
-    res.json({ result: true, token: newUser.token, pseudo: newUser.pseudo })
+    res.json({ result: true, user: newUser })
   } catch (err) {
     console.log(err)
     if (err.code === 11000) {
@@ -62,13 +62,13 @@ router.post('/signup', async function(req, res, next) {
 //Response: result (true), { pseudo, token, firstName, lastName, email }
 router.post('/signin', async function(req, res, next) {
   try {
-    let user = await User.findOne({ email: req.body.email });
+    let user = await User.findOne({ email: req.body.email }).populate('roadtrips').exec();
     if (!user) {
       throw 'email invalid'
     } 
 
     if (bcrypt.compareSync(req.body.password, user.password)) {
-      res.json({ result: true, token: user.token, pseudo: user.pseudo })
+      res.json({ result: true, user: user })
     } else {
       throw 'password invalid'
     }
@@ -81,6 +81,16 @@ router.post('/signin', async function(req, res, next) {
     }
   }
 });
+
+router.post('/staylogged', async function(req, res, next) {
+  try {
+    let user = await User.findOne({ token: req.body.token }).populate('roadtrips').exec();
+    res.json({ result: true, user: user })
+  } catch (err) {
+    console.log(err);
+    res.json({ result: false, message: 'account not found'})
+  }
+})
 
 router.get('/auth/facebook/signup/:accessToken', async function(req, res, next) {
   try {

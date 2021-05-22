@@ -14,12 +14,10 @@ import SearchModal from '../components/SearchModal'
 import { connect } from 'react-redux';
 
 function ScreenHome(props) {
-    console.log(props)
     //STATE HOOKS
     const [visible, setVisible] = useState(false);
     const [search, setSearch] = useState(null);
 
-    useEffect(() => {console.log(search)}, [search])
     //FUNCTIONS
     //modal
     const showModal = () => {

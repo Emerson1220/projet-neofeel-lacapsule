@@ -48,7 +48,6 @@ const ExperienceList = (props) => {
     };
 
     const chooseExperience = async(experience) => {
-        console.log(voyageSelect[0])
         if (voyageSelect[0] === 'new') {
             createRoadtrip(experience);
         } else {
@@ -166,7 +165,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return { experiences: state.experiences, region: state.region, token: state.token, roadplanner: state.roadplanner }
 }
 
