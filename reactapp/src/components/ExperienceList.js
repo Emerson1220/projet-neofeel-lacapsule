@@ -16,7 +16,7 @@ const ExperienceList = (props) => {
                 marginTop: '20vh',
             },
         });
-      };
+    };
 
     const options = [
         {
@@ -71,19 +71,11 @@ const ExperienceList = (props) => {
 
     //création nouveau voyage avec expérience choisie
     const createRoadtrip = async(experience) => {
-        if (props.token) {
-            let data = {
-                token: props.token,
-                name: 'Mon Voyage en Alsace',
-                region: props.region,
-                regionCode: 'ges',
-                experience: experience._id
-            };
-            data = JSON.stringify(data);
+        if (props.user) {
             let rawResponse = await fetch('/myroadplanner', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `token=${props.token}&name=Mon Voyage en Alsace&region=${props.region}&regionCode=ges&experience=${experience._id}`
+                body: `token=${props.user.token}&name=Mon Voyage en Alsace&region=${props.region}&regionCode=ges&experience=${experience._id}`
             })
         }
         props.onAddExperience(experience);

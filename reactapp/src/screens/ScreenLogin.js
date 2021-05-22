@@ -20,16 +20,30 @@ const ScreenLogin = (props) => {
     //STATE HOOKS
     const [display, setDisplay] = useState('signin');
 
+    
+    const fetchUser = async(token) => {
+        let rawResponse = await fetch('/users/staylogged', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `token=${token}`
+        })
+        let response = await rawResponse.json();
+        console.log(response)
+        if (response.result === true) {
+            props.stayLogged(response.user)
+        }
+    }
+    
+    if (cookies.get('token')) {
+        fetchUser(cookies.get('token'));
+    }
+    
     let input = <SignIn />
     if (display === "signup") {
         input = <SignUp />
     }
 
-    if (cookies.get('token')) {
-        props.onSigninClick(cookies.get('token'))
-    }
- 
-    return props.token ? (
+    return props.user.token ? (
         <Redirect to='/profil' />
     )
     : (
@@ -80,13 +94,14 @@ let styles = {
 }
 
 function mapStateToProps(state) {
-    return { token: state.token }
+    console.log(state)
+    return { user: state.user }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        onSigninClick: function(data) {
-            dispatch({ type: 'signin', user: data })
+        stayLogged: function(user) {
+            dispatch({ type: 'stayLogged', user: user })
         }
     }
 }
