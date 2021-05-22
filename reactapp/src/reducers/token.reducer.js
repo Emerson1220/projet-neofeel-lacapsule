@@ -4,6 +4,8 @@ export default function(token = '', action) {
         return action.token;
     } else if (action.type === 'signup') {
         return action.token;
+    } else if(action.type === 'delete') {
+        return '';
     } else {
         return token;
     }

@@ -18,7 +18,7 @@ import ScreenBasket from './screens/ScreenBasket';
 import region from './reducers/region.reducer';
 import activities from './reducers/activities.reducer';
 import experiences from './reducers/experiences.reducer';
-import token from './reducers/token.reducer';
+import user from './reducers/user.reducer'
 import roadplanner from './reducers/roadplanner.reducer'
 import { Provider } from 'react-redux';
 import { createStore, combineReducers }  from 'redux';
@@ -27,7 +27,7 @@ import { createStore, combineReducers }  from 'redux';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-const store = createStore(combineReducers({ region, activities, experiences, token, roadplanner }));
+const store = createStore(combineReducers({ region, activities, experiences, roadplanner, user }));
 
 const stripePromise = loadStripe('pk_test_51ItWKHK4yUyeZ8DTbPXklGpEqt6WL7YLvokEzbudM7jHc8Z72swBjC0aY38j3STBcWqWNsdRGWOKnDCyZsWoXQkr00SfyDo7CD')
 
