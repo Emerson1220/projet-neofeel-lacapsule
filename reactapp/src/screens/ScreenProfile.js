@@ -5,9 +5,16 @@ import '../styles/profile.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSuitcase, faCommentDots, faPhotoVideo } from '@fortawesome/free-solid-svg-icons'
 
+//REDUX
+import { connect } from 'react-redux';
 
-const ScreenProfile = () => {
-    return (
+//ROUTER
+import { Redirect } from 'react-router-dom';
+
+const ScreenProfile = (props) => {
+    return !props.user.token ?
+    ( <Redirect to="/connexion" /> )
+    : (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <Nav />
             <div style={{
@@ -112,10 +119,16 @@ const ScreenProfile = () => {
         </div>
 
 
-
-
-    )
+    ) ;
 
 }
 
-export default ScreenProfile;
+function mapStateToProps(state) {
+    console.log(state)
+    return { user: state.user }
+}
+
+export default connect(
+    mapStateToProps,
+    null
+)(ScreenProfile);

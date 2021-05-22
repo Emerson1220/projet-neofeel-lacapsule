@@ -74,8 +74,6 @@ function ScreenRoadPlanner(props) {
         </CardRoadPlanner>
     )
 
-    console.log(cards)
-
 
     return (	
     <div>
@@ -413,7 +411,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return { user: state.user, roadplanner: state.roadplanner }
 }
 
