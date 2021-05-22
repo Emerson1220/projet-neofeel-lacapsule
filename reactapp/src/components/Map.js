@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 //UI
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarker } from '@fortawesome/free-solid-svg-icons'
-import { Modal, Cascader  } from 'antd';
+import { Modal, Cascader, message  } from 'antd';
 import RedButton from './RedButton';
 
 
@@ -23,6 +23,16 @@ const Map = (props) => {
     const [locations, setLocations] = useState([])
 
     const google = window.google;
+
+    const success = () => {
+        message.success({
+            content: 'Expérience ajouté',
+            className: 'custom-class',
+            style: {
+                marginTop: '20vh',
+            },
+        });
+    };
 
     const [voyageSelect, setVoyageSelect] = useState('');
     const options = [
@@ -60,6 +70,7 @@ const Map = (props) => {
         } else {
             addExperience(experience);
         }
+        success();
     }
 
     //ajout d'expérience à un voyage existant
@@ -77,11 +88,11 @@ const Map = (props) => {
 
     //création nouveau voyage avec expérience choisie
     const createRoadtrip = async(experience) => {
-        if (props.token) {
+        if (props.user) {
             let rawResponse = await fetch('/myroadplanner', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `token=${props.token}&name=Mon Voyage en Alsace&region=${props.region}&regionCode=ges&experience=${experience._id}`
+                body: `token=${props.user.token}&name=Mon Voyage en Alsace&region=${props.region}&regionCode=ges&experience=${experience._id}`
             })
         }
         props.onAddExperience(experience);

@@ -13,12 +13,30 @@ import Cookie from 'universal-cookie';
 const cookies = new Cookie();
 
 function Nav(props) {
+    //STATE HOOKS
     const [isLogged, setIsLogged] = useState(false)
 
+    //EFFECT HOOKS
+    useEffect(()=> {
+        let cookieToken = cookies.get('token');
+        if (cookieToken) {
+            fetchUser(cookieToken)
+        }
+    }, [])
+
+    useEffect(()=> {
+        if (props.user.token) {
+            setIsLogged(true)
+        }
+    }, [props.user])
+
+    //FUNCTIONS
     const openInNewTab = (url) => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
         if (newWindow) newWindow.opener = null
     }
+
+    
 
     const fetchUser = async(token) => {
         let rawResponse = await fetch('/users/staylogged', {
@@ -31,51 +49,26 @@ function Nav(props) {
         if (response.result === true) {
             props.stayLogged(response.user)
             setIsLogged(true)
-            props.onSigninClick(token)
         }
     }
 
     const logOut = () => {
         cookies.remove('token');
-        props.deleteToken();
-        props.onLogoutClick();
         setIsLogged(false);
     }
-
-    useEffect(()=> {
-        console.log({
-            user: props.user,
-            isLogged: isLogged
-        })
-        if (props.user) {
-            setIsLogged(true)
-        } else {
-            let accessToken;
-            let cookieToken = cookies.get('token');
-            console.log(accessToken)
-            if (cookieToken) {
-                accessToken = cookieToken;
-            } else {
-                accessToken = props.user.token;
-            }
-            if (accessToken) {
-                fetchUser(accessToken);
-            }
-        }
-    }, [props.user, isLogged]);
     
     let connectButton;
     let greeting;
 
-    if(isLogged === true) {
-        connectButton = 
-        <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap', marginRight:'3%'}} onClick={ ()=>logOut() }>Déconnexion</h2>
-        greeting = <h2>Bienvenue, { props.user.firstName }!</h2>
-    } else {
+    if(isLogged === false) {
         connectButton = 
         <Link to={'/connexion'} style={{ marginRight:'3%'}}>
         <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Connexion</h2>
         </Link>
+    } else {
+        connectButton = 
+        <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap', marginRight:'3%'}} onClick={ ()=>logOut() }>Déconnexion</h2>
+        greeting = <h2>Bienvenue, { props.user.firstName }!</h2>
     }
 
     return (
@@ -147,12 +140,6 @@ function mapDispatchToProps(dispatch) {
     return {
         stayLogged: function(user) {
             dispatch({ type: 'stayLogged', user: user })
-        },
-        onSigninClick: function(data) {
-            dispatch({ type: 'signin', token: data })
-        },
-        deleteToken: function(data) {
-            dispatch({ type: 'delete', token: data })
         },
         onLogoutClick: function(data) {
             dispatch({ type: 'logout' })

@@ -42,7 +42,6 @@ const SignUp = (props) => {
         })
         let response = await rawResponse.json();
         if (response.result === true) {
-            props.onSignupClick(response.user.token);
             props.stayLogged(response.user)
             if (isChecked) {
                 cookies.set('token', response.token, { path: '/', maxAge: 604800 })
@@ -57,7 +56,6 @@ const SignUp = (props) => {
         let rawResponse = await fetch(`/users/auth/facebook/signup/${res.accessToken}`);
         let response = await rawResponse.json();
         if (response.result === true) {
-            props.onSignupClick(response.user.token);
             props.stayLogged(response.user)
             if (isChecked) {
                 cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
@@ -71,7 +69,6 @@ const SignUp = (props) => {
         let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
         let response = await rawResponse.json();
         if (response.result === true) {
-            props.onSignupClick(response.user.token);
             props.stayLogged(response.user)
             if (isChecked) {
                 cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
@@ -203,9 +200,6 @@ let styles = {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onSignupClick: function(data) {
-            dispatch({ type: 'signup', token: data })
-        },
         stayLogged: function(user) {
             dispatch({ type: 'stayLogged', user: user })
         },

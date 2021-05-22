@@ -34,7 +34,6 @@ const SignIn = (props) => {
         });
         let response = await rawResponse.json();
         if (response.result === true) {
-            props.onSigninClick(response.user.token);
             props.stayLogged(response.user)
             if (isChecked) {
                 cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
@@ -49,7 +48,7 @@ const SignIn = (props) => {
         let rawResponse = await fetch(`/users/auth/facebook/signin/${res.accessToken}`);
         let response = await rawResponse.json();
         if (response.result === true) {
-            props.onSigninClick(response.user.token);
+            // props.onSigninClick(response.user.token);
             props.stayLogged(response.user)
             if (isChecked) {
                 cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
@@ -63,7 +62,7 @@ const SignIn = (props) => {
         let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
         let response = await rawResponse.json();
         if (response.result === true) {
-            props.onSigninClick(response.user.token);
+            // props.onSigninClick(response.user.token);
             props.stayLogged(response.user)
             if (isChecked) {
                 cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
@@ -172,9 +171,6 @@ let styles = {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onSigninClick: function(data) {
-            dispatch({ type: 'signin', token: data })
-        },
         stayLogged: function(user) {
             dispatch({ type: 'stayLogged', user: user })
         }
