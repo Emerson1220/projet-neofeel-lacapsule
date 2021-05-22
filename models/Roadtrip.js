@@ -13,7 +13,7 @@ const roadtripSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
     },
-    days: daySchema,
+    days: [daySchema],
     images: Array,
     comments: Array,
     creationDate : Date,
