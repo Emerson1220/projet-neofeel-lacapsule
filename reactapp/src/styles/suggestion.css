@@ -1,0 +1,10 @@
+.site-collapse-custom-panel{
+    background: rgba(16, 98, 113, 0.5);
+    border: 0;
+    font-weight: bold;
+}
+
+.site-card-border-less-wrapper{
+    /* border: 3px solid rgba(16, 98, 113, 0.5); */
+    box-shadow: 2px 2px 4px 2px rgba(16, 98, 113, 0.4);
+}
