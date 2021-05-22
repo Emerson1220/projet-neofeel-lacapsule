@@ -62,7 +62,6 @@ const SignIn = (props) => {
         let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
         let response = await rawResponse.json();
         if (response.result === true) {
-            // props.onSigninClick(response.user.token);
             props.stayLogged(response.user)
             if (isChecked) {
                 cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
