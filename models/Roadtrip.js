@@ -1,22 +1,26 @@
 const mongoose = require('mongoose');
 
+const daySchema= mongoose.Schema({
+    experiences: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'experiences'
+    }]
+})
+
 const roadtripSchema = mongoose.Schema({
     name: String,
     creator: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
     },
-    experiences : [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'experiences'
-    }],
+    days: daySchema,
     images: Array,
     comments: Array,
     creationDate : Date,
     region: String,
     regionCode: String,
     type: String,
-    tags: Array
+    tags: Array,
 });
 
 module.exports =mongoose.model('roadtrips', roadtripSchema);
