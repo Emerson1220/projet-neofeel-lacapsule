@@ -124,6 +124,7 @@ const ScreenProfile = (props) => {
 }
 
 function mapStateToProps(state) {
+    console.log(state)
     return { user: state.user }
 }
 
