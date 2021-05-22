@@ -54,6 +54,7 @@ function Nav(props) {
 
     const logOut = () => {
         cookies.remove('token');
+        props.onLogoutClick();
         setIsLogged(false);
     }
     
@@ -68,7 +69,7 @@ function Nav(props) {
     } else {
         connectButton = 
         <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap', marginRight:'3%'}} onClick={ ()=>logOut() }>Déconnexion</h2>
-        greeting = <h2>Bienvenue, { props.user.firstName }!</h2>
+        greeting = <h2 style={{ color: '#106271', marginBottom: 0, marginLeft: '2%', whiteSpace: 'nowrap' }}>Bienvenue, { props.user.firstName }!</h2>
     }
 
     return (
