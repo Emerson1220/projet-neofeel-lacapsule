@@ -203,7 +203,6 @@ let styles = {
     },
 
     h4: {
-        // fontSize: '18px',
         color: '#e06868',
         textDecoration: 'none',
     },
@@ -212,13 +211,10 @@ let styles = {
 
     experiences_list_area: {
         display: 'grid',
-        //Old card
-        // gridTemplateColumns: 'repeat(1, 1fr)',
         boxSizing: 'border-box',
         outline: 'none',
         paddingLeft: '7rem',
         paddingRight: '7rem',
-        //New card
         gridTemplateColumns: 'repeat(3, 1fr)',
     },
 
@@ -243,8 +239,6 @@ let styles = {
         position: 'relative',
         background: '#106271',
         overflow: 'hidden',
-        //old
-        // flex: '0 0 30%',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
@@ -254,7 +248,9 @@ let styles = {
 
     image: {
         width: '100%',
+        minHeight: '300px',
         maxHeight: '300px',
+
         objectFit: 'cover',
         objectPosition: 'center center',
         borderRadius: '5px',
@@ -263,13 +259,8 @@ let styles = {
 
     detail_card: {
         display: 'grid',
-        //old
-        // gridTemplateColumns: 'repeat(2, 1fr)',
-        // padding: '22px 15px',
-        //New
         padding: '0 1rem 1rem 1rem',
         gridTemplateColumns: '2fr, 1fr',
-        //old
         flex: '0 0 100%',
         background: '#ffffff',
     },
@@ -285,7 +276,9 @@ let styles = {
         display: 'flex',
         boxSizing: 'border-box',
         outline: 'none',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        // paddingLeft:'2rem',
+        // paddingRight:'2rem',
     },
 
     liste_price_li: {
@@ -322,7 +315,8 @@ let styles = {
     liste_temps_item: {
         paddingRight: '10%',
         paddingTop: '0',
-        width: '45%'
+        width: '45%',
+        textAlign: 'right',
     },
 
     picto: {
