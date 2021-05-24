@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 import '../styles/googleMap.css';
 import { Link } from 'react-router-dom';
@@ -20,7 +20,6 @@ const Map = (props) => {
     const [experience, setExperience] = useState({ partner: { addresses: [{ city: '' }] }, tags: [], description: {imageBannerUrl:''} })
     const [visible, setVisible] = useState(false);
     const [voyageSelect, setVoyageSelect] = useState('');
-    const [map, setMap] = useState(null);
 
     //MODAL
     const showModal = (exp) => {
