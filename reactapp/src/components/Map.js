@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import '../App.css';
 import '../styles/googleMap.css';
 import { Link } from 'react-router-dom';
 
 //MAP
-import GoogleMapReact from 'google-map-react';
-
+// import GoogleMapReact from 'google-map-react';
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 //REDUX
 import { connect } from 'react-redux';
 
@@ -20,7 +20,8 @@ const Map = (props) => {
     const [experience, setExperience] = useState({ partner: { addresses: [{ city: '' }] }, tags: [], description: {imageBannerUrl:''} })
     const [visible, setVisible] = useState(false);
     const [voyageSelect, setVoyageSelect] = useState('');
-    
+    const [map, setMap] = useState(null);
+
     //MODAL
     const showModal = (exp) => {
         setExperience(exp)
@@ -173,46 +174,63 @@ const createNewTrip = async (experience) => {
     </div>
     }
 
-    const LocationPin = (props) => (
-        <div className="pin" onClick={() => props.onSelect()}>
-            <FontAwesomeIcon icon={faMapMarker} className="pin-icon" />
-            <p className="pin-text">{ props.text }</p>
-        </div>
-    );
+    // const LocationPin = (props) => (
+    //     <div className="pin" onClick={() => props.onSelect()}>
+    //         <FontAwesomeIcon icon={faMapMarker} className="pin-icon" />
+    //         <p className="pin-text">{ props.text }</p>
+    //     </div>
+    // );
 
-    var ExperienceListingMap = [];
-    if (props.experiences) {
+    // var ExperienceListingMap = [];
+    // if (props.experiences) {
 
-        ExperienceListingMap = props.experiences.map((experience, i) => {
-            return (
-                <LocationPin
-                    key={i}
-                    onSelect={() => showModal(experience)}
-                    lat={experience.coordinate.latitude}
-                    lng={experience.coordinate.longitude}
-                />
+    //     ExperienceListingMap = props.experiences.map((experience, i) => {
+    //         return (
+    //             <LocationPin
+    //                 key={i}
+    //                 onSelect={() => showModal(experience)}
+    //                 lat={experience.coordinate.latitude}
+    //                 lng={experience.coordinate.longitude}
+    //             />
 
-            )
-        })
-    }
+    //         )
+    //     })
+    // }
 
-    let location = {
-        address: '',
+    const { isLoaded } = useJsApiLoader({
+        id: 'google-map-script',
+        googleMapsApiKey: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s'
+    })
+
+    let center = {
         lat: 48.10707,
         lng: 7.21825
     }
 
+    const onLoad = useCallback(function callback(map) {
+        const bounds = new window.google.maps.LatLngBounds();
+        map.fitBounds(bounds);
+        setMap(map)
+    }, [])
+
+    const onUnmount = useCallback(function callback(map) {
+        setMap(null)
+    }, [])
+
+    let googleMap = isLoaded ? 
+        <GoogleMap
+        center={ center }
+        zoom={ 10 }
+        onLoad={ onLoad }
+        onUnmount={ onUnmount }
+        mapContainerStyle={{ width: '1400px', height: '700px' }}>
+        </GoogleMap>
+        : <></> ;
+
     return (
         <div className="map">
             <div className="google-map">
-                <GoogleMapReact
-                    bootstrapURLKeys={{ 
-                        key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s'}}
-                    defaultZoom={9}
-                    defaultCenter={ location }
-                >
-                    {ExperienceListingMap}
-                </GoogleMapReact>
+                { googleMap }
             </div>
             <Modal
                 title=''

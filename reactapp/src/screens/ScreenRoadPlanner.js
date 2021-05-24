@@ -31,23 +31,26 @@ function ScreenRoadPlanner(props) {
         }
     }
 
-    let cards = experienceList.map((e, i)=>
-
-        <CardRoadPlanner key={i}
-            id={ e._id } 
-            name={e.name} 
-            activity={e.activity} 
-            activityType={e.activityType} 
-            region={e.region}
-            tags={e.tags}
-            subtitle={e.subtitle}
-            activityTime={e.activityTime}
-            budget={e.budget}
-            imageBannerUrl={e.description.imageBannerUrl}
-            city={e.partner.addresses[0].city}
-            >
-        </CardRoadPlanner>
-    )
+    let cards = []
+    if (experienceList.length > 0) {
+        experienceList.map((e, i)=>
+    
+            <CardRoadPlanner key={i}
+                id={ e._id } 
+                name={e.name} 
+                activity={e.activity} 
+                activityType={e.activityType} 
+                region={e.region}
+                tags={e.tags}
+                subtitle={e.subtitle}
+                activityTime={e.activityTime}
+                budget={e.budget}
+                imageBannerUrl={e.description.imageBannerUrl}
+                city={e.partner.addresses[0].city}
+                >
+            </CardRoadPlanner>
+        )
+    }
 
 
     return (	
