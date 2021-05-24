@@ -145,13 +145,6 @@ const ScreenPartner = (props) => {
                             })}
                         </div>
 
-<<<<<<< HEAD
-                            <div style={ styles.row_card_button}>
-                                        <Link to={'/'}>
-                                            <RedButton transparent={true} title="Ajouter cette expérience à mon voyage" />
-                                        </Link>
-                                    </div>
-=======
                         <div style={styles.row_card_button}>
                             <Cascader
                                 options={options}
@@ -162,7 +155,6 @@ const ScreenPartner = (props) => {
                                 style={{ marginRight: '2%' }}
                             />
                             <RedButton title="Ajouter cette expérience à mon voyage" onSelect={() => chooseExperience(experience)} />
->>>>>>> main
 
                         </div>
 

@@ -21,27 +21,11 @@ function ScreenRoadPlanner(props) {
         }
 },  [props.roadplanner])
 
-<<<<<<< HEAD
-    const deleteBDD = async(data) => {
-        let rawResponse = await fetch(`/myroadplanner/${data.roadtripID}/${data.experienceID}`);
-        let response = await rawResponse.json();
-    }
-
-    //select expérience
-    var selectExperience = async (experience) => {
-        let rawResponse = await fetch('/roadtrips', {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body : `experience=${JSON.stringify(experience)}`
-        })
-        let response = await rawResponse.json();
-=======
     const deleteExperience = async(experienceID) => {
         if(props.user.token) {
             let rawResponse = await fetch(`/myroadplanner/${props.roadplanner.id}/${experienceID}`);
             let response = await rawResponse.json();
         }
->>>>>>> main
     }
 
     let cards = []
@@ -65,27 +49,6 @@ function ScreenRoadPlanner(props) {
         )
     }
 
-<<<<<<< HEAD
-    let cards = experienceList.map((e, i)=>
-
-        
-        <CardRoadPlanner key={i} 
-            name={e.name} 
-            activity={e.activity} 
-            activityType={e.activityType} 
-            region={e.region}
-            tags={e.tags}
-            subtitle={e.subtitle}
-            activityTime={e.activityTime}
-            budget={e.budget}
-            imageBannerUrl={e.description.imageBannerUrl}
-            city={e.partner.addresses[0].city}
-            tags={e.tags}>
-            
-        </CardRoadPlanner>
-    )
-=======
->>>>>>> main
 
     return (	
         <div>
@@ -161,16 +124,6 @@ let styles = {
             padding: '.5rem',
         },
 
-<<<<<<< HEAD
-        experiences_list_area:{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(1, 1fr)',        
-            boxSizing: 'border-box',
-            outline: 'none',
-            paddingLeft: '1rem',
-            paddingRight: '1rem',
-        },
-=======
     single_input_wrap:{
         position: 'relative',
         width: '100%',
@@ -307,7 +260,6 @@ let styles = {
         listStyle: 'none',
         display: 'inline-block',
     },
->>>>>>> main
 
 
 
