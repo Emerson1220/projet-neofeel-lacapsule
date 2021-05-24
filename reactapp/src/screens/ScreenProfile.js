@@ -20,6 +20,7 @@ const ScreenProfile = (props) => {
 
         tripLiked = props.user.roadtrips.map((roadtrip, i) => {
 
+            
             var ExperienceList = roadtrip.days[0].experiences.map((experience, j) => {
 
                 return (<div key={j} className='activitySelect'>
