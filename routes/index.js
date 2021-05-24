@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 //STRIPE
-// const Stripe = require('stripe');
-// const stripe = new Stripe('sk_test_51ItWKHK4yUyeZ8DTqXCM4ixI7xpzLNgd2sLglgnom7xUDNdcIpfzVgOGMhPovqQAp4ti8dLl9EgBEHyO51ONWjLg00rjQhJAvi')
+const Stripe = require('stripe');
+const stripe = new Stripe('sk_test_51ItWKHK4yUyeZ8DTqXCM4ixI7xpzLNgd2sLglgnom7xUDNdcIpfzVgOGMhPovqQAp4ti8dLl9EgBEHyO51ONWjLg00rjQhJAvi')
 //MODELS
 const Experience = require('../models/Experience');
 const Roadtrip = require('../models/Roadtrip');
@@ -218,10 +218,11 @@ router.get('/myroadplanner/:token', async function(req, res, next) {
         }
     })
     .exec();
+    console.log({user: user})
     let current = user.roadtrips.sort((a, b) => {
         return a.creationDate - b.creationDate
     })[0];
-    console.log(current)
+    console.log({current: current})
     res.json({ result: true, currentRoadtrip: current })
 })
 
