@@ -4,6 +4,10 @@ export default function(user = {}, action) {
         return action.user;
     } else if (action.type === 'logout') {
         return {};
+    } else if (action.type === 'addRoadtrip') {
+        let temp = { ...user };
+        temp.roadtrips.push(action.roadtrip);
+        return temp;
     } else {
         return user;
     }

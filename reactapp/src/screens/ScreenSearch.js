@@ -31,16 +31,55 @@ function ScreenSearch(props) {
     //FUNCTIONS
     //get experiences
     var selectRegion = async () => {
-        if (region !== 'none') {
-            let rawResponse = await fetch('/searchregions', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `region=${region}`
-            })
-            let response = await rawResponse.json();
-            props.onSearch(response.data)
+        let rawResponse = await fetch('/searchregions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `region=${region}`
+        })
+        let response = await rawResponse.json();
+        props.onSearch(response.data);
+        props.onRegionClick(region);
+    }
+
+    //HTTP REQUESTS
+    const addExperience = async () => {
+        if (props.user.token) {
+
+        } else {
+            props.addExperience()
         }
     }
+
+        // //ajout d'expérience à un voyage existant
+    // const addExperience = async(experience) => {
+    //     if (props.user.token) {
+    //         let rawResponse = await fetch('/myroadplanner', {
+    //             method: 'PUT',
+    //             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    //             body: `roadtripID=${voyageSelect[1]}&experienceID=${experience._id}`
+    //         })
+    //         let response = await rawResponse.json();
+    //         props.toggleRoadplanner(response.roadplanner.days[0].experiences)
+    //     }
+    //     props.onAddExperience(experience);
+    // };
+
+    // //création nouveau voyage avec expérience choisie
+    // const createRoadtrip = async(experience) => {
+    //     let region = 'Alsace-Vosges'
+    //     if (props.user.token) {
+    //         let rawResponse = await fetch('/myroadplanner', {
+    //             method: 'POST',
+    //             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    //             body: `token=${props.user.token}&name=Mon Voyage en ${region}&region=${region}&regionCode=${props.region}&experienceID=${experience._id}`
+    //         })
+    //         let response = await rawResponse.json();
+    //         console.log(response)
+    //         props.toggleRoadplanner(response.roadplanner.days[0].experiences)
+    //         props.onCreateRoadtrip(response.roadplanner);
+    //     }
+    //     props.onAddExperience(experience);
+    // }
 
     
     //display toggles
@@ -116,6 +155,15 @@ function mapDispatchToProps(dispatch) {
         },
         onSearch: function (data) {
             dispatch({ type: 'search', experiences: data })
+        },
+        onAddExperience: function(experience) {
+            dispatch({ type: 'addExperience', experience: experience })
+        },
+        onCreateRoadtrip: function(roadtrip) {
+            dispatch({ type: 'addRoadtrip', roadtrip: roadtrip })
+        },
+        toggleRoadplanner: function(roadtrip) {
+            dispatch({ type: 'toggleRoadplanner', roadtrip: roadtrip })
         }
     }
 }

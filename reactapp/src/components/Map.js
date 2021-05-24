@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 import '../styles/googleMap.css';
 import { Link } from 'react-router-dom';
-
 
 //MAP
 import GoogleMapReact from 'google-map-react';
@@ -20,9 +19,17 @@ import RedButton from './RedButton';
 const Map = (props) => {
     const [experience, setExperience] = useState({ partner: { addresses: [{ city: '' }] }, tags: [], description: {imageBannerUrl:''} })
     const [visible, setVisible] = useState(false);
-    const [locations, setLocations] = useState([])
-
-    const google = window.google;
+    const [voyageSelect, setVoyageSelect] = useState('');
+    
+    const showModal = (exp) => {
+        setExperience(exp)
+        setVisible(!visible);
+    
+    };
+    
+    const handleCancel = () => {
+        setVisible(!visible);
+    };
 
     const success = () => {
         message.success({
@@ -34,7 +41,6 @@ const Map = (props) => {
         });
     };
 
-    const [voyageSelect, setVoyageSelect] = useState('');
     const options = [
         {
             value: 'new',
@@ -138,6 +144,7 @@ const Map = (props) => {
             expandTrigger="hover"
             displayRender={ displayRender }
             onChange={ onChange }
+            placeholder="Sélectionnez un voyage"
             />
             <RedButton
             title="+"
@@ -146,27 +153,12 @@ const Map = (props) => {
     </div>
     }
 
-    const showModal = (exp) => {
-        setExperience(exp)
-        setVisible(!visible);
-
-    };
-
-    const handleCancel = () => {
-        setVisible(!visible);
-    };
-
-
-
-
     const LocationPin = (props) => (
         <div className="pin" onClick={() => props.onSelect()}>
             <FontAwesomeIcon icon={faMapMarker} className="pin-icon" />
             <p className="pin-text">{props.text}</p>
         </div>
     );
-
-
 
     var ExperienceListingMap = [];
     if (props.experiences) {
@@ -184,41 +176,10 @@ const Map = (props) => {
         })
     }
 
-    //fit map to markers
-    const getMapBounds = (locations) => {
-        const bounds = new google.maps.LatLngBounds();
-
-        locations.forEach((location) => {
-            bounds.extend( new google.maps.LatLng(location.latitude, location.longitude));
-        })
-        return bounds;
-    };
-
-    const bindResizeListener = (map, maps, bounds) => {
-        maps.event.addDomListenerOnce(map, 'idle', () => {
-            maps.event.addDomListener(window, 'resize', () => {
-                map.fitBounds(bounds)
-            })
-        })
-    };
-
-    const apiIsLoaded = (map, maps, locations) => {
-        if (map) {
-            const bounds = getMapBounds(locations);
-            map.fitBounds(bounds);
-            bindResizeListener(map, maps, bounds)
-        }
-    }
-    useEffect(() => {
-        let locationsArray = props.experiences.map(e => ({ lat: e.coordinate.latitude, lng: e.coordinate.longitude }))
-        setLocations(locationsArray)
-    }, [props.experiences]);
-
-
     let location = {
         address: '',
-        lat: 48.816,
-        lng: 5.806
+        lat: 48.10707,
+        lng: 7.21825
     }
 
     return (
@@ -227,10 +188,8 @@ const Map = (props) => {
                 <GoogleMapReact
                     bootstrapURLKeys={{ 
                         key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s'}}
-                    defaultZoom={8}
+                    defaultZoom={9}
                     defaultCenter={ location }
-                    // yesIWantToUseGoogleMapApiInternals
-                    // onGoogleApiLoaded={ ({map, maps}) => apiIsLoaded(map, maps, locations) }
                 >
                     {ExperienceListingMap}
                 </GoogleMapReact>
@@ -261,7 +220,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    return { experiences: state.experiences, region: state.region, token: state.token }
+    return { experiences: state.experiences, region: state.region, user: state.user }
 }
 
 export default connect(

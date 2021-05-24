@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Nav from '../components/Nav'
 import '../styles/profile.css'
 
@@ -35,7 +35,7 @@ const ScreenProfile = (props) => {
                     }}>
 
 
-                        <img height='70%' src='../images/neopassRecto.png' style={{borderRadius: 15}} />
+                        <img height='70%' src='../images/neopassRecto.png' style={{borderRadius: 15}} alt="neopass"/>
                         <div style={{ marginLeft: '1%' }}>
                             <h1 style={{ marginTop: '5%' }}>Votre Neopass</h1>
                             <h3>Region : Alsaces-Vosges</h3>

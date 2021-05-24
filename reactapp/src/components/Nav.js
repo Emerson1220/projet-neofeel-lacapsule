@@ -150,7 +150,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        roadplanner: state.roadplanner, token: state.token, user: state.user
+        roadplanner: state.roadplanner, user: state.user
     }
 } 
 

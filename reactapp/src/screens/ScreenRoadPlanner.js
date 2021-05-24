@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
-import { Link } from 'react-router-dom';
 
-//UI
-import { Button } from 'antd';
 
 //COMPONENTS
 import Nav from '../components/Nav';
@@ -284,7 +281,7 @@ let styles = {
         borderRadius: '7px',
         position: 'relative',
         overflow: 'hidden',
-        margin: '.5rem',
+        // margin: '.5rem',
     },
 
     image_card:{

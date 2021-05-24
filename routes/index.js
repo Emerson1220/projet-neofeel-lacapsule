@@ -41,16 +41,17 @@ router.post('/searchregions', async function(req, res, next) {
     }
 })
 
-//get experiences par type
+//get voyages par type
 router.post('/searchtrips', async function(req, res, next) {
     try {
-        let a = JSON.parse(req.body.activities);
-        let experiences = [];
+        console.log(req.body)
+        let a = req.body.activities;
+        let roadtrips = [];
         for (let i=0 ; i<a.length ; i++) {
-            let response = await Experience.find({ tags: a[i] }).populate('partner').exec();
-            experiences = experiences.concat(response);
+            let response = await Roadtrip.find({ tags: a[i] }).populate('days.experiences').exec();
+            roadtrips = roadtrips.concat(response);
         }
-        res.json({ result: true, data: experiences })
+        res.json({ result: true, data: roadtrips })
     } catch (err) {
         console.log(err)
         res.json({ result: false, error: err, message: "Votre requête n'a pas pu aboutir. Veuillez réessayer plus tard."})
@@ -60,7 +61,7 @@ router.post('/searchtrips', async function(req, res, next) {
 //get liste des types d'activités
 router.get('/activities', async function(req, res, next) {
     try {
-        let aggregate = Experience.aggregate();
+        let aggregate = Roadtrip.aggregate();
         aggregate.unwind('tags');
         aggregate.group({ _id: '$tags' });
         let data = await aggregate.exec();
@@ -75,7 +76,7 @@ router.get('/activities', async function(req, res, next) {
 //get liste des voyages
 router.get('/roadtrips', async function(req, res, next) {
     try {
-        let roadtrips = await Roadtrip.find();
+        let roadtrips = await Roadtrip.find().populate('days.experiences').exec();
         res.json({ result: true, roadtrips: roadtrips })
     } catch (err) {
         console.log(err);
@@ -103,7 +104,7 @@ router.get('/roadtrips/:token', async function(req, res, next) {
 router.put('/myroadplanner', async function(req, res, next) {
     try {
         let roadtrip = await Roadtrip.findById(req.body.roadtripID);
-        roadtrip.experiences.push(req.body.experienceID);
+        roadtrip.days[0].experiences.push(req.body.experienceID);
 
         let roadtripSaved = await roadtrip.save();
         res.json({ result: true, roadtrip: roadtripSaved })
@@ -135,7 +136,10 @@ router.get('/myroadplanner/:token', async function(req, res, next) {
     let user = await User.findOne({ token: req.params.token })
     .populate('roadtrips')
     .exec();
-    let current = user.roadtrips.sort({ creationDate: -1 })[0];
+    let current = user.roadtrips.sort((a, b) => {
+        return a.creationDate - b.creationDate
+    })[0];
+    console.log(current)
     res.json({ result: true, currentRoadtrip: current })
 })
 
@@ -152,7 +156,10 @@ router.post('/myroadplanner', async function(req, res, next) {
             region: data.region,
             regionCode: data.regionCode,
             creator: user._id,
-            experiences: [data.experience]
+            days: [{
+                name: 'Experiences',
+                experiences: [data.experienceID]
+            }]
         })
         console.log(roadplanner)
         let roadplannerSave = await roadplanner.save();

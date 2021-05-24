@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/antdmodif.css'
 import Nav from '../components/Nav';
-import { Modal, Form, Input, Divider, Button } from 'antd';
+import { Modal, Divider } from 'antd';
 import RedButton from '../components/RedButton'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 

@@ -2,6 +2,8 @@
 export default function(roadplanner = [], action) {
     if (action.type === 'addExperience') {
         return [...roadplanner, action.experience]
+    } else if (action.type === 'toggleRoadplanner') {
+        return action.roadtrip;
     } else {
         return roadplanner;
     }
