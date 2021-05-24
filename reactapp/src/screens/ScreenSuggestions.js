@@ -1,21 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Nav from '../components/Nav'
 import { Card, Collapse } from 'antd';
 import '../styles/suggestion.css'
 import RedButton from '../components/RedButton';
 
+//REDUX
+import { connect } from 'react-redux';
+
 const { Panel } = Collapse;
 
 function callback(key) {
-
-    
     console.log(key);
 }
 
-const ScreenSuggestions = () => {
+const ScreenSuggestions = (props) => {
+    //EFFECT HOOKS
+    useEffect(()=> {
+        props.activities.length > 0 ? filterTrips() : getSuggestions() ;
+    }, [props.activities])
 
+    //HTTP REQUESTS
+    const getSuggestions = async() => {
+        let rawResponse = await fetch('/roadtrips')
+        let response = await rawResponse.json();
+        console.log(response);
+        props.loadSuggestions(response.roadtrips)
+    };
+
+    const filterTrips = async() => {
+        let activityList = JSON.stringify(props.activities)
+        let rawResponse = await fetch('/searchtrips', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `activities=${activityList}`
+        })
+        let response = await rawResponse.json();
+        console.log({response: response })
+        props.loadSuggestions(response.roadtrips);
+    }
+    //DISPLAY MANAGEMENT
     const button = <RedButton title = 'Ajouter ce voyage'></RedButton>
-
 
     return (
 
@@ -30,7 +54,6 @@ const ScreenSuggestions = () => {
                         bodyStyle={{ width: '100%' }}
                         size='default'
                         extra ={button}
-                        bordered = {true}
                         >
 
                         <div style={{ fontWeight: 'bold', height: '90px', marginBottom: '23px', display:'flex', justifyContent:'space-between', maxWidth:'1200px'}}>
@@ -38,10 +61,10 @@ const ScreenSuggestions = () => {
                                 <h3 style={{ margin: 0,whiteSpace:'nowrap', color:'#fff' }}>Vous économiserez 130€ avec le NeoPass Alsaces-Vosges !</h3>
                             </div>
                             <div style={{ height:'100%', width:'50%', display:'flex', justifyContent:'flex-end'}} >
-                                <img src='/images/pictos/bar-a-vin-8.png'/>
-                                <img src='/images/pictos/bistro-8.png'/>
-                                <img src='/images/pictos/epicerie-8.png'/>
-                                <img src='/images/pictos/fromagerie-8.png'/>
+                                <img src='/images/pictos/bar-a-vin-8.png' alt="picto"/>
+                                <img src='/images/pictos/bistro-8.png' alt="picto"/>
+                                <img src='/images/pictos/epicerie-8.png' alt="picto"/>
+                                <img src='/images/pictos/fromagerie-8.png' alt="picto"/>
                             </div>
                         </div>
 
@@ -107,4 +130,22 @@ const ScreenSuggestions = () => {
 
 }
 
-export default ScreenSuggestions;
+function mapDispatchToProps(dispatch) {
+    return {
+        loadSuggestions: function(roadtrips) {
+            dispatch({ type: 'loadSuggestions', suggestions: roadtrips })
+        }
+    }
+}
+
+function mapStateToProps(state) {
+    console.log({ state: state })
+    return {
+        roadtrips: state.roadtrips, activities: state.activities
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ScreenSuggestions);

@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
-const daySchema= mongoose.Schema({
-    experiences: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'experiences'
-    }]
+const daySchema = mongoose.Schema({
+        name: String,
+        experiences: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'experiences'
+        }]
 })
 
 const roadtripSchema = mongoose.Schema({

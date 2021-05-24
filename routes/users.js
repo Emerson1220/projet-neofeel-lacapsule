@@ -14,8 +14,6 @@ router.get('/', function(req, res, next) {
 });
 
 //Inscription client (Sign up)
-//Body: firstName, lastName, pseudo, password, email
-//Response: result (true), { pseudo, token, firstName, lastName, email }
 router.post('/signup', async function(req, res, next) {
   try {  
     let user = req.body;
@@ -58,20 +56,36 @@ router.post('/signup', async function(req, res, next) {
 })
 
 //Connexion client (sign in)
-//Body: email, password
-//Response: result (true), { pseudo, token, firstName, lastName, email }
 router.post('/signin', async function(req, res, next) {
   try {
-    let user = await User.findOne({ email: req.body.email }).populate('roadtrips').exec();
+    let user = await User.findOne({ email: req.body.email })
+    .populate({
+      path: 'roadtrips',
+      populate: {
+        path: 'days.experiences',
+        model: 'experiences'
+      }
+    })
+    .exec();
+
     if (!user) {
       throw 'email invalid'
     } 
 
-    if (bcrypt.compareSync(req.body.password, user.password)) {
-      res.json({ result: true, user: user })
-    } else {
+    if (!bcrypt.compareSync(req.body.password, user.password)) {
       throw 'password invalid'
     }
+
+    let current = user.roadtrips.sort((a, b) => {
+      return a.creationDate - b.creationDate
+    })[0];
+    current = {
+      id: current._id,
+      experiences: current.days[0].experiences
+    }
+    
+    res.json({ result: true, user: user, currentRoadtrip: current })
+
   } catch (err) {
     console.log(err)
     if (err === 'email invalid') {
@@ -84,8 +98,26 @@ router.post('/signin', async function(req, res, next) {
 
 router.post('/staylogged', async function(req, res, next) {
   try {
-    let user = await User.findOne({ token: req.body.token }).populate('roadtrips').exec();
-    res.json({ result: true, user: user })
+    let user = await User.findOne({ token: req.body.token })
+    .populate({
+      path: 'roadtrips',
+      populate: {
+        path: 'days.experiences',
+        model: 'experiences'
+      }
+    })
+    .exec();
+
+
+    let current = user.roadtrips.sort((a, b) => {
+      return a.creationDate - b.creationDate
+    })[0];
+    current = {
+      id: current._id,
+      experiences: current.days[0].experiences
+    }
+
+    res.json({ result: true, user: user, currentRoadtrip: current })
   } catch (err) {
     console.log(err);
     res.json({ result: false, message: 'account not found'})

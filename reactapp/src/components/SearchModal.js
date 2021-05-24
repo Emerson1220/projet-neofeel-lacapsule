@@ -40,14 +40,7 @@ const SearchModal = (props) => {
     }
 
     //select activities
-    var selectActivity = async () => {
-        let rawResponse = await fetch('/searchtrips', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body : `activities=${JSON.stringify(props.activities)}`
-        });
-        let response = await rawResponse.json();
-        props.onSearch(response.data);
+    const selectActivities = () => {
         props.searchTrips(selection);
     }
 
@@ -78,7 +71,7 @@ const SearchModal = (props) => {
         let index = temp.findIndex(f => f === e)
         index > -1 ? temp.splice(index, 1) : temp.push(e);
         setActivities(temp);
-        props.onActivityClick(temp)
+        props.selectActivities(temp)
     }
 
     //DISPLAY TREATMENT
@@ -107,7 +100,7 @@ const SearchModal = (props) => {
         selectButton = <RedButton title="Allons-y!" onSelect={ ()=> selectRegion() } />
     }else if (activities.length > 0){
         selected = <h3>{ region }</h3>
-        selectButton = <RedButton title="Allons-y!" onSelect={ ()=> selectActivity() }/>
+        selectButton = <RedButton title="Allons-y!" onSelect={ ()=> selectActivities() }/>
     };
 
 
@@ -233,7 +226,7 @@ function mapDispatchToProps(dispatch) {
         onRegionClick: function(region) {
             dispatch({ type: 'selectRegion', region: region })
         },
-        onActivityClick: function(activities) {
+        selectActivities: function(activities) {
             dispatch({ type: 'selectActivities', activities: activities })
         },
         onSearch: function(data) {
