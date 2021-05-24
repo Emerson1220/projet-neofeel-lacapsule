@@ -5,6 +5,7 @@ import '../styles/profile.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSuitcase, faCommentDots, faPhotoVideo } from '@fortawesome/free-solid-svg-icons'
 
+import RedButton from '../components/RedButton';
 //REDUX
 import { connect } from 'react-redux';
 
@@ -20,24 +21,48 @@ const ScreenProfile = (props) => {
 
         tripLiked = props.user.roadtrips.map((roadtrip, i) => {
 
-            
-            var ExperienceList = roadtrip.days[0].experiences.map((experience, j) => {
+       var styleTripPerso = { display: 'flex', flexDirection: ' column', width: '80%', margin: '2%', border: '2px solid rgba(80, 80, 80, 0.7)' }
+       var styleTripSuggest = { display: 'flex', flexDirection: ' column', width: '80%', margin: '2%', border: '2px solid rgba(224, 104, 104, 0.8)' }
 
-                return (<div key={j} className='activitySelect'>
-                    <FontAwesomeIcon size='2x' style={{ marginRight: '5px' }} icon={faSuitcase} /><h3 style={{ width: '50%', marginBottom: '0px' }}>{experience.name}</h3>
-                    <div style={{ display: 'flex', flexDirection: 'row', width: '75%', height: '100%', alignItems: 'center', justifyContent: 'flex-end' }} >
-                        <FontAwesomeIcon size='2x' style={{ marginRight: '5px' }} icon={faCommentDots} />
-                        <FontAwesomeIcon size='2x' style={{ marginRight: '5px' }} icon={faPhotoVideo} />
-                    </div>
-                </div>)
+       var suggestionNeofeel = <></>
+       if (roadtrip.type) {
+            suggestionNeofeel = <h3 style= {{color:'rgba(224, 104, 104, 0.8)'}}>Suggestion NEOFEEL</h3>
+       }
+
+            var daySuggestionList = roadtrip.days.map((day, k) => {
+
+
+                var ExperienceList = day.experiences.map((experience, j) => {
+
+                    return (<div key={j} className='activitySelect'>
+                        <FontAwesomeIcon size='2x' style={{ marginRight: '5px' }} icon={faSuitcase} />
+                        <h3 style={{ width: '50%', marginBottom: '0px' }}>{experience.name}</h3>                       
+                        <div style={{ display: 'flex', flexDirection: 'row', width: '75%', height: '100%', alignItems: 'center', justifyContent: 'flex-end' }} >
+                            <FontAwesomeIcon size='2x' style={{ marginRight: '5px' }} icon={faCommentDots} />
+                            <FontAwesomeIcon size='2x' style={{ marginRight: '5px' }} icon={faPhotoVideo} />
+                        </div>
+                    </div>)
+                })
+                return (<div key={k}>
+                    <h3> {day.name} :</h3>
+                    {ExperienceList} </div>)
+
             })
             return (
-                <div key={i} className="tripSelect" style={{ display: 'flex', flexDirection: ' column', width: '80%', margin: '2%' }}>
+                <div key={i} className="tripSelect" style={roadtrip.type === 'admin' ? styleTripSuggest : styleTripPerso}>
+                    <div style={{display:'flex', justifyContent:'space-between'}}>
                     <h2>{roadtrip.name}</h2>
-                    <h3> Expériences :</h3>
-                    {ExperienceList}
+                    {suggestionNeofeel}
+                    </div>
+                    
+                    {daySuggestionList}
+                    <div style={{display:'flex', alignItems: 'end', justifyContent:'flex-end'}}>
+                        <RedButton title='Partager le Voyage'></RedButton> 
+                        <RedButton title='Supprimer le Voyage'></RedButton>
+                        </div>
                 </div>)
         })
+
     }
 
 
