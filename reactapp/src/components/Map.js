@@ -102,35 +102,39 @@ const Map = (props) => {
     if (experience !== {}) {
         openModal = 
         <div style={styles.single_destinations}> 
-        <div style={styles.image_card}>
-            <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
-        </div>
-        <div style={{ width: '100%',backgroundColor: 'white',display:'flex', flexWrap:'nowrap', padding:'1rem'}}>
-            {experience.tags.map((image, j) => {
-                return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
-            }) }
-        </div>
-            <div style={styles.detail_title_location}>
-                <div>
-                    <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
-                    <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
-                    <p style={{ color: '#e06868', marginBottom: '8px' }}>
-                    <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
-                    <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
-                </div>
+            <div style={styles.image_card}>
+                <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
             </div>
+            
+            <div style={{ width: '100%',backgroundColor: 'white',display:'flex', flexWrap:'nowrap', padding:'1rem'}}>
+                {experience.tags.map((image, j) => {
+                    return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
+                }) }
+        </div>
+
+        <div style={styles.detail_title_location}>
+            <div>
+                <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
+                <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <p style={{ color: '#e06868', marginBottom: '8px' }}>
+                <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
+                <h4 >{experience.partner.addresses[0].city}</h4>
+            </div>
+        </div>
+
         <div style={styles.detail_card}>
                 <div style={styles.liste_temps_item}>
-                    <p>Temps</p>
-                    <h2>{experience.activityTime}</h2>
+                    <h4>Durée</h4>
+                    <p>{experience.activityTime}</p>
                 </div>
                 <div style={styles.liste_price_item}>
-                    <p>Prix</p>
-                    <h2>{experience.budget}</h2>
+                    <h4>Prix</h4>
+                    <p>{experience.budget}</p>
                 </div>
         </div>
+
         <div style={{ textAlign: 'center', marginTop:'1rem', alignSelf: 'center', width: '100%' }}>
             <h4 style={styles.h4}>Ajouter cette experience à votre voyage</h4>
             <Cascader
@@ -271,23 +275,6 @@ export default connect(
 
 
 let styles = {
-    // CSS - ICONS //
-
-
-    // CSS - ICONS //
-
-    icons_la:{
-        display: 'inline-block',
-        position: 'absolute',
-        top: '17px',
-        left: '20px',
-        color: '#CFD3DE',
-        font: 'normal normal normal 16px/1 LineAwesome',
-        fontSize: 'inherit',
-        textDecoration: 'inherit',
-        textRendering: 'optimizeLegibility',
-        textTransform: 'none',
-    },
 
     // CARD - TITLE//
 
@@ -304,39 +291,24 @@ let styles = {
         textDecoration: 'none',
     },
 
-    // CARD - CSS //
-
-    experiences_list_area:{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(1, 1fr)',        
-        boxSizing: 'border-box',
-        outline: 'none',
-        paddingLeft: '1rem',
-        paddingRight: '1rem',
-
-    },
-
     single_destinations:{
         display: 'flex',
         flexWrap: 'wrap',
-        margin: '0 0 30px 0',
         border: '1px solid #CFD3DE',
         boxShadow: '0px 3px 9px #071c551f',
         borderRadius: '7px',
         position: 'relative',
         overflow: 'hidden',
-        // maxHeight: '400px'
+        width: '100%',
     },
 
     image_card:{
         position: 'relative',
         background: '#fff',
         overflow: 'hidden',
-        // flex: '0 0 30%',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
-        // minHeight: '200px',
         maxHeight: '30%',
         borderRadius: '5px',
     },
@@ -344,70 +316,41 @@ let styles = {
     image:{
         width: '100%',
         height: '100%',
-        // objectFit: 'cover',
         objectFit: 'contains',
         objectPosition: 'center center',
         borderRadius: '5px',
     },
 
+    detail_title_location:{
+        padding:'.5rem',
+    },
+
     detail_card:{
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',        
-        // flex: '0 0 70%',
-        padding: '22px 15px',
+        // padding: '22px 15px',
         background: '#ffffff',
-        width: '100%'
-    },
-
-    card_content:{
-        marginBottom: '15px',
-        color: '#bcbcbc',
-        hyphens: 'auto',
-    },
-
-    liste_price:{
-        marginTop: '20px',
-        display: 'flex',
-        boxSizing: 'border-box',
-        outline: 'none',
-    },
-
-    liste_price_li:{
-        margin: '0 10px',
-        fontSize: '14px',
-        listStyle: 'none',
-        display: 'inline-block',
-    },
-
-
-    liste_price_content:{
-        float: 'left',
-        marginTop: '20px',  
-        margin: '0',
-        padding: '0',
-        display: 'inline-block',      
-    },
-
-    icons_fa:{
-        display: 'inline-block',
-        font: 'normal normal normal 14px/1 FontAwesome',
-        fontSize: 'inherit',
-        textRendering: 'auto',
-        color: '#01B9B7',
-        marginRight: '5px',
+        width: '100%',
+        marginLeft: '.5rem',
+        marginRight: '.5rem',
     },
 
     liste_price_item: {
         paddingLeft: '10%',
         borderLeft: '1px solid #CFD3DE',
         paddingTop: '0',
-        width: '45%'
+        width: '100%',
+        color:'grey',
+        textAlign: 'center',
+
     },
 
     liste_temps_item: {
         paddingRight: '10%',
         paddingTop: '0',
-        width: '45%'
+        width: '100%',
+        color:'grey',
+        textAlign: 'center',
     },
 
     picto: {
@@ -418,12 +361,14 @@ let styles = {
         zIndex:'10',
         marginTop: '-3rem',
     },
+
     modal: {
         backgroundColor: 'rgba(244, 244, 246, 0.5)',
         borderRadius: '15px',
         height: '70%'
     },
+
     modalMask: {
         backgroundColor: "rgba(133, 187, 197, 0.6)"
-    }
+    },
 }

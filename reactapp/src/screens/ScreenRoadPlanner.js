@@ -10,11 +10,8 @@ import Nav from '../components/Nav';
 import Map from '../components/Map';
 import CardRoadPlanner from '../components/CardRoadPlanner';
 
-
 //REDUX
 import { connect } from 'react-redux';
-
-
 
 function ScreenRoadPlanner(props) {
     //Etats
@@ -30,8 +27,6 @@ function ScreenRoadPlanner(props) {
         let rawResponse = await fetch(`/myroadplanner/${data.roadtripID}/${data.experienceID}`);
         let response = await rawResponse.json();
     }
-
-
 
     //select expérience
     var selectExperience = async (experience) => {
@@ -50,14 +45,9 @@ function ScreenRoadPlanner(props) {
         let response = await rawResponse.json();
     }
 
-
-    // let experience = [{name:"test"}, {name:"test2"}, {name3:"test3"}]
-
-
     let cards = experienceList.map((e, i)=>
 
         
-
         <CardRoadPlanner key={i} 
             name={e.name} 
             activity={e.activity} 
@@ -74,49 +64,31 @@ function ScreenRoadPlanner(props) {
         </CardRoadPlanner>
     )
 
-
     return (	
-    <div>
+        <div>
             <Nav />
-                <div style={ styles.container }>
 
-                <div style={{ display: 'flex', justifyContent: 'center', width: '60%' }}>
+            <div style={ styles.container }>
+                <div style={{ display: 'flex', justifyContent: 'center', width: '2%' }}>
                     <Map></Map>
                 </div>
 
-
-
-
-
-                    <div style={ styles.row }>
-
-                        <div style={ styles.col_xl_9}>                           
-                            <div style={{ marginBottom:'40px' }}> {/* Filters */}
-
+                <div style={ styles.row }>
+                    <div style={ styles.col_xl_9}>                           
+                        <div style={{ marginBottom:'40px' }}> {/* Filters */}
                             <div style={ styles.avantage}>
-                                <h3 style={{color:'#fff'}}>Vous avez cumulé<span> 100€</span> d'avantages dans votre séléction</h3>
-                                <ul>
-                                    <li>Mes avantages</li>
-                                    <li>Mes avantages</li>
-                                    <li>Mes avantages</li>
-                                    <li>Mes avantages</li>
-                                </ul>
-                                <button style={{backgroundColor:'#106271'}}>Achetez votre Neopass</button>
+                                <h3>Vous avez cumulé<span> 100€</span> d'avantages dans votre séléction</h3>
+                                <button>Achetez votre Neopass pour seulement 60€</button>
                             </div>
-
-                            </div> 
-                            
-                            <div style={ styles.experiences_list_area }> 
-
+                        </div> 
+                        
+                        <div style={ styles.experiences_list_area }> 
                             {cards}
-
-                                
-                            </div>
-
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     )
 };
 
@@ -127,243 +99,52 @@ let styles = {
     container: {
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)', 
-        paddingBTop: '1rem',       
-        paddingright: '15px',
-        paddingleft: '15px',
-        marginTop:'2rem',
-        marginright: 'auto',
-        marginleft: 'auto',
+        gridTemplateColumns: '1fr 2fr', 
+        paddingTop: '1rem',       
+        marginRight: '1rem',
+        marginLeft: '1rem',
     },
 
     row:{
         display: 'flex',
         flexWrap: 'wrap',
-    },
-
-    row_filters:{
-        display: 'flex',
-        flexWrap: 'wrap',
+        padding: '1rem',
     },
 
     col_xl_9:{
         position: 'relative',
         width: '100%',
-        minHeight: '1px',
-        paddingRight: '15px',
-        paddingLeft: '15px',
+        minHeight: '.1rem',
+        paddingRight: '1.5rem',
+        paddingLeft: '1.5rem',
         },
 
-    col_xl_3:{
-        position: 'relative',
-        flex: '0 0 25%',
-        maxWidth: '25%',
-        width: '100%',
-        minHeight: '1px',
-        paddingRight: '15px',
-        paddingLeft: '15px',
+        avantage:{
+            background: '#e06868',
+            textAlign: 'center',
+            color: '#fff', 
+            width: '100%',
+            marginBottom: '1rem', 
+            padding: '.5rem',
         },
 
-    single_input_wrap:{
-        position: 'relative',
-        width: '100%',
-        marginBottom: '18px',
-        display: 'inline-block',        
-    },
-
-    single_input_wrap_input:{
-        background: '#ffffff',
-        border: '1px solid #EAEAEA',
-        height: '52px',
-        width: '100%',       
-    },
-
-    display_inline:{
-        display: 'inline-flex',
-    },
-
-    text_align_center:{
-        textAlign:'center',
-    },
-
-    // CSS - MAP //
-
-    map:{
-        width:'50%', 
-        height:'auto', 
-        position: 'fixed',
-        top: '100px',
-        left: '10px',
-        padding:'1rem',
-    },
+        experiences_list_area:{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(1, 1fr)',        
+            boxSizing: 'border-box',
+            outline: 'none',
+            paddingLeft: '1rem',
+            paddingRight: '1rem',
+        },
 
 
-    // CSS - ICONS //
-
-    icons_la:{
-        display: 'inline-block',
-        position: 'absolute',
-        top: '17px',
-        left: '20px',
-        color: '#CFD3DE',
-        font: 'normal normal normal 16px/1 LineAwesome',
-        fontSize: 'inherit',
-        textDecoration: 'inherit',
-        textRendering: 'optimizeLegibility',
-        textTransform: 'none',
-    },
-
-    // CARD - TITLE//
-
-    h3:{
-        fontWeight:'bold',
-        fontSize: '28px',
-        color: '#106271',
-        textDecoration: 'none',
-    },
-
-    h4:{
-        fontSize: '20px',
-        color: '#e06868',
-        textDecoration: 'none',
-    },
-
-    // CARD - CSS //
-
-    experiences_list_area:{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(1, 1fr)',        
-        boxSizing: 'border-box',
-        outline: 'none',
-        paddingLeft: '1rem',
-        paddingRight: '1rem',
-
-    },
-
-    single_destinations:{
-        display: 'flex',
-        flexWrap: 'wrap',
-        margin: '0 0 30px 0',
-        border: '1px solid #CFD3DE',
-        boxShadow: '0px 3px 9px #071c551f',
-        borderRadius: '7px',
-        position: 'relative',
-        overflow: 'hidden',
-        margin: '.5rem',
-    },
-
-    image_card:{
-        position: 'relative',
-        background: '#fff',
-        overflow: 'hidden',
-        flex: '0 0 30%',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center center',
-        minHeight: '200px',
-        borderRadius: '5px',
-    },
-
-    image:{
-        width: '100%',
-        height: '100%',
-        // objectFit: 'cover',
-        objectFit: 'contains',
-        objectPosition: 'center center',
-        borderRadius: '5px',
-    },
-
-    detail_card:{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',        
-        flex: '0 0 70%',
-        padding: '22px 15px',
-        background: '#ffffff',
-    },
-
-    card_content:{
-        marginBottom: '15px',
-        color: '#bcbcbc',
-        hyphens: 'auto',
-    },
-
-    liste_price:{
-        marginTop: '20px',
-        display: 'flex',
-        boxSizing: 'border-box',
-        outline: 'none',
-    },
-
-    liste_price_li:{
-        margin: '0 10px',
-        fontSize: '14px',
-        listStyle: 'none',
-        display: 'inline-block',
-    },
 
 
-    liste_price_content:{
-        float: 'left',
-        marginTop: '20px',  
-        margin: '0',
-        padding: '0',
-        display: 'inline-block',      
-    },
 
-    icons_fa:{
-        display: 'inline-block',
-        font: 'normal normal normal 14px/1 FontAwesome',
-        fontSize: 'inherit',
-        textRendering: 'auto',
-        color: '#01B9B7',
-        marginRight: '5px',
-    },
 
-    liste_price_item:{
-        paddingLeft: '30px',
-        marginLeft: '20px',
-        borderLeft: '1px solid #CFD3DE',
-        paddingTop: '0',    
-    },
 
-    // PAGINATION - CSS //
 
-    pagination:{
-        display: 'inline-block',
-        textAlign: 'center',   
-        marginTop: '.5rem',    
-    },
 
-    pagination_ul:{
-        display: 'flex',
-        flexDirection: 'row',
-        listStyleType: 'none',
-    },
-
-    pagination_li:{
-        lineHeight: '43px',
-        border: '2px solid #CFD3DE',
-        borderRadius: '50%',
-        textAlign: 'center',
-        display: 'inline-block',
-        color: '#97A1B3', 
-        width: '42px',
-        height: '42px',
-        margin: '0 5px', 
-    },
-
-    avantage:{
-        // border: '2px solid #CFD3DE',
-        background: '#e06868',
-        // borderRadius: '5%',
-        textAlign: 'center',
-        color: '#fff', 
-        width: '100%',
-        // height: '42px',
-        marginBottom: '1rem', 
-        padding: '.5rem',
-        // position: 'fixed',
-    },
 
 }        
 

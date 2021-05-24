@@ -38,7 +38,7 @@ const ScreenPartner = () => {
 
                             <div style={ styles.row_card_button}>
                                         <Link to={'/'}>
-                                            <RedButton transparent={true} title="Ajouter cette epérience à mon voyage" />
+                                            <RedButton transparent={true} title="Ajouter cette expérience à mon voyage" />
                                         </Link>
                                     </div>
 
