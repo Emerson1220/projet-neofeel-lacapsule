@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 
@@ -115,7 +115,6 @@ let styles = {
     single_destinations:{
         display: 'flex',
         flexWrap: 'wrap',
-        margin: '0 0 30px 0',
         border: '1px solid #CFD3DE',
         boxShadow: '0px 3px 9px #071c551f',
         borderRadius: '7px',

@@ -91,8 +91,8 @@ function Nav(props) {
                 </Link>
 
                 <div style={{ display: "flex", flexDirection: 'column', height: '90%', justifyContent: 'space-around', }}>
-                    <a 
-                    style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center' }}
+                    <button 
+                    style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center', background: 'transparent', border: 'none' }}
                     onClick={ ()=>openInNewTab("https://www.facebook.com/lespritdepartage/") }>
                         <img
                             height={'100%'}
@@ -100,9 +100,9 @@ function Nav(props) {
                             src="/images/facebookColor.png"
                             alt='picto facebook'
                         />
-                    </a>
-                    <a
-                    style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center'}}
+                    </button>
+                    <button
+                    style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center', background: 'transparent', border: 'none' }}
                     onClick={ ()=>openInNewTab("https://www.youtube.com/channel/UCHdHavcCfpXR8wLhgK3t0qQ")} >
                         <img
                             height={'100%'}
@@ -110,9 +110,9 @@ function Nav(props) {
                             src="/images/youtubeColor.png"
                             alt="picto youtube"
                         />
-                    </a>
-                    <a
-                    style={{height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center'}}
+                    </button>
+                    <button
+                    style={{height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center', background: 'transparent', border: 'none' }}
                     onClick={ ()=>openInNewTab("https://www.instagram.com/neofeeltravel/")}
                     >
                         <img
@@ -121,7 +121,7 @@ function Nav(props) {
                             src="/images/instagramColor.png"
                             alt="picto instagram"
                         />
-                    </a>
+                    </button>
                 </div>
                 { greeting }
             </div>

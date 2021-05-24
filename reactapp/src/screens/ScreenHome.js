@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 import '../styles/Home.css';
 import { Link, Redirect } from 'react-router-dom';
@@ -37,7 +37,7 @@ function ScreenHome(props) {
             <div className="home" style={{ display: "flex", flexDirection: 'column', height: '100vh' }}>
                 <Nav />
                 <div style={{
-                    display: "flex", flexDirection: 'column', height: '100vh ', display: 'grid',
+                    flexDirection: 'column', height: '100vh ', display: 'grid',
                     gridTemplateColumns: 'repeat(2, 1fr)' }} >
                     <div>
                         <div style={{
