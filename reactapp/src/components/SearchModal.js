@@ -43,16 +43,6 @@ const SearchModal = (props) => {
     const selectActivities = () => {
         props.searchTrips(selection);
     }
-    // var selectActivity = async () => {
-    //     let rawResponse = await fetch('/searchtrips', {
-    //         method: 'POST',
-    //         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    //         body : `activities=${JSON.stringify(props.activities)}`
-    //     });
-    //     let response = await rawResponse.json();
-    //     props.onSearch(response.data);
-    //     props.searchTrips(selection);
-    // }
 
     //get list activity options from back
     const getOptions = async () => {
