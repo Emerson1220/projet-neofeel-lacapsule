@@ -47,7 +47,7 @@ router.post('/searchregions', async function(req, res, next) {
 //filtrer voyages par type
 router.post('/searchtrips', async function(req, res, next) {
     try {
-        let activities = req.body.activities;
+        let activities = JSON.parse(req.body.activities);
         let roadtrips = [];
         for (let i=0 ; i<activities.length ; i++) {
             let response = await Roadtrip.find({ tags: activities[i] })
