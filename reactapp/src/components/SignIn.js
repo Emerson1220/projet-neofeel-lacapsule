@@ -35,6 +35,7 @@ const SignIn = (props) => {
         let response = await rawResponse.json();
         if (response.result === true) {
             props.stayLogged(response.user)
+            props.loadRoadplanner(response.currentRoadtrip)
             if (isChecked) {
                 cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
             }
@@ -48,7 +49,6 @@ const SignIn = (props) => {
         let rawResponse = await fetch(`/users/auth/facebook/signin/${res.accessToken}`);
         let response = await rawResponse.json();
         if (response.result === true) {
-            // props.onSigninClick(response.user.token);
             props.stayLogged(response.user)
             if (isChecked) {
                 cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
@@ -172,6 +172,9 @@ function mapDispatchToProps(dispatch) {
     return {
         stayLogged: function(user) {
             dispatch({ type: 'stayLogged', user: user })
+        },
+        loadRoadplanner: function(roadplanner) {
+            dispatch({ type: 'loadRoadplanner', roadplanner: roadplanner })
         }
     }
 }

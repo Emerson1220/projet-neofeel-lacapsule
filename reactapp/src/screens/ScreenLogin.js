@@ -28,7 +28,6 @@ const ScreenLogin = (props) => {
             body: `token=${token}`
         })
         let response = await rawResponse.json();
-        console.log(response)
         if (response.result === true) {
             props.stayLogged(response.user)
         }
@@ -94,7 +93,6 @@ let styles = {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return { user: state.user }
 }
 

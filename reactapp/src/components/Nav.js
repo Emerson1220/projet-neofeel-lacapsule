@@ -14,7 +14,8 @@ const cookies = new Cookie();
 
 function Nav(props) {
     //STATE HOOKS
-    const [isLogged, setIsLogged] = useState(false)
+    const [isLogged, setIsLogged] = useState(false);
+    const [roadplannerCount, setRoadplannerCount] = useState(0);
 
     //EFFECT HOOKS
     useEffect(()=> {
@@ -29,6 +30,12 @@ function Nav(props) {
             setIsLogged(true)
         }
     }, [props.user])
+
+    useEffect(() => {
+    if(props.roadplanner.experiences) {
+            setRoadplannerCount(props.roadplanner.experiences.length)
+    }
+    }, [props.roadplanner])
 
     //FUNCTIONS
     const openInNewTab = (url) => {
@@ -45,9 +52,9 @@ function Nav(props) {
             body: `token=${token}`
         })
         let response = await rawResponse.json();
-        console.log(response)
         if (response.result === true) {
             props.stayLogged(response.user)
+            props.loadRoadplanner(response.currentRoadtrip)
             setIsLogged(true)
         }
     }
@@ -55,6 +62,7 @@ function Nav(props) {
     const logOut = () => {
         cookies.remove('token');
         props.onLogoutClick();
+        props.clearRoadplanner();
         setIsLogged(false);
     }
     
@@ -122,7 +130,7 @@ function Nav(props) {
                     <Button className='devenezPartenaireButton' > Devenez Partenaire </Button>
                 </Link>
                 <div className='listNav' style={{ display: 'flex', alignItems: 'center',justifyContent:'flex-end', flexDirection: 'row', marginLeft: '11%', marginBottom: 0, height: '100%', width:'100%' }}>
-                    <Badge count={ props.roadplanner.length } >
+                    <Badge count={ roadplannerCount } >
                         <Link to={'/roadPlanner'}  >
                             <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Mon Voyage</h2>
                         </Link>
@@ -144,6 +152,12 @@ function mapDispatchToProps(dispatch) {
         },
         onLogoutClick: function(data) {
             dispatch({ type: 'logout' })
+        },
+        loadRoadplanner: function(roadplanner) {
+            dispatch({ type: 'loadRoadplanner', roadplanner: roadplanner })
+        },
+        clearRoadplanner: function() {
+            dispatch({ type: 'clearRoadplanner' })
         }
     }
 }

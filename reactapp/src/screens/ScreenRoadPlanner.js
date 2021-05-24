@@ -15,47 +15,26 @@ import { connect } from 'react-redux';
 
 function ScreenRoadPlanner(props) {
     //Etats
-    const [experienceList, setExperienceList] = useState([{ partner: { addresses: [{ city: '' }] }, tags: [], description: {imageBannerUrl:''} }])
+    const [experienceList, setExperienceList] = useState([]);
     const [experiences, setExperience] = useState([]);
 
-    // let roadplanner = [];
     useEffect(() =>{
-        setExperienceList(props.roadplanner)
+        if(props.roadplanner.experiences) {
+            setExperienceList(props.roadplanner.experiences)
+        }
 },  [props.roadplanner])
 
-    const deleteBDD = async(data) => {
-        let rawResponse = await fetch(`/myroadplanner/${data.roadtripID}/${data.experienceID}`);
-        let response = await rawResponse.json();
+    const deleteExperience = async(experienceID) => {
+        if(props.user.token) {
+            let rawResponse = await fetch(`/myroadplanner/${props.roadplanner.id}/${experienceID}`);
+            let response = await rawResponse.json();
+        }
     }
-
-
-
-    //select expérience
-    var selectExperience = async (experience) => {
-        let rawResponse = await fetch('/roadtrips', {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body : `experience=${JSON.stringify(experience)}`
-        })
-        let response = await rawResponse.json();
-    }
-
-    var selectExperience = async (experience) => {
-        let rawResponse = await fetch('/roadtrips/60a4d8695e61b2c452d97b78', {
-            method: 'DELETE',
-        })
-        let response = await rawResponse.json();
-    }
-
-
-    // let experience = [{name:"test"}, {name:"test2"}, {name3:"test3"}]
-
 
     let cards = experienceList.map((e, i)=>
 
-        
-
-        <CardRoadPlanner key={i} 
+        <CardRoadPlanner key={i}
+            id={ e._id } 
             name={e.name} 
             activity={e.activity} 
             activityType={e.activityType} 
@@ -66,8 +45,7 @@ function ScreenRoadPlanner(props) {
             budget={e.budget}
             imageBannerUrl={e.description.imageBannerUrl}
             city={e.partner.addresses[0].city}
-            tags={e.tags}>
-            
+            >
         </CardRoadPlanner>
     )
 
@@ -136,12 +114,12 @@ function ScreenRoadPlanner(props) {
                             <div style={ styles.text_align_center}>
                                 <div style={ styles.pagination }>
                                     <ul style={ styles.pagination_ul}>
-                                        <li><a style={ styles.pagination_li } href=""><i    /></a></li>
+                                        <li><a style={ styles.pagination_li } href=""><i/></a></li>
                                         <li><a style={ styles.pagination_li } href="">1</a></li>
                                         <li><a style={ styles.pagination_li } href="">2</a></li>
                                         <li><a style={ styles.pagination_li } href="">3</a></li>
                                         <li><a style={ styles.pagination_li } href="">4</a></li>
-                                        <li><a style={ styles.pagination_li } href=""><i /></a></li>
+                                        <li><a style={ styles.pagination_li } href=""><i/></a></li>
                                     </ul>                          
                                 </div>
                             </div>
@@ -151,6 +129,16 @@ function ScreenRoadPlanner(props) {
             </div>
     )
 };
+
+
+function mapStateToProps(state) {
+    return { user: state.user, roadplanner: state.roadplanner }
+}
+
+export default connect(
+    mapStateToProps,
+    null
+)(ScreenRoadPlanner);
 
 let styles = {
 
@@ -398,20 +386,3 @@ let styles = {
     },
 
 }        
-
-function mapDispatchToProps(dispatch) {
-    return {
-        deleteExperience: function(data) {
-            dispatch({ type: 'deleteExperience', data: data })
-        }
-    }
-}
-
-function mapStateToProps(state) {
-    return { user: state.user, roadplanner: state.roadplanner }
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ScreenRoadPlanner);

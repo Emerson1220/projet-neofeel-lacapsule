@@ -1,21 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Nav from '../components/Nav'
 import { Card, Collapse } from 'antd';
 import '../styles/suggestion.css'
 import RedButton from '../components/RedButton';
 
+//REDUX
+import { connect } from 'react-redux';
+
 const { Panel } = Collapse;
 
 function callback(key) {
-
-    
     console.log(key);
 }
 
-const ScreenSuggestions = () => {
+const ScreenSuggestions = (props) => {
+    //EFFECT HOOKS
+    useEffect(()=> {
+        props.activities.length > 0 ? filterTrips() : getSuggestions() ;
+    }, [props.activities])
 
+    //HTTP REQUESTS
+    const getSuggestions = async() => {
+        let rawResponse = await fetch('/roadtrips')
+        let response = await rawResponse.json();
+        console.log(response);
+        props.loadSuggestions(response.roadtrips)
+    };
+
+    const filterTrips = async() => {
+        let activityList = JSON.stringify(props.activities)
+        let rawResponse = await fetch('/searchtrips', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `activities=${activityList}`
+        })
+        let response = await rawResponse.json();
+        console.log({response: response })
+        props.loadSuggestions(response.roadtrips);
+    }
+    //DISPLAY MANAGEMENT
     const button = <RedButton title = 'Ajouter ce voyage'></RedButton>
-
 
     return (
 
@@ -107,4 +131,22 @@ const ScreenSuggestions = () => {
 
 }
 
-export default ScreenSuggestions;
+function mapDispatchToProps(dispatch) {
+    return {
+        loadSuggestions: function(roadtrips) {
+            dispatch({ type: 'loadSuggestions', suggestions: roadtrips })
+        }
+    }
+}
+
+function mapStateToProps(state) {
+    console.log({ state: state })
+    return {
+        roadtrips: state.roadtrips, activities: state.activities
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ScreenSuggestions);

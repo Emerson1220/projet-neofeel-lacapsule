@@ -7,6 +7,88 @@ import { Cascader, message } from 'antd'
 
 const ExperienceList = (props) => {
     const [voyageSelect, setVoyageSelect] = useState('');
+    
+    //CASCADER
+    let options = [
+            {
+                value: 'new',
+                label: 'Mon voyage'
+            }
+        ]
+        
+        if (props.user.roadtrips) { 
+            let userTrips = props.user.roadtrips.map(e => {
+                return {
+                    value: e._id,
+                    label: e.name
+                }
+            });
+
+            let savedTripsOption = {};
+
+            if (userTrips.length > 0) { 
+                savedTripsOption = {
+                    value: 'saved',
+                    label: "Vos voyages",
+                    children: userTrips
+                }
+            }
+
+            options = [
+            {
+                value: 'new',
+                label: 'Nouveau voyage'
+            },
+            savedTripsOption
+        ];
+    }
+
+function displayRender(label) {
+    return label[label.length - 1];
+}
+
+const onChange = (value) => {
+    setVoyageSelect(value)
+};
+
+//HTTP REQUESTS
+const createNewTrip = async (experience) => {
+    let region = 'Alsace-Vosges';
+        let rawResponse = await fetch('/myroadplanner', {
+            method: "POST",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `token=${props.user.token}&name=Mon Voyage en ${region}&region=${region}&regionCode=${props.region}&experienceID=${experience._id}`
+        });
+        let response = await rawResponse.json();
+        if (response.result === true) {
+            props.toggleRoadplanner(response.roadtrip._id, experience);
+            props.addRoadtripToUser(response.roadtrip)
+            success();
+        }
+    }
+    
+    const addExperienceToTrip = async(experience) => {
+        let rawResponse = await fetch('/myroadplanner', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `roadtripID=${voyageSelect[1]}&experienceID=${experience._id}`
+        })
+        let response = await rawResponse.json();
+        if(response.result === true) {
+            props.addExperience(response.roadtrip._id, experience)
+            success()
+        }
+    }
+
+    //FUNCTIONS
+    const chooseExperience = async(experience) => {
+        if (props.user.token) {
+            voyageSelect[0] === 'new' ? createNewTrip(experience) : addExperienceToTrip(experience);
+        } else {
+            !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.toggleRoadplanner('temp', experience) : props.addExperience('temp', experience) ;
+            success();
+        }
+    }
 
     const success = () => {
         message.success({
@@ -18,88 +100,6 @@ const ExperienceList = (props) => {
         });
     };
 
-    //CASCADER
-    let options = [
-        {
-            value: 'new',
-            label: 'Mon voyage'
-        }
-    ]
-    
-    if (props.user.roadtrips) { 
-        let userTrips = props.user.roadtrips.map(e => {
-            return {
-                value: e._id,
-                label: e.name
-            }
-        });
-
-        let savedTripsOption = {};
-
-        if (userTrips.length > 0) { 
-            savedTripsOption = {
-                value: 'saved',
-                label: "Vos voyages",
-                children: userTrips
-            }
-        }
-
-        options = [
-        {
-            value: 'new',
-            label: 'Nouveau voyage'
-        },
-        savedTripsOption
-        ];
-    }
-
-    function displayRender(label) {
-        return label[label.length - 1];
-    }
-
-    const onChange = (value) => {
-        setVoyageSelect(value)
-    };
-
-    const chooseExperience = async(experience) => {
-        if (voyageSelect[0] === 'new') {
-            createRoadtrip(experience);
-        } else {
-            addExperience(experience);
-        }
-        success();
-    }
-
-    // //ajout d'expérience à un voyage existant
-    // const addExperience = async(experience) => {
-    //     if (props.user.token) {
-    //         let rawResponse = await fetch('/myroadplanner', {
-    //             method: 'PUT',
-    //             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    //             body: `roadtripID=${voyageSelect[1]}&experienceID=${experience._id}`
-    //         })
-    //         let response = await rawResponse.json();
-    //         props.toggleRoadplanner(response.roadplanner.days[0].experiences)
-    //     }
-    //     props.onAddExperience(experience);
-    // };
-
-    // //création nouveau voyage avec expérience choisie
-    // const createRoadtrip = async(experience) => {
-    //     let region = 'Alsace-Vosges'
-    //     if (props.user.token) {
-    //         let rawResponse = await fetch('/myroadplanner', {
-    //             method: 'POST',
-    //             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    //             body: `token=${props.user.token}&name=Mon Voyage en ${region}&region=${region}&regionCode=${props.region}&experienceID=${experience._id}`
-    //         })
-    //         let response = await rawResponse.json();
-    //         console.log(response)
-    //         props.toggleRoadplanner(response.roadplanner.days[0].experiences)
-    //         props.onCreateRoadtrip(response.roadplanner);
-    //     }
-    //     props.onAddExperience(experience);
-    // }
     /* MAP SUR EXPERIENCES LIST ___________*/
     var ExperienceListing = [];
     if (props.experiences) {
@@ -108,7 +108,7 @@ const ExperienceList = (props) => {
                 return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
             })
             return (
-
+                
                 //Container
                 <div key={i} style={styles.single_destinations}> 
                     {/* Card 1 */}
@@ -171,20 +171,30 @@ const ExperienceList = (props) => {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onAddExperience: function(experience) {
-            dispatch({ type: 'addExperience', experience: experience })
+        toggleRoadplanner: function(roadtripID, experience) {
+            dispatch({ 
+                type: 'toggleRoadplanner',
+                roadtripID: roadtripID,
+                experience: experience 
+            })
         },
-        onCreateRoadtrip: function(roadtrip) {
-            dispatch({ type: 'addRoadtrip', roadtrip: roadtrip })
+        addExperience: function(roadtripID, experience) {
+            dispatch({
+                type: 'addExperience',
+                roadtripID: roadtripID,
+                experience: experience
+            })
         },
-        toggleRoadplanner: function(roadtrip) {
-            dispatch({ type: 'toggleRoadplanner', roadtrip: roadtrip })
+        addRoadtripToUser: function(roadtrip) {
+            dispatch({
+                type: 'addRoadtrip',
+                roadtrip: roadtrip
+            })
         }
     }
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return { experiences: state.experiences, region: state.region, user: state.user, roadplanner: state.roadplanner }
 }
 

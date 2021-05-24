@@ -59,7 +59,13 @@ router.post('/signup', async function(req, res, next) {
 router.post('/signin', async function(req, res, next) {
   try {
     let user = await User.findOne({ email: req.body.email })
-    .populate('roadtrips')
+    .populate({
+      path: 'roadtrips',
+      populate: {
+        path: 'days.experiences',
+        model: 'experiences'
+      }
+    })
     .exec();
 
     if (!user) {
@@ -72,7 +78,11 @@ router.post('/signin', async function(req, res, next) {
 
     let current = user.roadtrips.sort((a, b) => {
       return a.creationDate - b.creationDate
-    })[0];    
+    })[0];
+    current = {
+      id: current._id,
+      experiences: current.days[0].experiences
+    }
     
     res.json({ result: true, user: user, currentRoadtrip: current })
 
@@ -89,12 +99,23 @@ router.post('/signin', async function(req, res, next) {
 router.post('/staylogged', async function(req, res, next) {
   try {
     let user = await User.findOne({ token: req.body.token })
-    .populate('roadtrips')
+    .populate({
+      path: 'roadtrips',
+      populate: {
+        path: 'days.experiences',
+        model: 'experiences'
+      }
+    })
     .exec();
+
 
     let current = user.roadtrips.sort((a, b) => {
       return a.creationDate - b.creationDate
     })[0];
+    current = {
+      id: current._id,
+      experiences: current.days[0].experiences
+    }
 
     res.json({ result: true, user: user, currentRoadtrip: current })
   } catch (err) {
