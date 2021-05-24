@@ -36,7 +36,10 @@ const ScreenSuggestions = (props) => {
         })
         let response = await rawResponse.json();
         props.loadSuggestions(response.roadtrips);
-    }
+    };
+
+    //DISPLAY MANAGEMENT
+    const button = <RedButton title = 'Ajouter ce voyage'></RedButton>
 
     const addTrip = async(suggestion) => {
         if (props.user.token) {
