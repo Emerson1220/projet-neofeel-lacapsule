@@ -35,7 +35,6 @@ const ScreenSuggestions = (props) => {
             body: `activities=${activityList}`
         })
         let response = await rawResponse.json();
-        console.log({ response: response }, 'kkkkkkkkkkkkk')
         props.loadSuggestions(response.roadtrips);
     }
 
@@ -47,7 +46,6 @@ const ScreenSuggestions = (props) => {
                 body: `token=${props.user.token}&roadtripID=${suggestion._id}`
             });
             let response = await rawResponse.json();
-            console.log(response)
             if(response.result === true) {
                 props.saveSuggestion(suggestion)
             }

@@ -15,20 +15,20 @@ router.get('/', function(req, res, next) {
 })
 
 //Stripe payment
-// router.post('/auth/stripe', async function(req, res, next) {
-//     try {
-//         const { amount } = req.body;
+router.post('/auth/stripe', async function(req, res, next) {
+    try {
+        const { amount } = req.body;
 
-//         const paymentIntent = await stripe.paymentIntents.create({
-//             amount,
-//             currency: 'eur'
-//         });
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount,
+            currency: 'eur'
+        });
 
-//         res.status(200).json({ clientSecret: paymentIntent.client_secret })
-//     } catch (err) {
-//         res.status(500).json({ statusCode: 500, message: err.message })
-//     }
-// })
+        res.status(200).json({ clientSecret: paymentIntent.client_secret })
+    } catch (err) {
+        res.status(500).json({ statusCode: 500, message: err.message })
+    }
+})
 
 //get experiences par région
 router.post('/searchregions', async function(req, res, next) {
