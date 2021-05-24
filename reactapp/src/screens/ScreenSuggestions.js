@@ -37,7 +37,12 @@ const ScreenSuggestions = (props) => {
         let response = await rawResponse.json();
         console.log({response: response })
         props.loadSuggestions(response.roadtrips);
+    };
+
+    const addTrip = async(roadtripID) => {
+
     }
+
     //DISPLAY MANAGEMENT
     const button = <RedButton title = 'Ajouter ce voyage'></RedButton>
 
@@ -54,7 +59,6 @@ const ScreenSuggestions = (props) => {
                         bodyStyle={{ width: '100%' }}
                         size='default'
                         extra ={button}
-                        bordered = {true}
                         >
 
                         <div style={{ fontWeight: 'bold', height: '90px', marginBottom: '23px', display:'flex', justifyContent:'space-between', maxWidth:'1200px'}}>
@@ -62,10 +66,10 @@ const ScreenSuggestions = (props) => {
                                 <h3 style={{ margin: 0,whiteSpace:'nowrap', color:'#fff' }}>Vous économiserez 130€ avec le NeoPass Alsaces-Vosges !</h3>
                             </div>
                             <div style={{ height:'100%', width:'50%', display:'flex', justifyContent:'flex-end'}} >
-                                <img src='/images/pictos/bar-a-vin-8.png'/>
-                                <img src='/images/pictos/bistro-8.png'/>
-                                <img src='/images/pictos/epicerie-8.png'/>
-                                <img src='/images/pictos/fromagerie-8.png'/>
+                                <img src='/images/pictos/bar-a-vin-8.png' alt="picto"/>
+                                <img src='/images/pictos/bistro-8.png' alt="picto"/>
+                                <img src='/images/pictos/epicerie-8.png' alt="picto"/>
+                                <img src='/images/pictos/fromagerie-8.png' alt="picto"/>
                             </div>
                         </div>
 

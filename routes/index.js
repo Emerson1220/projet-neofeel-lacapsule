@@ -143,6 +143,21 @@ router.get('/roadtrips/:token', async function(req, res, next) {
     }
 })
 
+//ajout suggestion de voyage
+router.post('/addroadtrip', async function(req, res, next) {
+    try {
+        let data = JSON.parse(req.body.data);
+        let user = await User.findOne({ token: data.token });
+        user.roadtrips.push(data.roadtripID);
+
+        let userSaved = await user.save();
+        res.json({ result: true })
+    } catch(err) {
+        console.log(err);
+        res.json({ result: false, error: err })
+    }
+})
+
 //Ajout d'expérience au road planner
 //Body: experienceID (12345)
 //Response: result (true)

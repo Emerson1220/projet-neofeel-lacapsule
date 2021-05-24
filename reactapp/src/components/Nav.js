@@ -91,7 +91,7 @@ function Nav(props) {
                 </Link>
 
                 <div style={{ display: "flex", flexDirection: 'column', height: '90%', justifyContent: 'space-around', }}>
-                    <a 
+                    <button 
                     style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center' }}
                     onClick={ ()=>openInNewTab("https://www.facebook.com/lespritdepartage/") }>
                         <img
@@ -100,8 +100,8 @@ function Nav(props) {
                             src="/images/facebookColor.png"
                             alt='picto facebook'
                         />
-                    </a>
-                    <a
+                    </button>
+                    <button
                     style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center'}}
                     onClick={ ()=>openInNewTab("https://www.youtube.com/channel/UCHdHavcCfpXR8wLhgK3t0qQ")} >
                         <img
@@ -110,8 +110,8 @@ function Nav(props) {
                             src="/images/youtubeColor.png"
                             alt="picto youtube"
                         />
-                    </a>
-                    <a
+                    </button>
+                    <button
                     style={{height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center'}}
                     onClick={ ()=>openInNewTab("https://www.instagram.com/neofeeltravel/")}
                     >
@@ -121,13 +121,13 @@ function Nav(props) {
                             src="/images/instagramColor.png"
                             alt="picto instagram"
                         />
-                    </a>
+                    </button>
                 </div>
                 { greeting }
             </div>
             <div style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', marginRight: '1%', height: '100%', width: '40%' }}>
                 <Link to={'/partenaire'}>
-                    <Button className='devenezPartenaireButton' > Devenez Partenaire </Button>
+                    <Button className='devenezPartenaireButton' >Devenez Partenaire</Button>
                 </Link>
                 <div className='listNav' style={{ display: 'flex', alignItems: 'center',justifyContent:'flex-end', flexDirection: 'row', marginLeft: '11%', marginBottom: 0, height: '100%', width:'100%' }}>
                     <Badge count={ roadplannerCount } >
