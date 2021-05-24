@@ -35,7 +35,7 @@ const ScreenSuggestions = (props) => {
             body: `activities=${activityList}`
         })
         let response = await rawResponse.json();
-        console.log({response: response })
+        console.log({response: response }, 'kkkkkkkkkkkkk')
         props.loadSuggestions(response.roadtrips);
     }
     //DISPLAY MANAGEMENT
@@ -141,7 +141,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     console.log({ state: state })
     return {
-        roadtrips: state.roadtrips, activities: state.activities
+        roadtrips: state.roadtrips, activities: state.activities, loadSuggestions: state.loadSuggestions
     }
 }
 
