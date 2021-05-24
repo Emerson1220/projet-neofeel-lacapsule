@@ -1,0 +1,30 @@
+.Neobox {
+    background: linear-gradient(#e06868, #FFF);
+}
+
+
+.div-picto{
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 90%;
+
+}
+
+
+.h3 {
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    margin-left: 50px;
+    width: 90%;
+}
+.subtitle{
+    font-size: 2vh;
+}
+.title{
+    margin: 0px 0px;
+    font-size: 25;
+}

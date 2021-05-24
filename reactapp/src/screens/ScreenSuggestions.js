@@ -71,7 +71,7 @@ const ScreenSuggestions = (props) => {
                     total = (total + experience.advantageAmount)
                     return (<Panel key={l} header={experience.name} style={{}}>
                         <div style={{ width: '1100px' }}>
-                            <p style={{ maxWidth: '1000px' }}>{experience.description.content.split('<br/>')[0]}</p>
+                            <p style={{ maxWidth: '1000px' }}>{experience.description.review.split('<br/>')[0]}</p>
                             <div style={{ maxWidth: '1200px', display: 'flex', justifyContent: 'center', alignItems: 'flex-end', color: 'red', flexDirection: 'column', }}>
                                 <h3 style={{ color: 'rgba(224, 104, 104)', fontWeight: 'bold' }}> Avantages</h3>
                                 <h4>{experience.advantage}</h4>
