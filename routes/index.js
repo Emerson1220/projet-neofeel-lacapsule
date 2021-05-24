@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 //STRIPE
-const Stripe = require('stripe');
-const stripe = new Stripe('sk_test_51ItWKHK4yUyeZ8DTqXCM4ixI7xpzLNgd2sLglgnom7xUDNdcIpfzVgOGMhPovqQAp4ti8dLl9EgBEHyO51ONWjLg00rjQhJAvi')
+// const Stripe = require('stripe');
+// const stripe = new Stripe('sk_test_51ItWKHK4yUyeZ8DTqXCM4ixI7xpzLNgd2sLglgnom7xUDNdcIpfzVgOGMhPovqQAp4ti8dLl9EgBEHyO51ONWjLg00rjQhJAvi')
 //MODELS
 const Experience = require('../models/Experience');
 const Roadtrip = require('../models/Roadtrip');
@@ -15,20 +15,20 @@ router.get('/', function(req, res, next) {
 })
 
 //Stripe payment
-router.post('/auth/stripe', async function(req, res, next) {
-    try {
-        const { amount } = req.body;
+// router.post('/auth/stripe', async function(req, res, next) {
+//     try {
+//         const { amount } = req.body;
 
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount,
-            currency: 'eur'
-        });
+//         const paymentIntent = await stripe.paymentIntents.create({
+//             amount,
+//             currency: 'eur'
+//         });
 
-        res.status(200).json({ clientSecret: paymentIntent.client_secret })
-    } catch (err) {
-        res.status(500).json({ statusCode: 500, message: err.message })
-    }
-})
+//         res.status(200).json({ clientSecret: paymentIntent.client_secret })
+//     } catch (err) {
+//         res.status(500).json({ statusCode: 500, message: err.message })
+//     }
+// })
 
 //get experiences par région
 router.post('/searchregions', async function(req, res, next) {
@@ -90,7 +90,7 @@ router.get('/activities', async function(req, res, next) {
 //get suggestions Neofeel
 router.get('/roadtrips', async function(req, res, next) {
     try {
-        let roadtrips = await Roadtrip.find()
+        let roadtrips = await Roadtrip.find({ type: 'admin' })
         .populate({
             path: 'days',
             populate: {
@@ -225,11 +225,26 @@ router.get('/myroadplanner/:token', async function(req, res, next) {
     res.json({ result: true, currentRoadtrip: current })
 })
 
+//ajouter un voyage à la liste perso
+router.post('/addtrip', async function(req, res, next) {
+    try {
+        let data = JSON.parse(req.body.data);
+        let user = await User.findOne({ token: data.token });
+        user.roadtrips.push(data.roadtripID);
+
+        let userSave = await user.save();
+        res.json({ result: true, user: userSave })
+    } catch(err) {
+        console.log(err)
+        res.json({ result: false })
+    }
+})
+
 //Sauvegarder le road planner
 //Body: user token, trip name, trip region, trip region code
 //Response: result (true)
 router.post('/myroadplanner', async function(req, res, next) {
-   try {
+    try {
         let data = req.body;
         let experience = await Experience.findById(data.experienceID)
         .populate('partner')
