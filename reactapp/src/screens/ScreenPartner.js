@@ -3,189 +3,254 @@ import Nav from '../components/Nav'
 import '../App.css';
 import '../styles/partner.css'
 
+import { Link, Redirect } from 'react-router-dom';
+
+
+//UI
+import RedButton from '../components/RedButton'
+
+
 
 
 const ScreenPartner = () => {
     return (
         <div>
             <Nav />
+                <div>
+                    <img style={ styles.banniere_img} src="images/photo-526x360.png" alt="image" />
+                </div>
 
-            <div style={ styles.container}>
-                <div style={ styles.gallery}>
-                    <div style={ styles.gallery_container}>
-                    <h4 style={styles.h4}>Title</h4>
+            <div style={ styles.container_all }>
+
+                    <div style={ styles.gallery_container }>
+                        <div style={ styles.row }>
+                            <div>
+                                <h4 style={ styles.h4_white }>Nom du partenaire</h4>
+                                <h4 style={ styles.h4_white }>Activité</h4>
+                                <p style={{color:'#fff'}}><i className="fa fa-map-marker" />Region</p>
+                            </div>
+                            <div style={styles.tags_title} >
+                                <a style={ styles.tags_title }  href="#">Tags 1</a>
+                                <a style={ styles.tags_title }  href="#">Tags 2</a>
+                                <a style={ styles.tags_title }  href="#">Tags 3</a>
+                                <a style={ styles.tags_title }  href="#">Tags 4</a>
+                            </div>
+
+                            <div style={ styles.row_card_button}>
+                                        <Link to={'/'}>
+                                            <RedButton transparent={true} title="Ajouter cette epérience à mon voyage" />
+                                        </Link>
+                                    </div>
+
+                        </div>
+
                         <div>
-                            <div style={ styles.gallery_area}>
+                            <div style={ styles.gallery_area }>
                                     {/* gallery-item */}
-                                    <div style={ styles.gallery_item_video}>
-                                        <div style={ styles.tp_gallery_item_img}>
+                                    <div style={ styles.gallery_item }>
+                                        <div style={ styles.tp_gallery_item_img }>
                                             <a href="#" data-effect="mfp-zoom-in">
-                                                <img style={ styles.tp_gallery_item_img} src="images/photo-526x360.png" alt="image" />
+                                                <img style={ styles.tp_gallery_item_img } src="images/photo-526x360.png" alt="image" />
                                             </a>
                                         </div>
                                     </div>
 
                                     {/* gallery-item */}
-                                    <div style={ styles.gallery_item_video}>
-                                        <div style={ styles.tp_gallery_item_img}>
+                                    <div style={ styles.gallery_item }>
+                                        <div style={ styles.tp_gallery_item_img }>
                                             <a href="#" data-effect="mfp-zoom-in">
-                                                <img style={ styles.tp_gallery_item_img} src="images/photo-526x360.png" alt="image" />
+                                                <img style={ styles.tp_gallery_item_img } src="images/photo-526x360.png" alt="image" />
                                             </a>
                                         </div>
                                     </div>
 
                                     {/* gallery-item */}
-                                    <div style={ styles.gallery_item_video}>
-                                        <div style={ styles.tp_gallery_item_img}>
+                                    <div style={ styles.gallery_item }>
+                                        <div style={ styles.tp_gallery_item_img }>
                                             <a href="#" data-effect="mfp-zoom-in">
-                                                <img style={ styles.tp_gallery_item_img} src="images/photo-526x360.png" alt="image" />
+                                                <img style={ styles.tp_gallery_item_img } src="images/photo-526x360.png" alt="image" />
                                             </a>
                                         </div>
                                     </div>
                             </div>
+                            
+                            <div>
+                                <h2 style={styles.h2_white_avantage}>Votre avantage avec le Neopass</h2>
+                                <p style={styles.p_avantage}>Lorem ipsum dolor sit amet, consetetur</p>
+                            </div>
 
-                                <div style={ styles.row}>
+                                <div style={ styles.row_card_gallery}>
                                     <div style={styles.information_col_3}>
                                         <div style={{boxSizing:'border-box', outline:'none'}}>
-                                            <p style={{color:'#fff'}}><i className="fa fa-map-marker" />Region</p>
-                                            <h4 style={styles.h4_white}>Ville</h4>
-                                            <h4 style={styles.h4_white}>Durée</h4>
-                                            <div style={{margin:'1rem'}}>
-                                                <a style={{marginRight:'1rem'}} href="#">Tags 1</a>
-                                                <a style={{marginRight:'1rem'}} href="#">Tags 2</a>
-                                                <a style={{marginRight:'1rem'}} href="#">Tags 3</a>
-                                                <a style={{marginRight:'1rem'}} href="#">Tags 4</a>
-                                            </div>
+                                            <h4 style={ styles.h4_white }>Ville</h4>
+                                            <h4 style={ styles.h4_white }>Durée</h4>
                                         </div>
+                                    </div>
+
+                                    <div style={ styles.row_card_button}>
+                                        <Link to={'/'}>
+                                            <RedButton transparent={true} title="Acheter ce Neopass" />
+                                        </Link>
                                     </div>
 
                                     <div style={styles.information_col_3}>
                                         <div>
-                                            <h4 style={styles.h4_white}>Prix</h4>
-                                            <h2>775</h2>
-                                        </div>
+                                            <h4 style={ styles.h4_white }>Le budget</h4>
+                                            <h4 style={ styles.h4_white }>80€</h4>
+                                        </div> 
 
-                                        <ul style={styles.infos_contents}>
-                                            <li className="ml-0"><i className="fa fa-calendar-o" /> info 1</li>
-                                            <li><i className="fa fa-clock-o" /> info 2</li>
-                                            <li><i className="fa fa-users" />info 3</li>
-                                            <li><i className="fa fa-snowflake-o" /> info 4</li>
-                                            <li><i className="fa fa-star" /> info 5</li>
-                                        </ul>
                                     </div>  
                                 </div>
 
                         </div>
-                    </div>
                 </div>
-                <div style={ styles.container}>
-                    <div className="row">
-                    <div className="col-lg-8">
-                        <div className="tour-details-wrap">
-                            <h4 className="single-page-small-title">Write A Review</h4>
-                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
-                            <div className="host-area">
-                                <div className="single-host-wrap text-center">
-                                    <div className="thumb">
-                                        <img src= "" alt="photo partenaire" />
+
+                <div style={ styles.container }>
+                    <div style={ styles.row_flex }>
+                        <div style={ styles.information_col_1 }>
+
+                            <div style={ styles.container }>
+                                <div style={ styles.information_bloc}>
+                                    <h4 style={ styles.h4 }>Description</h4>
+                                    <p style={ styles.p_description }>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
+                                </div>
+                                
+                                <div style={ styles.information_bloc}>
+                                    <div style={ styles.tp_description_item }>
+                                        <div style={ styles.tp_description_item_title }>
+                                            <h4 style={styles.h4_notice }>L'avis de Neofeel</h4>
+                                            <img src= "https://www.neo-feel.com/wp-content/uploads/2020/06/about-240x119.png" alt="logo Neofeel" />
+                                        </div>
+                                        <div>
+                                            <p style={ styles.p_description }>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
+                                        </div>
                                     </div>
-                                    <h4 style={styles.h4}>Nom du partenaire</h4>
-                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
-                                    <a className="btn btn-yellow" href="#">Contacter le partenaire</a>
                                 </div>
-                            </div>
-                        <div className="service-location-map">
-                            <h4 style={styles.h4}>Localisation</h4>
-                            <div className="service-location-map">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d649788.5753409272!2d-0.5724199684037448!3d52.92186340524542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604d94c3b82ab%3A0x62077a554c8e9a8e!2sPetty%20France%2C%20Westminster%2C%20London%2C%20UK!5e0!3m2!1sen!2sbd!4v1572346566908!5m2!1sen!2sbd" />
-                            </div>
-                        </div>
-                        <div className="comments-area tour-details-review-area">
-                            <h4 style={styles.h4}>Commentaires</h4>
-                            <ul className="comment-list mb-0">
-                            <li>
-                                <div className="single-comment-wrap">
-                                <div className="thumb">
-                                    <img src="assets/img/client/2.png" alt="img" />
-                                </div>
-                                <div className="content">
-                                    <h4 style={styles.h4}>Tyler Bailey</h4>
-                                    <span className="date">13 August 2019</span>
-                                    <div className="tp-review-meta">
-                                    <i className="ic-yellow fa fa-star" />
-                                    <i className="ic-yellow fa fa-star" />
-                                    <i className="ic-yellow fa fa-star" />
-                                    <i className="ic-yellow fa fa-star" />
-                                    <i className="ic-yellow fa fa-star" />
+
+                                <div style={ styles.information_bloc}>
+                                    <div style={styles.description_notice}>
+                                        <div>
+                                            <img style={ styles.tp_description_item_img } src= "https://www.neo-feel.com/wp-content/uploads/2020/08/DSC_0569-min.jpg.webp" alt="photo partenaire" />
+                                        </div>
+                                        <div>
+                                            <h4 style={styles.h4}>Le mot du partenaire</h4>
+                                            <p style={ styles.p_description }>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
+                                            <Link to={'/info'}>
+                                                <RedButton transparent={true} title="Contacter le partenaire" />
+                                            </Link>
+                                        </div>
                                     </div>
-                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
                                 </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="single-comment-wrap">
-                                <div className="thumb">
-                                    <img src="assets/img/client/3.png" alt="img" />
-                                </div>
-                                <div className="content">
-                                    <h4 style={styles.h4}>Eliza Jordan</h4>
-                                    <span className="date">17 SEP 2019</span>
-                                    <div className="tp-review-meta">
-                                    <i className="ic-yellow fa fa-star" />
-                                    <i className="ic-yellow fa fa-star" />
-                                    <i className="ic-yellow fa fa-star" />
-                                    <i className="ic-yellow fa fa-star" />
-                                    <i className="ic-yellow fa fa-star" />
+
+                                <div style={ styles.information_bloc}>
+                                    <div style={ styles.tp_description_item }>
+                                        <div style={ styles.tp_description_item_title }>
+                                            <h4 style={styles.h4_notice }>La petite astuce</h4>
+                                        </div>
+                                        <div>
+                                            <p style={ styles.p_description }>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
+                                        </div>
                                     </div>
-                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
                                 </div>
+
+                                <div style={ styles.information_bloc } >
+                                    <h4 style={styles.h4}>Localisation</h4>
+                                    <div>
+                                        <iframe style={ styles.location_map } src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d649788.5753409272!2d-0.5724199684037448!3d52.92186340524542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604d94c3b82ab%3A0x62077a554c8e9a8e!2sPetty%20France%2C%20Westminster%2C%20London%2C%20UK!5e0!3m2!1sen!2sbd!4v1572346566908!5m2!1sen!2sbd" />
+                                    </div>
                                 </div>
-                            </li>
-                            </ul>
-                            <div className="btn-wrapper text-right mt-3">
-                            <a className="btn-read-more" href="#"><span>Plus de commentaires<i className="la la-arrow-right" /></span></a>
+
+                                <div style={ styles.information_bloc}>
+                                    <div style={ styles.tp_description_item }>
+                                        <div style={ styles.tp_description_item_title }>
+                                            <h4 style={styles.h4_notice }>Infos</h4>
+                                        </div>
+                                        <div>
+                                            <p style={ styles.p_description }>Adresses:<span> 4 rue Neofeel 77000 La ferte sous jouarre</span></p>
+                                            <p style={ styles.p_description }>Site internet:<span> www.neo-feel.com</span></p>
+                                            <p style={ styles.p_description }>Page facebook:<span> facebook:link</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div style={ styles.information_bloc }>
+                                    <h4 style={styles.h4}>Commentaires</h4>
+                                    <ul style={ styles.comments_bloc }>
+                                        <li>
+                                            <div style={ styles.comments_bloc_li }>
+                                                <div style={ styles.comments_img } >
+                                                    <img style={ styles.tp_comments_img } src="images/avatar.png" alt="img" />
+                                                </div>
+                                                <div className="content">
+                                                    <h4 style={styles.h4}>Emerson</h4>
+                                                    <span className="date">13 August 2019</span>
+                                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div style={ styles.comments_bloc_li }>
+                                                <div style={ styles.comments_img } >
+                                                    <img style={ styles.tp_comments_img } src="images/avatar.png" alt="img" />
+                                                </div>
+                                                <div className="content">
+                                                    <h4 style={styles.h4}>Anais</h4>
+                                                    <span className="date">13 August 2019</span>
+                                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                    <div>
+                                        <a href="#"><span>Plus de commentaires<i/></span></a>
+                                    </div>
+
+                                </div>
+
+                                <div style={ styles.information_bloc }>
+                                    <form style={ styles.tp_comments_form }>
+                                        <div>
+                                            <div style={ styles.tp_comments_form_label }>
+                                                <h4 style={ styles.h4 }>Ecrire un commentaire</h4>
+                                            </div>
+
+                                            <div>
+                                                <label style={ styles.tp_comments_form_label }>
+                                                    <span>Nom:</span>
+                                                    <input style={ styles.tp_comments_form_input } type="text" />
+                                                </label>
+                                            </div>
+
+                                            <div>
+                                                <label style={ styles.tp_comments_form_label }>
+                                                    <span>Email:</span>
+                                                    <input style={ styles.tp_comments_form_input } type="text" />
+                                                </label>
+                                            </div>
+
+                                            <div>
+                                                <label style={ styles.tp_comments_form_label }>
+                                                    <span>Commentaire:</span>
+                                                    <textarea style={ styles.tp_comments_form_input }  defaultValue={""} />
+                                                </label>
+                                            </div>
+
+                                            <div style={ styles.tp_comments_form_label }>
+                                                <Link to={'/'}>
+                                                    <RedButton transparent={true} title="Envoyer" />
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+
                             </div>
                         </div>
-                        <div className="location-review-area">
-                            <form className="tp-form-wrap bg-gray tp-form-wrap-one">
-                            <div className="row">
-                                <div className="col-lg-6"><h4 className="single-page-small-title">Ecrire un commentaire</h4></div>
-                                <div className="col-lg-6">
-                                <div className="tp-review-meta text-lg-right">
-                                    <span className="mr-3 ml-0">Vote</span>
-                                    <i className="fa fa-star" />
-                                    <i className="fa fa-star" />
-                                    <i className="fa fa-star" />
-                                    <i className="fa fa-star" />
-                                    <i className="fa fa-star" />
-                                </div>
-                                </div>
-                                <div className="col-lg-6">
-                                <label className="single-input-wrap">
-                                    <span className="single-input-title">Nom</span>
-                                    <input type="text" />
-                                </label>
-                                </div>
-                                <div className="col-lg-6">
-                                <label className="single-input-wrap">
-                                    <span className="single-input-title">Email</span>
-                                    <input type="text" />
-                                </label>
-                                </div>
-                                <div className="col-lg-12">
-                                <label className="single-input-wrap">
-                                    <span className="single-input-title">Commentaire</span>
-                                    <textarea defaultValue={""} />
-                                </label>
-                                </div>
-                                <div className="col-12">
-                                <a className="btn btn-yellow" href="#">Envoyé</a>
-                                </div>
-                            </div>
-                            </form>
-                        </div>
-                        </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -203,33 +268,82 @@ const ScreenPartner = () => {
 
 
     let styles = {
-        // CSS -  //
+        // ARCHITECTURE //
+
+        container_all:{
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop:'1rem',
+            width: '100%',
+            paddingRight: '1.5rem',
+            paddingLeft: '1.5rem',
+            marginRight: 'auto',
+            marginLeft: 'auto',
+            marginTop:'-200px'
+        },
     
         container:{
-            marginTop:'2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop:'1rem',
+            width: '100%',
+            paddingRight: '1.5rem',
+            paddingLeft: '1.5rem',
+            marginRight: 'auto',
+            marginLeft: 'auto',
         },
 
         row:{
             display:"grid",
-            gridTemplateColumns: 'repeat(2, 1fr)',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+        },
 
-            // display:'flex',
-            // flexDirection:'column',
-            // flewWrap:'wrap',
-            // marginRight:'-15px',
-            // marginLeft:'-15px',
+        row_card_gallery:{
+            display:"grid",
+            gridTemplateColumns: 'repeat(3, 1fr)',
+        },
+
+        row_flex:{
+            display:"grid",
+            gridTemplateColumns: 'repeat(1, 1fr)',
+            paddingTop:'1rem',
         },
 
         information_col_3:{
             position: 'relative',
             width: '100%',
-            minHeight: '1px',
-            paddingRight: '15px',
-            paddingLeft: '15px',
-        },  
+            minHeight: '0.1rem',
+            paddingRight: '1.5rem',
+            paddingLeft: '1.5rem',
+            textAlign:'center',
+        },
+
+        information_col_1:{
+            position: 'relative',
+            alignItem: 'center',
+            width: '70%',
+            minHeight: '0.1rem',
+            paddingRight: '1.5rem',
+            paddingLeft: '1.5rem',
+            margin: 'auto',
+        },
+
+        information_bloc:{
+            paddingTop:'1.5rem',
+            paddingBottom:'1.5rem',
+        },
+
         
         
-        // CARD - TITLE//
+        // TITLE //
+
+        h2_white_avantage:{
+            fontWeight:'bold',
+            fontSize: '28px',
+            color: '#fff',
+            textDecoration: 'none',
+            textAlign:'center',
+        },
 
         h3_white:{
             fontWeight:'bold',
@@ -252,25 +366,68 @@ const ScreenPartner = () => {
         },
 
         h4:{
+            fontWeight:'bold',
             fontSize: '20px',
             color: '#106271',
             textDecoration: 'none',
         },
-    
-        gallery:{
-            // background:'#006271',
-            padding:'3rem',
+
+        h4_notice:{
+            fontWeight:'bold',
+            fontSize: '20px',
+            color: '#106271',
+            textDecoration: 'none',
+            verticalAlign: 'middle',       
         },
+
+        tags_title:{
+            margin:'1rem',
+            textAlign:'right',
+        },
+
+        p_avantage:{
+            fontWeight:'bold',
+            fontSize: '16px',
+            color: '#fff',
+            textAlign:'center',
+            borderBottom: '1px solid #FFF',
+            marginBottom:'1rem',
+            paddingBottom: '1rem'
+        },
+
+        p_description:{
+            fontSize: '16px',
+            textAlign:'justify',
+            borderBottom: '1px solid #FFF',
+            paddingBottom:'1rem',
+            marginBottom:'0',
+        },
+
+
     
+
+        // GALLERIE //
+
+        banniere_img:{
+            position: 'relative',
+            marginBottom:'0.24rem',
+            width: '100%',
+            maxHeight: '600px',
+            objectFit: 'cover',
+        },
+
+        gallery_item:{
+            padding: '1rem',
+        },
+
         gallery_container:{
-            margin:'0px 40px',
+            margin:'0 40px',
             padding:'2rem 2rem 0',
             boxSadow:'1px 0px 45px #fff',
             borderRadius:'25px',
             zIndex:'1',
             position:'relative',
             background:'#006271',
-
         },  
         
         gallery_area:{
@@ -280,40 +437,140 @@ const ScreenPartner = () => {
 
         gallery_item_img:{
             position: 'relative',
-            marginBottom:'30px',
-            // maxWidth:'100px',
-            width: '150px',
-            height: '150px',
+            marginBottom:'0.24rem',
+            width: '50%',
+            height: '50%',
             objectFit: 'cover',
         },
 
         tp_gallery_item_img:{
             position: 'relative',
-            marginBottom: '30px',
+            marginBottom: '0.24rem',
             width: '100%',
-            height: '50%%',
             objectFit: 'cover',
         },
 
-        // gallery_item_thumbnails:{
-        //     boxSizing:'border-box',
-        //     outline:'none',
-        // },
-
-        gallery_item_video:{
-            padding: '1rem',
-        },
-
         infos_contents:{
-            paddingTop: '24px',
+            paddingTop: '0.30rem',
             orderTop: '1px solid #CFD3DE',
         },
 
+        row_card_button:{
+            textAlign: 'center',
+        },
 
+        // GALLERIE -> INFORMATIONS //
 
+        gallery_tags_li:{
+            background: '#e06868',
+            padding: '0 0.28rem 0 0.28rem',
+            height: '1rem',
+            lineHeight: '1rem',
+            color: '#ffffff',
+            fontSize: '1rem',
+            bordeeRadius: '0.08rem',
+            marginRight: '0.24rem',
+            display: 'inline-block',
+            marginTop: '0.2rem',
+        },
 
+        // DESCRIPTION //
+
+        description_notice:{
+            boxShadow: '0px 3px 27px #23397417',
+            borderRadius: '10px',
+            padding: '2rem',
+            textAlign: 'center',
+            margin: '1rem',
+        },
+
+        tp_description_item_img:{
+            position: 'relative',
+            marginBottom: '0.24rem',
+            width: '50%',
+            borderRadius: '80%',
+            objectFit: 'contain',
+            margin:'auto',
+        },
+
+        tp_description_item_title:{
+            display:"grid",
+            gridTemplateColumns: 'repeat(1, 1fr)',
+            marginBottom:'1rem',
+        },
     
-    
+        // DESCRIPTION //
+
+        location_map:{
+            height: '40rem',
+            width: '100%',
+            border: '0',
+        },
+
+
+
+        // COMMENTAIRES//
+
+        comments_bloc:{
+            margin: '0',
+            padding: '0',
+            listStyle: 'none',
+            listStyleType: 'none',
+        },
+
+        comments_bloc_li:{
+            display: 'flex',
+            alignSelf: 'flex-start',
+            border: '1px solid #CFD3DE',
+            borderRadius: '1rem',
+            padding: '2rem',
+            boxShadow: '0px 3px 27px #23397417',
+            margin:'.5rem'
+        },
+
+        comments_img:{
+            marginRight: '3rem',
+            height: '6rem',
+            width: '6rem',
+            borderRadius: '80%',
+            border: '.2rem solid #e06868 ',
+            
+        },
+
+        tp_comments_img:{
+            width: '5rem',
+            padding: '.5rem'
+        },
+
+        tp_comments_form:{
+            padding: '30px 40px 40px',
+            borderRadius: '1rem',
+            background: '#F8F8F8',
+            display:"grid",
+            gridTemplateColumns: 'repeat(1, 1fr)',
+
+        },
+
+        tp_comments_form_label:{
+            position: 'relative',
+            display:"grid",
+            gridTemplateColumns: '1fr 2fr',
+            width: '100%',
+            minHeight: '1px',
+            paddingRight: '15px',
+            paddingLeft: '15px',
+            margin:'1rem',
+        },
+
+        tp_comments_form_input: {
+            background: '#ffffff',
+            border: '.1rem solid #EAEAEA',
+            height: '5.2rem',
+            width: '100%',
+            padding: '0 1.8rem',
+            borderRadius: '.4rem',
+            color: '#e06868',       
+        },
     };
 
 

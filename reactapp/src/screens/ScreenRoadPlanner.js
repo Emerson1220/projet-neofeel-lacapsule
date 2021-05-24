@@ -79,29 +79,6 @@ function ScreenRoadPlanner(props) {
                                 <button style={{backgroundColor:'#106271'}}>Achetez votre Neopass</button>
                             </div>
 
-
-                                <div style={ styles.row_filters }>
-                                    <div style={ styles.col_xl_3 }>
-                                        <label style={ styles.single_input_wrap }>
-                                            <i style={ styles.icons_la }/> 
-                                            <input style={ styles.single_input_wrap_input } type="text" placeholder="Filtre 1" />
-                                        </label>
-                                    </div>
-
-                                    <div style={ styles.col_xl_3 }>
-                                        <label style={ styles.single_input_wrap }>
-                                            <i style={ styles.icons_la }/> 
-                                            <input style={ styles.single_input_wrap_input } type="text" placeholder="Filtre 2" />
-                                        </label>
-                                    </div>
-
-                                    <div style={ styles.col_xl_3 }>
-                                        <label style={ styles.single_input_wrap }>
-                                            <i style={ styles.icons_la }/> 
-                                            <input style={ styles.single_input_wrap_input } type="text" placeholder="Filtre 3" />
-                                        </label>
-                                    </div>
-                                </div>
                             </div> 
                             
                             <div style={ styles.experiences_list_area }> 
@@ -111,18 +88,6 @@ function ScreenRoadPlanner(props) {
                                 
                             </div>
 
-                            <div style={ styles.text_align_center}>
-                                <div style={ styles.pagination }>
-                                    <ul style={ styles.pagination_ul}>
-                                        <li><a style={ styles.pagination_li } href=""><i/></a></li>
-                                        <li><a style={ styles.pagination_li } href="">1</a></li>
-                                        <li><a style={ styles.pagination_li } href="">2</a></li>
-                                        <li><a style={ styles.pagination_li } href="">3</a></li>
-                                        <li><a style={ styles.pagination_li } href="">4</a></li>
-                                        <li><a style={ styles.pagination_li } href=""><i/></a></li>
-                                    </ul>                          
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

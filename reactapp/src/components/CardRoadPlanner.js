@@ -26,24 +26,34 @@ function CardRoadPlanner(props) {
     }
 
     var pictos = props.tags.map((image, j) => {
-        return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
+        return (<img key={j} style={styles.liste_pictos} src={`images/pictos/${image}-8.png`} alt={image} />)
     })
 
 
 
     return ( 
         <div style={ styles.single_destinations}>
-            <div style={ styles.image_card }>
-                <img style={ styles.image } src={props.imageBannerUrl} alt="list" />
-            </div>
-            <div style={ styles.detail_card }>
-                <div>
-                    <h3><Link style={ styles.h3 } to="/">{props.subtitle}</Link></h3>
-                    <h4><Link style={ styles.h4 } to="/">{props.name}</Link></h4>
+
+            <div style={ styles.card_banniere }>
+                <div style={ styles.image_card }>
+                    <img style={ styles.image } src={props.imageBannerUrl} alt="list" />
                 </div>
                 <div style={{ padding: '2rem' }}>
                     <p style={{ color: '#e06868', marginToop: '2rem'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />{props.region}</p>
                     <h4 ><Link style={ styles.h4 }  to="/">{props.city}</Link></h4>
+                    <div style={styles.liste_pictos}>
+                        {pictos}
+                    </div> 
+
+                </div>
+
+
+            </div>
+
+            <div style={ styles.detail_card }>
+                <div>
+                    <h3><Link style={ styles.h3 } to="/">{props.subtitle}</Link></h3>
+                    <h4><Link style={ styles.h4 } to="/">{props.name}</Link></h4>
                 </div>
                 <div style={styles.liste_price}>
                     <div style={styles.liste_price_item}>
@@ -55,13 +65,6 @@ function CardRoadPlanner(props) {
                         <h4>{props.budget}</h4>
                     </div>
                 </div> 
-                <div style={styles.liste_price}>
-                            {pictos}
-                </div> 
-
-
-
-                
             </div>
         </div> 
                                 
@@ -69,6 +72,55 @@ function CardRoadPlanner(props) {
 };
 
 let styles = {
+
+    single_destinations:{
+        // display: 'flex',
+        flexWrap: 'wrap',
+        margin: '0 0 30px 0',
+        border: '1px solid #CFD3DE',
+        boxShadow: '0px 3px 9px #071c551f',
+        borderRadius: '7px',
+        position: 'relative',
+        // overflow: 'hidden',
+        margin: '.5rem',
+        maxHeight: '400px'
+    },
+
+
+    card_banniere:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',        
+    },
+
+    image_card:{
+        position: 'relative',
+        background: '#fff',
+        overflow: 'hidden',
+        flex: '0 0 30%',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+        mHeight: '400px',
+        borderRadius: '5px',
+    },
+
+    liste_pictos:{
+        width: '40%',
+        display: 'flex',
+        flexWrap: 'nowrap',
+        // padding: '1rem',
+    },
+
+    detail_card:{
+        display: 'grid',
+        gridTemplateColumns: '2fr 1fr',        
+        flex: '0 0 70%',
+        padding: '22px 15px',
+        background: '#ffffff',
+    },
+
+
+
 
     // CSS - ICONS //
 
@@ -78,7 +130,7 @@ let styles = {
         top: '17px',
         left: '20px',
         color: '#CFD3DE',
-        font: 'normal normal normal 16px/1 LineAwesome',
+        font: 'normal 16px/1 LineAwesome',
         fontSize: 'inherit',
         textDecoration: 'inherit',
         textRendering: 'optimizeLegibility',
@@ -112,46 +164,19 @@ let styles = {
 
     },
 
-    single_destinations:{
-        display: 'flex',
-        flexWrap: 'wrap',
-        border: '1px solid #CFD3DE',
-        boxShadow: '0px 3px 9px #071c551f',
-        borderRadius: '7px',
-        position: 'relative',
-        overflow: 'hidden',
-        margin: '.5rem',
-        maxHeight: '400px'
-    },
 
-    image_card:{
-        position: 'relative',
-        background: '#fff',
-        overflow: 'hidden',
-        flex: '0 0 30%',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center center',
-        minHeight: '200px',
-        borderRadius: '5px',
-    },
+
+
 
     image:{
         width: '100%',
         height: '100%',
-        // objectFit: 'cover',
         objectFit: 'contains',
         objectPosition: 'center center',
         borderRadius: '5px',
     },
 
-    detail_card:{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',        
-        flex: '0 0 70%',
-        padding: '22px 15px',
-        background: '#ffffff',
-    },
+
 
     card_content:{
         marginBottom: '15px',
@@ -165,6 +190,8 @@ let styles = {
         boxSizing: 'border-box',
         outline: 'none',
     },
+
+
 
     liste_price_li:{
         margin: '0 10px',

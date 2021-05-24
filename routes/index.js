@@ -47,28 +47,24 @@ router.post('/searchregions', async function(req, res, next) {
 //filtrer voyages par type
 router.post('/searchtrips', async function(req, res, next) {
     try {
-        let activities = JSON.parse(req.body.activities);
+        let activities = req.body.activities;
         let roadtrips = [];
         for (let i=0 ; i<activities.length ; i++) {
             let response = await Roadtrip.find({ tags: activities[i] })
             .populate({
-                path: 'roadtrips',
+                path: 'days',
                 populate: {
-                    path: 'days.experiences',
-                    model: 'experiences'
-                }
-            })
-            .populate({
-                path: 'roadtrips.days.experiences',
-                populate: {
-                    path: 'partner',
-                    model: 'users'
+                    path: 'experiences',
+                    model: 'experiences',
+                    populate: {
+                        path: 'partner',
+                        model: 'users'
+                    }
                 }
             })
             .exec();
             roadtrips = roadtrips.concat(response);
         }
-        console.log(roadtrips)
         res.json({ result: true, roadtrips: roadtrips })
     } catch (err) {
         console.log(err)
@@ -96,17 +92,14 @@ router.get('/roadtrips', async function(req, res, next) {
     try {
         let roadtrips = await Roadtrip.find()
         .populate({
-            path: 'roadtrips',
+            path: 'days',
             populate: {
-                path: 'days.experiences',
-                model: 'experiences'
-            }
-        })
-        .populate({
-            path: 'roadtrips.days.experiences',
-            populate: {
-                path: 'partner',
-                model: 'users'
+                path: 'experiences',
+                model: 'experiences',
+                populate: {
+                    path: 'partner',
+                    model: 'users'
+                }
             }
         })
         .exec();
@@ -121,18 +114,19 @@ router.get('/roadtrips', async function(req, res, next) {
 router.get('/roadtrips/:token', async function(req, res, next) {
     try {
         let user = await User.findOne({ token: req.params.token })
+        .populate('roadtrips')
         .populate({
             path: 'roadtrips',
             populate: {
-                path: 'days.experiences',
-                model: 'experiences'
-            }
-        })
-        .populate({
-            path: 'roadtrips.days.experiences',
-            populate: {
-                path: 'partner',
-                model: 'users'
+                path: 'days',
+                populate: {
+                    path: 'experiences',
+                    model: 'experiences',
+                    populate: {
+                        path: 'partner',
+                        model: 'users'
+                    }
+                }
             }
         })
         .exec();
@@ -151,17 +145,14 @@ router.put('/myroadplanner', async function(req, res, next) {
     try {
         let roadtrip = await Roadtrip.findById(req.body.roadtripID)
         .populate({
-            path: 'roadtrips',
+            path: 'days',
             populate: {
-                path: 'days.experiences',
-                model: 'experiences'
-            }
-        })
-        .populate({
-            path: 'roadtrips.days.experiences',
-            populate: {
-                path: 'partner',
-                model: 'users'
+                path: 'experiences',
+                model: 'experiences',
+                populate: {
+                    path: 'partner',
+                    model: 'users'
+                }
             }
         })
         .exec();
@@ -181,6 +172,7 @@ router.put('/myroadplanner', async function(req, res, next) {
 router.delete('/myroadplanner/:roadtripID/:experienceID', async function(req, res, next) {
     try {
         let roadplanner = await Roadtrip.findById(req.params.roadtripID)
+        .populate('roadtrips')
         .populate({
             path: 'roadtrips',
             populate: {

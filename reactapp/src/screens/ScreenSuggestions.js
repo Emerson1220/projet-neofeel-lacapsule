@@ -123,7 +123,7 @@ const ScreenSuggestions = (props) => {
 
                     </Card>
                 </div>
-            </div >
+            </div>
         </div>
 
     )
