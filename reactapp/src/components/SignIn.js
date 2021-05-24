@@ -11,8 +11,8 @@ import { connect } from 'react-redux';
 import Cookie from 'universal-cookie';
 
 // //PLUGINS
-// import FacebookLogin from 'react-facebook-login';
-// import GoogleLogin from 'react-google-login'
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login'
 
 const SignIn = (props) => {
     //STATE HOOKS
@@ -45,31 +45,31 @@ const SignIn = (props) => {
     };
 
     //Facebook/Google logins
-    // const responseFacebook = async(res) => {
-    //     let rawResponse = await fetch(`/users/auth/facebook/signin/${res.accessToken}`);
-    //     let response = await rawResponse.json();
-    //     if (response.result === true) {
-    //         props.stayLogged(response.user)
-    //         if (isChecked) {
-    //             cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
-    //         }
-    //     } else {
-    //         setError(response.message);
-    //     }
-    // }
+    const responseFacebook = async(res) => {
+        let rawResponse = await fetch(`/users/auth/facebook/signin/${res.accessToken}`);
+        let response = await rawResponse.json();
+        if (response.result === true) {
+            props.stayLogged(response.user)
+            if (isChecked) {
+                cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
+            }
+        } else {
+            setError(response.message);
+        }
+    }
 
-    // const responseGoogle = async (res) => {
-    //     let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
-    //     let response = await rawResponse.json();
-    //     if (response.result === true) {
-    //         props.stayLogged(response.user)
-    //         if (isChecked) {
-    //             cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
-    //         }
-    //     } else {
-    //         setError(response.message)
-    //     }
-    // }
+    const responseGoogle = async (res) => {
+        let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
+        let response = await rawResponse.json();
+        if (response.result === true) {
+            props.stayLogged(response.user)
+            if (isChecked) {
+                cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
+            }
+        } else {
+            setError(response.message)
+        }
+    }
 
     return (
         <div style={ styles.container }>
@@ -98,7 +98,7 @@ const SignIn = (props) => {
                 <Divider style={ styles.divider }>OU</Divider>
             </div>
             <div style={ styles.buttonContainer }>
-                    {/* <FacebookLogin
+                    <FacebookLogin
                     appId='509585980227274'
                     fields="name, email, picture"
                     textButton="Se connecter avec Facebook"
@@ -114,7 +114,7 @@ const SignIn = (props) => {
                     onSuccess={ responseGoogle }
                     onFailure={ responseGoogle }
                     cookiePolicy={ 'single_host_origin' }
-                    /> */}
+                    />
             </div>
         </div>
     )

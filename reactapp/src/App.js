@@ -43,7 +43,7 @@ function App() {
             <Route component={ ScreenLogin } path="/connexion"  />
             <Route component={ ScreenSearch } path="/recherche"  />                    
             <Route component={ ScreenInfo } path="/info"  />
-            <Route component={ ScreenPartner } path="/partenaire"  />
+            <Route component={ ScreenPartner } path="/partenaire/:experienceID"  />
             <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
             <Route component={ ScreenProfile } path="/profil"  />
             <Route component={ ScreenBasket } path="/panier"  />
