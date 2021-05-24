@@ -100,7 +100,7 @@ const ScreenSuggestions = () => {
 
                     </Card>
                 </div>
-            </div >
+            </div>
         </div>
 
     )
