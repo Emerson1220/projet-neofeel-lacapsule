@@ -228,7 +228,7 @@ router.get('/myroadplanner/:token', async function(req, res, next) {
 //ajouter un voyage à la liste perso
 router.post('/addtrip', async function(req, res, next) {
     try {
-        let data = JSON.parse(req.body.data);
+        let data = req.body;
         let user = await User.findOne({ token: data.token });
         user.roadtrips.push(data.roadtripID);
 

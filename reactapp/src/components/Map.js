@@ -207,7 +207,7 @@ const createNewTrip = async (experience) => {
             <div className="google-map">
                 <GoogleMapReact
                     bootstrapURLKeys={{ 
-                        key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s'}}
+                        key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s' }}
                     defaultZoom={9}
                     defaultCenter={ location }
                 >

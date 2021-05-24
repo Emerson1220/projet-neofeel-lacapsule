@@ -68,7 +68,7 @@ router.post('/signin', async function(req, res, next) {
       }
     })
     .exec();
-
+    console.log(user)
     if (!user) {
       throw 'email invalid'
     } 

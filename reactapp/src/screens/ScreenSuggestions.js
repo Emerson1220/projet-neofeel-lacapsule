@@ -38,8 +38,21 @@ const ScreenSuggestions = (props) => {
         console.log({ response: response }, 'kkkkkkkkkkkkk')
         props.loadSuggestions(response.roadtrips);
     }
-    //DISPLAY MANAGEMENT
-    const button = <RedButton onSelect={()=>{}} title='Ajouter ce voyage'></RedButton>
+
+    const addTrip = async(suggestion) => {
+        if (props.user.token) {
+            let rawResponse = await fetch('/addtrip', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `token=${props.user.token}&roadtripID=${suggestion._id}`
+            });
+            let response = await rawResponse.json();
+            console.log(response)
+            if(response.result === true) {
+                props.saveSuggestion(suggestion)
+            }
+        }
+    }
 
 
     /* Map sur suggestions List _____________*/
@@ -48,6 +61,7 @@ const ScreenSuggestions = (props) => {
     if (props.suggestions) {
 
         SuggestionList = props.suggestions.map((suggestion, i) => {
+            const button = <RedButton onSelect={ ()=>addTrip(suggestion) } title='Ajouter ce voyage'></RedButton>
             var total = 0;
             var pictos = suggestion.tags.map((image, j) => {
                 return (<img key={j} src={`/images/pictos/${image}-8.png`} alt={image} />)
@@ -57,7 +71,7 @@ const ScreenSuggestions = (props) => {
                 var dayExperienceList = day.experiences.map((experience, l) => {
                     /* experience */
                     total = (total + experience.advantageAmount)
-                    return (<Panel key={l} header={experience.name} key="1" style={{}}>
+                    return (<Panel key={l} header={experience.name} style={{}}>
                         <div style={{ width: '1100px' }}>
                             <p style={{ maxWidth: '1000px' }}>{experience.description.content.split('<br/>')[0]}</p>
                             <div style={{ maxWidth: '1200px', display: 'flex', justifyContent: 'center', alignItems: 'flex-end', color: 'red', flexDirection: 'column', }}>
@@ -117,8 +131,11 @@ const ScreenSuggestions = (props) => {
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadSuggestions: function (roadtrips) {
+        loadSuggestions: function(roadtrips) {
             dispatch({ type: 'loadSuggestions', suggestions: roadtrips })
+        },
+        saveSuggestion: function(suggestion) {
+            dispatch({ type: 'saveSuggestion', suggestion: suggestion })
         }
     }
 }
@@ -126,7 +143,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     console.log({ state: state })
     return {
-        roadtrips: state.roadtrips, activities: state.activities, suggestions: state.suggestions
+        roadtrips: state.roadtrips, activities: state.activities, suggestions: state.suggestions, user: state.user
     }
 }
 
