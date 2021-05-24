@@ -4,8 +4,8 @@ import '../styles/googleMap.css';
 import { Link } from 'react-router-dom';
 
 //MAP
-// import GoogleMapReact from 'google-map-react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
+import GoogleMapReact from 'google-map-react';
+
 //REDUX
 import { connect } from 'react-redux';
 
@@ -139,8 +139,26 @@ const createNewTrip = async (experience) => {
         </div>
             <div style={styles.detail_title_location}>
                 <div>
-                    <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
-                    <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
+                    <Link
+                    style={styles.h3}
+                    to={{
+                        pathname: `/partenaire/${experience._id}`,
+                        state: {
+                            experience: experience
+                        }
+                    }}>
+                        <h3>{experience.name}</h3>
+                    </Link>
+                    <Link
+                    style={styles.h4}
+                    to={{
+                        pathname: `/partenaire/${experience._id}`,
+                        state: {
+                            experience: experience
+                        }
+                    }}>
+                        <h4>{experience.subtitle}</h4>
+                    </Link>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
                     <p style={{ color: '#e06868', marginBottom: '8px' }}>
@@ -174,63 +192,45 @@ const createNewTrip = async (experience) => {
     </div>
     }
 
-    // const LocationPin = (props) => (
-    //     <div className="pin" onClick={() => props.onSelect()}>
-    //         <FontAwesomeIcon icon={faMapMarker} className="pin-icon" />
-    //         <p className="pin-text">{ props.text }</p>
-    //     </div>
-    // );
+    const LocationPin = (props) => (
+        <div className="pin" onClick={() => props.onSelect()}>
+            <FontAwesomeIcon icon={faMapMarker} className="pin-icon" />
+            <p className="pin-text">{ props.text }</p>
+        </div>
+    );
 
-    // var ExperienceListingMap = [];
-    // if (props.experiences) {
+    var ExperienceListingMap = [];
+    if (props.experiences) {
 
-    //     ExperienceListingMap = props.experiences.map((experience, i) => {
-    //         return (
-    //             <LocationPin
-    //                 key={i}
-    //                 onSelect={() => showModal(experience)}
-    //                 lat={experience.coordinate.latitude}
-    //                 lng={experience.coordinate.longitude}
-    //             />
+        ExperienceListingMap = props.experiences.map((experience, i) => {
+            return (
+                <LocationPin
+                    key={i}
+                    onSelect={() => showModal(experience)}
+                    lat={experience.coordinate.latitude}
+                    lng={experience.coordinate.longitude}
+                />
 
-    //         )
-    //     })
-    // }
-
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s'
-    })
+            )
+        })
+    }
 
     let center = {
         lat: 48.10707,
         lng: 7.21825
     }
 
-    const onLoad = useCallback(function callback(map) {
-        const bounds = new window.google.maps.LatLngBounds();
-        map.fitBounds(bounds);
-        setMap(map)
-    }, [])
-
-    const onUnmount = useCallback(function callback(map) {
-        setMap(null)
-    }, [])
-
-    let googleMap = isLoaded ? 
-        <GoogleMap
-        center={ center }
-        zoom={ 10 }
-        onLoad={ onLoad }
-        onUnmount={ onUnmount }
-        mapContainerStyle={{ width: '1400px', height: '700px' }}>
-        </GoogleMap>
-        : <></> ;
-
     return (
         <div className="map">
             <div className="google-map">
-                { googleMap }
+                <GoogleMapReact
+                    bootstrapURLKeys={{ 
+                        key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s' }}
+                    defaultZoom={9}
+                    defaultCenter={ center }
+                >
+                    {ExperienceListingMap}
+                </GoogleMapReact>
             </div>
             <Modal
                 title=''

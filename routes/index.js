@@ -90,7 +90,7 @@ router.get('/activities', async function(req, res, next) {
 //get suggestions Neofeel
 router.get('/roadtrips', async function(req, res, next) {
     try {
-        let roadtrips = await Roadtrip.find()
+        let roadtrips = await Roadtrip.find({ type: 'admin' })
         .populate({
             path: 'days',
             populate: {
@@ -218,18 +218,34 @@ router.get('/myroadplanner/:token', async function(req, res, next) {
         }
     })
     .exec();
+    console.log({user: user})
     let current = user.roadtrips.sort((a, b) => {
         return a.creationDate - b.creationDate
     })[0];
-    console.log(current)
+    console.log({current: current})
     res.json({ result: true, currentRoadtrip: current })
+})
+
+//ajouter un voyage à la liste perso
+router.post('/addtrip', async function(req, res, next) {
+    try {
+        let data = req.body;
+        let user = await User.findOne({ token: data.token });
+        user.roadtrips.push(data.roadtripID);
+
+        let userSave = await user.save();
+        res.json({ result: true, user: userSave })
+    } catch(err) {
+        console.log(err)
+        res.json({ result: false })
+    }
 })
 
 //Sauvegarder le road planner
 //Body: user token, trip name, trip region, trip region code
 //Response: result (true)
 router.post('/myroadplanner', async function(req, res, next) {
-   try {
+    try {
         let data = req.body;
         let experience = await Experience.findById(data.experienceID)
         .populate('partner')

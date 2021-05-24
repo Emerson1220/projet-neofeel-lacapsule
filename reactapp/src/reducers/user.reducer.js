@@ -8,6 +8,10 @@ export default function(user = {}, action) {
         let temp = { ...user };
         temp.roadtrips.push(action.roadtrip);
         return temp;
+    } else if (action.type === 'saveSuggestion') {
+        let temp = { ...user };
+        temp.roadtrips.push(action.suggestion);
+        return temp;
     } else {
         return user;
     }

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 //COOKIE MANAGEMENT
 import Cookie from 'universal-cookie';
 
-//PLUGINS
+// //PLUGINS
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login'
 

@@ -59,6 +59,7 @@ router.post('/signup', async function(req, res, next) {
 router.post('/signin', async function(req, res, next) {
   try {
     let user = await User.findOne({ email: req.body.email })
+    .populate('roadtrips')
     .populate({
       path: 'roadtrips',
       populate: {
@@ -67,7 +68,7 @@ router.post('/signin', async function(req, res, next) {
       }
     })
     .exec();
-
+    console.log(user)
     if (!user) {
       throw 'email invalid'
     } 
@@ -99,6 +100,7 @@ router.post('/signin', async function(req, res, next) {
 router.post('/staylogged', async function(req, res, next) {
   try {
     let user = await User.findOne({ token: req.body.token })
+    .populate('roadtrips')
     .populate({
       path: 'roadtrips',
       populate: {
