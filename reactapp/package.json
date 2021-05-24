@@ -6,6 +6,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
+    "@react-google-maps/api": "^2.2.0",
     "@stripe/react-stripe-js": "^1.4.1",
     "@stripe/stripe-js": "^1.15.0",
     "@svg-maps/france.departments": "^1.0.1",

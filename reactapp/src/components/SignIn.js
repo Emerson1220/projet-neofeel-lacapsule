@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 //COOKIE MANAGEMENT
 import Cookie from 'universal-cookie';
 
-//PLUGINS
+// //PLUGINS
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login'
 
@@ -35,6 +35,7 @@ const SignIn = (props) => {
         let response = await rawResponse.json();
         if (response.result === true) {
             props.stayLogged(response.user)
+            props.loadRoadplanner(response.currentRoadtrip)
             if (isChecked) {
                 cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
             }
@@ -44,32 +45,31 @@ const SignIn = (props) => {
     };
 
     //Facebook/Google logins
-    const responseFacebook = async(res) => {
-        let rawResponse = await fetch(`/users/auth/facebook/signin/${res.accessToken}`);
-        let response = await rawResponse.json();
-        if (response.result === true) {
-            // props.onSigninClick(response.user.token);
-            props.stayLogged(response.user)
-            if (isChecked) {
-                cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
-            }
-        } else {
-            setError(response.message);
-        }
-    }
+    // const responseFacebook = async(res) => {
+    //     let rawResponse = await fetch(`/users/auth/facebook/signin/${res.accessToken}`);
+    //     let response = await rawResponse.json();
+    //     if (response.result === true) {
+    //         props.stayLogged(response.user)
+    //         if (isChecked) {
+    //             cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
+    //         }
+    //     } else {
+    //         setError(response.message);
+    //     }
+    // }
 
-    const responseGoogle = async (res) => {
-        let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
-        let response = await rawResponse.json();
-        if (response.result === true) {
-            props.stayLogged(response.user)
-            if (isChecked) {
-                cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
-            }
-        } else {
-            setError(response.message)
-        }
-    }
+    // const responseGoogle = async (res) => {
+    //     let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
+    //     let response = await rawResponse.json();
+    //     if (response.result === true) {
+    //         props.stayLogged(response.user)
+    //         if (isChecked) {
+    //             cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
+    //         }
+    //     } else {
+    //         setError(response.message)
+    //     }
+    // }
 
     return (
         <div style={ styles.container }>
@@ -99,21 +99,21 @@ const SignIn = (props) => {
             </div>
             <div style={ styles.buttonContainer }>
                     <FacebookLogin
-                    appId='509585980227274'
-                    fields="name, email, picture"
+                    // appId='509585980227274'
+                    // fields="name, email, picture"
                     textButton="Se connecter avec Facebook"
-                    callback={ responseFacebook }
-                    language="fr-FR"
-                    size="small"
-                    icon="fa-facebook"
-                    className="facebook"
+                    // callback={ responseFacebook }
+                    // language="fr-FR"
+                    // size="small"
+                    // icon="fa-facebook"
+                    // className="facebook"
                     />
                     <GoogleLogin
-                    clientId="884422014939-bu63e3eoqfgv1vrmsn01qd0ukfl2uumf.apps.googleusercontent.com"
+                    // clientId="884422014939-bu63e3eoqfgv1vrmsn01qd0ukfl2uumf.apps.googleusercontent.com"
                     buttonText="Se connecter avec Google"
-                    onSuccess={ responseGoogle }
-                    onFailure={ responseGoogle }
-                    cookiePolicy={ 'single_host_origin' }
+                    // onSuccess={ responseGoogle }
+                    // onFailure={ responseGoogle }
+                    // cookiePolicy={ 'single_host_origin' }
                     />
             </div>
         </div>
@@ -172,6 +172,9 @@ function mapDispatchToProps(dispatch) {
     return {
         stayLogged: function(user) {
             dispatch({ type: 'stayLogged', user: user })
+        },
+        loadRoadplanner: function(roadplanner) {
+            dispatch({ type: 'loadRoadplanner', roadplanner: roadplanner })
         }
     }
 }

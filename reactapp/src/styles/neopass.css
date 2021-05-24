@@ -1,0 +1,29 @@
+.Neopass {
+    background: linear-gradient(#106271, #FFF);
+}
+
+.div-picto{
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 90%;
+
+}
+
+
+.h3 {
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    margin-left: 50px;
+    width: 90%;
+}
+.h2{
+    font-size: 2vh;
+}
+
+.title{
+    font-size: 3vh;
+}

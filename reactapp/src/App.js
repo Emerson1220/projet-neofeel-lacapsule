@@ -19,7 +19,8 @@ import region from './reducers/region.reducer';
 import activities from './reducers/activities.reducer';
 import experiences from './reducers/experiences.reducer';
 import user from './reducers/user.reducer'
-import roadplanner from './reducers/roadplanner.reducer'
+import roadplanner from './reducers/roadplanner.reducer';
+import suggestions from './reducers/suggestions.reducer'
 import { Provider } from 'react-redux';
 import { createStore, combineReducers }  from 'redux';
 
@@ -27,7 +28,7 @@ import { createStore, combineReducers }  from 'redux';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-const store = createStore(combineReducers({ region, activities, experiences, roadplanner, user }));
+const store = createStore(combineReducers({ region, activities, experiences, roadplanner, user, suggestions }));
 
 const stripePromise = loadStripe('pk_test_51ItWKHK4yUyeZ8DTbPXklGpEqt6WL7YLvokEzbudM7jHc8Z72swBjC0aY38j3STBcWqWNsdRGWOKnDCyZsWoXQkr00SfyDo7CD')
 
@@ -42,7 +43,7 @@ function App() {
             <Route component={ ScreenLogin } path="/connexion"  />
             <Route component={ ScreenSearch } path="/recherche"  />                    
             <Route component={ ScreenInfo } path="/info"  />
-            <Route component={ ScreenPartner } path="/partenaire"  />
+            <Route component={ ScreenPartner } path="/partenaire/:experienceID"  />
             <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
             <Route component={ ScreenProfile } path="/profil"  />
             <Route component={ ScreenBasket } path="/panier"  />

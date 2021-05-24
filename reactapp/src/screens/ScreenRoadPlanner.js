@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
-import { Link } from 'react-router-dom';
 
-//UI
-import { Button } from 'antd';
 
 //COMPONENTS
 import Nav from '../components/Nav';
@@ -15,14 +12,16 @@ import { connect } from 'react-redux';
 
 function ScreenRoadPlanner(props) {
     //Etats
-    const [experienceList, setExperienceList] = useState([{ partner: { addresses: [{ city: '' }] }, tags: [], description: {imageBannerUrl:''} }])
+    const [experienceList, setExperienceList] = useState([]);
     const [experiences, setExperience] = useState([]);
 
-    // let roadplanner = [];
     useEffect(() =>{
-        setExperienceList(props.roadplanner)
+        if(props.roadplanner.experiences) {
+            setExperienceList(props.roadplanner.experiences)
+        }
 },  [props.roadplanner])
 
+<<<<<<< HEAD
     const deleteBDD = async(data) => {
         let rawResponse = await fetch(`/myroadplanner/${data.roadtripID}/${data.experienceID}`);
         let response = await rawResponse.json();
@@ -36,15 +35,37 @@ function ScreenRoadPlanner(props) {
             body : `experience=${JSON.stringify(experience)}`
         })
         let response = await rawResponse.json();
+=======
+    const deleteExperience = async(experienceID) => {
+        if(props.user.token) {
+            let rawResponse = await fetch(`/myroadplanner/${props.roadplanner.id}/${experienceID}`);
+            let response = await rawResponse.json();
+        }
+>>>>>>> main
     }
 
-    var selectExperience = async (experience) => {
-        let rawResponse = await fetch('/roadtrips/60a4d8695e61b2c452d97b78', {
-            method: 'DELETE',
-        })
-        let response = await rawResponse.json();
+    let cards = []
+    if (experienceList.length > 0) {
+        experienceList.map((e, i)=>
+    
+            <CardRoadPlanner key={i}
+                id={ e._id } 
+                name={e.name} 
+                activity={e.activity} 
+                activityType={e.activityType} 
+                region={e.region}
+                tags={e.tags}
+                subtitle={e.subtitle}
+                activityTime={e.activityTime}
+                budget={e.budget}
+                imageBannerUrl={e.description.imageBannerUrl}
+                city={e.partner.addresses[0].city}
+                >
+            </CardRoadPlanner>
+        )
     }
 
+<<<<<<< HEAD
     let cards = experienceList.map((e, i)=>
 
         
@@ -63,6 +84,8 @@ function ScreenRoadPlanner(props) {
             
         </CardRoadPlanner>
     )
+=======
+>>>>>>> main
 
     return (	
         <div>
@@ -91,6 +114,16 @@ function ScreenRoadPlanner(props) {
         </div>
     )
 };
+
+
+function mapStateToProps(state) {
+    return { user: state.user, roadplanner: state.roadplanner }
+}
+
+export default connect(
+    mapStateToProps,
+    null
+)(ScreenRoadPlanner);
 
 let styles = {
 
@@ -128,6 +161,7 @@ let styles = {
             padding: '.5rem',
         },
 
+<<<<<<< HEAD
         experiences_list_area:{
             display: 'grid',
             gridTemplateColumns: 'repeat(1, 1fr)',        
@@ -136,6 +170,144 @@ let styles = {
             paddingLeft: '1rem',
             paddingRight: '1rem',
         },
+=======
+    single_input_wrap:{
+        position: 'relative',
+        width: '100%',
+        marginBottom: '18px',
+        display: 'inline-block',        
+    },
+
+    single_input_wrap_input:{
+        background: '#ffffff',
+        border: '1px solid #EAEAEA',
+        height: '52px',
+        width: '100%',       
+    },
+
+    display_inline:{
+        display: 'inline-flex',
+    },
+
+    text_align_center:{
+        textAlign:'center',
+    },
+
+    // CSS - MAP //
+
+    map:{
+        width:'50%', 
+        height:'auto', 
+        position: 'fixed',
+        top: '100px',
+        left: '10px',
+        padding:'1rem',
+    },
+
+
+    // CSS - ICONS //
+
+    icons_la:{
+        display: 'inline-block',
+        position: 'absolute',
+        top: '17px',
+        left: '20px',
+        color: '#CFD3DE',
+        font: 'normal normal normal 16px/1 LineAwesome',
+        fontSize: 'inherit',
+        textDecoration: 'inherit',
+        textRendering: 'optimizeLegibility',
+        textTransform: 'none',
+    },
+
+    // CARD - TITLE//
+
+    h3:{
+        fontWeight:'bold',
+        fontSize: '28px',
+        color: '#106271',
+        textDecoration: 'none',
+    },
+
+    h4:{
+        fontSize: '20px',
+        color: '#e06868',
+        textDecoration: 'none',
+    },
+
+    // CARD - CSS //
+
+    experiences_list_area:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(1, 1fr)',        
+        boxSizing: 'border-box',
+        outline: 'none',
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
+
+    },
+
+    single_destinations:{
+        display: 'flex',
+        flexWrap: 'wrap',
+        margin: '0 0 30px 0',
+        border: '1px solid #CFD3DE',
+        boxShadow: '0px 3px 9px #071c551f',
+        borderRadius: '7px',
+        position: 'relative',
+        overflow: 'hidden',
+        // margin: '.5rem',
+    },
+
+    image_card:{
+        position: 'relative',
+        background: '#fff',
+        overflow: 'hidden',
+        flex: '0 0 30%',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+        minHeight: '200px',
+        borderRadius: '5px',
+    },
+
+    image:{
+        width: '100%',
+        height: '100%',
+        // objectFit: 'cover',
+        objectFit: 'contains',
+        objectPosition: 'center center',
+        borderRadius: '5px',
+    },
+
+    detail_card:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',        
+        flex: '0 0 70%',
+        padding: '22px 15px',
+        background: '#ffffff',
+    },
+
+    card_content:{
+        marginBottom: '15px',
+        color: '#bcbcbc',
+        hyphens: 'auto',
+    },
+
+    liste_price:{
+        marginTop: '20px',
+        display: 'flex',
+        boxSizing: 'border-box',
+        outline: 'none',
+    },
+
+    liste_price_li:{
+        margin: '0 10px',
+        fontSize: '14px',
+        listStyle: 'none',
+        display: 'inline-block',
+    },
+>>>>>>> main
 
 
 
@@ -147,20 +319,3 @@ let styles = {
 
 
 }        
-
-function mapDispatchToProps(dispatch) {
-    return {
-        deleteExperience: function(data) {
-            dispatch({ type: 'deleteExperience', data: data })
-        }
-    }
-}
-
-function mapStateToProps(state) {
-    return { user: state.user, roadplanner: state.roadplanner }
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ScreenRoadPlanner);

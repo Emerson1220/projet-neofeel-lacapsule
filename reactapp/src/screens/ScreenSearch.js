@@ -31,18 +31,16 @@ function ScreenSearch(props) {
     //FUNCTIONS
     //get experiences
     var selectRegion = async () => {
-        if (region !== 'none') {
-            let rawResponse = await fetch('/searchregions', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `region=${region}`
-            })
-            let response = await rawResponse.json();
-            props.onSearch(response.data)
-        }
+        let rawResponse = await fetch('/searchregions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `region=${region}`
+        })
+        let response = await rawResponse.json();
+        props.onSearch(response.data);
+        props.onRegionClick(region);
     }
 
-    
     //display toggles
     function OnclickMap() {
         setDisplay('map');
@@ -89,7 +87,7 @@ function ScreenSearch(props) {
 
                     </Select>
                     <RedButton onSelect={() => selectRegion()} title='Rechercher'></RedButton>
-                    <Link to= {'/suggestion'}>
+                    <Link to= {'/suggestions'}>
                         <RedButton onSelect={()=> console.log('Result Good')} title="Suggestion de voyages"></RedButton>
                     </Link>
 

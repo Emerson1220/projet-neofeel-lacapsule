@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 import '../styles/googleMap.css';
 import { Link } from 'react-router-dom';
-
 
 //MAP
 import GoogleMapReact from 'google-map-react';
@@ -20,9 +19,100 @@ import RedButton from './RedButton';
 const Map = (props) => {
     const [experience, setExperience] = useState({ partner: { addresses: [{ city: '' }] }, tags: [], description: {imageBannerUrl:''} })
     const [visible, setVisible] = useState(false);
-    const [locations, setLocations] = useState([])
+    const [voyageSelect, setVoyageSelect] = useState('');
 
-    const google = window.google;
+    //MODAL
+    const showModal = (exp) => {
+        setExperience(exp)
+        setVisible(!visible);
+    
+    };
+
+    const handleCancel = () => {
+        setVisible(!visible);
+    };
+
+    //CASCADER
+    let options = [
+            {
+                value: 'new',
+                label: 'Mon voyage'
+            }
+        ]
+        
+    if (props.user.roadtrips) { 
+        let userTrips = props.user.roadtrips.map(e => {
+            return {
+                value: e._id,
+                label: e.name
+            }
+        });
+
+        let savedTripsOption = {};
+
+        if (userTrips.length > 0) { 
+            savedTripsOption = {
+                value: 'saved',
+                label: "Vos voyages",
+                children: userTrips
+            }
+        }
+
+        options = [
+        {
+            value: 'new',
+            label: 'Nouveau voyage'
+        },
+        savedTripsOption
+    ];
+    }
+
+    function displayRender(label) {
+        return label[label.length - 1];
+    }
+
+    const onChange = (value) => {
+        setVoyageSelect(value)
+    };
+
+    //HTTP REQUESTS
+const createNewTrip = async (experience) => {
+    let region = 'Alsace-Vosges';
+        let rawResponse = await fetch('/myroadplanner', {
+            method: "POST",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `token=${props.user.token}&name=Mon Voyage en ${region}&region=${region}&regionCode=${props.region}&experienceID=${experience._id}`
+        });
+        let response = await rawResponse.json();
+        if (response.result === true) {
+            props.toggleRoadplanner(response.roadtrip._id, experience);
+            props.addRoadtripToUser(response.roadtrip)
+            success();
+        }
+    }
+    
+    const addExperienceToTrip = async(experience) => {
+        let rawResponse = await fetch('/myroadplanner', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `roadtripID=${voyageSelect[1]}&experienceID=${experience._id}`
+        })
+        let response = await rawResponse.json();
+        if(response.result === true) {
+            props.addExperience(response.roadtrip._id, experience)
+            success()
+        }
+    }
+
+    //FUNCTIONS
+    const chooseExperience = async(experience) => {
+        if (props.user.token) {
+            voyageSelect[0] === 'new' ? createNewTrip(experience) : addExperienceToTrip(experience);
+        } else {
+            !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.toggleRoadplanner('temp', experience) : props.addExperience('temp', experience) ;
+            success();
+        }
+    }
 
     const success = () => {
         message.success({
@@ -33,70 +123,6 @@ const Map = (props) => {
             },
         });
     };
-
-    const [voyageSelect, setVoyageSelect] = useState('');
-    const options = [
-        {
-            value: 'new',
-            label: 'Nouveau voyage'
-        },
-        {
-            value: 'saved',
-            label: 'Vos voyages',
-            children: [
-                {
-                    value: 'id12345',
-                    label: 'Voyage 1'
-                },
-                {
-                    value: 'id23456',
-                    label: 'Voyage 2'
-                }
-            ]
-        }
-    ];
-
-    function displayRender(label) {
-        return label[label.length - 1];
-    }
-
-    const onChange = (value) => {
-        setVoyageSelect(value)
-    };
-
-    const chooseExperience = async(experience) => {
-        if (voyageSelect[0] === 'new') {
-            createRoadtrip(experience);
-        } else {
-            addExperience(experience);
-        }
-        success();
-    }
-
-    //ajout d'expérience à un voyage existant
-    const addExperience = async(experience) => {
-        let rawResponse = await fetch('/myroadplanner', {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `roadtripID=${voyageSelect}&experienceID=${experience._id}`
-        })
-        let response = await rawResponse.json();
-        if (response.result === true) {
-            props.onAddExperience(response.roadtrip);
-        }
-    };
-
-    //création nouveau voyage avec expérience choisie
-    const createRoadtrip = async(experience) => {
-        if (props.user) {
-            let rawResponse = await fetch('/myroadplanner', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `token=${props.user.token}&name=Mon Voyage en Alsace&region=${props.region}&regionCode=ges&experience=${experience._id}`
-            })
-        }
-        props.onAddExperience(experience);
-    }
 
     let openModal = [];
     if (experience !== {}) {
@@ -111,11 +137,42 @@ const Map = (props) => {
                     return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
                 }) }
         </div>
+<<<<<<< HEAD
 
         <div style={styles.detail_title_location}>
             <div>
                 <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
                 <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
+=======
+            <div style={styles.detail_title_location}>
+                <div>
+                    <Link
+                    style={styles.h3}
+                    to={{
+                        pathname: `/partenaire/${experience._id}`,
+                        state: {
+                            experience: experience
+                        }
+                    }}>
+                        <h3>{experience.name}</h3>
+                    </Link>
+                    <Link
+                    style={styles.h4}
+                    to={{
+                        pathname: `/partenaire/${experience._id}`,
+                        state: {
+                            experience: experience
+                        }
+                    }}>
+                        <h4>{experience.subtitle}</h4>
+                    </Link>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
+                    <p style={{ color: '#e06868', marginBottom: '8px' }}>
+                    <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
+                    <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
+                </div>
+>>>>>>> main
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <p style={{ color: '#e06868', marginBottom: '8px' }}>
@@ -142,6 +199,7 @@ const Map = (props) => {
             expandTrigger="hover"
             displayRender={ displayRender }
             onChange={ onChange }
+            placeholder="Sélectionnez un voyage"
             />
             <RedButton
             title="+"
@@ -150,27 +208,12 @@ const Map = (props) => {
     </div>
     }
 
-    const showModal = (exp) => {
-        setExperience(exp)
-        setVisible(!visible);
-
-    };
-
-    const handleCancel = () => {
-        setVisible(!visible);
-    };
-
-
-
-
     const LocationPin = (props) => (
         <div className="pin" onClick={() => props.onSelect()}>
             <FontAwesomeIcon icon={faMapMarker} className="pin-icon" />
-            <p className="pin-text">{props.text}</p>
+            <p className="pin-text">{ props.text }</p>
         </div>
     );
-
-
 
     var ExperienceListingMap = [];
     if (props.experiences) {
@@ -188,41 +231,9 @@ const Map = (props) => {
         })
     }
 
-    //fit map to markers
-    const getMapBounds = (locations) => {
-        const bounds = new google.maps.LatLngBounds();
-
-        locations.forEach((location) => {
-            bounds.extend( new google.maps.LatLng(location.latitude, location.longitude));
-        })
-        return bounds;
-    };
-
-    const bindResizeListener = (map, maps, bounds) => {
-        maps.event.addDomListenerOnce(map, 'idle', () => {
-            maps.event.addDomListener(window, 'resize', () => {
-                map.fitBounds(bounds)
-            })
-        })
-    };
-
-    const apiIsLoaded = (map, maps, locations) => {
-        if (map) {
-            const bounds = getMapBounds(locations);
-            map.fitBounds(bounds);
-            bindResizeListener(map, maps, bounds)
-        }
-    }
-    useEffect(() => {
-        let locationsArray = props.experiences.map(e => ({ lat: e.coordinate.latitude, lng: e.coordinate.longitude }))
-        setLocations(locationsArray)
-    }, [props.experiences]);
-
-
-    let location = {
-        address: '',
-        lat: 48.816,
-        lng: 5.806
+    let center = {
+        lat: 48.10707,
+        lng: 7.21825
     }
 
     return (
@@ -230,11 +241,9 @@ const Map = (props) => {
             <div className="google-map">
                 <GoogleMapReact
                     bootstrapURLKeys={{ 
-                        key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s'}}
-                    defaultZoom={8}
-                    defaultCenter={ location }
-                    // yesIWantToUseGoogleMapApiInternals
-                    // onGoogleApiLoaded={ ({map, maps}) => apiIsLoaded(map, maps, locations) }
+                        key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s' }}
+                    defaultZoom={9}
+                    defaultCenter={ center }
                 >
                     {ExperienceListingMap}
                 </GoogleMapReact>
@@ -258,14 +267,31 @@ const Map = (props) => {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onAddExperience: function(experience) {
-            dispatch({ type: 'addExperience', experience: experience })
+        toggleRoadplanner: function(roadtripID, experience) {
+            dispatch({ 
+                type: 'toggleRoadplanner',
+                roadtripID: roadtripID,
+                experience: experience 
+            })
+        },
+        addExperience: function(roadtripID, experience) {
+            dispatch({
+                type: 'addExperience',
+                roadtripID: roadtripID,
+                experience: experience
+            })
+        },
+        addRoadtripToUser: function(roadtrip) {
+            dispatch({
+                type: 'addRoadtrip',
+                roadtrip: roadtrip
+            })
         }
     }
 }
 
 function mapStateToProps(state) {
-    return { experiences: state.experiences, region: state.region, token: state.token }
+    return { experiences: state.experiences, region: state.region, user: state.user, roadplanner: state.roadplanner }
 }
 
 export default connect(

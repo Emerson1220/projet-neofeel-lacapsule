@@ -16,7 +16,7 @@
 
   .tripSelect{
     display:flex;
-    border: 2px solid rgba(80, 80, 80, 0.7); 
+    /* border: 2px solid rgba(80, 80, 80, 0.7);  */
     padding: 10px;
   }
 

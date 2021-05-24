@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 
@@ -10,9 +10,20 @@ import { connect } from 'react-redux';
 
 function CardRoadPlanner(props) {
 
-    const deleteBDD = async(data) => {
-        let rawResponse = await fetch(`/myroadplanner/${data.roadtripID}/${data.experienceID}`);
-        let response = await rawResponse.json();
+    const deleteExperienceDB = async(experienceID) => {
+            let rawResponse = await fetch(`/myroadplanner/${props.roadplanner.id}/${experienceID}`);
+            let response = await rawResponse.json();
+            if(response.result === true) {
+                props.deleteExperience(experienceID)
+            }
+    }
+
+    const deleteExperience = experienceID => {
+        if (props.user.token) {
+            deleteExperienceDB(experienceID)
+        } else {
+            props.deleteExperience(experienceID)
+        }
     }
 
     var pictos = props.tags.map((image, j) => {
