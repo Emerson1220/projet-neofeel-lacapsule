@@ -78,11 +78,11 @@ function Nav(props) {
     } else {
         connectButton = 
         <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap', marginRight:'3%'}} onClick={ ()=>logOut() }>Déconnexion</h2>
-        greeting = <h2 style={{ color: '#106271', marginBottom: 0, marginLeft: '2%', whiteSpace: 'nowrap' }}>Bienvenue, { props.user.firstName }!</h2>
+        greeting = <h2 style={{ color: '#106271', marginBottom: 0, marginLeft: '20%', whiteSpace: 'nowrap' }}>Bienvenue, { props.user.firstName }!</h2>
     }
 
     return (
-        <div style={{ width: '100%', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor:'#FFF' }}>
+        <div style={{ width: '100%', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor:'#FFF', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.2)' }}>
             <div style={{ display: 'flex', height: '100%', alignItems: 'center', marginLeft: '1%' }}>
                 <Link style={{ height: '100%' }} to={'/'}>
                     <img

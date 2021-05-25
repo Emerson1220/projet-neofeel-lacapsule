@@ -22,7 +22,14 @@
 
   .margeTitle{
     color:rgb(255, 255, 255);
-    font-size: 200%;
+    font-size: 160%;
+    padding-right:4%;
+    
   }
 
-  
+.bannerGradient{
+  background: linear-gradient(.25turn, #FFF,20%,#106271);
+}
+.bannerGradientList{
+  background: linear-gradient(#106271, 80%, #FFF);
+}
