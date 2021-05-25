@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //UI
-import { Cascader, message  } from 'antd';
+import { Cascader, notification  } from 'antd';
 import RedButton from './RedButton';
 
 const PopoverContent = (props) => {
@@ -67,7 +67,9 @@ const PopoverContent = (props) => {
         if (response.result === true) {
             props.toggleRoadplanner(response.roadtrip._id, experience);
             props.addRoadtripToUser(response.roadtrip)
-            success();
+            openNotification('success', 'Voyage enregistré!');
+        } else {
+            openNotification('error', "Votre voyage n'a pas pu être crée. Veuillez réessayer.")
         }
     }
     
@@ -80,7 +82,11 @@ const PopoverContent = (props) => {
         let response = await rawResponse.json();
         if(response.result === true) {
             props.addExperience(response.roadtrip._id, experience)
-            success()
+            openNotification('success', 'Expérience ajouté');
+        } else if (response.message === 'already exists') {
+            openNotification('warning', 'Votre voyage contient déjà cette expérience.')
+        } else {
+            openNotification('error', "L'ajout d'expérience n'a pas pu aboutir. Veuillez réessayer.")
         }
     }
 
@@ -90,18 +96,16 @@ const PopoverContent = (props) => {
             voyageSelect[0] === 'new' ? createNewTrip(experience) : addExperienceToTrip(experience);
         } else {
             !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.toggleRoadplanner('temp', experience) : props.addExperience('temp', experience) ;
-            success();
+            openNotification('warning', 'Expérience ajoutée. Connectez-vous pour sauvegarder votre voyage.');
         }
     }
 
-    const success = () => {
-        message.success({
-            content: 'Expérience ajouté',
-            className: 'custom-class',
-            style: {
-                marginTop: '20vh',
-            },
-        });
+    const openNotification = (type, message) => {
+        let description = '';
+        notification[type] ({
+            description: message,
+            placement: 'bottomRight'
+        })
     };
 
     //DISPLAY

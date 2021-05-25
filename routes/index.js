@@ -171,7 +171,7 @@ router.put('/myroadplanner', async function(req, res, next) {
             }
         })
         .exec();
-        if (roadtrip.days[0].experiences.some(e => e._id === req.body.roadtripID)) {
+        if (roadtrip.days[0].experiences.some(e => e.id === req.body.experienceID)) {
             throw 'already exists'
         }
         roadtrip.days[0].experiences.push(req.body.experienceID);
