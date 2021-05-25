@@ -24,15 +24,6 @@ function CardRoadPlanner(props) {
                 props.deleteExperience(experienceID)
             }
     }
-        
-    //FUNCTIONS
-    const deleteExperience = experienceID => {
-        if (props.user.token) {
-            deleteExperienceDB(experienceID)
-        } else {
-            props.deleteExperience(experienceID)
-        }
-    }
 
     const getWeather = async(data) => {
         const api_key = '4810d2c7945fe82541e351ffa914d368';
@@ -45,6 +36,16 @@ function CardRoadPlanner(props) {
             icon: response.weather[0].icon
         })
     }
+        
+    //FUNCTIONS
+    const deleteExperience = experienceID => {
+        if (props.user.token) {
+            deleteExperienceDB(experienceID)
+        } else {
+            props.deleteExperience(experienceID)
+        }
+    }
+
 
     //DISPLAY
     var pictos = props.tags.map((image, j) => {
@@ -66,7 +67,7 @@ function CardRoadPlanner(props) {
                             {pictos}
                         </div>
                         <div>
-                            <FontAwesomeIcon size='2x' icon={faTrashAlt} />
+                            <FontAwesomeIcon size='2x' icon={faTrashAlt} onClick={ ()=>deleteExperience() } />
                         </div>
                         <h3 style={ styles.padding_top } ><Link style={ styles.h3 } to="/">{props.subtitle}</Link></h3>
                         <h4><Link style={ styles.h4 } to="/">{props.name}</Link></h4>
@@ -100,6 +101,23 @@ function CardRoadPlanner(props) {
                                 
     )
 };
+
+function mapDispatchToProps(dispatch) {
+    return {
+        deleteExperience: function(data) {
+            dispatch({ type: 'deleteExperience', data: data })
+        }
+    }
+}
+
+function mapStateToProps(state) {
+    return { user: state.user, roadplanner: state.roadplanner }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CardRoadPlanner);
 
 let styles = {
 
@@ -213,20 +231,3 @@ let styles = {
     },
 
 }        
-
-function mapDispatchToProps(dispatch) {
-    return {
-        deleteExperience: function(data) {
-            dispatch({ type: 'deleteExperience', data: data })
-        }
-    }
-}
-
-function mapStateToProps(state) {
-    return { user: state.user, roadplanner: state.roadplanner }
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(CardRoadPlanner);

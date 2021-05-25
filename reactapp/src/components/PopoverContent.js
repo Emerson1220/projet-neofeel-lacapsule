@@ -65,7 +65,7 @@ const PopoverContent = (props) => {
         });
         let response = await rawResponse.json();
         if (response.result === true) {
-            props.toggleRoadplanner(response.roadtrip._id, experience);
+            props.newRoadplanner(response.roadtrip._id, experience);
             props.addRoadtripToUser(response.roadtrip)
             openNotification('success', 'Voyage enregistré!');
         } else {
@@ -95,13 +95,12 @@ const PopoverContent = (props) => {
         if (props.user.token) {
             voyageSelect[0] === 'new' ? createNewTrip(experience) : addExperienceToTrip(experience);
         } else {
-            !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.toggleRoadplanner('temp', experience) : props.addExperience('temp', experience) ;
+            !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.newRoadplanner('temp', experience) : props.addExperience('temp', experience) ;
             openNotification('warning', 'Expérience ajoutée. Connectez-vous pour sauvegarder votre voyage.');
         }
     }
 
     const openNotification = (type, message) => {
-        let description = '';
         notification[type] ({
             description: message,
             placement: 'bottomRight'
@@ -190,9 +189,9 @@ const PopoverContent = (props) => {
 
 function mapDispatchToProps(dispatch) {
     return {
-        toggleRoadplanner: function(roadtripID, experience) {
+        newRoadplanner: function(roadtripID, experience) {
             dispatch({ 
-                type: 'toggleRoadplanner',
+                type: 'newRoadplanner',
                 roadtripID: roadtripID,
                 experience: experience 
             })
