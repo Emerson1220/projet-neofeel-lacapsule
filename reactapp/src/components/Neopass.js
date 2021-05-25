@@ -13,7 +13,7 @@ const Neopass = () => {
 
             <div className='Neopass' style={{ display: 'flex', height: '100%', width: '400px', flexDirection: 'column', alignItems: 'center', borderRadius: '15px' }}>
 
-                <div style={{ display: 'flex', width: 'auto', height: '12%', justifyContent: 'center', alignItems: 'center', marginTop: '4%', marginBottom: '4%', borderRadius:'15px' }}>
+                <div style={{ display: 'flex', width: 'auto', height: '12%', justifyContent: 'center', alignItems: 'center', marginTop: '2%', marginBottom: '2%', borderRadius:'15px' }}>
                     <h2 className='title' style={{ marginRight: '5%', fontWeight: 'bold', color: '#fff' }}>NEOPASS</h2>
                     <img style={{ width: '25%' }} src='../images/pictos/voyagez-8.png' />
                 </div>

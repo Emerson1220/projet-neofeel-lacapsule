@@ -525,7 +525,7 @@ let styles = {
     gallery_container: {
         margin: '0 40px',
         padding: '2rem 2rem 0',
-        boxSadow: '1px 0px 45px #fff',
+        boxShadow: '1px 0px 45px #fff',
         borderRadius: '25px',
         zIndex: '1',
         position: 'relative',

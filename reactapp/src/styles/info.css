@@ -18,3 +18,18 @@ left: 0;
 padding: 0;
 margin: 0;
   }
+  
+
+  .picto{
+    width: 78px;
+    margin: 1%;
+  }
+
+  .h3{
+    margin-left: 5%;
+  }
+
+  .valeurs{
+    display: flex;
+    margin-left: 50px;
+  }
