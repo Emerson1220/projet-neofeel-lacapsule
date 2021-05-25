@@ -171,13 +171,19 @@ router.put('/myroadplanner', async function(req, res, next) {
             }
         })
         .exec();
+        if (roadtrip.days[0].experiences.some(e => e.id === req.body.experienceID)) {
+            throw 'already exists'
+        }
         roadtrip.days[0].experiences.push(req.body.experienceID);
 
         let roadtripSaved = await roadtrip.save();
         res.json({ result: true, roadtrip: roadtripSaved })
     } catch (err) {
         console.log(err)
-        res.json({ result: false, error: err })
+        if (err === 'already exists') {
+            res.json({ result: false, message: err})
+        }
+        res.json({ result: false, message: 'failure' })
     }
 })
 

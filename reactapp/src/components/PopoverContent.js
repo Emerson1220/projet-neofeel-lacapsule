@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
+import '../styles/popover.css'
 import '../App.css';
-import '../styles/googleMap.css';
 import { Link } from 'react-router-dom';
-
 //REDUX
 import { connect } from 'react-redux';
 
 //UI
-import { Popover, Cascader, message  } from 'antd';
+import { Cascader, notification  } from 'antd';
 import RedButton from './RedButton';
 
 const PopoverContent = (props) => {
     const [voyageSelect, setVoyageSelect] = useState('');
 
-        //CASCADER
-        let options = [
-            {
-                value: 'new',
-                label: 'Mon voyage'
-            }
-        ]
-        
+    //CASCADER
+    let options = [
+        {
+            value: 'new',
+            label: 'Mon voyage'
+        }
+    ]
+    
     if (props.user.roadtrips) { 
-        let userTrips = props.user.roadtrips.map(e => {
-            return {
-                value: e._id,
-                label: e.name
-            }
+        let userTrips = props.user.roadtrips.filter(e => e.type !== 'admin').map(e => {
+                return {
+                    value: e._id,
+                    label: e.name
+                }
         });
 
         let savedTripsOption = {};
@@ -40,12 +39,12 @@ const PopoverContent = (props) => {
         }
 
         options = [
-        {
-            value: 'new',
-            label: 'Nouveau voyage'
-        },
-        savedTripsOption
-    ];
+            {
+                value: 'new',
+                label: 'Nouveau voyage'
+            },
+            savedTripsOption
+        ];
     }
 
     function displayRender(label) {
@@ -56,8 +55,8 @@ const PopoverContent = (props) => {
         setVoyageSelect(value)
     };
 
-        //HTTP REQUESTS
-const createNewTrip = async (experience) => {
+    //HTTP REQUESTS
+    const createNewTrip = async (experience) => {
     let region = 'Alsace-Vosges';
         let rawResponse = await fetch('/myroadplanner', {
             method: "POST",
@@ -68,7 +67,9 @@ const createNewTrip = async (experience) => {
         if (response.result === true) {
             props.toggleRoadplanner(response.roadtrip._id, experience);
             props.addRoadtripToUser(response.roadtrip)
-            success();
+            openNotification('success', 'Voyage enregistré!');
+        } else {
+            openNotification('error', "Votre voyage n'a pas pu être crée. Veuillez réessayer.")
         }
     }
     
@@ -81,7 +82,11 @@ const createNewTrip = async (experience) => {
         let response = await rawResponse.json();
         if(response.result === true) {
             props.addExperience(response.roadtrip._id, experience)
-            success()
+            openNotification('success', 'Expérience ajouté');
+        } else if (response.message === 'already exists') {
+            openNotification('warning', 'Votre voyage contient déjà cette expérience.')
+        } else {
+            openNotification('error', "L'ajout d'expérience n'a pas pu aboutir. Veuillez réessayer.")
         }
     }
 
@@ -91,21 +96,41 @@ const createNewTrip = async (experience) => {
             voyageSelect[0] === 'new' ? createNewTrip(experience) : addExperienceToTrip(experience);
         } else {
             !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.toggleRoadplanner('temp', experience) : props.addExperience('temp', experience) ;
-            success();
+            openNotification('warning', 'Expérience ajoutée. Connectez-vous pour sauvegarder votre voyage.');
         }
     }
 
-    const success = () => {
-        message.success({
-            content: 'Expérience ajouté',
-            className: 'custom-class',
-            style: {
-                marginTop: '20vh',
-            },
-        });
+    const openNotification = (type, message) => {
+        let description = '';
+        notification[type] ({
+            description: message,
+            placement: 'bottomRight'
+        })
     };
 
+    //DISPLAY
     let experience = props.experience;
+
+    let addContent = <></>
+    if (props.mode === 'search') {
+        addContent = 
+            <div style={{ textAlign: 'center', width: '50%',height: '100%', paddingLeft: '1%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <h4 style={styles.h4}>Ajouter cette experience à un voyage</h4>
+                <div style={{ display: 'flex', width: '100%', alignItems: 'center'}}>
+                    <Cascader
+                    options={ options }
+                    expandTrigger="hover"
+                    displayRender={ displayRender }
+                    onChange={ onChange }
+                    placeholder="Sélectionnez un voyage"
+                    />
+                    <RedButton
+                    title="+"
+                    onSelect={ ()=>chooseExperience(experience) }/>
+                </div>
+            </div>
+    }
+
     return (
         <div style={styles.single_destinations}> 
             <div style={styles.image_card}>
@@ -146,7 +171,7 @@ const createNewTrip = async (experience) => {
                 </div>
             </div>
             <div style ={{ display: 'flex', width: '100%' }}>
-                <div style={styles.detail_card}>
+                <div style={ props.mode === 'search'? styles.detail_card : styles.detail_roadplanner_card }>
                         <div style={styles.liste_temps_item}>
                             <p style={{ marginBottom: '0.3rem'}}>Temps</p>
                             <p style={{ marginBottom: '0.3rem'}}>{experience.activityTime}</p>
@@ -156,26 +181,36 @@ const createNewTrip = async (experience) => {
                             <p style={{ marginBottom: '0.3rem'}}>{experience.budget}</p>
                         </div>
                 </div>
-                <div style={{ textAlign: 'center', width: '100%', paddingLeft: '1%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                    <h4 style={styles.h4}>Ajouter cette experience à un voyage</h4>
-                    <div style={{ display: 'flex', width: '100%', alignItems: 'center'}}>
-                        <Cascader
-                        options={ options }
-                        expandTrigger="hover"
-                        displayRender={ displayRender }
-                        onChange={ onChange }
-                        placeholder="Sélectionnez un voyage"
-                        />
-                        <RedButton
-                        title="+"
-                        onSelect={ ()=>chooseExperience(experience) }/>
-                    </div>
-                </div>
-
+                { addContent }
             </div>
     </div>
 );
 
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        toggleRoadplanner: function(roadtripID, experience) {
+            dispatch({ 
+                type: 'toggleRoadplanner',
+                roadtripID: roadtripID,
+                experience: experience 
+            })
+        },
+        addExperience: function(roadtripID, experience) {
+            dispatch({
+                type: 'addExperience',
+                roadtripID: roadtripID,
+                experience: experience
+            })
+        },
+        addRoadtripToUser: function(roadtrip) {
+            dispatch({
+                type: 'addRoadtrip',
+                roadtrip: roadtrip
+            })
+        }
+    }
 }
 
 function mapStateToProps(state) {
@@ -189,7 +224,7 @@ function mapStateToProps(state) {
 
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(PopoverContent)
 
 let styles = {
@@ -217,8 +252,8 @@ let styles = {
         borderRadius: '7px',
         position: 'relative',
         overflow: 'hidden',
-        width: '30vw',
-        height: '50vh'
+        width: '35vw',
+        height: '50vh',
     },
 
     image_card:{
@@ -252,8 +287,18 @@ let styles = {
         display: 'flex',
         flexDirection: 'column',
         background: '#ffffff',
+        width: '45%',
+        paddingRight: '2%',
+        paddingLeft: '2%'
+    },
+
+    detail_roadplanner_card:{
+        display: 'flex',
+        flexDirection: 'column',
+        background: '#ffffff',
         width: '100%',
-        paddingRight: '1%'
+        paddingRight: '2%',
+        paddingLeft: '2%'
     },
 
     liste_price_item: {
