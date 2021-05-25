@@ -7,6 +7,9 @@ import Nav from '../components/Nav';
 import Map from '../components/Map';
 import Neopass from '../components/Neopass';
 import CardRoadPlanner from '../components/CardRoadPlanner';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { Popover, Button } from 'antd';
 //REDUX
 import { connect } from 'react-redux';
@@ -23,7 +26,7 @@ function ScreenRoadPlanner(props) {
 
     const content = (
         <div>
-            {Neopass}
+            <Neopass/>
         </div>
     );
 
@@ -70,8 +73,8 @@ function ScreenRoadPlanner(props) {
                             <div style={styles.avantage}>
                                 <h3>Vous avez cumulé <span>{total}</span>€ d'avantages dans votre séléction</h3>
                                 <button>Achetez votre Neopass pour seulement 60€</button>
-                                <Popover content={content} title="Title">
-                                    <Button type="primary">Information</Button>
+                                <Popover content={content} >
+                                    <FontAwesomeIcon size='2x' icon={faInfoCircle} style={{marginLeft:'2%'}}/>
                                 </Popover>
                             </div>
                         </div>
