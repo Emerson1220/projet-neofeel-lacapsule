@@ -123,9 +123,9 @@ const ScreenBasket =  () => {
                 title="Checkout"
                 centered={ true }
                 closable={ false }
-                onClose={ ()=>toggleModal() }
                 visible={ visible }
                 footer={ null }
+                handleCancel={ ()=>toggleModal() }
                 >
                 <form
                 style={{ display: 'flex', flexDirection: 'column' }}

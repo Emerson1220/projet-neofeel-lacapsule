@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/profile.css'
 
 //COMPONENTS
 import Nav from '../components/Nav'
+import ShareModal from '../components/ShareModal'
 
 //UI
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSuitcase, faCommentDots, faPhotoVideo } from '@fortawesome/free-solid-svg-icons'
 import RedButton from '../components/RedButton';
-import { notification } from 'antd';
 
 //REDUX
 import { connect } from 'react-redux';
@@ -17,31 +17,19 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 const ScreenProfile = (props) => {
-    //HTTP REQUESTS
-    const shareTrip = async(token, roadtripID) => {
-        let rawResponse = await fetch('/sharetrip', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `token=${token}&roadtripID=${roadtripID}`
-        });
-        let response = await rawResponse.json();
-        if (response.result === true) {
-            openNotification('success', 'Voyage partagé!')
-        } else if (response.message === 'not authorized') {
-            openNotification('error', 'Vous ne pouvez que partager vos propre voyages.', 'Erreur')
-        } else {
-            openNotification('warning', "Le partage de voyage n'a pas pu aboutir. Veuillez réessayer.", 'Erreur')
-        }
-    }
-
+    //STATE HOOKS
+    const [visible, setVisible] = useState(false);
+    const [selectedTrip, setSelectedTrip] = useState({});
     //FUNCTIONS
-    const openNotification = (type, message, title) => {
-        notification[type] ({
-            description: message,
-            placement: 'bottomRight',
-            message: title
-        })
-    };
+    const selectTrip = data => {
+        setSelectedTrip(data);
+        toggleModal();
+    }
+    //modal
+    const toggleModal = () => {
+        setVisible(!visible);
+    }
+    
 
     var tripLiked = [];
     if (props.user.roadtrips && props.user.roadtrips.length > 0) {
@@ -84,16 +72,13 @@ const ScreenProfile = (props) => {
                     
                     {daySuggestionList}
                     <div style={{display:'flex', alignItems: 'end', justifyContent:'flex-end'}}>
-                        <RedButton title='Partager' onSelect={ ()=>shareTrip(props.user.token, roadtrip._id)}></RedButton> 
+                        <RedButton title='Partager' onSelect={ ()=>selectTrip({ id: roadtrip._id, name: roadtrip.name }) }></RedButton> 
                         <RedButton title='Supprimer'></RedButton>
                         </div>
                 </div>)
         })
 
     }
-
-
-
 
 
     return !props.user.token ?
@@ -150,6 +135,12 @@ const ScreenProfile = (props) => {
                         </div>
                     </div>
                 </div>
+                <ShareModal
+                visible={ visible }
+                toggleModal={ ()=>toggleModal() }
+                roadtrip={ selectedTrip }
+                >
+                </ShareModal>
             </div>
 
 

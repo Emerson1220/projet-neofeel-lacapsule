@@ -35,9 +35,11 @@ const SignIn = (props) => {
         let response = await rawResponse.json();
         if (response.result === true) {
             props.stayLogged(response.user)
-            props.loadRoadplanner(response.currentRoadtrip)
-            if (isChecked) {
-                cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
+            if (response.currentRoadtrip !== 'none') {
+                props.loadRoadplanner(response.currentRoadtrip)
+            }            
+        if (isChecked) {
+            cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
             }
         } else {
             setError(response.message);

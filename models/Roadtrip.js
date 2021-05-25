@@ -22,6 +22,7 @@ const roadtripSchema = mongoose.Schema({
     regionCode: String,
     type: String,
     tags: Array,
+    duration: Number
 });
 
 module.exports =mongoose.model('roadtrips', roadtripSchema);
