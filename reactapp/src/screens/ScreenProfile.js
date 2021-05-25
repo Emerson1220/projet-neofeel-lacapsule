@@ -127,7 +127,7 @@ const ScreenProfile = (props) => {
                     </div>
 
 
-                    <div style={{ flexDirection: 'row', backgroundColor: 'rgb(16, 98, 113, 0.7)', alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: '2%' }}>
+                    <div className='bannerGradientList' style={{ flexDirection: 'row', backgroundColor: 'rgb(16, 98, 113, 0.7)', alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: '2%' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end', padding: '3%' }}>
                             <h3 className='margeTitle' style={{paddingTop:'4%'}}>Mes commandes</h3>
                             <h2 className='margeTitle'>Mes abonnements</h2>
