@@ -128,9 +128,9 @@ const ScreenBasket =  () => {
                 visible={ visible }
                 footer={ null }
                 handleCancel={ ()=>toggleModal() }
-                >
                 bodyStyle={{background:'linear-gradient(#106271, #FFF)', padding:'8%',boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.4)'}}
-                ><h2>Checkout</h2>
+                >
+                <h2>Checkout</h2>
                 <form
                 style={{ display: 'flex', flexDirection: 'column' }}
                 onSubmit={ handleSubmit }
