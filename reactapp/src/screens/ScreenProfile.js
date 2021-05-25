@@ -17,7 +17,7 @@ import { Redirect } from 'react-router-dom';
 const ScreenProfile = (props) => {
 
     var tripLiked = [];
-    if (props.user) {
+    if (props.user.roadtrips && props.user.roadtrips.length > 0) {
 
         tripLiked = props.user.roadtrips.map((roadtrip, i) => {
 

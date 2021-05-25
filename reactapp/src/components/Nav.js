@@ -63,6 +63,7 @@ function Nav(props) {
         cookies.remove('token');
         props.onLogoutClick();
         props.clearRoadplanner();
+        setRoadplannerCount(0);
         setIsLogged(false);
     }
     

@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
 
-
 //COMPONENTS
 import Nav from '../components/Nav';
 import Map from '../components/Map';
@@ -14,36 +13,37 @@ import { connect } from 'react-redux';
 function ScreenRoadPlanner(props) {
     //Etats
     const [experienceList, setExperienceList] = useState([]);
+    const [experiences, setExperience] = useState([]);
 
-    //EFFECT HOOKS
     useEffect(() =>{
-        if(props.roadplanner.experiences) {
-            setExperienceList(props.roadplanner.experiences)
-        }
+        setExperienceList(props.roadplanner.experiences)
     },  [props.roadplanner])
-    
-    //DISPLAY
+
+    useEffect(()=> {
+        console.log(experienceList)
+    }, [experienceList])
+
     let cards = []
     if (experienceList.length > 0) {
-        experienceList.map((e, i)=> 
-                <CardRoadPlanner key={i}
-                    id={ e._id } 
-                    name={e.name} 
-                    activity={e.activity} 
-                    activityType={e.activityType} 
-                    region={e.region}
-                    tags={e.tags}
-                    subtitle={e.subtitle}
-                    activityTime={e.activityTime}
-                    budget={e.budget}
-                    imageBannerUrl={e.description.imageBannerUrl}
-                    city={e.partner.addresses[0].city}
-                    coordinate={e.coordinate}
-                    >
-                </CardRoadPlanner>
+        cards = experienceList.map((e, i)=>
+    
+            <CardRoadPlanner key={i}
+                id={ e._id } 
+                name={e.name} 
+                activity={e.activity} 
+                activityType={e.activityType} 
+                region={e.region}
+                tags={e.tags}
+                subtitle={e.subtitle}
+                activityTime={e.activityTime}
+                budget={e.budget}
+                imageBannerUrl={e.description.imageBannerUrl}
+                city={e.city}
+                coordinate={ e.coordinate }
+                >
+            </CardRoadPlanner>
         )
     }
-    console.log({ cards: cards })
 
     return (	
         <div>
@@ -63,8 +63,8 @@ function ScreenRoadPlanner(props) {
                             </div>
                         </div> 
                         
-                        <div style={ styles.experiences_list_area }> 
-                            {cards}
+                        <div style={ styles.experiences_list_area }>
+                            { cards }
                         </div>
 
                     </div>
@@ -76,7 +76,6 @@ function ScreenRoadPlanner(props) {
 
 
 function mapStateToProps(state) {
-    console.log(state)
     return { user: state.user, roadplanner: state.roadplanner }
 }
 
@@ -112,14 +111,21 @@ let styles = {
         paddingLeft: '1.5rem',
         },
 
-        avantage:{
-            background: '#e06868',
-            textAlign: 'center',
-            color: '#fff', 
-            width: '100%',
-            marginBottom: '1rem', 
-            padding: '.5rem',
+    avantage:{
+        background: '#e06868',
+        textAlign: 'center',
+        color: '#fff', 
+        width: '100%',
+        marginBottom: '1rem', 
+        padding: '.5rem',
         },
+
+
+
+
+
+
+        
 
     single_input_wrap:{
         position: 'relative',
@@ -257,10 +263,6 @@ let styles = {
         listStyle: 'none',
         display: 'inline-block',
     },
-
-
-
-
 
 
 
