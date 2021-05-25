@@ -77,20 +77,21 @@ const ScreenBasket =  () => {
     <div>
         <Nav />
         <div style={ styles.container }>
-        <div style={ styles.summary }>
-        <Divider orientation='left'>Mon Neopass</Divider>
+        <div className='summary' >
+        <Divider orientation='center' style={ styles.divider }>Mon Neopass</Divider>
             <div style={ styles.neopassContainer }>
-                <div style={{ height: '100px', width: '200px', backgroundColor: 'blue', borderRadius: '5px'}}>NEOPASS</div>
-                <div>
-                    <h4>Mes avantages sur mon prochain voyage</h4>
-                    <ul>
+                <div style={{ height: '100px', width: '200px', backgroundColor: 'blue', borderRadius: '5px'}}>
+                    <img style={{width:'100%', borderRadius:'15px'}} src='./images/neopassRecto.png'/>
+                </div>
+                <div style={{color:'white'}}>
+                    <h4 style={{color:'black'}}>Mes avantages sur mon prochain voyage</h4>
+                    <ul style={{color:'black', fontWeight:'bold'}}>
                         <li>avantage 1</li>
                         <li>avantage 2</li>
                         <li>avantage 3</li>
                     </ul>
                 </div>
             </div>
-        </div>
         <div style={ styles.basket }>
             <Divider style={ styles.divider }>Ma Commande</Divider>
             <table style={ styles.table }>
@@ -111,22 +112,25 @@ const ScreenBasket =  () => {
                     </tr>
                 </tfoot>
             </table>
+        
             <div style={ styles.buttonContainer }>
                 <RedButton
                 title="Payer par carte"
                 onSelect={ ()=>toggleModal() } />
-                <form onSubmit={ handleSubmit }>
- 
+                <form onSubmit={ handleSubmit }> 
             </form>
+                </div>
             </div>
-                <Modal
-                title="Checkout"
+            
+                <Modal                
                 centered={ true }
                 closable={ false }
-                onClose={ ()=>toggleModal() }
                 visible={ visible }
                 footer={ null }
+                handleCancel={ ()=>toggleModal() }
                 >
+                bodyStyle={{background:'linear-gradient(#106271, #FFF)', padding:'8%',boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.4)'}}
+                ><h2>Checkout</h2>
                 <form
                 style={{ display: 'flex', flexDirection: 'column' }}
                 onSubmit={ handleSubmit }
@@ -230,23 +234,25 @@ const styles = {
     container: {
         display: 'flex',
         width: '100%',
-        justifyContent: 'space-around',
-        paddingTop: '3%'
+        justifyContent: 'center',
+        alignItems:'center',
+        flexDirection:'column',
+        paddingTop: '3%',
+        
+        
     },
-    summary: {
-        width: '45%',
-        marginLeft: '4%',
-        paddingTop: '1%'
-    },
+    
     basket: {
-        width: '55%',
+        width: '100%',
         display: 'flex',
-        flexDirection: 'column',
-        marginRight: '4%',
-        backgroundColor: 'rgba(16, 98, 113, 0.7)',
+        flexDirection: 'column',       
+        backgroundColor: 'rgba(255,255,255,0.6)',
+        color:'black',
         borderRadius: '8px',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        marginTop:'5%',
+        
     },
     buttonContainer: {
         alignSelf: 'flex-end',
@@ -258,15 +264,18 @@ const styles = {
         paddingBottom: '1%'
     },
     table: {
-        color: 'white',
+        color: 'black',
         marginLeft: '5%',
         marginRight: '5%'
     },
     lastTableRow: { 
         textAlign: 'end', 
     },
+    
     divider: {
-        color: 'white'
+        
+        color: 'black',
+        paddingBottom:'1%'
     },
     neopassContainer: {
         display: 'flex',

@@ -7,4 +7,17 @@ input::-webkit-input-placeholder, input::-moz-placeholder, input::-ms-placeholde
     border: 1px solid rgba(0, 0, 0, 0.2);
     margin-bottom: 3px;
     font-family: Montserrat, sans-serif;
+    
+}
+
+.summary{
+        background:linear-gradient(#106271, #FFF);
+        width: 45%;
+        margin: 4%;
+        padding: 2%;
+        justify-content:center;
+        align-items:center;       
+        border-radius:8px;
+        /* border: 1px solid #106271 ; */
+        box-shadow: 1px 0px 45px rgba(16, 98, 113, 0.4)
 }
