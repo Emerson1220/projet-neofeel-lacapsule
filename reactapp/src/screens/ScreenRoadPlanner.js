@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 
 
@@ -15,10 +15,20 @@ import { connect } from 'react-redux';
 
 
 function ScreenRoadPlanner(props) {
+    //Etats
+    const [experienceList, setExperienceList] = useState([]);
+
+    //EFFECT HOOKS
+    useEffect(() =>{
+        if(props.roadplanner.experiences) {
+            setExperienceList(props.roadplanner.experiences)
+        }
+    },  [props.roadplanner])
+
     //DISPLAY
     let cards = []
-    if (props.roadplanner.experiences && props.roadplanner.experiences.length > 0) {
-        props.roadplanner.experiences.map((e, i)=> 
+    if (experienceList.length > 0) {
+        experienceList.map((e, i)=> 
                 <CardRoadPlanner key={i}
                     id={ e._id } 
                     name={e.name} 
