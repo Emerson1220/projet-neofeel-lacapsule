@@ -90,7 +90,7 @@ router.get('/activities', async function(req, res, next) {
 //get suggestions Neofeel
 router.get('/roadtrips', async function(req, res, next) {
     try {
-        let roadtrips = await Roadtrip.find({ type: 'admin' })
+        let roadtrips = await Roadtrip.find({ $or : [ { type: 'admin' }, { type: 'public' } ] })
         .populate({
             path: 'days',
             populate: {
@@ -171,13 +171,19 @@ router.put('/myroadplanner', async function(req, res, next) {
             }
         })
         .exec();
+        if (roadtrip.days[0].experiences.some(e => e.id === req.body.experienceID)) {
+            throw 'already exists'
+        }
         roadtrip.days[0].experiences.push(req.body.experienceID);
 
         let roadtripSaved = await roadtrip.save();
         res.json({ result: true, roadtrip: roadtripSaved })
     } catch (err) {
         console.log(err)
-        res.json({ result: false, error: err })
+        if (err === 'already exists') {
+            res.json({ result: false, message: err})
+        }
+        res.json({ result: false, message: 'failure' })
     }
 })
 
@@ -186,6 +192,7 @@ router.put('/myroadplanner', async function(req, res, next) {
 //Response: result (true)
 router.delete('/myroadplanner/:roadtripID/:experienceID', async function(req, res, next) {
     try {
+        let user = await User.findOne({ token: req.params.token });
         let roadplanner = await Roadtrip.findById(req.params.roadtripID)
         .populate('roadtrips')
         .populate({
@@ -203,6 +210,11 @@ router.delete('/myroadplanner/:roadtripID/:experienceID', async function(req, re
             }
         })
         .exec();
+
+        if (roadtrip.creator !== user._id) {
+            throw 'not authorized'
+        }
+
         roadplanner.experiences = roadplanner.experiences.filter(e => e.id !== req.params.experienceID);
         let roadplannerSave = await roadplanner.save();
         res.json({ result: true, roadplanner: roadplannerSave })
@@ -312,12 +324,26 @@ router.get('/myproduct', function(req, res, next) {
 })
 
 //Partage de voyage
-//Body: [expériences], nom, commentaires, photos, userID
-//Response: result (true), voyage
-router.post('/sharetrip', function(req, res, next){
-    !req.body.experiences
-    ? res.json({ result: false }) 
-    : res.json({ result: true, roadtripID: '1234567' }) ;
+//Body: roadtripID, token(user)
+//Response: result, 
+router.post('/sharetrip', async function(req, res, next){
+    try {
+        let user = await User.findOne({ token: req.body.token });
+        let roadtrip = await Roadtrip.findById(req.body.roadtripID);
+        console.log(typeof(user._id), typeof(roadtrip.creator))
+        console.log({ creator: roadtrip.creator, user: user._id })
+        console.log(roadtrip.creator !== user._id)
+        if (roadtrip.creator === user._id) {
+            throw 'not authorized'
+        }
+        
+        roadtrip.type = 'public';
+        await roadtrip.save();
+        res.json({ result: true, roadtrip: roadtrip })
+    } catch (err) {
+        res.json({ result: false, message: err })
+    }
+
 })
 
 //actualités météo

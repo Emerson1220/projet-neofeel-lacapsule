@@ -8,7 +8,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 //UI
 import RedButton from '../components/RedButton'
-import { Cascader, message } from 'antd';
+import { Cascader, notification } from 'antd';
 
 //REDUX
 import { connect } from 'react-redux';
@@ -75,9 +75,11 @@ const ScreenPartner = (props) => {
         });
         let response = await rawResponse.json();
         if (response.result === true) {
-            props.toggleRoadplanner(response.roadtrip._id, experience);
+            props.newRoadplanner(response.roadtrip._id, experience);
             props.addRoadtripToUser(response.roadtrip)
-            success();
+            openNotification('success', 'Voyage enregistré!');
+        } else {
+            openNotification('error', "Votre voyage n'a pas pu être crée. Veuillez réessayer.")
         }
     }
 
@@ -88,9 +90,13 @@ const ScreenPartner = (props) => {
             body: `roadtripID=${voyageSelect[1]}&experienceID=${experience._id}`
         })
         let response = await rawResponse.json();
-        if (response.result === true) {
+        if(response.result === true) {
             props.addExperience(response.roadtrip._id, experience)
-            success()
+            openNotification('success', 'Expérience ajouté');
+        } else if (response.message === 'already exists') {
+            openNotification('warning', 'Votre voyage contient déjà cette expérience.')
+        } else {
+            openNotification('error', "L'ajout d'expérience n'a pas pu aboutir. Veuillez réessayer.")
         }
     }
 
@@ -99,22 +105,18 @@ const ScreenPartner = (props) => {
         if (props.user.token) {
             voyageSelect[0] === 'new' ? createNewTrip(experience) : addExperienceToTrip(experience);
         } else {
-            !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.toggleRoadplanner('temp', experience) : props.addExperience('temp', experience);
-            success();
+            !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.newRoadplanner('temp', experience) : props.addExperience('temp', experience);
+            openNotification('warning', 'Expérience ajoutée. Connectez-vous pour sauvegarder votre voyage.');
         }
     }
 
-    const success = () => {
-        message.success({
-            content: 'Expérience ajouté',
-            className: 'custom-class',
-            style: {
-                marginTop: '20vh',
-            },
-        });
+    const openNotification = (type, message) => {
+        notification[type] ({
+            description: message,
+            placement: 'bottomRight'
+        })
     };
 
-    //FUNCTIONS
     const openInNewTab = (url) => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
         if (newWindow) newWindow.opener = null
@@ -364,14 +366,47 @@ const ScreenPartner = (props) => {
 
 
 
-    )
+)
 
 };
 
+function mapStateToProps(state) {
+    return { experiences: state.experiences, region: state.region, user: state.user, roadplanner: state.roadplanner }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        newRoadplanner: function (roadtripID, experience) {
+            dispatch({
+                type: 'newRoadplanner',
+                roadtripID: roadtripID,
+                experience: experience
+            })
+        },
+        addExperience: function (roadtripID, experience) {
+            dispatch({
+                type: 'addExperience',
+                roadtripID: roadtripID,
+                experience: experience
+            })
+        },
+        addRoadtripToUser: function (roadtrip) {
+            dispatch({
+                type: 'addRoadtrip',
+                roadtrip: roadtrip
+            })
+        }
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ScreenPartner);
 
 let styles = {
     // ARCHITECTURE //
-
+    
     container_all: {
         display: 'flex',
         flexDirection: 'column',
@@ -684,39 +719,6 @@ let styles = {
 };
 
 
-function mapStateToProps(state) {
-    return { experiences: state.experiences, region: state.region, user: state.user, roadplanner: state.roadplanner }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        toggleRoadplanner: function (roadtripID, experience) {
-            dispatch({
-                type: 'toggleRoadplanner',
-                roadtripID: roadtripID,
-                experience: experience
-            })
-        },
-        addExperience: function (roadtripID, experience) {
-            dispatch({
-                type: 'addExperience',
-                roadtripID: roadtripID,
-                experience: experience
-            })
-        },
-        addRoadtripToUser: function (roadtrip) {
-            dispatch({
-                type: 'addRoadtrip',
-                roadtrip: roadtrip
-            })
-        }
-    }
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ScreenPartner);
 
 
 

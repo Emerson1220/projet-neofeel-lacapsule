@@ -1,33 +1,60 @@
 import React from 'react';
-import Nav from '../components/Nav'
 import '../styles/profile.css'
 
+//COMPONENTS
+import Nav from '../components/Nav'
+
+//UI
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSuitcase, faCommentDots, faPhotoVideo } from '@fortawesome/free-solid-svg-icons'
-
 import RedButton from '../components/RedButton';
+import { notification } from 'antd';
+
 //REDUX
 import { connect } from 'react-redux';
 
 //ROUTER
 import { Redirect } from 'react-router-dom';
 
-
-
 const ScreenProfile = (props) => {
+    //HTTP REQUESTS
+    const shareTrip = async(token, roadtripID) => {
+        let rawResponse = await fetch('/sharetrip', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `token=${token}&roadtripID=${roadtripID}`
+        });
+        let response = await rawResponse.json();
+        if (response.result === true) {
+            openNotification('success', 'Voyage partagé!')
+        } else if (response.message === 'not authorized') {
+            openNotification('error', 'Vous ne pouvez que partager vos propre voyages.', 'Erreur')
+        } else {
+            openNotification('warning', "Le partage de voyage n'a pas pu aboutir. Veuillez réessayer.", 'Erreur')
+        }
+    }
+
+    //FUNCTIONS
+    const openNotification = (type, message, title) => {
+        notification[type] ({
+            description: message,
+            placement: 'bottomRight',
+            message: title
+        })
+    };
 
     var tripLiked = [];
     if (props.user.roadtrips && props.user.roadtrips.length > 0) {
 
         tripLiked = props.user.roadtrips.map((roadtrip, i) => {
 
-       var styleTripPerso = { display: 'flex', flexDirection: ' column', width: '80%', margin: '2%', border: '2px solid rgba(80, 80, 80, 0.7)' }
-       var styleTripSuggest = { display: 'flex', flexDirection: ' column', width: '80%', margin: '2%', border: '2px solid rgba(224, 104, 104, 0.8)' }
+        var styleTripPerso = { display: 'flex', flexDirection: ' column', width: '80%', margin: '2%', border: '2px solid rgba(80, 80, 80, 0.7)' }
+        var styleTripSuggest = { display: 'flex', flexDirection: ' column', width: '80%', margin: '2%', border: '2px solid rgba(224, 104, 104, 0.8)' }
 
-       var suggestionNeofeel = <></>
-       if (roadtrip.type) {
+        var suggestionNeofeel = <></>
+        if (roadtrip.type) {
             suggestionNeofeel = <h3 style= {{color:'rgba(224, 104, 104, 0.8)'}}>Suggestion NEOFEEL</h3>
-       }
+        }
 
             var daySuggestionList = roadtrip.days.map((day, k) => {
 
@@ -57,8 +84,8 @@ const ScreenProfile = (props) => {
                     
                     {daySuggestionList}
                     <div style={{display:'flex', alignItems: 'end', justifyContent:'flex-end'}}>
-                        <RedButton title='Partager le Voyage'></RedButton> 
-                        <RedButton title='Supprimer le Voyage'></RedButton>
+                        <RedButton title='Partager' onSelect={ ()=>shareTrip(props.user.token, roadtrip._id)}></RedButton> 
+                        <RedButton title='Supprimer'></RedButton>
                         </div>
                 </div>)
         })
@@ -115,9 +142,7 @@ const ScreenProfile = (props) => {
                     </div>
 
 
-
-
-                    <div className= 'bannerGradientList' style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: '2%' }}>
+                    <div style={{ flexDirection: 'row', backgroundColor: 'rgb(16, 98, 113, 0.7)', alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: '2%' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end', padding: '3%' }}>
                             <h3 className='margeTitle' style={{paddingTop:'4%'}}>Mes commandes</h3>
                             <h2 className='margeTitle'>Mes abonnements</h2>

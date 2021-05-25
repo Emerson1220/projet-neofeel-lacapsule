@@ -3,12 +3,11 @@ import '../App.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RedButton from './RedButton';
-import { Cascader, message } from 'antd'
+import { Cascader, notification } from 'antd'
 /* TESTTTTT*/
 const ExperienceList = (props) => {
     const [voyageSelect, setVoyageSelect] = useState('');
     
-    //test
     //CASCADER
     let options = [
             {
@@ -18,7 +17,7 @@ const ExperienceList = (props) => {
         ]
         
         if (props.user.roadtrips) { 
-            let userTrips = props.user.roadtrips.map(e => {
+            let userTrips = props.user.roadtrips.filter(e => e.type !== 'admin').map(e => {
                 return {
                     value: e._id,
                     label: e.name
@@ -44,28 +43,30 @@ const ExperienceList = (props) => {
         ];
     }
 
-function displayRender(label) {
-    return label[label.length - 1];
-}
+    function displayRender(label) {
+        return label[label.length - 1];
+    }
 
-const onChange = (value) => {
-    setVoyageSelect(value)
-};
+    const onChange = (value) => {
+        setVoyageSelect(value)
+    };
 
-//HTTP REQUESTS
-const createNewTrip = async (experience) => {
-    let region = 'Alsace-Vosges';
-        let rawResponse = await fetch('/myroadplanner', {
-            method: "POST",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `token=${props.user.token}&name=Mon Voyage en ${region}&region=${region}&regionCode=${props.region}&experienceID=${experience._id}`
-        });
-        let response = await rawResponse.json();
-        if (response.result === true) {
-            props.toggleRoadplanner(response.roadtrip._id, experience);
-            props.addRoadtripToUser(response.roadtrip)
-            success();
-        }
+    //HTTP REQUESTS
+    const createNewTrip = async (experience) => {
+        let region = 'Alsace-Vosges';
+            let rawResponse = await fetch('/myroadplanner', {
+                method: "POST",
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `token=${props.user.token}&name=Mon Voyage en ${region}&region=${region}&regionCode=${props.region}&experienceID=${experience._id}`
+            });
+            let response = await rawResponse.json();
+            if (response.result === true) {
+                props.newRoadplanner(response.roadtrip._id, experience);
+                props.addRoadtripToUser(response.roadtrip)
+                openNotification('success', 'Voyage enregistré!');
+            } else {
+                openNotification('error', "Votre voyage n'a pas pu être crée. Veuillez réessayer.")
+            }
     }
     
     const addExperienceToTrip = async(experience) => {
@@ -77,7 +78,11 @@ const createNewTrip = async (experience) => {
         let response = await rawResponse.json();
         if(response.result === true) {
             props.addExperience(response.roadtrip._id, experience)
-            success()
+            openNotification('success', 'Expérience ajouté');
+        } else if (response.message === 'already exists') {
+            openNotification('warning', 'Votre voyage contient déjà cette expérience.')
+        } else {
+            openNotification('error', "L'ajout d'expérience n'a pas pu aboutir. Veuillez réessayer.")
         }
     }
 
@@ -86,19 +91,16 @@ const createNewTrip = async (experience) => {
         if (props.user.token) {
             voyageSelect[0] === 'new' ? createNewTrip(experience) : addExperienceToTrip(experience);
         } else {
-            !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.toggleRoadplanner('temp', experience) : props.addExperience('temp', experience) ;
-            success();
+            !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.newRoadplanner('temp', experience) : props.addExperience('temp', experience) ;
+            openNotification('warning', 'Expérience ajoutée. Connectez-vous pour sauvegarder votre voyage.');
         }
     }
 
-    const success = () => {
-        message.success({
-            content: 'Expérience ajouté',
-            className: 'custom-class',
-            style: {
-                marginTop: '20vh',
-            },
-        });
+    const openNotification = (type, message) => {
+        notification[type] ({
+            description: message,
+            placement: 'bottomRight'
+        })
     };
 
     /* MAP SUR EXPERIENCES LIST ___________*/
@@ -190,9 +192,9 @@ const createNewTrip = async (experience) => {
 
 function mapDispatchToProps(dispatch) {
     return {
-        toggleRoadplanner: function(roadtripID, experience) {
+        newRoadplanner: function(roadtripID, experience) {
             dispatch({ 
-                type: 'toggleRoadplanner',
+                type: 'newRoadplanner',
                 roadtripID: roadtripID,
                 experience: experience 
             })

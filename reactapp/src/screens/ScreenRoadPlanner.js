@@ -11,17 +11,14 @@ import CardRoadPlanner from '../components/CardRoadPlanner';
 import { connect } from 'react-redux';
 
 function ScreenRoadPlanner(props) {
-    //Etats
+    //STATE HOOKS
     const [experienceList, setExperienceList] = useState([]);
-    const [experiences, setExperience] = useState([]);
-
+    const [total, setTotal] = useState(null);
+    //EFFECT HOOKS
     useEffect(() =>{
         setExperienceList(props.roadplanner.experiences)
+        setTotal(getTotal(props.roadplanner.experiences))
     },  [props.roadplanner])
-
-    useEffect(()=> {
-        console.log(experienceList)
-    }, [experienceList])
 
     let cards = []
     if (experienceList.length > 0) {
@@ -45,20 +42,25 @@ function ScreenRoadPlanner(props) {
         )
     }
 
+    //FUNCTIONS
+    const getTotal = (arr) => {
+        return arr.reduce((a, c) => { return a + c.advantageAmount }, 0);
+    }
+
     return (	
         <div>
             <Nav />
 
             <div style={ styles.container }>
                 <div style={{ display: 'flex', justifyContent: 'center', width: '2%' }}>
-                    <Map></Map>
+                    <Map mode='roadplanner'></Map>
                 </div>
 
                 <div style={ styles.row }>
                     <div style={ styles.col_xl_9}>                           
                         <div style={{ marginBottom:'40px' }}> {/* Filters */}
                             <div style={ styles.avantage}>
-                                <h3>Vous avez cumulé<span> 100€</span> d'avantages dans votre séléction</h3>
+                                <h3>Vous avez cumulé <span>{ total }</span>€ d'avantages dans votre séléction</h3>
                                 <button>Achetez votre Neopass pour seulement 60€</button>
                             </div>
                         </div> 
@@ -109,82 +111,16 @@ let styles = {
         minHeight: '.1rem',
         paddingRight: '1.5rem',
         paddingLeft: '1.5rem',
-        },
+    },
 
-        avantage:{
-            background: '#e06868',
-            textAlign: 'center',
-            color: '#fff', 
-            width: '100%',
-            marginBottom: '1rem', 
-            padding: '.5rem',
-        },
-
-    single_input_wrap:{
-        position: 'relative',
+    avantage:{
+        background: '#e06868',
+        textAlign: 'center',
+        color: '#fff', 
         width: '100%',
-        marginBottom: '18px',
-        display: 'inline-block',        
+        marginBottom: '1rem', 
+        padding: '.5rem',
     },
-
-    single_input_wrap_input:{
-        background: '#ffffff',
-        border: '1px solid #EAEAEA',
-        height: '52px',
-        width: '100%',       
-    },
-
-    display_inline:{
-        display: 'inline-flex',
-    },
-
-    text_align_center:{
-        textAlign:'center',
-    },
-
-    // CSS - MAP //
-
-    map:{
-        width:'50%', 
-        height:'auto', 
-        position: 'fixed',
-        top: '100px',
-        left: '10px',
-        padding:'1rem',
-    },
-
-
-    // CSS - ICONS //
-
-    icons_la:{
-        display: 'inline-block',
-        position: 'absolute',
-        top: '17px',
-        left: '20px',
-        color: '#CFD3DE',
-        font: 'normal normal normal 16px/1 LineAwesome',
-        fontSize: 'inherit',
-        textDecoration: 'inherit',
-        textRendering: 'optimizeLegibility',
-        textTransform: 'none',
-    },
-
-    // CARD - TITLE//
-
-    h3:{
-        fontWeight:'bold',
-        fontSize: '28px',
-        color: '#106271',
-        textDecoration: 'none',
-    },
-
-    h4:{
-        fontSize: '20px',
-        color: '#e06868',
-        textDecoration: 'none',
-    },
-
-    // CARD - CSS //
 
     experiences_list_area:{
         display: 'grid',
@@ -194,72 +130,6 @@ let styles = {
         paddingLeft: '1rem',
         paddingRight: '1rem',
 
-    },
-
-    single_destinations:{
-        display: 'flex',
-        flexWrap: 'wrap',
-        // margin: '0 0 30px 0',
-        border: '1px solid #CFD3DE',
-        boxShadow: '0px 3px 9px #071c551f',
-        borderRadius: '7px',
-        position: 'relative',
-        overflow: 'hidden',
-        margin: '.5rem',
-    },
-
-    image_card:{
-        position: 'relative',
-        background: '#fff',
-        overflow: 'hidden',
-        flex: '0 0 30%',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center center',
-        minHeight: '200px',
-        borderRadius: '5px',
-    },
-
-    image:{
-        width: '100%',
-        height: '100%',
-        // objectFit: 'cover',
-        objectFit: 'contains',
-        objectPosition: 'center center',
-        borderRadius: '5px',
-    },
-
-    detail_card:{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',        
-        flex: '0 0 70%',
-        padding: '22px 15px',
-        background: '#ffffff',
-    },
-
-    card_content:{
-        marginBottom: '15px',
-        color: '#bcbcbc',
-        hyphens: 'auto',
-    },
-
-    liste_price:{
-        marginTop: '20px',
-        display: 'flex',
-        boxSizing: 'border-box',
-        outline: 'none',
-    },
-
-    liste_price_li:{
-        margin: '0 10px',
-        fontSize: '14px',
-        listStyle: 'none',
-        display: 'inline-block',
-    },
-
-
-
-
-
+    }
 
 }        
