@@ -137,13 +137,6 @@ const createNewTrip = async (experience) => {
                     return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
                 }) }
         </div>
-<<<<<<< HEAD
-
-        <div style={styles.detail_title_location}>
-            <div>
-                <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
-                <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
-=======
             <div style={styles.detail_title_location}>
                 <div>
                     <Link
@@ -172,7 +165,6 @@ const createNewTrip = async (experience) => {
                     <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
                     <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
                 </div>
->>>>>>> main
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <p style={{ color: '#e06868', marginBottom: '8px' }}>
