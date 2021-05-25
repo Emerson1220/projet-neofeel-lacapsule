@@ -136,7 +136,7 @@ const ScreenPartner = (props) => {
                         <div>
                             <h4 style={styles.h4_white}>{experience.name}</h4>
                             <h4 style={styles.h4_white}>{experience.subtitle}</h4>
-                            <p style={{ color: '#fff' }}><i className="fa fa-map-marker" />{experience.partner.addresses[0].city}</p>
+                            <p style={{ color: '#fff' }}><i className="fa fa-map-marker" />{experience.city}</p>
                             <p style={{ color: '#fff' }}><i className="fa fa-map-marker" />{experience.region}</p>
                         </div>
                         <div style={styles.tags_title} >
