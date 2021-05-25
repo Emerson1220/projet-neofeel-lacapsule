@@ -10,6 +10,7 @@ import ScreenSearch from './screens/ScreenSearch';
 import ScreenLogin from './screens/ScreenLogin';
 import ScreenInfo from './screens/ScreenInfo';
 import ScreenPartner from './screens/ScreenPartner';
+import ScreenBecomePartner from './screens/ScreenBecomePartner';
 import ScreenProfile from './screens/ScreenProfile';
 import ScreenBasket from './screens/ScreenBasket';
 
@@ -44,6 +45,7 @@ function App() {
             <Route component={ ScreenSearch } path="/recherche"  />                    
             <Route component={ ScreenInfo } path="/info"  />
             <Route component={ ScreenPartner } path="/partenaire/:experienceID"  />
+            <Route component={ ScreenBecomePartner } path="/partenaire/"  />
             <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
             <Route component={ ScreenProfile } path="/profil"  />
             <Route component={ ScreenBasket } path="/panier"  />

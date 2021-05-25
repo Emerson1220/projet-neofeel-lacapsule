@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css';
 
+
 const RedButton = (props) => {
     //STATE HOOKS
     const [hover, setHover] = useState(false);
@@ -10,6 +11,7 @@ const RedButton = (props) => {
         title = <h2 style={ styles.buttonText }>{ props.title.split(' ').slice(0, 3).join(' ')}<br/>{ props.title.split(' ').slice(3).join(' ')}</h2>
     }
 
+    
     return(
     <button
     style={ hover ? styles.buttonHover : styles.button }
@@ -17,6 +19,7 @@ const RedButton = (props) => {
     onMouseEnter={ ()=>setHover(true) }
     onMouseLeave={ ()=>setHover(false) }
     onClick={ props.onSelect ? ()=>props.onSelect() : null }>
+        
         { title }
     </button>
     )
