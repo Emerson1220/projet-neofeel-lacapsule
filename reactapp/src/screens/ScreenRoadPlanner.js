@@ -40,7 +40,7 @@ function ScreenRoadPlanner(props) {
                     activityTime={e.activityTime}
                     budget={e.budget}
                     imageBannerUrl={e.description.imageBannerUrl}
-                    city={e.partner.addresses[0].city}
+                    city={e.partner.addresses[0].city ? e.partner.addresses[0].city : ''}
                     coordinate={e.coordinate}
                     >
                 </CardRoadPlanner>
