@@ -54,7 +54,9 @@ function Nav(props) {
         let response = await rawResponse.json();
         if (response.result === true) {
             props.stayLogged(response.user)
-            props.loadRoadplanner(response.currentRoadtrip)
+            if (response.currentRoadtrip !== 'none') {
+                props.loadRoadplanner(response.currentRoadtrip)
+            }
             setIsLogged(true)
         }
     }

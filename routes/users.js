@@ -29,7 +29,7 @@ router.post('/signup', async function(req, res, next) {
       email: user.email,
       password: hash,
       token: uid2(32),
-      category: 'user'
+      category: 'user',
     });
 
     await newUser.save();
@@ -75,13 +75,17 @@ router.post('/signin', async function(req, res, next) {
     if (!bcrypt.compareSync(req.body.password, user.password)) {
       throw 'password invalid'
     }
-
     let current = user.roadtrips.sort((a, b) => {
       return a.creationDate - b.creationDate
     })[0];
-    current = {
-      id: current._id,
-      experiences: current.days[0].experiences
+    let currentRoadtrip;
+    if (current) {
+      currentRoadtrip = {
+        id: current._id,
+        experiences: current.days[0].experiences
+      }
+    } else {
+      currentRoadtrip = 'none'
     }
     
     res.json({ result: true, user: user, currentRoadtrip: current })

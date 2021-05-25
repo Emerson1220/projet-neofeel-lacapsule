@@ -324,23 +324,28 @@ router.get('/myproduct', function(req, res, next) {
 })
 
 //Partage de voyage
-//Body: roadtripID, token(user)
+//Body: roadtrip({name, id, comments, photos, duration}), token(user)
 //Response: result, 
 router.post('/sharetrip', async function(req, res, next){
     try {
-        let user = await User.findOne({ token: req.body.token });
-        let roadtrip = await Roadtrip.findById(req.body.roadtripID);
-        console.log(typeof(user._id), typeof(roadtrip.creator))
-        console.log({ creator: roadtrip.creator, user: user._id })
-        console.log(roadtrip.creator !== user._id)
+        let data = JSON.parse(req.body.data);
+        console.log(data);
+
+        let user = await User.findOne({ token: data.token });
+        let roadtrip = await Roadtrip.findById(data.roadtripID);
+
         if (roadtrip.creator === user._id) {
             throw 'not authorized'
         }
         
         roadtrip.type = 'public';
+        roadtrip.comments.push(data.comment);
+        roadtrip.photos.concat(data.photos);
+
         await roadtrip.save();
         res.json({ result: true, roadtrip: roadtrip })
     } catch (err) {
+        console.log(err)
         res.json({ result: false, message: err })
     }
 
