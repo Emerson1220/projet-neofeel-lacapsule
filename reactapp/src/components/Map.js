@@ -229,7 +229,7 @@ const createNewTrip = async (experience) => {
             <div className="google-map">
                 <GoogleMapReact
                     bootstrapURLKeys={{ 
-                        key: 'AIzaSyBvIhotKMqoE6LT2ahjaI1T87LX1zG5Y3s' }}
+                        key: 'AIzaSyA3ZlVPMDj0kr5MTDux3rftgTC6x-cBr-g' }}
                     defaultZoom={9}
                     defaultCenter={ center }
                 >
