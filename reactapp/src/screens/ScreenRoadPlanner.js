@@ -114,7 +114,15 @@ let styles = {
         marginLeft: '1rem',
     },
 
-    row: {
+    map:{
+        display: 'block',
+        overflow: 'hidden',
+        height:'600px',
+        width:'600px',
+        padding: '2rem',
+        },
+
+    row:{
         display: 'flex',
         flexWrap: 'wrap',
         padding: '1rem',
@@ -128,8 +136,8 @@ let styles = {
         paddingLeft: '1.5rem',
     },
 
-    avantage: {
-        background: '#e06868',
+    avantage:{
+        // background: '#e06868',
         textAlign: 'center',
         color: '#fff',
         width: '100%',

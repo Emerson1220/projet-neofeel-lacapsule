@@ -63,11 +63,13 @@ function CardRoadPlanner(props) {
 
                 <div style={ styles.detail_card }>
                     <div>
-                        <div style={styles.liste_pictos}>
-                            {pictos}
-                        </div>
-                        <div>
-                            <FontAwesomeIcon size='2x' icon={faTrashAlt} onClick={ ()=>deleteExperience() } />
+                        <div style={styles.liste_pictos_header}>
+                            <div style={styles.liste_pictos}>
+                                {pictos}
+                            </div>
+                            <div style={styles.liste_pictos_trash}>
+                                <FontAwesomeIcon size='2x' icon={faTrashAlt} onClick={ ()=>deleteExperience() } />
+                            </div>
                         </div>
                         <h3 style={ styles.padding_top } ><Link style={ styles.h3 } to="/">{props.subtitle}</Link></h3>
                         <h4><Link style={ styles.h4 } to="/">{props.name}</Link></h4>
@@ -164,11 +166,22 @@ let styles = {
         padding: '.5rem',
     },
 
+    liste_pictos_header:{
+        display: 'grid',
+        gridTemplateColumns: '2fr 40px',        
+
+    },
+
     liste_pictos:{
-        width: '30%',
+        width: '35%',
         display: 'flex',
         flexWrap: 'nowrap',
-        marginTop: '-.8rem'
+        marginTop: '-.8rem',
+    },
+
+    liste_pictos_trash:{
+        color:'#e06868',
+        textAlign:'right',
     },
 
     liste_price:{
@@ -200,8 +213,6 @@ let styles = {
         color:'grey',
         borderLeft: '1px solid #CFD3DE',
         fontWeight: 'bold',
-
-
     },
 
     picto_weather: {
