@@ -27,6 +27,7 @@ const experienceSchema = mongoose.Schema({
     },
     region: String,
     regionCode: String,
+    city: String,
     address: addressSchema,
     activityType: String,
     activityCategory: String,

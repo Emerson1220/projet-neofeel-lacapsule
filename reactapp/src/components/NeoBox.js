@@ -34,19 +34,19 @@ const Neobox = () => {
                         <h2 className='subtitle'>A partir de 45€</h2>
                         <div className='div-picto'>
                             <FontAwesomeIcon icon={faHeart} style={{ color: '#e06868' }} size='3x' />
-                            <h3 className='h3'>Le Neopass physique.</h3>
+                            <h3 className='h3'>Une sélection de produits artisanaux de nos partenaires</h3>
                         </div>
                         <div className='div-picto'>
                             <FontAwesomeIcon icon={faAddressCard} style={{ color: '#e06868' }} size='3x' />
-                            <h3 className='h3'>1 guide avec toutes les expériences.</h3>
+                            <h3 className='h3'>Une carte Neopass physique.</h3>
                         </div>
                         <div className='div-picto'>
                             <FontAwesomeIcon icon={faWallet} style={{ color: '#e06868' }} size='3x' />
-                            <h3 className='h3'>Des avantages particuliers à chaque rencontre.</h3>
+                            <h3 className='h3'>1 guide avec toutes les expériences.</h3>
                         </div>
                         <div className='div-picto'>
                             <FontAwesomeIcon icon={faGift} style={{ color: '#e06868' }} size='3x' />
-                            <h3 className='h3'>Option coffret cadeau disponible.</h3>
+                            <h3 className='h3'>Des avantages particuliers à chaque rencontre.</h3>
                         </div>
                         <div className='div-picto'>
                             <img src='./images/pictos/mondial-relay-logo.png' style={{ color: '#106271', width:'60px' }}  />

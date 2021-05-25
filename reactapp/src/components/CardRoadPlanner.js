@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
-
 //UI
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 //REDUX
 import { connect } from 'react-redux';
 
@@ -14,7 +13,7 @@ function CardRoadPlanner(props) {
 
     //EFFECT HOOKS
     useEffect(()=> {
-        setWeather(getWeather(props.coordinate));
+        setWeather(getWeather(props.coordinate))
     }, [props.coordinate])
 
     //HTTP REQUESTS
@@ -40,12 +39,11 @@ function CardRoadPlanner(props) {
         
         let rawResponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${data.latitude}&lon=${data.longitude}&appid=${api_key}&units=metric&lang=fr`);
         let response = await rawResponse.json();
-        console.log(response)
-        return {
+        setWeather({
             temp: response.main.temp,
             desc: response.weather[0].description,
             icon: response.weather[0].icon
-        }
+        })
     }
 
     //DISPLAY
@@ -68,7 +66,7 @@ function CardRoadPlanner(props) {
                             {pictos}
                         </div>
                         <div>
-                            {/* <FontAwesomeIcon size='2x' icon={TrashAlt} /> */}
+                            <FontAwesomeIcon size='2x' icon={faTrashAlt} />
                         </div>
                         <h3 style={ styles.padding_top } ><Link style={ styles.h3 } to="/">{props.subtitle}</Link></h3>
                         <h4><Link style={ styles.h4 } to="/">{props.name}</Link></h4>
@@ -89,7 +87,10 @@ function CardRoadPlanner(props) {
                             <p>{props.budget}</p>
                         </div>
                         <div style={styles.liste_weather_item}>
-                            <p>ICI LA METEO</p>                         
+                            <p>Méteo</p>
+                            <img src={ `http://openweathermap.org/img/wn/${weather.icon}@2x.png` } alt="picto météo" style={ styles.picto_weather }/>
+                            <p>{ weather.temp }</p>
+                            <p>{ weather.desc }</p>                         
                         </div>
 
                     </div> 
@@ -183,6 +184,10 @@ let styles = {
         fontWeight: 'bold',
 
 
+    },
+
+    picto_weather: {
+        height: '40px'
     },
 
     // CARD - TITLE//
