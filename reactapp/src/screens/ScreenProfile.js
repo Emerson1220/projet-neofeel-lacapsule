@@ -92,14 +92,16 @@ const ScreenProfile = (props) => {
                 }}>
                     <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
 
-                        <div style={{
+                        <div className= 'bannerGradient' style={{
                             height: '35%',
                             width: '100%',
                             display: 'flex',
                             flexDirection: 'row',
-                            justifyContent: 'center',
+                            justifyContent: 'end',
+                            paddingLeft:'14%',
                             alignItems: 'center',
                             backgroundColor: 'rgba(224, 104, 104, 0.8)',
+                            
 
                         }}>
 
@@ -116,7 +118,7 @@ const ScreenProfile = (props) => {
 
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <div style={{ display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }} >
-                                <h1 style={{ marginTop: '5%', marginLeft: '10%', alignSelf: 'flex-start' }}>Mes Voyages Passés</h1>
+                                <h1 style={{ marginTop: '5%', marginLeft: '10%', alignSelf: 'flex-start' }}>Mes Voyages </h1>
                                 {tripLiked}
 
                             </div>
@@ -127,7 +129,7 @@ const ScreenProfile = (props) => {
 
                     <div style={{ flexDirection: 'row', backgroundColor: 'rgb(16, 98, 113, 0.7)', alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: '2%' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end', padding: '3%' }}>
-                            <h2 className='margeTitle'>Mes commandes</h2>
+                            <h3 className='margeTitle' style={{paddingTop:'4%'}}>Mes commandes</h3>
                             <h2 className='margeTitle'>Mes abonnements</h2>
                             <h2 className='margeTitle'>Mes accés</h2>
                             <h2 className='margeTitle'>Mes téléchargements</h2>
