@@ -147,7 +147,7 @@ let styles = {
         overflow: 'hidden',
         borderTopLeftRadius: '.5rem',
         borderBottomLeftRadius: '.5rem',
-        maxHeight: 'inherit',
+        height: '100%',
         borderBottom: '.1rem solid #CFD3DE',
     },
 
