@@ -17,11 +17,13 @@ function ScreenRoadPlanner(props) {
     //EFFECT HOOKS
     useEffect(() =>{
         setExperienceList(props.roadplanner.experiences)
-        setTotal(getTotal(props.roadplanner.experiences))
+        if(props.roadplanner.experiences && props.roadplanner.experiences.length > 0) {
+            setTotal(getTotal(props.roadplanner.experiences))
+        }
     },  [props.roadplanner])
 
     let cards = []
-    if (experienceList.length > 0) {
+    if (experienceList && experienceList.length > 0) {
         cards = experienceList.map((e, i)=>
     
             <CardRoadPlanner key={i}
