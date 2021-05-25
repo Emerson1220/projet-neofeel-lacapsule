@@ -7,15 +7,16 @@
   align-items: flex-start ;
   display: flex;
   justify-content: center;
-  height: 70vh;
-  width: 70vw
-  
+  /* height: 100vh;
+  width: 100vw; */
+  width:1400px;
+  height:900px;
 }
 
 .google-map {
-  width: 70%;
-  height: 70%;
-  position: fixed;
+  width: 100%;
+  height: 100%;
+  /* position: fixed; */
 }
 
 .pin {
