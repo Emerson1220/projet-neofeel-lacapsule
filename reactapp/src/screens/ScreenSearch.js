@@ -52,7 +52,7 @@ function ScreenSearch(props) {
     let displaySelection;
     if (display === 'map') {
         displaySelection =
-            <Map></Map>
+            <Map mode="search"></Map>
     } else if (display === 'ExperienceList') {
         displaySelection =
             <ExperienceList></ExperienceList>

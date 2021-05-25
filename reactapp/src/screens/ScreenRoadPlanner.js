@@ -11,17 +11,14 @@ import CardRoadPlanner from '../components/CardRoadPlanner';
 import { connect } from 'react-redux';
 
 function ScreenRoadPlanner(props) {
-    //Etats
+    //STATE HOOKS
     const [experienceList, setExperienceList] = useState([]);
-    const [experiences, setExperience] = useState([]);
-
+    const [total, setTotal] = useState(null);
+    //EFFECT HOOKS
     useEffect(() =>{
         setExperienceList(props.roadplanner.experiences)
+        setTotal(getTotal(props.roadplanner.experiences))
     },  [props.roadplanner])
-
-    useEffect(()=> {
-        console.log(experienceList)
-    }, [experienceList])
 
     let cards = []
     if (experienceList.length > 0) {
@@ -45,20 +42,25 @@ function ScreenRoadPlanner(props) {
         )
     }
 
+    //FUNCTIONS
+    const getTotal = (arr) => {
+        return arr.reduce((a, c) => { return a + c.advantageAmount }, 0);
+    }
+
     return (	
         <div>
             <Nav />
 
             <div style={ styles.container }>
                 <div style={{ display: 'flex', justifyContent: 'center', width: '2%' }}>
-                    <Map></Map>
+                    <Map mode='roadplanner'></Map>
                 </div>
 
                 <div style={ styles.row }>
                     <div style={ styles.col_xl_9}>                           
                         <div style={{ marginBottom:'40px' }}> {/* Filters */}
                             <div style={ styles.avantage}>
-                                <h3>Vous avez cumulé<span> 100€</span> d'avantages dans votre séléction</h3>
+                                <h3>Vous avez cumulé <span>{ total }</span>€ d'avantages dans votre séléction</h3>
                                 <button>Achetez votre Neopass pour seulement 60€</button>
                             </div>
                         </div> 
