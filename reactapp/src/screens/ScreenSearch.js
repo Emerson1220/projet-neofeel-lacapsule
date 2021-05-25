@@ -59,7 +59,7 @@ function ScreenSearch(props) {
     }
 
     return (
-        <div className="search" style={{ height: '100vh', alignItems: 'center' }}>
+        <div className="search" style={{ height: '100%', alignItems: 'center' }}>
             <Nav />
             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <div style={{marginTop:'2%', fontSize:20}}><h2>Découvrez nos expériences dans cette région</h2></div>

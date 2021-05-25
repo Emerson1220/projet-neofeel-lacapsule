@@ -10,14 +10,18 @@ import CardRoadPlanner from '../components/CardRoadPlanner';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
-import { Popover, Button } from 'antd';
+import { Popover } from 'antd';
+import RedButton from '../components/RedButton'
+import { WarningTwoTone } from '@ant-design/icons'
+
+
 //REDUX
 import { connect } from 'react-redux';
 
 function ScreenRoadPlanner(props) {
     //STATE HOOKS
     const [experienceList, setExperienceList] = useState([]);
-    const [total, setTotal] = useState(null);
+    const [total, setTotal] = useState(0);
     //EFFECT HOOKS
     useEffect(() => {
         setExperienceList(props.roadplanner.experiences)
@@ -31,6 +35,11 @@ function ScreenRoadPlanner(props) {
             <Neopass/>
         </div>
     );
+
+    let warning = <></>
+    if (!props.user.token) {
+        warning = <p><span><WarningTwoTone twoToneColor="rgb(224, 104, 104)"/></span><span style={{ color: 'black', marginLeft: '0.3rem'}}>Connectez-vous pour sauvegarder votre voyage.</span></p>
+    }
     
     let cards = []
     if (experienceList && experienceList.length > 0) {
@@ -70,8 +79,9 @@ function ScreenRoadPlanner(props) {
 
                 <div style={styles.list}>
                     <div style={styles.avantage}>
-                        <h3>Vous avez cumulé <span>{total}</span>€ d'avantages dans votre séléction</h3>
-                        <button>Achetez votre Neopass pour seulement 60€</button>
+                        { warning }
+                        <h3>Vous avez cumulé <span>{total}</span>€ d'avantages dans votre séléction!</h3>
+                        <RedButton title='Achetez votre Neopass pour 60€'></RedButton>
                         <Popover content={content} >
                             <FontAwesomeIcon size='2x' icon={faInfoCircle} style={{marginLeft:'2%'}}/>
                         </Popover>
@@ -104,6 +114,7 @@ let styles = {
         width: '100%',
         display: 'grid',
         gridTemplateColumns: '50% 50%',
+        height: '100%'
     },
 
     map:{
@@ -114,8 +125,10 @@ let styles = {
         },
 
     list:{
-        display: 'flex',
+        display: 'grid',
+        gridTemplateRows: '15% 85%',
         flexWrap: 'wrap',
+        height: '100vh'
     },
 
     col_xl_9: {
@@ -127,13 +140,15 @@ let styles = {
     },
 
     avantage:{
-        background: '#e06868',
         textAlign: 'center',
         color: '#fff',
-        width: '100%',
+        width: '65%',
         padding: '.5rem',
         margin: '1rem',
-        height: '10%'
+        borderRadius: '0.7rem',
+        border: '2px solid #e06868',
+        alignSelf: 'center',
+        justifySelf: 'center'
     },
 
     experiences_list_area: {
@@ -141,8 +156,10 @@ let styles = {
         gridTemplateColumns: 'repeat(1, 1fr)',
         boxSizing: 'border-box',
         outline: 'none',
-        height: '90vh',
-        overflow: 'scroll'
+        overflow: 'scroll', 
+        '::-webkit-scrollbar' : {
+            display: 'none'
+        }
     }
 
 }

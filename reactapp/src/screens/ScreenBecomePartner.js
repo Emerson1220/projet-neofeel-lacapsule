@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+
+//COMPONENTS
 import Nav from '../components/Nav'
+
+//UI
 import '../App.css';
 import '../styles/partner.css'
-import RedButton from '../components/RedButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhoneAlt, faBookmark } from '@fortawesome/free-solid-svg-icons'
 

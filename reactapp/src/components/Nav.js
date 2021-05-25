@@ -90,7 +90,7 @@ function Nav(props) {
     }
 
     return (
-        <div style={{ width: '100%', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#FFF', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.2)' }}>
+        <div style={{ width: '100vw', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#FFF', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.2)' }}>
             <div style={{ display: 'flex', height: '100%', alignItems: 'center', marginLeft: '1%' }}>
                 <Link style={{ height: '100%' }} to={'/'}>
                     <img

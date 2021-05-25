@@ -249,8 +249,8 @@ let styles = {
         overflow: 'hidden',
         width: '35vw',
         height: '50vh',
-        maxWidth: '500px',
-        maxHeight: '400px'
+        maxWidth: '550px',
+        maxHeight: '450px'
     },
 
     image_card:{
