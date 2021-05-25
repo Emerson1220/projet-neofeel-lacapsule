@@ -143,24 +143,22 @@ const PopoverContent = (props) => {
             <div style={styles.detail_title_location}>
                 <div>
                     <Link
-                    style={styles.h3}
                     to={{
                         pathname: `/partenaire/${experience._id}`,
                         state: {
                             experience: experience
                         }
                     }}>
-                        <h3 style={{ fontSize: '1.2rem' }}>{experience.name}</h3>
+                        <h3 style={ styles.h3 }>{experience.name}</h3>
                     </Link>
                     <Link
-                    style={styles.h4}
                     to={{
                         pathname: `/partenaire/${experience._id}`,
                         state: {
                             experience: experience
                         }
                     }}>
-                        <h4 style={{ margin: 0 }}>{experience.subtitle}</h4>
+                        <h4 style={ styles.h4 }>{experience.subtitle}</h4>
                     </Link>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
@@ -171,13 +169,13 @@ const PopoverContent = (props) => {
             </div>
             <div style ={{ display: 'flex', width: '100%' }}>
                 <div style={ props.mode === 'search'? styles.detail_card : styles.detail_roadplanner_card }>
-                        <div style={styles.liste_temps_item}>
-                            <p style={{ marginBottom: '0.3rem'}}>Temps</p>
-                            <p style={{ marginBottom: '0.3rem'}}>{experience.activityTime}</p>
+                        <div style={props.mode === 'roadplanner' ? styles.liste_temps_item_roadplanner : styles.liste_temps_item}>
+                            <p style={ styles.subtitle }>Temps</p>
+                            <p style={ styles.p }>{experience.activityTime}</p>
                         </div>
                         <div style={styles.liste_price_item}>
-                            <p style={{ marginBottom: '0.3rem'}}>Prix</p>
-                            <p style={{ marginBottom: '0.3rem'}}>{experience.budget}</p>
+                            <p style={ styles.subtitle }>Prix</p>
+                            <p style={ styles.p }>{experience.budget}</p>
                         </div>
                 </div>
                 { addContent }
@@ -232,13 +230,11 @@ let styles = {
 
     h3: {
         fontWeight: 'bold',
-        fontSize: '20px',
         color: '#106271',
         textDecoration: 'none',
     },
 
     h4: {
-        // fontSize: '18px',
         color: '#e06868',
         textDecoration: 'none',
     },
@@ -253,6 +249,8 @@ let styles = {
         overflow: 'hidden',
         width: '35vw',
         height: '50vh',
+        maxWidth: '500px',
+        maxHeight: '400px'
     },
 
     image_card:{
@@ -276,7 +274,6 @@ let styles = {
 
     detail_title_location:{
         padding:'0rem 0.5rem',
-        // paddingBottom: 0,
         display: 'flex',
         justifyContent: 'space-between',
         width: '100%'
@@ -293,11 +290,11 @@ let styles = {
 
     detail_roadplanner_card:{
         display: 'flex',
-        flexDirection: 'column',
         background: '#ffffff',
         width: '100%',
         paddingRight: '2%',
-        paddingLeft: '2%'
+        paddingLeft: '2%',
+        marginBottom: '1rem'
     },
 
     liste_price_item: {
@@ -306,6 +303,14 @@ let styles = {
         color:'grey',
         textAlign: 'center',
 
+    },
+
+    liste_temps_item_roadplanner: {
+        paddingTop: '0',
+        width: '100%',
+        color:'grey',
+        textAlign: 'center',
+        borderRight: '1px solid #CFD3DE',
     },
 
     liste_temps_item: {
@@ -317,12 +322,25 @@ let styles = {
     },
 
     picto: {
-        height: '65px',
-        width: '65px',
+        height: '90px',
+        width: '90px',
         marginRight: '1%',
         whiteSpace: 'wrap',
         zIndex:'10',
         marginTop: '-3rem',
+    },
+
+    subtitle: {
+        color: 'black',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        margin: 0
+    },
+
+    p: {
+        margin: 0,
+        color:'grey',
+        fontWeight: 'bold'
     },
 
     popover: {

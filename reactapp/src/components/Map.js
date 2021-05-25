@@ -55,7 +55,7 @@ const Map = (props) => {
     }
 
     return (
-        <div className="map">
+        <div className={ props.mode === 'roadplanner' ? "mapRoadplanner" : 'map'}>
             <div className="google-map">
                 <GoogleMapReact
                     bootstrapURLKeys={{ 
