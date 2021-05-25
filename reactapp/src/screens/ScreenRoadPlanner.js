@@ -52,16 +52,17 @@ function ScreenRoadPlanner(props) {
             <Nav />
 
             <div style={ styles.container }>
-                <div style={{ display: 'flex', justifyContent: 'center', width: '2%' }}>
-                    <Map mode='roadplanner'></Map>
+                <div style={ styles.map } >
+                    <Map  mode='roadplanner'></Map>
                 </div>
 
                 <div style={ styles.row }>
                     <div style={ styles.col_xl_9}>                           
                         <div style={{ marginBottom:'40px' }}> {/* Filters */}
                             <div style={ styles.avantage}>
-                                <h3>Vous avez cumulé <span>{ total }</span>€ d'avantages dans votre séléction</h3>
-                                <button>Achetez votre Neopass pour seulement 60€</button>
+
+
+                            
                             </div>
                         </div> 
                         
@@ -99,6 +100,14 @@ let styles = {
         marginLeft: '1rem',
     },
 
+    map:{
+        display: 'block',
+        overflow: 'hidden',
+        height:'600px',
+        width:'600px',
+        padding: '2rem',
+        },
+
     row:{
         display: 'flex',
         flexWrap: 'wrap',
@@ -114,7 +123,7 @@ let styles = {
     },
 
     avantage:{
-        background: '#e06868',
+        // background: '#e06868',
         textAlign: 'center',
         color: '#fff', 
         width: '100%',
