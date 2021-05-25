@@ -30,22 +30,25 @@ const Map = (props) => {
     }, [experienceList])
 
     var markers = [];
-    markers = experienceList.map((experience, i) => {
-        return (
-            <Popover
-            key={i}
-            content={ <PopoverContent mode={ props.mode } experience={ experience } /> }
-            
-            trigger='click'                       
-            lat={experience.coordinate.latitude}
-            lng={experience.coordinate.longitude}>
-                <div className="pin">
-                    <FontAwesomeIcon icon={faMapMarker} className="pin-icon" />
-                </div>
-            </Popover>
-
-        )
-    })
+    if (experienceList && experienceList.length > 0) {
+        markers = experienceList.map((experience, i) => {
+            return (
+                <Popover
+                key={i}
+                content={ <PopoverContent mode={ props.mode } experience={ experience } /> }
+                
+                trigger='click'                       
+                lat={experience.coordinate.latitude}
+                lng={experience.coordinate.longitude}>
+                    <div className="pin">
+                        <FontAwesomeIcon icon={faMapMarker} className="pin-icon" />
+                    </div>
+                </Popover>
+    
+            )
+        })
+    }
+    
     let center = {
         lat: 48.10707,
         lng: 7.21825

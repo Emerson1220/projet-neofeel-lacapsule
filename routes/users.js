@@ -88,7 +88,7 @@ router.post('/signin', async function(req, res, next) {
       currentRoadtrip = 'none'
     }
     
-    res.json({ result: true, user: user, currentRoadtrip: current })
+    res.json({ result: true, user: user, currentRoadtrip: currentRoadtrip })
 
   } catch (err) {
     console.log(err)

@@ -21,20 +21,21 @@ function ScreenRoadPlanner(props) {
     //EFFECT HOOKS
     useEffect(() => {
         setExperienceList(props.roadplanner.experiences)
-        setTotal(getTotal(props.roadplanner.experiences))
-    }, [props.roadplanner])
+        if(props.roadplanner.experiences && props.roadplanner.experiences.length > 0) {
+            setTotal(getTotal(props.roadplanner.experiences))
+        }
+    },  [props.roadplanner])
 
     const content = (
         <div>
             <Neopass/>
         </div>
     );
-
-
+    
     let cards = []
-    if (experienceList.length > 0) {
-        cards = experienceList.map((e, i) =>
-
+    if (experienceList && experienceList.length > 0) {
+        cards = experienceList.map((e, i)=>
+    
             <CardRoadPlanner key={i}
                 id={e._id}
                 name={e.name}
