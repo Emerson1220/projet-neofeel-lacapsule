@@ -8,11 +8,8 @@ import Nav from '../components/Nav';
 import Map from '../components/Map';
 import CardRoadPlanner from '../components/CardRoadPlanner';
 
-
 //REDUX
 import { connect } from 'react-redux';
-
-
 
 function ScreenRoadPlanner(props) {
     //Etats
@@ -51,29 +48,23 @@ function ScreenRoadPlanner(props) {
     return (	
         <div>
             <Nav />
-            <div style={ styles.container }>
 
-                <div style={{ display: 'flex', justifyContent: 'center', width: '60%' }}>
+            <div style={ styles.container }>
+                <div style={{ display: 'flex', justifyContent: 'center', width: '2%' }}>
                     <Map></Map>
                 </div>
 
                 <div style={ styles.row }>
-
                     <div style={ styles.col_xl_9}>                           
-                        <div style={{ marginBottom:'40px' }}>
-
+                        <div style={{ marginBottom:'40px' }}> {/* Filters */}
                             <div style={ styles.avantage}>
-                                <h3 style={{color:'#fff'}}>Vous avez cumulé<span> 100€</span> d'avantages dans votre séléction</h3>
-                                <button style={{backgroundColor:'#106271'}}>Achetez votre Neopass</button>
+                                <h3>Vous avez cumulé<span> 100€</span> d'avantages dans votre séléction</h3>
+                                <button>Achetez votre Neopass pour seulement 60€</button>
                             </div>
-
                         </div> 
-                            
+                        
                         <div style={ styles.experiences_list_area }> 
-
                             {cards}
-
-                                
                         </div>
 
                     </div>
@@ -101,41 +92,33 @@ let styles = {
     container: {
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)', 
-        paddingBTop: '1rem',       
-        paddingright: '15px',
-        paddingleft: '15px',
-        marginTop:'2rem',
-        marginright: 'auto',
-        marginleft: 'auto',
+        gridTemplateColumns: '1fr 2fr', 
+        paddingTop: '1rem',       
+        marginRight: '1rem',
+        marginLeft: '1rem',
     },
 
     row:{
         display: 'flex',
         flexWrap: 'wrap',
-    },
-
-    row_filters:{
-        display: 'flex',
-        flexWrap: 'wrap',
+        padding: '1rem',
     },
 
     col_xl_9:{
         position: 'relative',
         width: '100%',
-        minHeight: '1px',
-        paddingRight: '15px',
-        paddingLeft: '15px',
+        minHeight: '.1rem',
+        paddingRight: '1.5rem',
+        paddingLeft: '1.5rem',
         },
 
-    col_xl_3:{
-        position: 'relative',
-        flex: '0 0 25%',
-        maxWidth: '25%',
-        width: '100%',
-        minHeight: '1px',
-        paddingRight: '15px',
-        paddingLeft: '15px',
+        avantage:{
+            background: '#e06868',
+            textAlign: 'center',
+            color: '#fff', 
+            width: '100%',
+            marginBottom: '1rem', 
+            padding: '.5rem',
         },
 
     single_input_wrap:{
@@ -276,67 +259,12 @@ let styles = {
     },
 
 
-    liste_price_content:{
-        float: 'left',
-        marginTop: '20px',  
-        margin: '0',
-        padding: '0',
-        display: 'inline-block',      
-    },
 
-    icons_fa:{
-        display: 'inline-block',
-        font: 'normal normal normal 14px/1 FontAwesome',
-        fontSize: 'inherit',
-        textRendering: 'auto',
-        color: '#01B9B7',
-        marginRight: '5px',
-    },
 
-    liste_price_item:{
-        paddingLeft: '30px',
-        marginLeft: '20px',
-        borderLeft: '1px solid #CFD3DE',
-        paddingTop: '0',    
-    },
 
-    // PAGINATION - CSS //
 
-    pagination:{
-        display: 'inline-block',
-        textAlign: 'center',   
-        marginTop: '.5rem',    
-    },
 
-    pagination_ul:{
-        display: 'flex',
-        flexDirection: 'row',
-        listStyleType: 'none',
-    },
 
-    pagination_li:{
-        lineHeight: '43px',
-        border: '2px solid #CFD3DE',
-        borderRadius: '50%',
-        textAlign: 'center',
-        display: 'inline-block',
-        color: '#97A1B3', 
-        width: '42px',
-        height: '42px',
-        margin: '0 5px', 
-    },
 
-    avantage:{
-        // border: '2px solid #CFD3DE',
-        background: '#e06868',
-        // borderRadius: '5%',
-        textAlign: 'center',
-        color: '#fff', 
-        width: '100%',
-        // height: '42px',
-        marginBottom: '1rem', 
-        padding: '.5rem',
-        // position: 'fixed',
-    },
 
 }        

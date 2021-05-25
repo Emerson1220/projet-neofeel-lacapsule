@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 
-
+//UI
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 //REDUX
 import { connect } from 'react-redux';
@@ -54,38 +55,45 @@ function CardRoadPlanner(props) {
 
     return ( 
         <div style={ styles.single_destinations}>
-
             <div style={ styles.card_banniere }>
+
                 <div style={ styles.image_card }>
                     <img style={ styles.image } src={props.imageBannerUrl} alt="list" />
                 </div>
-                <div style={{ padding: '2rem' }}>
-                    <p style={{ color: '#e06868', marginToop: '2rem'}}><img style={{ marginRight: '4px'}} src="images/icone-geo.png" alt="map" />{props.region}</p>
-                    <h4 ><Link style={ styles.h4 }  to="/">{props.city}</Link></h4>
-                    <div style={styles.liste_pictos}>
-                        {pictos}
+
+
+                <div style={ styles.detail_card }>
+                    <div>
+                        <div style={styles.liste_pictos}>
+                            {pictos}
+                        </div>
+                        <div>
+                            {/* <FontAwesomeIcon size='2x' icon={TrashAlt} /> */}
+                        </div>
+                        <h3 style={ styles.padding_top } ><Link style={ styles.h3 } to="/">{props.subtitle}</Link></h3>
+                        <h4><Link style={ styles.h4 } to="/">{props.name}</Link></h4>
+                    </div>
+
+                    <div style={ styles.title_location }>
+                        <h4 style={ styles.items_title_location }><img style={{marginRight:'.5rem'}} src="images/icone-geo.png" alt="map" />{props.region}</h4>
+                        <h4 style={ styles.items_title_location }>{props.city}</h4>
+                    </div>
+
+                    <div style={styles.liste_price}>
+                        <div style={styles.liste_time_item}>
+                            <p>Durée:</p>
+                            <p>{props.activityTime}</p>
+                        </div>
+                        <div style={styles.liste_price_item}>
+                            <p>Prix:</p>
+                            <p>{props.budget}</p>
+                        </div>
+                        <div style={styles.liste_weather_item}>
+                            <p>ICI LA METEO</p>                         
+                        </div>
+
                     </div> 
-
                 </div>
-
-
-            </div>
-
-            <div style={ styles.detail_card }>
-                <div>
-                    <h3><Link style={ styles.h3 } to="/">{props.subtitle}</Link></h3>
-                    <h4><Link style={ styles.h4 } to="/">{props.name}</Link></h4>
-                </div>
-                <div style={styles.liste_price}>
-                    <div style={styles.liste_price_item}>
-                        <p>Temps</p>
-                        <h4>{props.activityTime}</h4>
-                    </div>
-                    <div style={styles.liste_price_item}>
-                        <p>Prix</p>
-                        <h4>{props.budget}</h4>
-                    </div>
-                </div> 
             </div>
         </div> 
                                 
@@ -95,156 +103,110 @@ function CardRoadPlanner(props) {
 let styles = {
 
     single_destinations:{
-        // display: 'flex',
         flexWrap: 'wrap',
-        // margin: '0 0 30px 0',
-        border: '1px solid #CFD3DE',
-        boxShadow: '0px 3px 9px #071c551f',
-        borderRadius: '7px',
+        margin: '1rem',
+        border: '.1rem solid #CFD3DE',
+        boxShadow: '0 .3rem .9rem #071c551f',
+        borderRadius: '.5rem',
         position: 'relative',
-        // overflow: 'hidden',
-        margin: '.5rem',
-        maxHeight: '400px'
+        boxSizing: 'border-box',
     },
-
 
     card_banniere:{
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',        
+        gridTemplateColumns: '1fr 2fr',
     },
 
     image_card:{
+        display: 'grid',
+        gridTemplateRows: 'repeat(1, 1fr)',        
         position: 'relative',
         background: '#fff',
         overflow: 'hidden',
-        flex: '0 0 30%',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center center',
-        mHeight: '400px',
         borderRadius: '5px',
     },
 
-    liste_pictos:{
-        width: '40%',
-        display: 'flex',
-        flexWrap: 'nowrap',
-        // padding: '1rem',
+    image:{
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'center',
+        borderRadius: '.4rem',
+    },
+
+    title_location:{
+        display:'flex', 
+        flexDirection: 'columns',
     },
 
     detail_card:{
         display: 'grid',
-        gridTemplateColumns: '2fr 1fr',        
-        flex: '0 0 70%',
-        padding: '22px 15px',
-        background: '#ffffff',
+        gridTemplateColumns: '1fr',        
+        padding: '.5rem',
     },
 
+    liste_pictos:{
+        width: '30%',
+        display: 'flex',
+        flexWrap: 'nowrap',
+        marginTop: '-.8rem'
+    },
+
+    liste_price:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',        
+        marginTop: '1rem',
+    },
+
+    liste_time_item:{
+        paddingLeft: '.5rem',
+        borderRight: '1px solid #CFD3DE',
+        paddingTop: '0', 
+        color:'grey',
+        textAlign:'center',
+        fontWeight: 'bold',
+    },
+
+    liste_price_item:{
+        paddingLeft: '.5rem',
+        borderLeft: '1px solid #CFD3DE',
+        paddingTop: '0',
+        color:'grey',
+        textAlign:'center',
+        fontWeight: 'bold',
+    },
+
+    liste_weather_item:{
+        textAlign:'center',
+        color:'grey',
+        borderLeft: '1px solid #CFD3DE',
+        fontWeight: 'bold',
 
 
-
-    // CSS - ICONS //
-
-    icons_la:{
-        display: 'inline-block',
-        position: 'absolute',
-        top: '17px',
-        left: '20px',
-        color: '#CFD3DE',
-        font: 'normal 16px/1 LineAwesome',
-        fontSize: 'inherit',
-        textDecoration: 'inherit',
-        textRendering: 'optimizeLegibility',
-        textTransform: 'none',
     },
 
     // CARD - TITLE//
 
     h3: {
         fontWeight: 'bold',
-        fontSize: '20px',
         color: '#106271',
         textDecoration: 'none',
     },
 
+    padding_top: {
+        paddingTop: '.5rem',
+    },
+
     h4: {
-        // fontSize: '18px',
         color: '#e06868',
         textDecoration: 'none',
     },
 
-    // CARD - CSS //
-
-    experiences_list_area:{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(1, 1fr)',        
-        boxSizing: 'border-box',
-        outline: 'none',
-        paddingLeft: '1rem',
-        paddingRight: '1rem',
-
+    items_title_location:{
+        color: 'grey', 
+        marginRight: '1rem',
     },
 
-
-
-
-
-    image:{
-        width: '100%',
-        height: '100%',
-        objectFit: 'contains',
-        objectPosition: 'center center',
-        borderRadius: '5px',
-    },
-
-
-
-    card_content:{
-        marginBottom: '15px',
-        color: '#bcbcbc',
-        hyphens: 'auto',
-    },
-
-    liste_price:{
-        marginTop: '20px',
-        display: 'flex',
-        boxSizing: 'border-box',
-        outline: 'none',
-    },
-
-
-
-    liste_price_li:{
-        margin: '0 10px',
-        fontSize: '14px',
-        listStyle: 'none',
-        display: 'inline-block',
-    },
-
-
-    liste_price_content:{
-        float: 'left',
-        marginTop: '20px',  
-        margin: '0',
-        padding: '0',
-        display: 'inline-block',      
-    },
-
-    icons_fa:{
-        display: 'inline-block',
-        font: 'normal normal normal 14px/1 FontAwesome',
-        fontSize: 'inherit',
-        textRendering: 'auto',
-        color: '#01B9B7',
-        marginRight: '5px',
-    },
-
-    liste_price_item:{
-        paddingLeft: '30px',
-        marginLeft: '20px',
-        borderLeft: '1px solid #CFD3DE',
-        paddingTop: '0',    
-    },
 }        
 
 function mapDispatchToProps(dispatch) {
