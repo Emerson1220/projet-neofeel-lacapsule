@@ -340,7 +340,7 @@ router.post('/sharetrip', async function(req, res, next){
         
         roadtrip.type = 'public';
         roadtrip.comments.push(data.comment);
-        roadtrip.photos.concat(data.photos);
+        roadtrip.images.concat(data.photos);
 
         await roadtrip.save();
         res.json({ result: true, roadtrip: roadtrip })
