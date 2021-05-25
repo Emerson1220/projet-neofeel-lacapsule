@@ -126,6 +126,8 @@ let styles = {
         display: 'flex',
         flexWrap: 'wrap',
         padding: '1rem',
+        justifyContent:'center',
+        alignItems :'center'
     },
 
     col_xl_9: {
@@ -137,10 +139,10 @@ let styles = {
     },
 
     avantage:{
-        // background: '#e06868',
+        background: '#e06868',        
         textAlign: 'center',
         color: '#fff',
-        width: '100%',
+        width: '80%',
         marginBottom: '1rem',
         padding: '.5rem',
     },
