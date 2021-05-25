@@ -2,12 +2,8 @@ var express = require('express');
 var router = express.Router();
 const uid2 = require('uid2');
 const bcrypt = require('bcrypt');
-<<<<<<< HEAD
-const axios = require('axios');
-=======
->>>>>>> test
-// const { OAuth2Client } = require('google-auth-library');
-// const client = new OAuth2Client('884422014939-bu63e3eoqfgv1vrmsn01qd0ukfl2uumf.apps.googleusercontent.com')
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client('884422014939-bu63e3eoqfgv1vrmsn01qd0ukfl2uumf.apps.googleusercontent.com')
 
 const User = require('../models/User');
 

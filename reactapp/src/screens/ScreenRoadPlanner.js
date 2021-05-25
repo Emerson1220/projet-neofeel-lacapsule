@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../App.css';
 
 
@@ -15,92 +15,67 @@ import { connect } from 'react-redux';
 
 
 function ScreenRoadPlanner(props) {
-    //Etats
-    const [experienceList, setExperienceList] = useState([]);
-    const [experiences, setExperience] = useState([]);
-
-    useEffect(() =>{
-        if(props.roadplanner.experiences) {
-            setExperienceList(props.roadplanner.experiences)
-        }
-},  [props.roadplanner])
-
-    const deleteExperience = async(experienceID) => {
-        if(props.user.token) {
-            let rawResponse = await fetch(`/myroadplanner/${props.roadplanner.id}/${experienceID}`);
-            let response = await rawResponse.json();
-        }
-    }
-
+    //DISPLAY
     let cards = []
-    if (experienceList.length > 0) {
-        experienceList.map((e, i)=>
-    
-            <CardRoadPlanner key={i}
-                id={ e._id } 
-                name={e.name} 
-                activity={e.activity} 
-                activityType={e.activityType} 
-                region={e.region}
-                tags={e.tags}
-                subtitle={e.subtitle}
-                activityTime={e.activityTime}
-                budget={e.budget}
-                imageBannerUrl={e.description.imageBannerUrl}
-                city={e.partner.addresses[0].city}
-                >
-            </CardRoadPlanner>
+    if (props.roadplanner.experiences && props.roadplanner.experiences.length > 0) {
+        props.roadplanner.experiences.map((e, i)=> 
+                <CardRoadPlanner key={i}
+                    id={ e._id } 
+                    name={e.name} 
+                    activity={e.activity} 
+                    activityType={e.activityType} 
+                    region={e.region}
+                    tags={e.tags}
+                    subtitle={e.subtitle}
+                    activityTime={e.activityTime}
+                    budget={e.budget}
+                    imageBannerUrl={e.description.imageBannerUrl}
+                    city={e.partner.addresses[0].city}
+                    coordinate={e.coordinate}
+                    >
+                </CardRoadPlanner>
         )
     }
-
+    console.log({ cards: cards })
 
     return (	
-    <div>
+        <div>
             <Nav />
-                <div style={ styles.container }>
+            <div style={ styles.container }>
 
                 <div style={{ display: 'flex', justifyContent: 'center', width: '60%' }}>
                     <Map></Map>
                 </div>
 
+                <div style={ styles.row }>
 
-
-
-
-                    <div style={ styles.row }>
-
-                        <div style={ styles.col_xl_9}>                           
-                            <div style={{ marginBottom:'40px' }}> {/* Filters */}
+                    <div style={ styles.col_xl_9}>                           
+                        <div style={{ marginBottom:'40px' }}>
 
                             <div style={ styles.avantage}>
                                 <h3 style={{color:'#fff'}}>Vous avez cumulé<span> 100€</span> d'avantages dans votre séléction</h3>
-                                <ul>
-                                    <li>Mes avantages</li>
-                                    <li>Mes avantages</li>
-                                    <li>Mes avantages</li>
-                                    <li>Mes avantages</li>
-                                </ul>
                                 <button style={{backgroundColor:'#106271'}}>Achetez votre Neopass</button>
                             </div>
 
-                            </div> 
+                        </div> 
                             
-                            <div style={ styles.experiences_list_area }> 
+                        <div style={ styles.experiences_list_area }> 
 
                             {cards}
 
                                 
-                            </div>
-
                         </div>
+
                     </div>
                 </div>
             </div>
+        </div>
     )
 };
 
 
 function mapStateToProps(state) {
+    console.log(state)
     return { user: state.user, roadplanner: state.roadplanner }
 }
 
@@ -232,13 +207,13 @@ let styles = {
     single_destinations:{
         display: 'flex',
         flexWrap: 'wrap',
-        margin: '0 0 30px 0',
+        // margin: '0 0 30px 0',
         border: '1px solid #CFD3DE',
         boxShadow: '0px 3px 9px #071c551f',
         borderRadius: '7px',
         position: 'relative',
         overflow: 'hidden',
-        // margin: '.5rem',
+        margin: '.5rem',
     },
 
     image_card:{

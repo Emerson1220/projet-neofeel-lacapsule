@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 
@@ -8,15 +8,24 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function CardRoadPlanner(props) {
+    //STATE HOOKS
+    const [weather, setWeather] = useState({});
 
+    //EFFECT HOOKS
+    useEffect(()=> {
+        setWeather(getWeather(props.coordinate));
+    }, [props.coordinate])
+
+    //HTTP REQUESTS
     const deleteExperienceDB = async(experienceID) => {
-            let rawResponse = await fetch(`/myroadplanner/${props.roadplanner.id}/${experienceID}`);
-            let response = await rawResponse.json();
+        let rawResponse = await fetch(`/myroadplanner/${props.roadplanner.id}/${experienceID}`);
+        let response = await rawResponse.json();
             if(response.result === true) {
                 props.deleteExperience(experienceID)
             }
     }
-
+        
+    //FUNCTIONS
     const deleteExperience = experienceID => {
         if (props.user.token) {
             deleteExperienceDB(experienceID)
@@ -25,11 +34,23 @@ function CardRoadPlanner(props) {
         }
     }
 
+    const getWeather = async(data) => {
+        const api_key = '4810d2c7945fe82541e351ffa914d368';
+        
+        let rawResponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${data.latitude}&lon=${data.longitude}&appid=${api_key}&units=metric&lang=fr`);
+        let response = await rawResponse.json();
+        console.log(response)
+        return {
+            temp: response.main.temp,
+            desc: response.weather[0].description,
+            icon: response.weather[0].icon
+        }
+    }
+
+    //DISPLAY
     var pictos = props.tags.map((image, j) => {
         return (<img key={j} style={styles.liste_pictos} src={`images/pictos/${image}-8.png`} alt={image} />)
     })
-
-
 
     return ( 
         <div style={ styles.single_destinations}>
@@ -76,7 +97,7 @@ let styles = {
     single_destinations:{
         // display: 'flex',
         flexWrap: 'wrap',
-        margin: '0 0 30px 0',
+        // margin: '0 0 30px 0',
         border: '1px solid #CFD3DE',
         boxShadow: '0px 3px 9px #071c551f',
         borderRadius: '7px',
