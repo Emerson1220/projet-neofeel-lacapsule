@@ -36,7 +36,7 @@ const ScreenSuggestions = (props) => {
         })
         let response = await rawResponse.json();
         props.loadSuggestions(response.roadtrips);
-    }
+    };
 
     const addTrip = async(suggestion) => {
         if (props.user.token) {
@@ -80,8 +80,8 @@ const ScreenSuggestions = (props) => {
                     </Panel>)
                 })
                 /* Days */
-                return (<Panel key={k} className="site-collapse-custom-panel" showArrow='false' header={day.name} key="1" style={{ width: '1200px', maxWidth: '100%' }}>
-                    <Collapse defaultActiveKey="1" style={{}}>
+                return (<Panel key={k} className="site-collapse-custom-panel" showArrow='false' header={day.name} style={{ width: '1200px', maxWidth: '100%' }}>
+                    <Collapse defaultActiveKey="0" style={{}}>
                         {dayExperienceList}
                     </Collapse>
                 </Panel>)

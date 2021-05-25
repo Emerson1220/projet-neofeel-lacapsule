@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import '../App.css';
 
@@ -13,42 +14,36 @@ import { connect } from 'react-redux';
 function ScreenRoadPlanner(props) {
     //Etats
     const [experienceList, setExperienceList] = useState([]);
-    const [experiences, setExperience] = useState([]);
 
+    //EFFECT HOOKS
     useEffect(() =>{
         if(props.roadplanner.experiences) {
             setExperienceList(props.roadplanner.experiences)
         }
-},  [props.roadplanner])
+    },  [props.roadplanner])
 
-    const deleteExperience = async(experienceID) => {
-        if(props.user.token) {
-            let rawResponse = await fetch(`/myroadplanner/${props.roadplanner.id}/${experienceID}`);
-            let response = await rawResponse.json();
-        }
-    }
-
+    //DISPLAY
     let cards = []
     if (experienceList.length > 0) {
-        experienceList.map((e, i)=>
-    
-            <CardRoadPlanner key={i}
-                id={ e._id } 
-                name={e.name} 
-                activity={e.activity} 
-                activityType={e.activityType} 
-                region={e.region}
-                tags={e.tags}
-                subtitle={e.subtitle}
-                activityTime={e.activityTime}
-                budget={e.budget}
-                imageBannerUrl={e.description.imageBannerUrl}
-                city={e.partner.addresses[0].city}
-                >
-            </CardRoadPlanner>
+        experienceList.map((e, i)=> 
+                <CardRoadPlanner key={i}
+                    id={ e._id } 
+                    name={e.name} 
+                    activity={e.activity} 
+                    activityType={e.activityType} 
+                    region={e.region}
+                    tags={e.tags}
+                    subtitle={e.subtitle}
+                    activityTime={e.activityTime}
+                    budget={e.budget}
+                    imageBannerUrl={e.description.imageBannerUrl}
+                    city={e.partner.addresses[0].city}
+                    coordinate={e.coordinate}
+                    >
+                </CardRoadPlanner>
         )
     }
-
+    console.log({ cards: cards })
 
     return (	
         <div>
@@ -71,6 +66,7 @@ function ScreenRoadPlanner(props) {
                         <div style={ styles.experiences_list_area }> 
                             {cards}
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -80,6 +76,7 @@ function ScreenRoadPlanner(props) {
 
 
 function mapStateToProps(state) {
+    console.log(state)
     return { user: state.user, roadplanner: state.roadplanner }
 }
 
@@ -203,13 +200,13 @@ let styles = {
     single_destinations:{
         display: 'flex',
         flexWrap: 'wrap',
-        margin: '0 0 30px 0',
+        // margin: '0 0 30px 0',
         border: '1px solid #CFD3DE',
         boxShadow: '0px 3px 9px #071c551f',
         borderRadius: '7px',
         position: 'relative',
         overflow: 'hidden',
-        // margin: '.5rem',
+        margin: '.5rem',
     },
 
     image_card:{

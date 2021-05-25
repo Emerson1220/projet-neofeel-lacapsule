@@ -126,24 +126,16 @@ const createNewTrip = async (experience) => {
 
     let openModal = [];
     if (experience !== {}) {
-        openModal = 
+        openModal =
         <div style={styles.single_destinations}> 
-            <div style={styles.image_card}>
-                <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
-            </div>
-            
-            <div style={{ width: '100%',backgroundColor: 'white',display:'flex', flexWrap:'nowrap', padding:'1rem'}}>
-                {experience.tags.map((image, j) => {
-                    return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
-                }) }
+        <div style={styles.image_card}>
+            <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
         </div>
-<<<<<<< HEAD
-
-        <div style={styles.detail_title_location}>
-            <div>
-                <h3><Link style={styles.h3} to="/partenaire">{experience.name}</Link></h3>
-                <h4><Link style={styles.h4} to="/partenaire">{experience.subtitle}</Link></h4>
-=======
+        <div style={{ width: '100%',backgroundColor: 'white',display:'flex', flexWrap:'nowrap', padding:'1rem'}}>
+            {experience.tags.map((image, j) => {
+                return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
+            }) }
+        </div>
             <div style={styles.detail_title_location}>
                 <div>
                     <Link
@@ -172,26 +164,17 @@ const createNewTrip = async (experience) => {
                     <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
                     <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
                 </div>
->>>>>>> main
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <p style={{ color: '#e06868', marginBottom: '8px' }}>
-                <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
-                <h4 >{experience.partner.addresses[0].city}</h4>
-            </div>
-        </div>
-
         <div style={styles.detail_card}>
                 <div style={styles.liste_temps_item}>
-                    <h4>Durée</h4>
-                    <p>{experience.activityTime}</p>
+                    <p>Temps</p>
+                    <h2>{experience.activityTime}</h2>
                 </div>
                 <div style={styles.liste_price_item}>
-                    <h4>Prix</h4>
-                    <p>{experience.budget}</p>
+                    <p>Prix</p>
+                    <h2>{experience.budget}</h2>
                 </div>
         </div>
-
         <div style={{ textAlign: 'center', marginTop:'1rem', alignSelf: 'center', width: '100%' }}>
             <h4 style={styles.h4}>Ajouter cette experience à votre voyage</h4>
             <Cascader

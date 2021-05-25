@@ -119,7 +119,7 @@ const ScreenPartner = (props) => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
         if (newWindow) newWindow.opener = null
     }
-    //DISPLAY MANAGEMENT
+    //DISPLAY
     let address = `${experience.partner.addresses[0].streetNumber} ${experience.partner.addresses[0].streetName} ${experience.partner.addresses[0].city} ${experience.partner.addresses[0].zipcode} ${experience.partner.addresses[0].country}`
 
     return (
@@ -141,7 +141,7 @@ const ScreenPartner = (props) => {
                         </div>
                         <div style={styles.tags_title} >
                             {experience.tags.map((e, i) => {
-                                return <a style={styles.tags_title} key={i} href="#">{e}</a>
+                                return <RedButton key={i} title={ `#${e}` }></RedButton>
                             })}
                         </div>
 
@@ -258,7 +258,7 @@ const ScreenPartner = (props) => {
                                 <div style={styles.information_bloc} >
                                     <h4 style={styles.h4}>Localisation</h4>
                                     <div>
-                                        <iframe style={styles.location_map} src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d649788.5753409272!2d-0.5724199684037448!3d52.92186340524542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604d94c3b82ab%3A0x62077a554c8e9a8e!2sPetty%20France%2C%20Westminster%2C%20London%2C%20UK!5e0!3m2!1sen!2sbd!4v1572346566908!5m2!1sen!2sbd" />
+                                        <iframe title={ experience.name } style={styles.location_map} src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d649788.5753409272!2d-0.5724199684037448!3d52.92186340524542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604d94c3b82ab%3A0x62077a554c8e9a8e!2sPetty%20France%2C%20Westminster%2C%20London%2C%20UK!5e0!3m2!1sen!2sbd!4v1572346566908!5m2!1sen!2sbd" />
                                     </div>
                                 </div>
 
@@ -269,8 +269,8 @@ const ScreenPartner = (props) => {
                                         </div>
                                         <div>
                                             <p style={styles.p_description}>Adresse: <span>{address}</span></p>
-                                            <p style={styles.p_description}>Site internet: <span onClick={ ()=>openInNewTab(experience.partner.website) }>{}</span></p>
-                                            <p style={styles.p_description}>Page facebook: <span onClick={ ()=>openInNewTab(experience.partner.facebook) }>{experience.partner.facebook}</span></p>
+                                            <p style={styles.p_description}>Site internet: <span style={ styles.link_externe} onClick={ ()=>openInNewTab(experience.partner.website) }>{}</span></p>
+                                            <p style={styles.p_description}>Page facebook: <span style={ styles.link_externe} onClick={ ()=>openInNewTab(experience.partner.facebook) }>{experience.partner.facebook}</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -375,7 +375,7 @@ let styles = {
     container_all: {
         display: 'flex',
         flexDirection: 'column',
-        marginTop: '1rem',
+        // marginTop: '1rem',
         width: '100%',
         paddingRight: '1.5rem',
         paddingLeft: '1.5rem',
@@ -572,7 +572,7 @@ let styles = {
         lineHeight: '1rem',
         color: '#ffffff',
         fontSize: '1rem',
-        bordeeRadius: '0.08rem',
+        borderRadius: '0.08rem',
         marginRight: '0.24rem',
         display: 'inline-block',
         marginTop: '0.2rem',
@@ -611,7 +611,10 @@ let styles = {
         border: '0',
     },
 
-
+    link_externe: {
+        color: ' #0000EE',
+        textDecoration: 'underline'
+    },
 
     // COMMENTAIRES//
 
