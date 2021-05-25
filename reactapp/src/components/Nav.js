@@ -63,6 +63,7 @@ function Nav(props) {
         cookies.remove('token');
         props.onLogoutClick();
         props.clearRoadplanner();
+        setRoadplannerCount(0);
         setIsLogged(false);
     }
     
@@ -127,7 +128,7 @@ function Nav(props) {
             </div>
             <div style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', marginRight: '1%', height: '100%', width: '40%' }}>
                 <Link to={'/partenaire'}>
-                    <Button className='devenezPartenaireButton' > Devenez Partenaire </Button>
+                    <Button className='devenezPartenaireButton' >Devenez Partenaire</Button>
                 </Link>
                 <div className='listNav' style={{ display: 'flex', alignItems: 'center',justifyContent:'flex-end', flexDirection: 'row', marginLeft: '11%', marginBottom: 0, height: '100%', width:'100%' }}>
                     <Badge count={ roadplannerCount } >

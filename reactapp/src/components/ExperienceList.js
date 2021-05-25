@@ -8,6 +8,7 @@ import { Cascader, message } from 'antd'
 const ExperienceList = (props) => {
     const [voyageSelect, setVoyageSelect] = useState('');
     
+    //test
     //CASCADER
     let options = [
             {
@@ -146,7 +147,7 @@ const createNewTrip = async (experience) => {
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
                                     <p style={{ color: '#e06868', marginBottom: '8px' }}>
                                     <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
-                                    <h4 ><Link style={styles.h4} to="/">{experience.partner.addresses[0].city}</Link></h4>
+                                    <h4 ><Link style={styles.h4} to="/">{experience.city}</Link></h4>
                                 </div>
                             </div>
                             <div style={styles.liste_price}>
