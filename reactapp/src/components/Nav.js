@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 
 //UI
 import { Button, Badge } from 'antd';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 //REDUX
 import { connect } from 'react-redux';
 
@@ -18,23 +19,23 @@ function Nav(props) {
     const [roadplannerCount, setRoadplannerCount] = useState(0);
 
     //EFFECT HOOKS
-    useEffect(()=> {
+    useEffect(() => {
         let cookieToken = cookies.get('token');
         if (cookieToken) {
             fetchUser(cookieToken)
         }
     }, [])
 
-    useEffect(()=> {
+    useEffect(() => {
         if (props.user.token) {
             setIsLogged(true)
         }
     }, [props.user])
 
     useEffect(() => {
-    if(props.roadplanner.experiences) {
+        if (props.roadplanner.experiences) {
             setRoadplannerCount(props.roadplanner.experiences.length)
-    }
+        }
     }, [props.roadplanner])
 
     //FUNCTIONS
@@ -43,12 +44,12 @@ function Nav(props) {
         if (newWindow) newWindow.opener = null
     }
 
-    
 
-    const fetchUser = async(token) => {
+
+    const fetchUser = async (token) => {
         let rawResponse = await fetch('/users/staylogged', {
             method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `token=${token}`
         })
         let response = await rawResponse.json();
@@ -68,45 +69,50 @@ function Nav(props) {
         setRoadplannerCount(0);
         setIsLogged(false);
     }
-    
+
     let connectButton;
     let greeting;
+    let connectIcon;
 
-    if(isLogged === false) {
-        connectButton = 
-        <Link to={'/connexion'} style={{ marginRight:'3%'}}>
-        <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Connexion</h2>
-        </Link>
+    if (isLogged === false) {
+        connectButton =
+            <Link to={'/connexion'} style={{ marginRight: '3%' }}>
+                <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Connexion</h2>
+            </Link>
     } else {
-        connectButton = 
-        <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap', marginRight:'3%'}} onClick={ ()=>logOut() }>Déconnexion</h2>
-        greeting = <h2 style={{ color: '#106271', marginBottom: 0, marginLeft: '20%', whiteSpace: 'nowrap' }}>Bienvenue, { props.user.firstName }!</h2>
+        connectButton =
+            <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap', marginRight: '3%' }} onClick={() => logOut()}>Déconnexion</h2>
+        greeting = <h2 style={{ color: '#106271', marginBottom: 0, marginLeft: '20%', whiteSpace: 'nowrap' }}>Bienvenue, {props.user.firstName}!</h2>
+        connectIcon = <Link to ={'/profil'} style={{marginRight:'3%'}}>
+                        <FontAwesomeIcon size='2x' icon={faUserCircle} style={{ color: '#106271' }}/>
+                     </Link>
+
     }
 
     return (
-        <div style={{ width: '100%', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor:'#FFF', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.2)' }}>
+        <div style={{ width: '100%', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#FFF', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.2)' }}>
             <div style={{ display: 'flex', height: '100%', alignItems: 'center', marginLeft: '1%' }}>
                 <Link style={{ height: '100%' }} to={'/'}>
                     <img
-
+                        style={{ margin: '1%', padding: '1%' }}
                         height={'90%'}
-                        src="/images/LOGO.png" alt="logo"/>
+                        src="/images/LOGO.png" alt="logo" />
                 </Link>
 
                 <div style={{ display: "flex", flexDirection: 'column', height: '90%', justifyContent: 'space-around', }}>
-                    <button 
-                    style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center', background: 'transparent', border: 'none' }}
-                    onClick={ ()=>openInNewTab("https://www.facebook.com/lespritdepartage/") }>
+                    <button
+                        style={{ height: '20%', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none' }}
+                        onClick={() => openInNewTab("https://www.facebook.com/lespritdepartage/")}>
                         <img
                             height={'100%'}
-                            style={{ marginLeft: '10px',padding: 0 }}
+                            style={{ marginLeft: '10px', padding: 0 }}
                             src="/images/facebookColor.png"
                             alt='picto facebook'
                         />
                     </button>
                     <button
-                    style={{ height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center', background: 'transparent', border: 'none' }}
-                    onClick={ ()=>openInNewTab("https://www.youtube.com/channel/UCHdHavcCfpXR8wLhgK3t0qQ")} >
+                        style={{ height: '20%', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none' }}
+                        onClick={() => openInNewTab("https://www.youtube.com/channel/UCHdHavcCfpXR8wLhgK3t0qQ")} >
                         <img
                             height={'100%'}
                             style={{ marginLeft: '10px', color: '#FF0000' }}
@@ -115,8 +121,8 @@ function Nav(props) {
                         />
                     </button>
                     <button
-                    style={{height: '20%', padding: 0, display:'flex', alignItems:'center',justifyContent:'center', background: 'transparent', border: 'none' }}
-                    onClick={ ()=>openInNewTab("https://www.instagram.com/neofeeltravel/")}
+                        style={{ height: '20%', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none' }}
+                        onClick={() => openInNewTab("https://www.instagram.com/neofeeltravel/")}
                     >
                         <img
                             height={'100%'}
@@ -126,22 +132,23 @@ function Nav(props) {
                         />
                     </button>
                 </div>
-                { greeting }
+                {greeting}
             </div>
             <div style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', marginRight: '1%', height: '100%', width: '40%' }}>
                 <Link to={'/partenaire'}>
                     <Button className='devenezPartenaireButton' >Devenez Partenaire</Button>
                 </Link>
-                <div className='listNav' style={{ display: 'flex', alignItems: 'center',justifyContent:'flex-end', flexDirection: 'row', marginLeft: '11%', marginBottom: 0, height: '100%', width:'100%' }}>
-                    <Badge count={ roadplannerCount } >
+                <div className='listNav' style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row', marginLeft: '11%', marginBottom: 0, height: '100%', width: '100%' }}>
+                    <Badge count={roadplannerCount} >
                         <Link to={'/roadPlanner'}  >
                             <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Mon Voyage</h2>
                         </Link>
                     </Badge>
-                    <Link to={'/recherche'} style={{ marginRight:'3%', marginLeft:'3%'}}>
+                    <Link to={'/recherche'} style={{ marginRight: '3%', marginLeft: '3%' }}>
                         <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap' }}>Recherche</h2>
                     </Link>
-                    { connectButton }
+                    {connectButton}
+                    {connectIcon}
                 </div>
             </div>
         </div>
@@ -150,16 +157,16 @@ function Nav(props) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        stayLogged: function(user) {
+        stayLogged: function (user) {
             dispatch({ type: 'stayLogged', user: user })
         },
-        onLogoutClick: function(data) {
+        onLogoutClick: function (data) {
             dispatch({ type: 'logout' })
         },
-        loadRoadplanner: function(roadplanner) {
+        loadRoadplanner: function (roadplanner) {
             dispatch({ type: 'loadRoadplanner', roadplanner: roadplanner })
         },
-        clearRoadplanner: function() {
+        clearRoadplanner: function () {
             dispatch({ type: 'clearRoadplanner' })
         }
     }
@@ -169,7 +176,7 @@ function mapStateToProps(state) {
     return {
         roadplanner: state.roadplanner, user: state.user
     }
-} 
+}
 
 export default connect(
     mapStateToProps,

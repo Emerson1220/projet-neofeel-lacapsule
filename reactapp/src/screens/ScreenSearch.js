@@ -62,7 +62,8 @@ function ScreenSearch(props) {
         <div className="search" style={{ height: '100vh', alignItems: 'center' }}>
             <Nav />
             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '50%', marginTop: '2%', flexDirection: 'row' }} >
+                <div style={{marginTop:'2%', fontSize:20}}><h2>Découvrez nos expériences dans cette région</h2></div>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '50%', marginTop: '1%', flexDirection: 'row' }} >
                     <div className='categorieSelect'>
 
                         <FontAwesomeIcon onClick={() => OnclickMap()} icon={faMapMarked} style={{ color: '#fff', cursor: 'pointer', height: '25px', width: 'auto', marginRight: '8px' }} />
