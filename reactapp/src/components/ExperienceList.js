@@ -114,17 +114,25 @@ const ExperienceList = (props) => {
                 
                 //Container
                 <div key={i} style={styles.single_destinations}> 
-                    {/* Card 1 */}
                     <div> 
                         <div style={styles.image_card}>
+                            <h4 style={styles.h4}>{experience.subtitle}</h4>
                             <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
                         </div>
                         <div style={{ width: '100%',backgroundColor: 'white',display:'flex', flexWrap:'nowrap', padding:'1rem'}}>
                             { pictos }
                         </div>
                         <div style={styles.detail_card}>
+                            <div style={styles.detail_card_grid}>
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-start'}}>
+                                    <p style={{ color: 'grey', marginBottom: '8px' }}>
+                                    <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
+                                    <h5 style={styles.h5}>à {experience.city}</h5>
+                                </div>
+                            </div>
+
+
                             <div style={styles.detail_title_location}>
-                                <div>
                                     <Link
                                     style={styles.h3}
                                     to={{
@@ -133,7 +141,6 @@ const ExperienceList = (props) => {
                                             experience: experience
                                         }
                                     }}>
-                                        <h3>{experience.name}</h3>
                                     </Link>
                                     <Link
                                     style={styles.h4}
@@ -143,27 +150,22 @@ const ExperienceList = (props) => {
                                             experience: experience
                                         }
                                     }}>
-                                        <h4>{experience.subtitle}</h4>
+                                        <h3 style={styles.h3}>{experience.name}</h3>
+
                                     </Link>
-                                </div>
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
-                                    <p style={{ color: '#e06868', marginBottom: '8px' }}>
-                                    <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
-                                    <h4 ><Link style={styles.h4} to="/">{experience.city}</Link></h4>
-                                </div>
                             </div>
                             <div style={styles.liste_price}>
                                 <div style={styles.liste_temps_item}>
                                     <p>Temps</p>
-                                    <h2>{experience.activityTime}</h2>
+                                    <h5 style={styles.h5}>{experience.activityTime}</h5>
                                 </div>
                                 <div style={styles.liste_price_item}>
                                     <p>Prix</p>
-                                    <h2>{experience.budget}</h2>
+                                    <h5 style={styles.h5}>{experience.budget}</h5>
                                 </div>
                             </div> 
-                            <div style={{ textAlign: 'center', marginTop:'1rem' }}>
-                                <h4 style={styles.h4}>Ajouter cette experience à votre voyage</h4>
+                            <div style={{ textAlign: 'center', margin:'1rem', bottom:'0' }}>
+                                <h4 style={styles.h5}>Ajouter cette experience à votre voyage</h4>
                                 <Cascader
                                 options={ options }
                                 expandTrigger="hover"
@@ -227,20 +229,6 @@ export default connect(
 
 
 let styles = {
-    // CSS - ICONS //
-
-    icons_la: {
-        display: 'inline-block',
-        position: 'absolute',
-        top: '17px',
-        left: '20px',
-        color: '#CFD3DE',
-        font: 'normal normal normal 16px/1 LineAwesome',
-        fontSize: 'inherit',
-        textDecoration: 'inherit',
-        textRendering: 'optimizeLegibility',
-        textTransform: 'none',
-    },
 
     // CARD - TITLE//
 
@@ -249,11 +237,22 @@ let styles = {
         fontSize: '20px',
         color: '#106271',
         textDecoration: 'none',
+        margin:'1rem',
     },
 
     h4: {
-        // fontSize: '18px',
-        color: '#e06868',
+        fontSize: '14px',
+        color: '#fff',
+        textDecoration: 'none',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        // backgroundColor: '#e06868',
+        margin:'1rem',
+    },
+
+    h5: {
+        fontSize: '16px',
+        color: 'grey',
         textDecoration: 'none',
     },
 
@@ -261,19 +260,18 @@ let styles = {
 
     experiences_list_area: {
         display: 'grid',
-        //Old card
-        // gridTemplateColumns: 'repeat(1, 1fr)',
         boxSizing: 'border-box',
         outline: 'none',
         paddingLeft: '7rem',
         paddingRight: '7rem',
-        //New card
         gridTemplateColumns: 'repeat(3, 1fr)',
     },
 
     detail_title_location: {
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
+        gridTemplateColumns: 'repeat(1, 1fr)',
+        // minHeight: '100px',
+        padding:'.5rem',
     },
 
     single_destinations: {
@@ -291,8 +289,6 @@ let styles = {
         position: 'relative',
         background: '#106271',
         overflow: 'hidden',
-        //old
-        // flex: '0 0 30%',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
@@ -300,24 +296,26 @@ let styles = {
         borderRadius: '5px',
     },
 
+    detail_card_grid:{
+        display: 'grid',
+        gridTemplateColumns: '60% 40%',
+    },
+
     image: {
         width: '100%',
-        maxHeight: '300px',
+        height: '300px',
+        // maxHeight: '300px',
+
         objectFit: 'cover',
-        objectPosition: 'center center',
+        objectPosition: 'center',
         borderRadius: '5px',
         zIndex: '10',
     },
 
     detail_card: {
         display: 'grid',
-        //old
-        // gridTemplateColumns: 'repeat(2, 1fr)',
-        // padding: '22px 15px',
-        //New
         padding: '0 1rem 1rem 1rem',
         gridTemplateColumns: '2fr, 1fr',
-        //old
         flex: '0 0 100%',
         background: '#ffffff',
     },
@@ -329,7 +327,7 @@ let styles = {
     },
 
     liste_price: {
-        marginTop: '20px',
+        // marginBottom: '100px',
         display: 'flex',
         boxSizing: 'border-box',
         outline: 'none',
@@ -364,13 +362,15 @@ let styles = {
         paddingLeft: '10%',
         borderLeft: '1px solid #CFD3DE',
         paddingTop: '0',
-        width: '45%'
+        width: '45%',
+        textAlign:'center',
     },
 
     liste_temps_item: {
         paddingRight: '10%',
         paddingTop: '0',
-        width: '45%'
+        width: '45%',
+        textAlign:'center',
     },
 
     picto: {
