@@ -98,6 +98,11 @@ function CardRoadPlanner(props) {
                     <h4 style={ styles.items_title_location }>{experience.city}</h4>
                 </div>
 
+                <div style={styles.liste_avantage}>
+                    <p style={ styles.p_white }>Votre avantage Neopass</p>
+                    <h4 style={ styles.h4_white }>{experience.advantage}</h4>
+                </div>
+
                 <div style={styles.liste_info}>
                     <div style={styles.liste_item}>
                         <p style={ styles.subtitle }>Durée</p>
@@ -155,7 +160,7 @@ let styles = {
         boxShadow: '0 .3rem .9rem #071c551f',
         borderRadius: '.5rem',
         position: 'relative',
-        maxHeight: '300px',
+        maxHeight: '320px',
         boxSizing: 'border-box',        
         display: 'grid',
         gridTemplateColumns: '1fr 2fr',
@@ -181,6 +186,12 @@ let styles = {
     title_location:{
         display:'flex', 
         flexDirection: 'columns',
+    },
+
+    liste_avantage:{
+        textAlign: 'center',
+        marginBottom: '.5rem',
+        background: '#106170'
     },
 
     detail_card:{
@@ -273,6 +284,17 @@ let styles = {
     p: {
         margin: 0,
         color:'grey',
+        fontWeight: 'bold'
+    },
+
+    h4_white: {
+        color: '#fff',
+        textDecoration: 'none',
+    },
+
+    p_white: {
+        margin: 0,
+        color:'#fff',
         fontWeight: 'bold'
     },
 

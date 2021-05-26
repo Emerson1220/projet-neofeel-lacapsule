@@ -164,7 +164,7 @@ const PopoverContent = (props) => {
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
                     <p style={{ color: '#e06868', marginBottom: '8px' }}>
                     <img style={{ marginRight: '4px', alignSelf: 'end' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
-                    <h4 ><Link style={styles.h4} to="/">{experience.city}</Link></h4>
+                    <h4 style={styles.h4}>  {experience.city}</h4>
                 </div>
             </div>
             <div style ={{ display: 'flex', width: '100%' }}>
@@ -267,8 +267,8 @@ let styles = {
     image:{
         width: '100%',
         height: '100%',
-        objectFit: 'contains',
-        objectPosition: 'center center',
+        objectFit: 'cover',
+        objectPosition: 'center',
         borderRadius: '5px',
     },
 
@@ -322,12 +322,12 @@ let styles = {
     },
 
     picto: {
-        height: '90px',
-        width: '90px',
+        height: '70px',
+        width: '70px',
         marginRight: '1%',
         whiteSpace: 'wrap',
         zIndex:'10',
-        marginTop: '-3rem',
+        marginTop: '-2rem',
     },
 
     subtitle: {

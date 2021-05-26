@@ -114,56 +114,61 @@ const ExperienceList = (props) => {
                 
                 //Container
                 <div key={i} style={styles.single_destinations}> 
-                    {/* Card 1 */}
                     <div> 
                         <div style={styles.image_card}>
+                        <Link
+                            to={{
+                                pathname: `/partenaire/${experience._id}`,
+                                state: {
+                                    experience: experience
+                                }
+                            }}>
+                            <h4 style={styles.h4_header}>{experience.subtitle}</h4>
                             <img style={styles.image} src={ experience.description.imageBannerUrl ? experience.description.imageBannerUrl : "images/photo-526x360.png" } alt="list" />
+                        </Link>
+
                         </div>
-                        <div style={{ width: '100%',backgroundColor: 'white',display:'flex', flexWrap:'nowrap', padding:'1rem'}}>
+
+                        <div style={styles.picto_items} >
                             { pictos }
                         </div>
+
                         <div style={styles.detail_card}>
-                            <div style={styles.detail_title_location}>
-                                <div>
+
+                            <div style={styles.card_title}>
+                                    <p style={styles.p}>
+                                        <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}
+                                    </p>
+                                    
                                     <Link
-                                    style={styles.h3}
                                     to={{
                                         pathname: `/partenaire/${experience._id}`,
                                         state: {
                                             experience: experience
                                         }
                                     }}>
-                                        <h3>{experience.name}</h3>
+                                        <h3 style={styles.h3}>{experience.name}</h3>
                                     </Link>
-                                    <Link
-                                    style={styles.h4}
-                                    to={{
-                                        pathname: `/partenaire/${experience._id}`,
-                                        state: {
-                                            experience: experience
-                                        }
-                                    }}>
-                                        <h4>{experience.subtitle}</h4>
-                                    </Link>
-                                </div>
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems:'flex-end' }}>
-                                    <p style={{ color: '#e06868', marginBottom: '8px' }}>
-                                    <img style={{ marginRight: '4px' }} src="images/icone-geo.png" alt="map" />{experience.region}</p>
-                                    <h4 ><Link style={styles.h4} to="/">{experience.city}</Link></h4>
-                                </div>
                             </div>
+
+                            <div style={styles.card_location}>
+                                <h5 style={styles.h5}>à {experience.city}</h5>
+                            </div>
+
+
                             <div style={styles.liste_price}>
                                 <div style={styles.liste_temps_item}>
-                                    <p>Temps</p>
-                                    <h2>{experience.activityTime}</h2>
+                                    <p style={styles.p_white}>Temps</p>
+                                    <h5 style={styles.h5_white}>{experience.activityTime}</h5>
                                 </div>
                                 <div style={styles.liste_price_item}>
-                                    <p>Prix</p>
-                                    <h2>{experience.budget}</h2>
+                                    <p style={styles.p_white}>Prix</p>
+                                    <h5 style={styles.h5_white}>{experience.budget}</h5>
                                 </div>
                             </div> 
-                            <div style={{ textAlign: 'center', marginTop:'1rem' }}>
-                                <h4 style={styles.h4}>Ajouter cette experience à votre voyage</h4>
+
+                            <div style={{ textAlign: 'center', margin:'1rem', bottom:'0' }}>
+                                <h4 style={styles.h5}>Ajouter cette experience à votre voyage</h4>
                                 <Cascader
                                 options={ options }
                                 expandTrigger="hover"
@@ -175,6 +180,7 @@ const ExperienceList = (props) => {
                                 title="+"
                                 onSelect={ ()=>chooseExperience(experience) }/>
                             </div>
+
                         </div>
                     </div>
 
@@ -227,37 +233,8 @@ export default connect(
 
 
 let styles = {
-    // CSS - ICONS //
 
-    icons_la: {
-        display: 'inline-block',
-        position: 'absolute',
-        top: '17px',
-        left: '20px',
-        color: '#CFD3DE',
-        font: 'normal normal normal 16px/1 LineAwesome',
-        fontSize: 'inherit',
-        textDecoration: 'inherit',
-        textRendering: 'optimizeLegibility',
-        textTransform: 'none',
-    },
-
-    // CARD - TITLE//
-
-    h3: {
-        fontWeight: 'bold',
-        fontSize: '20px',
-        color: '#106271',
-        textDecoration: 'none',
-    },
-
-    h4: {
-        color: '#e06868',
-        textDecoration: 'none',
-    },
-
-    // CARD - CSS //
-
+    // LISTE CONTAINER  //
     experiences_list_area: {
         display: 'grid',
         boxSizing: 'border-box',
@@ -267,11 +244,7 @@ let styles = {
         gridTemplateColumns: 'repeat(3, 1fr)',
     },
 
-    detail_title_location: {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-    },
-
+    // CARD CONTAINER  //
     single_destinations: {
         display: 'flex',
         flexWrap: 'wrap',
@@ -283,98 +256,145 @@ let styles = {
         margin: '.5rem',
     },
 
+    // CARD - TITLE//
+    h3: {
+        fontWeight: 'bold',
+        fontSize: '18px',
+        color: '#106271',
+        textDecoration: 'none',
+        textAlign:'left',
+        textTransform:'uppercase',
+        // height:'60px',
+    },
+
+    h4_header: {
+        fontSize: '16px',
+        color: '#fff',
+        textDecoration: 'none',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        margin:'1rem',
+        height:'40px',
+    },
+
+    h4: {
+        fontSize: '18px',
+        color: '#fff',
+        textDecoration: 'none',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        margin:'1rem',
+    },
+
+    h5: {
+        fontSize: '16px',
+        color: 'grey',
+        textDecoration: 'none',
+    },
+
+    h5_white: {
+        fontSize: '14px',
+        color: '#fff',
+        textDecoration: 'none',
+    },
+
+    p:{
+        fontSize: '12px',
+        color: 'grey',
+    },
+
+    p_white:{
+        fontSize: '12px',
+        color: '#fff',
+        marginBottom: '.1rem',
+    },
+
+    // CARD HEADER //
     image_card: {
         position: 'relative',
         background: '#106271',
         overflow: 'hidden',
-        //old
-        // flex: '0 0 30%',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center center',
+        backgroundPosition: 'center',
         minHeight: '200px',
         borderRadius: '5px',
     },
 
     image: {
         width: '100%',
-        maxHeight: '300px',
+        height: '300px',
+        // maxHeight: '300px',
         objectFit: 'cover',
-        objectPosition: 'center center',
+        objectPosition: 'center',
         borderRadius: '5px',
         zIndex: '10',
     },
 
-    detail_card: {
-        display: 'grid',
-        padding: '0 1rem 1rem 1rem',
-        gridTemplateColumns: '2fr, 1fr',
-        flex: '0 0 100%',
-        background: '#ffffff',
-    },
-
-    card_content: {
-        marginBottom: '15px',
-        color: '#bcbcbc',
-        hyphens: 'auto',
-    },
-
-    liste_price: {
-        marginTop: '20px',
-        display: 'flex',
-        boxSizing: 'border-box',
-        outline: 'none',
-        justifyContent: 'center'
-    },
-
-    liste_price_li: {
-        margin: '0 10px',
-        fontSize: '14px',
-        listStyle: 'none',
-        display: 'inline-block',
-    },
-
-    liste_price_content: {
-        float: 'left',
-        marginTop: '20px',
-        margin: '0',
-        padding: '0',
-        display: 'inline-block',
-    },
-
-    icons_fa: {
-        display: 'inline-block',
-        font: 'normal normal normal 14px/1 FontAwesome',
-        fontSize: 'inherit',
-        textRendering: 'auto',
-        color: '#01B9B7',
-        marginRight: '5px',
-    },
-
-    liste_price_item: {
-        paddingLeft: '10%',
-        borderLeft: '1px solid #CFD3DE',
-        paddingTop: '0',
-        width: '45%'
-    },
-
-    liste_temps_item: {
-        paddingRight: '10%',
-        paddingTop: '0',
-        width: '45%'
+    // CARD PICTOS //
+    picto_items:{
+        width: '100%',
+        backgroundColor: 'white',
+        display:'flex', 
+        flexWrap:'nowrap', 
+        padding:'1rem',
     },
 
     picto: {
-        height: '80px',
-        width: '80px',
+        height: '20%',
+        width: '20%',
         marginRight: '1%',
         whiteSpace: 'wrap',
         zIndex:'10',
         marginTop: '-3rem',
+        objectFit: 'contain',
     },
-    
-    display_inline: {
-        display: 'inline-flex',
+
+    // CARD CONTENU //
+    detail_card: {
+        padding: '0 1rem 1rem 1rem',
+    },
+
+    card_title: {
+        // padding:'.5rem',
+    },
+
+    card_location: {
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems:'flex-start',
+    },
+
+    // CARD TEMPS & PRIX //
+    liste_price: {
+        // width: '60%',
+        // alignItems: 'center',
+        display: 'flex',
+        boxSizing: 'border-box',
+        outline: 'none',
+        justifyContent: 'center',
+        backgroundColor: '#e06868',
+        borderRadius:'2%',
+        padding:'.2rem',
+    },
+
+    liste_price_item: {
+        paddingLeft: '5%',
+        borderLeft: '1px solid #CFD3DE',
+        paddingTop: '0',
+        width: '80%',
+        textAlign:'center',
+        color:'#fff',
+        fontWeight: 'bold',
+    },
+
+    liste_temps_item: {
+        paddingRight: '5%',
+        paddingTop: '0',
+        width: '80%',
+        textAlign:'center',
+        color:'#fff',
+        fontWeight: 'bold',
     },
 
     buttonContainer: {

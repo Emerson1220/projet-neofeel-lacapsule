@@ -105,7 +105,7 @@ export default connect(
 
 let styles = {
 
-    // CSS - ARCHITECTURE//
+    // CSS - ARCHITECTURE nf//
 
     container: {
         width: '100%',
