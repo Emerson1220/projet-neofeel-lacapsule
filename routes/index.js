@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 //STRIPE
-// const Stripe = require('stripe');
-// const stripe = new Stripe('sk_test_51ItWKHK4yUyeZ8DTqXCM4ixI7xpzLNgd2sLglgnom7xUDNdcIpfzVgOGMhPovqQAp4ti8dLl9EgBEHyO51ONWjLg00rjQhJAvi')
+const Stripe = require('stripe');
+const stripe = new Stripe('sk_test_51ItWKHK4yUyeZ8DTqXCM4ixI7xpzLNgd2sLglgnom7xUDNdcIpfzVgOGMhPovqQAp4ti8dLl9EgBEHyO51ONWjLg00rjQhJAvi')
+
 //MODELS
 const Experience = require('../models/Experience');
 const Roadtrip = require('../models/Roadtrip');
@@ -302,24 +303,10 @@ router.post('/myroadplanner', async function(req, res, next) {
     }
 })
 
-//Visualisation des avantages
-//Body: [experienceID]
-//Response: result (true), [avantages], montant
-router.get('/avantages', function(req, res, next) {
-
-})
-
 //Achat de NEOPASS
 //Body: userId (12345), productID (12345)
 //Response: result (true), { order }
 router.post('/confirm', function(req, res, next) {
-
-})
-
-//Détails du NEOPASS
-//Query: productID
-//Response: result (true), product (neopass (region))
-router.get('/myproduct', function(req, res, next) {
 
 })
 
@@ -348,21 +335,6 @@ router.post('/sharetrip', async function(req, res, next){
         console.log(err)
         res.json({ result: false, message: err })
     }
-
-})
-
-//actualités météo
-//Query: coordonées
-//Response: result (true), météo
-router.get('/weather', function(req, res, next) {
-
-})
-
-
-//Adhésion partenaire
-//Body: name (Dupont), firstName (Michel), token (1234), email: 'micheldupont@gmail.com', password (1234), adresse (6 rue du Puit)
-//Response: result (true)
-router.post('/becomeapartner', function(req, res, next) {
 
 })
 

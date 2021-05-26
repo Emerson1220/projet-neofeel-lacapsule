@@ -10,14 +10,18 @@ import CardRoadPlanner from '../components/CardRoadPlanner';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
-import { Popover, Button } from 'antd';
+import { Popover } from 'antd';
+import RedButton from '../components/RedButton'
+import { WarningTwoTone } from '@ant-design/icons'
+
+
 //REDUX
 import { connect } from 'react-redux';
 
 function ScreenRoadPlanner(props) {
     //STATE HOOKS
     const [experienceList, setExperienceList] = useState([]);
-    const [total, setTotal] = useState(null);
+    const [total, setTotal] = useState(0);
     //EFFECT HOOKS
     useEffect(() => {
         setExperienceList(props.roadplanner.experiences)
@@ -31,6 +35,11 @@ function ScreenRoadPlanner(props) {
             <Neopass/>
         </div>
     );
+
+    let warning = <></>
+    if (!props.user.token) {
+        warning = <p><span><WarningTwoTone twoToneColor="rgb(224, 104, 104)"/></span><span style={{ color: 'black', marginLeft: '0.3rem'}}>Connectez-vous pour sauvegarder votre voyage.</span></p>
+    }
     
     let cards = []
     if (experienceList && experienceList.length > 0) {
@@ -64,26 +73,22 @@ function ScreenRoadPlanner(props) {
             <Nav />
 
             <div style={styles.container}>
-                <div style={{ display: 'flex', justifyContent: 'center', width: '2%' }}>
+                <div style={ styles.map }>
                     <Map mode='roadplanner'></Map>
                 </div>
 
-                <div style={styles.row}>
-                    <div style={styles.col_xl_9}>
-                        <div style={{ marginBottom: '40px' }}> {/* Filters */}
-                            <div style={styles.avantage}>
-                                <h3>Vous avez cumulé <span>{total}</span>€ d'avantages dans votre séléction</h3>
-                                <button>Achetez votre Neopass pour seulement 60€</button>
-                                <Popover content={content} >
-                                    <FontAwesomeIcon size='2x' icon={faInfoCircle} style={{marginLeft:'2%'}}/>
-                                </Popover>
-                            </div>
-                        </div>
+                <div style={styles.list}>
+                    <div style={styles.avantage}>
+                        { warning }
+                        <h3>Vous avez cumulé <span>{total}</span>€ d'avantages dans votre séléction!</h3>
+                        <RedButton title='Achetez votre Neopass pour 60€'></RedButton>
+                        <Popover content={content} >
+                            <FontAwesomeIcon size='2x' icon={faInfoCircle} style={{marginLeft:'2%'}}/>
+                        </Popover>
+                    </div>
 
-                        <div style={styles.experiences_list_area}>
-                            {cards}
-                        </div>
-
+                    <div style={styles.experiences_list_area}>
+                        {cards}
                     </div>
                 </div>
             </div>
@@ -108,26 +113,22 @@ let styles = {
     container: {
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: '1fr 2fr',
-        paddingTop: '1rem',
-        marginRight: '1rem',
-        marginLeft: '1rem',
+        gridTemplateColumns: '50% 50%',
+        height: '100%'
     },
 
     map:{
-        display: 'block',
+        display: 'flex',
         overflow: 'hidden',
-        height:'600px',
-        width:'600px',
-        padding: '2rem',
+        height:'100vh',
+        width:'100%',
         },
 
-    row:{
-        display: 'flex',
+    list:{
+        display: 'grid',
+        gridTemplateRows: '15% 85%',
         flexWrap: 'wrap',
-        padding: '1rem',
-        justifyContent:'center',
-        alignItems :'center'
+        height: '100vh'
     },
 
     col_xl_9: {
@@ -139,12 +140,15 @@ let styles = {
     },
 
     avantage:{
-        background: '#e06868',        
         textAlign: 'center',
         color: '#fff',
-        width: '80%',
-        marginBottom: '1rem',
+        width: '65%',
         padding: '.5rem',
+        margin: '1rem',
+        borderRadius: '0.7rem',
+        border: '2px solid #e06868',
+        alignSelf: 'center',
+        justifySelf: 'center'
     },
 
     experiences_list_area: {
@@ -152,9 +156,10 @@ let styles = {
         gridTemplateColumns: 'repeat(1, 1fr)',
         boxSizing: 'border-box',
         outline: 'none',
-        paddingLeft: '1rem',
-        paddingRight: '1rem',
-
+        overflow: 'scroll', 
+        '::-webkit-scrollbar' : {
+            display: 'none'
+        }
     }
 
 }

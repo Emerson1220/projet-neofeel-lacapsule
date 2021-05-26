@@ -23,9 +23,6 @@ const ScreenBasket =  () => {
         base: {
             fontSize: '16px',
             color: 'rgb(16, 98, 113)',
-            '::placeholder': {
-            color: 'rgb(16, 98, 113, 0.4)',
-            },
         },
         invalid: {
             color: '#9e2146',
@@ -57,6 +54,7 @@ const ScreenBasket =  () => {
         })
         let response = await rawResponse.json();
         const clientSecret = response.clientSecret;
+        console.log(clientSecret)
 
         const cardElement = elements.getElement(CardElement);
     
@@ -124,13 +122,13 @@ const ScreenBasket =  () => {
             
                 <Modal                
                 centered={ true }
-                closable={ false }
+                closable={ true}
                 visible={ visible }
                 footer={ null }
                 handleCancel={ ()=>toggleModal() }
                 bodyStyle={{background:'linear-gradient(#106271, #FFF)', padding:'8%',boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.4)'}}
                 >
-                <h2>Checkout</h2>
+                <h2 style={{color:'black'}}>Checkout</h2>
                 <form
                 style={{ display: 'flex', flexDirection: 'column' }}
                 onSubmit={ handleSubmit }

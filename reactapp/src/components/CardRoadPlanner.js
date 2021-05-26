@@ -53,51 +53,57 @@ function CardRoadPlanner(props) {
     })
 
     return ( 
-        <div style={ styles.single_destinations}>
-            <div style={ styles.card_banniere }>
+        <div style={ styles.single_destinations }>
 
-                <div style={ styles.image_card }>
-                    <img style={ styles.image } src={props.imageBannerUrl} alt="list" />
+            <div style={ styles.image_card }>
+                <img style={ styles.image } src={props.imageBannerUrl} alt="list" />
+            </div>
+
+
+            <div style={ styles.detail_card }>
+                <div>
+                    <div style={styles.liste_pictos_header}>
+                        <div style={styles.liste_pictos}>
+                            {pictos}
+                        </div>
+                        <div style={styles.liste_pictos_trash}>
+                            <FontAwesomeIcon size='2x' icon={faTrashAlt} onClick={ ()=>deleteExperience() } />
+                        </div>
+                    </div>
+                    <h3 style={ styles.padding_top } ><Link style={ styles.h3 } to="/">{props.name}</Link></h3>
+                    <h4><Link style={ styles.h4 } to="/">{props.subtitle}</Link></h4>
                 </div>
 
+                <div style={ styles.title_location }>
+                    <h4 style={ styles.items_title_location }><img style={{marginRight:'.5rem'}} src="images/icone-geo.png" alt="map" />{props.region}</h4>
+                    <h4 style={ styles.items_title_location }>{props.city}</h4>
+                </div>
 
-                <div style={ styles.detail_card }>
-                    <div>
-                        <div style={styles.liste_pictos_header}>
-                            <div style={styles.liste_pictos}>
-                                {pictos}
-                            </div>
-                            <div style={styles.liste_pictos_trash}>
-                                <FontAwesomeIcon size='2x' icon={faTrashAlt} onClick={ ()=>deleteExperience() } />
-                            </div>
+                <div style={styles.liste_info}>
+                    <div style={styles.liste_item}>
+                        <p style={ styles.subtitle }>Durée</p>
+                        <div style={ styles.infoContainer }>
+                            <p style={ styles.p }>{props.activityTime}</p>
                         </div>
-                        <h3 style={ styles.padding_top } ><Link style={ styles.h3 } to="/">{props.subtitle}</Link></h3>
-                        <h4><Link style={ styles.h4 } to="/">{props.name}</Link></h4>
                     </div>
-
-                    <div style={ styles.title_location }>
-                        <h4 style={ styles.items_title_location }><img style={{marginRight:'.5rem'}} src="images/icone-geo.png" alt="map" />{props.region}</h4>
-                        <h4 style={ styles.items_title_location }>{props.city}</h4>
+                    <div style={styles.liste_item_center}>
+                        <p style={ styles.subtitle }>Prix</p>
+                        <div style={ styles.infoContainer }>
+                            <p style={ styles.p }>{props.budget}</p>
+                        </div>
                     </div>
-
-                    <div style={styles.liste_price}>
-                        <div style={styles.liste_time_item}>
-                            <p>Durée:</p>
-                            <p>{props.activityTime}</p>
-                        </div>
-                        <div style={styles.liste_price_item}>
-                            <p>Prix:</p>
-                            <p>{props.budget}</p>
-                        </div>
-                        <div style={styles.liste_weather_item}>
-                            <p>Méteo</p>
+                    <div style={styles.liste_item}>
+                        <p  style={ styles.subtitle }>Méteo</p>
+                        <div style={ styles.infoWeatherContainer }>
                             <img src={ `http://openweathermap.org/img/wn/${weather.icon}@2x.png` } alt="picto météo" style={ styles.picto_weather }/>
-                            <p>{ weather.temp }</p>
-                            <p>{ weather.desc }</p>                         
+                            <div>
+                                <p style={ styles.p }>{ weather.temp }° C</p>
+                                <p style={ styles.p }>{ weather.desc }</p>                         
+                            </div>
                         </div>
+                    </div>
 
-                    </div> 
-                </div>
+                </div> 
             </div>
         </div> 
                                 
@@ -130,21 +136,19 @@ let styles = {
         boxShadow: '0 .3rem .9rem #071c551f',
         borderRadius: '.5rem',
         position: 'relative',
-        boxSizing: 'border-box',
-    },
-
-    card_banniere:{
+        maxHeight: '300px',
+        boxSizing: 'border-box',        
         display: 'grid',
         gridTemplateColumns: '1fr 2fr',
     },
 
     image_card:{
-        display: 'grid',
-        gridTemplateRows: 'repeat(1, 1fr)',        
-        position: 'relative',
         background: '#fff',
         overflow: 'hidden',
-        borderRadius: '5px',
+        borderTopLeftRadius: '.5rem',
+        borderBottomLeftRadius: '.5rem',
+        height: '100%',
+        borderBottom: '.1rem solid #CFD3DE',
     },
 
     image:{
@@ -152,7 +156,7 @@ let styles = {
         height: '100%',
         objectFit: 'cover',
         objectPosition: 'center',
-        borderRadius: '.4rem',
+        overflow: 'hidden'
     },
 
     title_location:{
@@ -164,6 +168,9 @@ let styles = {
         display: 'grid',
         gridTemplateColumns: '1fr',        
         padding: '.5rem',
+        height: '100%',
+        boxSizing: 'border-box',
+        maxHeight: '100%'
     },
 
     liste_pictos_header:{
@@ -184,39 +191,47 @@ let styles = {
         textAlign:'right',
     },
 
-    liste_price:{
+    liste_info:{
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',        
-        marginTop: '1rem',
+        gridTemplateColumns: '1fr 1fr 1fr',        
+        boxSizing: 'border-box',
     },
 
-    liste_time_item:{
-        paddingLeft: '.5rem',
+    liste_item: {
+        display: 'grid',
+        gridTemplateRows: '20% 80%',
+        boxSizing: 'border-box'
+    },
+
+    liste_item_center: {
         borderRight: '1px solid #CFD3DE',
-        paddingTop: '0', 
-        color:'grey',
-        textAlign:'center',
-        fontWeight: 'bold',
-    },
-
-    liste_price_item:{
-        paddingLeft: '.5rem',
         borderLeft: '1px solid #CFD3DE',
-        paddingTop: '0',
-        color:'grey',
-        textAlign:'center',
-        fontWeight: 'bold',
-    },
-
-    liste_weather_item:{
-        textAlign:'center',
-        color:'grey',
-        borderLeft: '1px solid #CFD3DE',
-        fontWeight: 'bold',
+        boxSizing: 'border-box',
+        display: 'grid',
+        gridTemplateRows: '20% 80%',
     },
 
     picto_weather: {
         height: '40px'
+    },
+
+    infoContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        whiteSpace: 'wrap',
+        flexWrap: 'wrap',
+        textAlign: 'center'
+    },
+
+    infoWeatherContainer: {
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        whiteSpace: 'wrap',
+        flexWrap: 'wrap',
+        textAlign: 'center'
     },
 
     // CARD - TITLE//
@@ -236,9 +251,21 @@ let styles = {
         textDecoration: 'none',
     },
 
+    p: {
+        margin: 0,
+        color:'grey',
+        fontWeight: 'bold'
+    },
+
     items_title_location:{
         color: 'grey', 
         marginRight: '1rem',
     },
 
+    subtitle: {
+        color: 'black',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        margin: 0
+    }
 }        

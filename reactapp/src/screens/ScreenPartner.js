@@ -169,9 +169,9 @@ const ScreenPartner = (props) => {
                                 return (
                                     <div style={styles.gallery_item} key={i}>
                                         <div style={styles.tp_gallery_item_img}>
-                                            <a href="#" data-effect="mfp-zoom-in">
+                                            {/* <a href="#" data-effect="mfp-zoom-in"> */}
                                                 <img style={styles.tp_gallery_item_img} src={e} alt="" />
-                                            </a>
+                                            {/* </a> */}
                                         </div>
                                     </div>
                                 )
@@ -310,7 +310,9 @@ const ScreenPartner = (props) => {
                                     </ul>
 
                                     <div>
-                                        <a href="#"><span>Plus de commentaires<i /></span></a>
+                                        {/* <a href="#"> */}
+                                            <span>Plus de commentaires<i /></span>
+                                        {/* </a> */}
                                     </div>
 
                                 </div>
