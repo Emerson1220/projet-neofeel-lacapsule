@@ -37,42 +37,49 @@ const ScreenBasket = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
         if (!stripe || !elements) {
             return;
         }
-
+        
         const billingDetails = {
             name: `${paymentInfo.firstName} ${paymentInfo.lastName}`,
             email: paymentInfo.email,
+            phone: paymentInfo.phone,
             address: {
                 city: paymentInfo.city,
                 line1: `${paymentInfo.streetNumber} ${paymentInfo.streetName}`,
-                postal_code: paymentInfo.zipcode
+                postal_code: paymentInfo.zipcode,
+                country: 'fr'
             }
         };
 
-        let rawResponse = await fetch('/auth/stripe', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `amount=${total * 100}`
-        })
-        let response = await rawResponse.json();
-        const clientSecret = response.clientSecret;
-
-        console.log(clientSecret)
-
         const cardElement = elements.getElement(CardElement);
 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-            type: 'card',
-            card: cardElement,
-            billing_details: billingDetails
-        })
-
-        if (error) {
-            console.log('[error]', error)
-        } else {
-            console.log('[PaymentMethod]', paymentMethod)
+        try {
+            let rawResponse =  await fetch('/auth/stripe', {
+                method: 'post',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `amount=${total * 100}`
+            })
+            let response = await rawResponse.json();
+            
+            const paymentMethodReq = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+                billing_details: billingDetails
+            })
+    
+            const clientSecret = response.clientSecret;
+            console.log(clientSecret)
+        
+            const confirm = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: paymentMethodReq.paymentMethod.id
+            });
+            console.log(confirm)
+    
+        } catch (err) {
+            console.log(err)
         }
     };
 
@@ -116,10 +123,10 @@ const ScreenBasket = () => {
                         name='firstName'
                         placeholder='prénom'
                         className='input'
-                        value={paymentInfo.firstName}
-                        onChange={(e) => setPaymentInfo({ ...paymentInfo }, { firstName: e.target.value })}>
-                    </input>
-                    <input
+                        value={ paymentInfo.firstName }
+                        onChange={ (e)=>setPaymentInfo(Object.assign({ ...paymentInfo }, { firstName: e.target.value })) }>
+                        </input>
+                        <input
                         name='lastname'
                         placeholder='nom'
                         className='input'
