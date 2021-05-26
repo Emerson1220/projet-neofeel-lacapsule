@@ -67,15 +67,23 @@ function ScreenRoadPlanner(props) {
                 </div>
 
                 <div style={styles.list}>
-                    <div style={styles.avantage}>
-                        { warning }
-                        <h3>Vous avez cumulé <span>{total}</span>€ d'avantages dans votre séléction!</h3>
-                        <RedButton title='Achetez votre Neopass pour 60€'></RedButton>
-                        <Popover content={content} >
-                            <FontAwesomeIcon size='2x' icon={faInfoCircle} style={{marginLeft:'2%'}}/>
-                        </Popover>
+                    <div style={styles.menu}>
+                        <div style={{ borderRight: '1px solid grey' }}>
+                            { warning }
+                            <h3>Vous avez cumulé <span>{total}</span>€ d'avantages dans votre séléction!</h3>
+                            <RedButton title='Achetez votre Neopass pour 60€'></RedButton>
+                            <Popover content={content} >
+                                <FontAwesomeIcon size='2x' icon={faInfoCircle} style={{marginLeft:'2%'}}/>
+                            </Popover>
+                        </div>
+                        <div>
+                            <h3>Mes voyages</h3>
+                            <select style={ styles.select } placeholder="choisissez un voyage pour l'afficher">
+                                <option>Voyage 1</option>
+                                <option>Voyage 2</option>
+                            </select>
+                        </div>
                     </div>
-
                     <div style={styles.experiences_list_area}>
                         {cards}
                     </div>
@@ -128,16 +136,18 @@ let styles = {
         paddingLeft: '1.5rem',
     },
 
-    avantage:{
+    menu:{
         textAlign: 'center',
         color: '#fff',
-        width: '65%',
+        width: '95%',
         padding: '.5rem',
         margin: '1rem',
         borderRadius: '0.7rem',
         border: '2px solid #e06868',
         alignSelf: 'center',
-        justifySelf: 'center'
+        justifySelf: 'center',
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr'
     },
 
     experiences_list_area: {
@@ -149,6 +159,11 @@ let styles = {
         '::-webkit-scrollbar' : {
             display: 'none'
         }
+    },
+
+    select: {
+        border: '2px solid #e06868',
+        color: 'black'
     }
 
 }

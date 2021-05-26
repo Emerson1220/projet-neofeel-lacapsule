@@ -59,7 +59,7 @@ function CardRoadPlanner(props) {
         <div style={ styles.single_destinations }>
 
             <div style={ styles.image_card }>
-                <img style={ styles.image } src={props.imageBannerUrl} alt="list" />
+                <img style={ styles.image } src={experience.description.imageBannerUrl} alt="list" />
             </div>
 
 
