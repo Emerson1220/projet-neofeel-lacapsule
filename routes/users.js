@@ -99,8 +99,8 @@ router.post('/signin', async function(req, res, next) {
 
       userFind.roadtrips.push(newRoadplanner._id);
       currentRoadtrip = 'current'
-    } else if (user.roadtrips.length > 0) {
-      let current = user.roadtrips.sort((a, b) => {
+    } else if (userFind.roadtrips.length > 0) {
+      let current = userFind.roadtrips.sort((a, b) => {
         return a.creationDate - b.creationDate
       })[0];
 

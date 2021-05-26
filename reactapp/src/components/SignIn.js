@@ -28,7 +28,7 @@ const SignIn = (props) => {
 
     const signinUser = async() => {
         let roadplanner = null;
-        if (props.roadplanner !== {}) {
+        if (props.roadplanner.experiences) {
             roadplanner = {
                 name: 'mon voyage',
                 experiences: props.roadplanner.experiences.map(e => e._id)

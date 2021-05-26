@@ -84,7 +84,7 @@ const ScreenProfile = (props) => {
     return !props.user.token ?
         (<Redirect to="/connexion" />)
         : (
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                 <Nav />
                 <div style={{
                     width: '100%', height: '100vh', display: 'grid',
