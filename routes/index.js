@@ -35,6 +35,7 @@ router.post('/searchregions', async function(req, res, next) {
         let experiences = await Experience.find({ regionCode: req.body.region })
         .populate('partner')
         .exec();
+        console.log(experiences)
         res.json({ result: true, data: experiences })
     } catch (err) {
         console.log(err)
@@ -164,12 +165,13 @@ router.put('/myroadplanner', async function(req, res, next) {
                 path: 'experiences',
                 model: 'experiences',
                 populate: {
-                    path: 'partner',
-                    model: 'users'
+                        path: 'partner',
+                        model: 'users'
                 }
             }
-        })
+            })
         .exec();
+        console.log(roadtrip)
         if (roadtrip.days[0].experiences.some(e => e.id === req.body.experienceID)) {
             throw 'already exists'
         }
@@ -195,17 +197,14 @@ router.delete('/myroadplanner/:token/:roadtripID/:experienceID', async function(
         let roadtrip = await Roadtrip.findById(req.params.roadtripID)
         .populate('roadtrips')
         .populate({
-            path: 'roadtrips',
+            path: 'days',
             populate: {
-                path: 'days.experiences',
-                model: 'experiences'
-            }
-        })
-        .populate({
-            path: 'roadtrips.days.experiences',
-            populate: {
-                path: 'partner',
-                model: 'users'
+                path: 'experiences',
+                model: 'experiences',
+                populate: {
+                        path: 'partner',
+                        model: 'users'
+                }
             }
         })
         .exec();
@@ -232,19 +231,19 @@ router.get('/myroadplanner/:token', async function(req, res, next) {
     .populate({
         path: 'roadtrips',
         populate: {
-            path: 'days.experiences',
-            model: 'experiences'
-        }
-    })
-    .populate({
-        path: 'roadtrips.days.experiences',
-        populate: {
-            path: 'partner',
-            model: 'users'
+            path: 'days',
+            populate: {
+                path: 'experiences',
+                model: 'experiences',
+                    populate: {
+                        path: 'partner',
+                        model: 'users'
+                    }
+            }
+            
         }
     })
     .exec();
-    console.log({user: user})
     let current = user.roadtrips.sort((a, b) => {
         return a.creationDate - b.creationDate
     })[0];

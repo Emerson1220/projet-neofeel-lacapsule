@@ -122,8 +122,7 @@ const ScreenPartner = (props) => {
         if (newWindow) newWindow.opener = null
     }
     //DISPLAY
-    let address;
-    // let address = `${experience.partner.addresses[0].streetNumber} ${experience.partner.addresses[0].streetName} ${experience.partner.addresses[0].city} ${experience.partner.addresses[0].zipcode} ${experience.partner.addresses[0].country}`
+    let address = `${experience.partner.addresses[0].streetNumber} ${experience.partner.addresses[0].streetName} ${experience.partner.addresses[0].city} ${experience.partner.addresses[0].zipcode} ${experience.partner.addresses[0].country}`
 
     return (
         <div>
