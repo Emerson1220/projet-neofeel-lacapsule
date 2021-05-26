@@ -23,6 +23,7 @@ function ScreenRoadPlanner(props) {
     //STATE HOOKS
     const [experienceList, setExperienceList] = useState([]);
     const [total, setTotal] = useState(0);
+
     //EFFECT HOOKS
     useEffect(() => {
         setExperienceList(props.roadplanner.experiences)
@@ -128,7 +129,7 @@ let styles = {
         display: 'grid',
         gridTemplateRows: '15% 85%',
         flexWrap: 'wrap',
-        height: '100vh'
+        height: '100%'
     },
 
     col_xl_9: {
