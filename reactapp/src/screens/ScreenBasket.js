@@ -41,10 +41,12 @@ const ScreenBasket =  () => {
         const billingDetails = {
             name: `${paymentInfo.firstName} ${paymentInfo.lastName}`,
             email: paymentInfo.email,
+            phone: paymentInfo.phone,
             address: {
                 city: paymentInfo.city,
                 line1: `${paymentInfo.streetNumber} ${paymentInfo.streetName}`,
                 postal_code: paymentInfo.zipcode,
+                country: 'fr'
             }
         };
 
