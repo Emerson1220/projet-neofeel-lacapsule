@@ -78,7 +78,7 @@ const ScreenBasket =  () => {
         <Divider orientation='center' style={ styles.divider }>Mon Neopass</Divider>
             <div style={ styles.neopassContainer }>
                 <div style={{ height: '100px', width: '200px', backgroundColor: 'blue', borderRadius: '5px'}}>
-                    <img style={{width:'100%', borderRadius:'15px'}} src='./images/neopassRecto.png'/>
+                    <img style={{width:'100%', borderRadius:'15px'}} src='./images/neopassRecto.png' alt="neopass"/>
                 </div>
                 <div style={{color:'white'}}>
                     <h4 style={{color:'black'}}>Mes avantages sur mon prochain voyage</h4>
