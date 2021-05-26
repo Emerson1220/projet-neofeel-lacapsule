@@ -161,7 +161,7 @@ let styles = {
 
     list:{
         display: 'grid',
-        gridTemplateRows: '15% 85%',
+        gridTemplateRows: '20% 80%',
         flexWrap: 'wrap',
         height: '100%'
     },
