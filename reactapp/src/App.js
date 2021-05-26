@@ -24,7 +24,7 @@ import user from './reducers/user.reducer'
 import roadplanner from './reducers/roadplanner.reducer';
 import suggestions from './reducers/suggestions.reducer'
 import { Provider } from 'react-redux';
-import { createStore, combineReducers }  from 'redux';
+import { createStore, combineReducers } from 'redux';
 
 //STRIPE
 import { Elements } from '@stripe/react-stripe-js';
@@ -37,28 +37,28 @@ const stripePromise = loadStripe('pk_test_51ItWKHK4yUyeZ8DTbPXklGpEqt6WL7YLvokEz
 
 function App() {
   return (
-    <Provider store={ store }>
-      <Elements stripe={ stripePromise } >
+    <Provider store={store}>
+      <Elements stripe={stripePromise} >
 
-        <div style={ styles.page_container }>
-          <div style={ styles.content_wrapper}>
-            <Router>
+        <div style={styles.page_container}>
+          <Router>
+            <div style={styles.content_wrapper}>
               <Switch>
-                <Route component={ ScreenHome } path="/" exact />
-                <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
-                <Route component={ ScreenLogin } path="/connexion"  />
-                <Route component={ ScreenSearch } path="/recherche"  />                    
-                <Route component={ ScreenInfo } path="/info"  />
-                <Route component={ ScreenPartner } path="/partenaire/:experienceID"  />
-                <Route component={ ScreenBecomePartner } path="/partenaire/"  />
-                <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
-                <Route component={ ScreenProfile } path="/profil"  />
-                <Route component={ ScreenBasket } path="/panier"  />
-                <Route component={ScreenSuggestions} path="/suggestions"  />  
+                <Route component={ScreenHome} path="/" exact />
+                <Route component={ScreenRoadPlanner} path="/roadPlanner" />
+                <Route component={ScreenLogin} path="/connexion" />
+                <Route component={ScreenSearch} path="/recherche" />
+                <Route component={ScreenInfo} path="/info" />
+                <Route component={ScreenPartner} path="/partenaire/:experienceID" />
+                <Route component={ScreenBecomePartner} path="/partenaire/" />
+                <Route component={ScreenRoadPlanner} path="/roadPlanner" />
+                <Route component={ScreenProfile} path="/profil" />
+                <Route component={ScreenBasket} path="/panier" />
+                <Route component={ScreenSuggestions} path="/suggestions" />
               </Switch>
-            </Router>
-          </div>
-          <Footer />
+            </div>
+            <Footer />
+          </Router>
         </div>
       </Elements>
     </Provider>
