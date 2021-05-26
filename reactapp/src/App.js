@@ -37,7 +37,7 @@ const stripePromise = loadStripe('pk_test_51ItWKHK4yUyeZ8DTbPXklGpEqt6WL7YLvokEz
 function App() {
   return (
     <Provider store={ store }>
-      <Elements stripe={ stripePromise }>
+      <Elements stripe={ stripePromise } >
 
         <div style={ styles.page_container }>
           <div style={ styles.content_wrapper}>

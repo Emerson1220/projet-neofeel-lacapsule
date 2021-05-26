@@ -2,4 +2,9 @@
     padding: 0;
     border-radius: 15px;
     overflow: hidden;
+    z-index: 0;
+}
+
+.ant-popover-content, .ant-popover-arrow, .ant-popover-inner, .ant-popover, .ant-popover-placement-top, .ant-popover-placement-bottom {
+    z-index: 0;
 }

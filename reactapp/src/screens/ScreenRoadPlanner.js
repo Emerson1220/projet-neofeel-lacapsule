@@ -144,7 +144,7 @@ export default connect(
 
 let styles = {
 
-    // CSS - ARCHITECTURE//
+    // CSS - ARCHITECTURE nf//
 
     container: {
         width: '100%',
@@ -164,7 +164,7 @@ let styles = {
         display: 'grid',
         gridTemplateRows: '15% 85%',
         flexWrap: 'wrap',
-        height: '100vh'
+        height: '100%'
     },
 
     col_xl_9: {

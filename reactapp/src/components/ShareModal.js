@@ -55,7 +55,7 @@ const ShareModal = (props) => {
             title="Partager mon expérience NEOFEEL"
             centered={ true }
             visible={ props.visible }
-            handleCancel={ ()=>props.toggleModal() }
+            onCancel={ ()=>props.toggleModal() }
             footer={ null }
             maskClosable={ true }
             >
