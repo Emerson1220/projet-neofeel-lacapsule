@@ -24,10 +24,6 @@ const Map = (props) => {
             setExperienceList(props.experiences)
         }
     }, [props.roadplanner.experiences, props.experiences, props.mode])
-    
-    useEffect(()=> {
-        console.log(experienceList)
-    }, [experienceList])
 
     var markers = [];
     if (experienceList && experienceList.length > 0) {

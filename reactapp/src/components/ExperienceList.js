@@ -3,10 +3,13 @@ import '../App.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RedButton from './RedButton';
-import { Cascader, notification } from 'antd'
+import { Cascader, notification, Modal } from 'antd'
 /* TESTTTTT*/
 const ExperienceList = (props) => {
     const [voyageSelect, setVoyageSelect] = useState('');
+    const [visible, setVisible] = useState(false);
+    const [newTripName, setNewTripName] = useState('');
+    const [newTripExperience, setNewTripExperience] = useState(null);
     
     //CASCADER
     let options = [
@@ -47,17 +50,24 @@ const ExperienceList = (props) => {
         return label[label.length - 1];
     }
 
-    const onChange = (value) => {
-        setVoyageSelect(value)
+    
+    const onChange = value => {
+        console.log(value)
+        if (value[0] === 'new') {
+            setVisible(true);
+        } else {
+            setVoyageSelect(value)
+        }
     };
-
+    
     //HTTP REQUESTS
     const createNewTrip = async (experience) => {
+        console.log(experience)
         let region = 'Alsace-Vosges';
-            let rawResponse = await fetch('/myroadplanner', {
-                method: "POST",
+        let rawResponse = await fetch('/myroadplanner', {
+            method: "POST",
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `token=${props.user.token}&name=Mon Voyage en ${region}&region=${region}&regionCode=${props.region}&experienceID=${experience._id}`
+                body: `token=${props.user.token}&name=${newTripName}&region=${region}&regionCode=${props.region}&experienceID=${experience._id}`
             });
             let response = await rawResponse.json();
             if (response.result === true) {
@@ -67,15 +77,16 @@ const ExperienceList = (props) => {
             } else {
                 openNotification('error', "Votre voyage n'a pas pu être crée. Veuillez réessayer.")
             }
-    }
-    
-    const addExperienceToTrip = async(experience) => {
-        let rawResponse = await fetch('/myroadplanner', {
+        }
+        
+        const addExperienceToTrip = async(experience) => {
+            let rawResponse = await fetch('/myroadplanner', {
             method: 'PUT',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: `roadtripID=${voyageSelect[1]}&experienceID=${experience._id}`
         })
         let response = await rawResponse.json();
+        console.log(response)
         if(response.result === true) {
             props.addExperience(response.roadtrip._id, experience)
             openNotification('success', 'Expérience ajouté');
@@ -88,6 +99,7 @@ const ExperienceList = (props) => {
 
     //FUNCTIONS
     const chooseExperience = async(experience) => {
+        console.log(experience)
         if (props.user.token) {
             voyageSelect[0] === 'new' ? createNewTrip(experience) : addExperienceToTrip(experience);
         } else {
@@ -96,6 +108,14 @@ const ExperienceList = (props) => {
         }
     }
 
+    // const chooseTripName = () => {
+    //     voyageSelect
+    // }
+
+    const toggleModal = () => {
+        setVisible(!visible);
+    }
+    
     const openNotification = (type, message) => {
         notification[type] ({
             description: message,
@@ -185,7 +205,16 @@ const ExperienceList = (props) => {
     return (
         <div style={ styles.experiences_list_area }>
             {ExperienceListing}
-            
+            <Modal
+            title="Choisissez un nom pour votre nouveau voyage!"
+            visible={ visible }
+            onOK={ toggleModal }
+            onCancel={ toggleModal }
+            footer={ null }>
+                <label for='name'>Nom</label>
+                <input name="name" type='text' onChange={ (e)=>setNewTripName(e.target.value) }></input>
+                <RedButton title="Confirm"/>
+            </Modal>
         </div>
     )
 }
@@ -216,6 +245,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+    console.log(state)
     return { experiences: state.experiences, region: state.region, user: state.user, roadplanner: state.roadplanner }
 }
 

@@ -17,6 +17,8 @@ export default function(roadplanner = {}, action) {
         return temp;
     } else if (action.type === 'clearRoadplanner') {
         return {}
+    }else if (action.type === 'toggleRoadplanner') {
+        return action.roadplanner;
     } else {
         return roadplanner;
     }
