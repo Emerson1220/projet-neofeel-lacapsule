@@ -4,7 +4,7 @@ import '../App.css';
 import '../styles/partner.css'
 import RedButton from '../components/RedButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhoneAlt, faBookmark } from '@fortawesome/free-solid-svg-icons'
+import { faPhoneAlt, faBookmark, faEye, faHandsHelping,FaCreativeCommonsNceu } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -43,11 +43,11 @@ const ScreenPartner = () => {
                             <h4 className='description'>Partagez avec des visiteurs curieux et engagés</h4>
                         </div>
                         <div className='description'>
-                        <FontAwesomeIcon size="2x" icon={faBookmark} style={{marginRight:'2%', marginBottom:'5%', color:'#106271'}} />
+                        <FontAwesomeIcon size="2x" icon={faEye} style={{marginRight:'2%', marginBottom:'5%', color:'#106271'}} />
                             <h4 className='description'>Donnée une visibilité nationale à votre entreprise</h4>
                         </div>
                         <div className='description'>
-                        <FontAwesomeIcon size="2x" icon={faBookmark} style={{marginRight:'2%', marginBottom:'5%', color:'#106271'}} />
+                        <FontAwesomeIcon size="2x" icon={faHandsHelping} style={{marginRight:'2%', marginBottom:'5%', color:'#106271'}} />
                             <h4 className='description'>Intégrez un réseau solidaire pour de nouvelles opportunités</h4>
                         </div>
                     </div>
