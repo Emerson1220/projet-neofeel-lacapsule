@@ -45,21 +45,10 @@ function ScreenRoadPlanner(props) {
     if (experienceList && experienceList.length > 0) {
         cards = experienceList.map((e, i)=>
     
-            <CardRoadPlanner key={i}
-                id={e._id}
-                name={e.name}
-                activity={e.activity}
-                activityType={e.activityType}
-                region={e.region}
-                tags={e.tags}
-                subtitle={e.subtitle}
-                activityTime={e.activityTime}
-                budget={e.budget}
-                imageBannerUrl={e.description.imageBannerUrl}
-                city={e.city}
-                coordinate={e.coordinate}
-            >
-            </CardRoadPlanner>
+            <CardRoadPlanner
+            key={i}
+            experience={ e }
+            />
         )
     }
 

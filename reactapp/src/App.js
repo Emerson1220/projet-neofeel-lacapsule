@@ -75,6 +75,6 @@ const styles = {
     minHeight: '100vh'
   },
   content_wrap: {
-    flex: 1
+    flex: 2
   }
 }
