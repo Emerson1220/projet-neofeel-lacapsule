@@ -23,7 +23,6 @@ const ScreenSuggestions = (props) => {
     const getSuggestions = async () => {
         let rawResponse = await fetch('/roadtrips')
         let response = await rawResponse.json();
-        console.log(response);
         props.loadSuggestions(response.roadtrips)
     };
 
@@ -142,7 +141,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    console.log({ state: state })
     return {
         roadtrips: state.roadtrips, activities: state.activities, suggestions: state.suggestions, user: state.user
     }

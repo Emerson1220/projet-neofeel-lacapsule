@@ -20,7 +20,6 @@ const PopoverContent = (props) => {
 
     const onMenuClick = ({ key }) => {
         const data = JSON.parse(key)
-        console.log(data)
         if (data[0] === 'temp') {
             !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.newRoadplanner(data[0], data[1]) : props.addExperience(data[0], data[1]) ;
             openNotification('warning', 'Expérience ajoutée. Connectez-vous pour sauvegarder votre voyage.');
@@ -57,7 +56,6 @@ const PopoverContent = (props) => {
                 body: `roadtripID=${trip}&experienceID=${experience._id}`
                 })
                 let response = await rawResponse.json();
-                console.log(response)
                 if(response.result === true) {
                     props.addExperience(response.roadtrip._id, experience)
                     openNotification('success', 'Expérience ajouté');

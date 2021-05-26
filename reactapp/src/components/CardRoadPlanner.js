@@ -22,7 +22,6 @@ function CardRoadPlanner(props) {
             {method: 'DELETE'
         });
         let response = await rawResponse.json();
-        console.log(response)
             if(response.result === true) {
                 props.deleteExperience(experienceID)
             }
@@ -43,7 +42,6 @@ function CardRoadPlanner(props) {
         
     //FUNCTIONS
     const deleteExperience = experienceID => {
-        console.log('click')
         if (props.user.token) {
             deleteExperienceDB(experienceID)
         } else {
@@ -148,7 +146,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return { user: state.user, roadplanner: state.roadplanner }
 }
 

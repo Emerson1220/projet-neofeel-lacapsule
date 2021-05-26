@@ -35,7 +35,6 @@ router.post('/searchregions', async function(req, res, next) {
         let experiences = await Experience.find({ regionCode: req.body.region })
         .populate('partner')
         .exec();
-        console.log(experiences)
         res.json({ result: true, data: experiences })
     } catch (err) {
         console.log(err)
@@ -171,7 +170,6 @@ router.put('/myroadplanner', async function(req, res, next) {
             }
             })
         .exec();
-        console.log(roadtrip)
         if (roadtrip.days[0].experiences.some(e => e.id === req.body.experienceID)) {
             throw 'already exists'
         }
@@ -247,7 +245,6 @@ router.get('/myroadplanner/:token', async function(req, res, next) {
     let current = user.roadtrips.sort((a, b) => {
         return a.creationDate - b.creationDate
     })[0];
-    console.log({current: current})
     res.json({ result: true, currentRoadtrip: current })
 })
 

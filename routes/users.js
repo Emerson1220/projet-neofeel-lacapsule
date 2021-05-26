@@ -6,6 +6,7 @@ const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client('884422014939-bu63e3eoqfgv1vrmsn01qd0ukfl2uumf.apps.googleusercontent.com')
 
 const User = require('../models/User');
+const Roadtrip = require('../models/Roadtrip')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -14,8 +15,8 @@ router.get('/', function(req, res, next) {
 
 //Inscription client (Sign up)
 router.post('/signup', async function(req, res, next) {
-  try {  
-    let user = req.body;
+  try {
+    const { user, roadplanner } = JSON.parse(req.body.data);
     if (!user.pseudo || !user.email || !user.password) {
       throw 'sign up incomplete'
     }
@@ -30,10 +31,23 @@ router.post('/signup', async function(req, res, next) {
       password: hash,
       token: uid2(32),
       category: 'user',
+      roadtrips: []
     });
 
+    let newRoadplanner = null;
+    if (roadplanner !== null) {
+      roadplannerCreate = new Roadtrip({
+        name: roadplanner.name,
+        days: [{ name: 'experiences', experiences: roadplanner.experiences }]
+      })
+      await roadplannerCreate.save();
+
+      newRoadplanner = roadplannerCreate._id;
+      newUser.roadtrips.push(roadplannerCreate);
+    }
+
     await newUser.save();
-    res.json({ result: true, user: newUser })
+    res.json({ result: true, user: newUser, newRoadplanner: newRoadplanner._id })
   } catch (err) {
     console.log(err)
     if (err.code === 11000) {
@@ -57,7 +71,8 @@ router.post('/signup', async function(req, res, next) {
 //Connexion client (sign in)
 router.post('/signin', async function(req, res, next) {
   try {
-    let user = await User.findOne({ email: req.body.email })
+    let { user, roadplanner } = JSON.parse(req.body.data)
+    let userFind = await User.findOne({ email: user.email })
     .populate('roadtrips')
     .populate({
       path: 'roadtrips',
@@ -67,26 +82,36 @@ router.post('/signin', async function(req, res, next) {
       }
     })
     .exec();
-    console.log(user)
-    if (!user) {
-      throw 'email invalid'
-    } 
 
-    if (!bcrypt.compareSync(req.body.password, user.password)) {
+    if (!userFind) {
+      throw 'email invalid'
+    } else if (!bcrypt.compareSync(user.password, userFind.password)) {
       throw 'password invalid'
     }
-    let current = user.roadtrips.sort((a, b) => {
-      return a.creationDate - b.creationDate
-    })[0];
-    let currentRoadtrip;
-    if (current) {
-      currentRoadtrip = {
-        id: current._id,
-        experiences: current.days[0].experiences
-      }
-    } else {
-      currentRoadtrip = 'none'
+    let currentRoadtrip = 'none';
+
+    if (roadplanner !== null) {
+      let newRoadplanner = new Roadtrip({
+        name: roadplanner.name,
+        days: [{ name: 'experience', experiences: roadplanner.experiences }]
+      })
+      await newRoadplanner.save();
+
+      userFind.roadtrips.push(newRoadplanner._id);
+      currentRoadtrip = 'current'
+    } else if (user.roadtrips.length > 0) {
+      let current = user.roadtrips.sort((a, b) => {
+        return a.creationDate - b.creationDate
+      })[0];
+
+      if (current) {
+        currentRoadtrip = {
+          id: current._id,
+          experiences: current.days[0].experiences
+        }
     }
+    }
+
     
     res.json({ result: true, user: user, currentRoadtrip: currentRoadtrip })
 
@@ -117,6 +142,7 @@ router.post('/staylogged', async function(req, res, next) {
     let current = user.roadtrips.sort((a, b) => {
       return a.creationDate - b.creationDate
     })[0];
+
     current = {
       id: current._id,
       experiences: current.days[0].experiences
@@ -139,7 +165,6 @@ router.get('/auth/facebook/signup/:accessToken', async function(req, res, next) 
         access_token: req.params.accessToken
       }
     });
-    console.log(data)
     if (!data) {
       throw 'facebook login failed'
     }
@@ -152,7 +177,6 @@ router.get('/auth/facebook/signup/:accessToken', async function(req, res, next) 
       category: 'user',
       avatar: data.picture.data.url
     })
-    console.log(user);
     let newUser = await user.save();
     res.json({ result: true, token: newUser.token })
   } catch(err) {
@@ -171,7 +195,7 @@ router.get('/auth/google/signup/:accessToken', async function(req, res, next) {
     });
     res.send(ticket);
     const { name, email, picture } = ticket.getPayload();
-    console.log({ name, email, picture })
+    ({ name, email, picture })
     let user = new User({
       firstName: name.split(' ')[0],
       lastName: name.split(' ')[-1],
@@ -200,7 +224,6 @@ router.post('/auth/facebook/signin', async function(req, res, next) {
         access_token: req.params.accessToken
       }
     });
-    console.log(data)
     if (!data) {
       throw 'facebook login failed'
     }

@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 const ShareModal = (props) => {
     const [tripData, setTripData] = useState({});
-    console.log(props.roadtrip)
+    
     //HTTP REQUESTS
     const shareTrip = async() => {
         let data = JSON.stringify({
