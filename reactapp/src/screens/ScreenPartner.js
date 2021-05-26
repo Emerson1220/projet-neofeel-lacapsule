@@ -193,7 +193,7 @@ const ScreenPartner = (props) => {
                             </div>
 
                             <div style={styles.row_card_button_achat}>
-                                <Link to={'/'}>
+                                <Link to={'/panier'}>
                                     <RedButton transparent={true} title="Acheter ce Neopass" />
                                 </Link>
                             </div>

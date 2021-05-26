@@ -7,8 +7,8 @@ import Nav from '../components/Nav'
 import '../App.css';
 import '../styles/partner.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhoneAlt, faBookmark, faEye, faHandsHelping,FaCreativeCommonsNceu } from '@fortawesome/free-solid-svg-icons'
-
+import { faPhoneAlt, faBookmark, faEye, faHandsHelping} from '@fortawesome/free-solid-svg-icons'
+import {faCreativeCommonsNcEu } from '@fortawesome/free-brands-svg-icons'
 
 
 const ScreenPartner = () => {
@@ -38,7 +38,7 @@ const ScreenPartner = () => {
                     <div className='whyPartner'>
                         <h2>Pourquoi devenir partenaire ?</h2>
                         <div className='description'>
-                        <FontAwesomeIcon size="2x" icon={faBookmark} style={{marginRight:'2%', marginBottom:'5%', color:'#106271'}} />
+                        <FontAwesomeIcon size="2x" icon={faCreativeCommonsNcEu} style={{marginRight:'2%', marginBottom:'5%', color:'#106271'}} />
                             <h4>100% gratuit et sans engagement de durée</h4>
                         </div>
                         <div className='description'>

@@ -228,7 +228,7 @@ const ScreenBasket = () => {
                             <img style={{ width: '100%', borderRadius: '15px' }} src='./images/neopassRecto.png' />
                         </div>
                         <div style={{ color: 'white' }}>
-                            <h2 style={{color:'black'}}>NOM DU PRODUITS</h2>
+                            <h2 style={{color:'black'}}>NEOPASS Alsaces-Vosges</h2>
                         </div>
                     </div>
                     <div style={styles.basket}>

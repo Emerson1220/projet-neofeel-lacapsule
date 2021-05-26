@@ -14,6 +14,7 @@ import ScreenBecomePartner from './screens/ScreenBecomePartner';
 import ScreenProfile from './screens/ScreenProfile';
 import ScreenBasket from './screens/ScreenBasket';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 
 
 //REDUX
@@ -42,6 +43,7 @@ function App() {
 
         <div style={styles.page_container}>
           <Router>
+            <ScrollToTop/>
             <div style={styles.content_wrapper}>
               <Switch>
                 <Route component={ScreenHome} path="/" exact />

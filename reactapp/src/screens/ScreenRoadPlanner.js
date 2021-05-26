@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
+import {Link} from 'react-router-dom'
 import '../App.css';
 
 //COMPONENTS
@@ -71,7 +72,9 @@ function ScreenRoadPlanner(props) {
                         <div style={{ borderRight: '1px solid grey' }}>
                             { warning }
                             <h3>Vous avez cumulé <span>{total}</span>€ d'avantages dans votre séléction!</h3>
+                            <Link to={'/panier'}>
                             <RedButton title='Achetez votre Neopass pour 60€'></RedButton>
+                            </Link>
                             <Popover content={content} >
                                 <FontAwesomeIcon size='2x' icon={faInfoCircle} style={{marginLeft:'2%', color:'#e06868 '}}/>
                             </Popover>
