@@ -45,13 +45,14 @@ const SignIn = (props) => {
             body: `data=${sendData}`
         });
         let response = await rawResponse.json();
+        console.log(response)
         if (response.result === true) {
             props.stayLogged(response.user)
             if (response.currentRoadtrip !== 'none' && response.currentRoadtrip !== 'current') {
                 props.loadRoadplanner(response.currentRoadtrip)
-            }
-        if (isChecked) {
-            cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
+                if (isChecked) {
+                    cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
+                    }
             }
         } else {
             setError(response.message);

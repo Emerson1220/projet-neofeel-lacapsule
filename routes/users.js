@@ -113,7 +113,7 @@ router.post('/signin', async function(req, res, next) {
     }
 
     
-    res.json({ result: true, user: user, currentRoadtrip: currentRoadtrip })
+    res.json({ result: true, user: userFind, currentRoadtrip: currentRoadtrip })
 
   } catch (err) {
     console.log(err)
