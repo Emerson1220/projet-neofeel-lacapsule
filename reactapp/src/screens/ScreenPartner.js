@@ -122,7 +122,8 @@ const ScreenPartner = (props) => {
         if (newWindow) newWindow.opener = null
     }
     //DISPLAY
-    let address = `${experience.partner.addresses[0].streetNumber} ${experience.partner.addresses[0].streetName} ${experience.partner.addresses[0].city} ${experience.partner.addresses[0].zipcode} ${experience.partner.addresses[0].country}`
+    let address;
+    // let address = `${experience.partner.addresses[0].streetNumber} ${experience.partner.addresses[0].streetName} ${experience.partner.addresses[0].city} ${experience.partner.addresses[0].zipcode} ${experience.partner.addresses[0].country}`
 
     return (
         <div>
@@ -169,9 +170,9 @@ const ScreenPartner = (props) => {
                                 return (
                                     <div style={styles.gallery_item} key={i}>
                                         <div style={styles.tp_gallery_item_img}>
-                                            <a href="#" data-effect="mfp-zoom-in">
+                                            {/* <a href="#" data-effect="mfp-zoom-in"> */}
                                                 <img style={styles.tp_gallery_item_img} src={e} alt="" />
-                                            </a>
+                                            {/* </a> */}
                                         </div>
                                     </div>
                                 )
@@ -310,7 +311,9 @@ const ScreenPartner = (props) => {
                                     </ul>
 
                                     <div>
-                                        <a href="#"><span>Plus de commentaires<i /></span></a>
+                                        {/* <a href="#"> */}
+                                            <span>Plus de commentaires<i /></span>
+                                        {/* </a> */}
                                     </div>
 
                                 </div>

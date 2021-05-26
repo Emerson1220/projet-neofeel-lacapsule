@@ -13,8 +13,8 @@ function CardRoadPlanner(props) {
 
     //EFFECT HOOKS
     useEffect(()=> {
-        setWeather(getWeather(props.coordinate))
-    }, [props.coordinate])
+        setWeather(getWeather(props.experience.coordinate))
+    }, [props.experience.coordinate])
 
     //HTTP REQUESTS
     const deleteExperienceDB = async(experienceID) => {
@@ -48,9 +48,12 @@ function CardRoadPlanner(props) {
 
 
     //DISPLAY
-    var pictos = props.tags.map((image, j) => {
+    const { experience } = props;
+    console.log(experience)
+    var pictos = experience.tags.map((image, j) => {
         return (<img key={j} style={styles.liste_pictos} src={`images/pictos/${image}-8.png`} alt={image} />)
     })
+
 
     return ( 
         <div style={ styles.single_destinations }>
@@ -70,26 +73,42 @@ function CardRoadPlanner(props) {
                             <FontAwesomeIcon size='2x' icon={faTrashAlt} onClick={ ()=>deleteExperience() } />
                         </div>
                     </div>
-                    <h3 style={ styles.padding_top } ><Link style={ styles.h3 } to="/">{props.name}</Link></h3>
-                    <h4><Link style={ styles.h4 } to="/">{props.subtitle}</Link></h4>
+                    <Link
+                    to={{
+                        pathname: `/partenaire/${experience._id}`,
+                        state: {
+                            experience: experience
+                        }
+                    }}>
+                        <h3 style={ styles.h3 }>{experience.name}</h3>
+                    </Link>
+                    <Link
+                    to={{
+                        pathname: `/partenaire/${experience._id}`,
+                        state: {
+                            experience: experience
+                        }
+                    }}>
+                        <h4 style={ styles.h4 }>{experience.subtitle}</h4>
+                    </Link>
                 </div>
 
                 <div style={ styles.title_location }>
-                    <h4 style={ styles.items_title_location }><img style={{marginRight:'.5rem'}} src="images/icone-geo.png" alt="map" />{props.region}</h4>
-                    <h4 style={ styles.items_title_location }>{props.city}</h4>
+                    <h4 style={ styles.items_title_location }><img style={{marginRight:'.5rem'}} src="images/icone-geo.png" alt="map" />{experience.region}</h4>
+                    <h4 style={ styles.items_title_location }>{experience.city}</h4>
                 </div>
 
                 <div style={styles.liste_info}>
                     <div style={styles.liste_item}>
                         <p style={ styles.subtitle }>Durée</p>
                         <div style={ styles.infoContainer }>
-                            <p style={ styles.p }>{props.activityTime}</p>
+                            <p style={ styles.p }>{experience.activityTime}</p>
                         </div>
                     </div>
                     <div style={styles.liste_item_center}>
                         <p style={ styles.subtitle }>Prix</p>
                         <div style={ styles.infoContainer }>
-                            <p style={ styles.p }>{props.budget}</p>
+                            <p style={ styles.p }>{experience.budget}</p>
                         </div>
                     </div>
                     <div style={styles.liste_item}>
@@ -147,7 +166,7 @@ let styles = {
         overflow: 'hidden',
         borderTopLeftRadius: '.5rem',
         borderBottomLeftRadius: '.5rem',
-        maxHeight: 'inherit',
+        height: '100%',
         borderBottom: '.1rem solid #CFD3DE',
     },
 

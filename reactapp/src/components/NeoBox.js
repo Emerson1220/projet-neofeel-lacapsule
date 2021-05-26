@@ -5,8 +5,6 @@ import { Card } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { faHeart, faAddressCard, faWallet,faGift} from '@fortawesome/free-solid-svg-icons'
-import { icons } from 'antd/lib/image/PreviewGroup';
-
 
 const Neobox = () => {
 
@@ -17,7 +15,7 @@ const Neobox = () => {
 
                 <div style={{ display: 'flex', width: 'auto', height: '12%', justifyContent: 'center', alignItems: 'center', marginTop: '2%', marginBottom: '2%', borderRadius: '15px' }}>
                     <h2 className='title' style={{ marginRight: '5%', fontWeight: 'bold', color: '#fff' }}>NEOBOX</h2>
-                    <img style={{ width: '25%' }} src='../images/pictos/avantage-particulier-8.png' />
+                    <img style={{ width: '25%' }} src='../images/pictos/avantage-particulier-8.png' alt=''/>
                 </div>
 
                 <Card
@@ -25,7 +23,7 @@ const Neobox = () => {
                     bodyStyle={{ borderRadius: '15px' }}
                     cover={
                         <img
-                            alt="image"
+                            alt="neobox"
                             src="../images/BOX-v2.jpg.webp"
                         />
                     }
@@ -49,7 +47,7 @@ const Neobox = () => {
                             <h3 className='h3'>Des avantages particuliers à chaque rencontre.</h3>
                         </div>
                         <div className='div-picto'>
-                            <img src='./images/pictos/mondial-relay-logo.png' style={{ color: '#106271', width:'60px' }}  />
+                            <img src='./images/pictos/mondial-relay-logo.png' style={{ color: '#106271', width:'60px' }}  alt="picto livraison gratuite"/>
                             <h3 className='h3'>Livraison gratuite</h3>
                         </div>
 

@@ -110,7 +110,7 @@ router.put('/manageexperiences', function(req, res, next) {
     } else {
       res.json({ result: true, experience:{experienceID: '123', name: 'Vinot VArlot', activity: 'Visite vignes', category: 'gastronomie'}});
     }
-    })
+})
 
 //Gestion expérience Delete
 //Query: expérienceID

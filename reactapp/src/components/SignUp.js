@@ -51,32 +51,33 @@ const SignUp = (props) => {
         }
     }
 
-    //Facebook/Google logins
-    // const responseFacebook = async(res) => {
-    //     let rawResponse = await fetch(`/users/auth/facebook/signup/${res.accessToken}`);
-    //     let response = await rawResponse.json();
-    //     if (response.result === true) {
-    //         props.stayLogged(response.user)
-    //         if (isChecked) {
-    //             cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
-    //         }
-    //     } else {
-    //         setError(response.message);
-    //     }
-    // }
+    // Facebook/Google logins
+    const responseFacebook = async(res) => {
+        let rawResponse = await fetch(`/users/auth/facebook/signup/${res.accessToken}`);
+        let response = await rawResponse.json();
+        if (response.result === true) {
+            props.stayLogged(response.user)
+            if (isChecked) {
+                cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
+            }
+        } else {
+            setError(response.message);
+        }
+    }
 
-    // const responseGoogle = async (res) => {
-    //     let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
-    //     let response = await rawResponse.json();
-    //     if (response.result === true) {
-    //         props.stayLogged(response.user)
-    //         if (isChecked) {
-    //             cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
-    //         }
-    //     } else {
-    //         setError(response.message)
-    //     }
-    // }
+    const responseGoogle = async (res) => {
+        console.log(res)
+        let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
+        let response = await rawResponse.json();
+        if (response.result === true) {
+            props.stayLogged(response.user)
+            if (isChecked) {
+                cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
+            }
+        } else {
+            setError(response.message)
+        }
+    }
 
     return (
         <div style={ styles.container }>
@@ -129,20 +130,20 @@ const SignUp = (props) => {
             </div>
             <div style={ styles.buttonContainer }>
                     <FacebookLogin
-                    // appId='509585980227274'
+                    appId='509585980227274'
                     fields="name, email, picture"
                     textButton="S'inscrire avec Facebook"
-                    // callback={ responseFacebook }
+                    callback={ responseFacebook }
                     language="fr-FR"
                     size="small"
                     icon="fa-facebook"
                     className="facebook"
                     />
                     <GoogleLogin
-                    // clientId="884422014939-bu63e3eoqfgv1vrmsn01qd0ukfl2uumf.apps.googleusercontent.com"
+                    clientId="884422014939-bu63e3eoqfgv1vrmsn01qd0ukfl2uumf.apps.googleusercontent.com"
                     buttonText="S'inscrire avec Google"
-                    // onSuccess={ responseGoogle }
-                    // onFailure={ responseGoogle }
+                    onSuccess={ responseGoogle }
+                    onFailure={ responseGoogle }
                     cookiePolicy={'single_host_origin'}
                     />
             </div>

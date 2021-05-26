@@ -36,7 +36,7 @@ const ScreenInfo = () => {
                     </h4>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <img style={{ display: 'flex', width: '70%', marginBottom: '2%', }} src='./images/carte2.jpg '></img>
+                        <img style={{ display: 'flex', width: '70%', marginBottom: '2%', }} src='./images/carte2.jpg ' alt="carte de France NEOFEEL"></img>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@ const ScreenInfo = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', width: '80%', alignItems: 'center', margin: '6%' }}>
                     <h2 style={{ marginBottom: '6%', fontSize: '40px', color: '#106271', fontWeight: 'bold' }}>Les Valeurs</h2>
                     <Timeline color='#106271'>
-                        <Timeline.Item dot={<img className='picto' src='./images/pictos/solidaire-8.png' />} >
+                        <Timeline.Item dot={<img className='picto' src='./images/pictos/solidaire-8.png' alt="picto valeur solidaire"/>} >
                             <div classname='valeurs'>
                                 <h3 className='h3'>
                                     LE RESEAU ETHIQUE & SOLIDAIRE</h3>
@@ -59,7 +59,7 @@ const ScreenInfo = () => {
                             </div>
                         </Timeline.Item>
 
-                        <Timeline.Item dot={<img className='picto' src='./images/pictos/partagez-8.png' />}>
+                        <Timeline.Item dot={<img className='picto' src='./images/pictos/partagez-8.png' alt="picto valeur partage du savoir"/>}>
                             <div classname='valeurs'>
                                 <h3 className='h3'>
                                     LE PARTAGE DU SAVOIR</h3>
@@ -68,7 +68,7 @@ const ScreenInfo = () => {
                             </div>
                         </Timeline.Item>
 
-                        <Timeline.Item dot={<img className='picto' src='./images/pictos/prix-juste-8.png' />}>
+                        <Timeline.Item dot={<img className='picto' src='./images/pictos/prix-juste-8.png' alt="picto valeur prix juste"/>}>
                             <div classname='valeurs'>
                                 <h3 className='h3'>
                                     LE PRIX JUSTE</h3>
@@ -77,7 +77,7 @@ const ScreenInfo = () => {
                             </div>
                         </Timeline.Item>
 
-                        <Timeline.Item dot={<img className='picto' src='./images/pictos/rencontrez-8.png' />}>
+                        <Timeline.Item dot={<img className='picto' src='./images/pictos/rencontrez-8.png' alt="picto valeur l'esprit donnant"/>}>
                             <div classname='valeurs'>
                                 <h3 className='h3'>
                                     L'ESPRIT "DONNANT-DONNANT"</h3>
@@ -89,7 +89,7 @@ const ScreenInfo = () => {
                             </div>
                         </Timeline.Item>
 
-                        <Timeline.Item dot={<img className='picto' src='./images/pictos/reseau-solidaire-8.png' />}>
+                        <Timeline.Item dot={<img className='picto' src='./images/pictos/reseau-solidaire-8.png' alt="picto valeur relations humaines et environnementales"/>}>
                             <div classname='valeurs'>
                                 <h3 className='h3'>
                                     LES RELATIONS HUMAINES ET ENVIRONNEMENTALES</h3>

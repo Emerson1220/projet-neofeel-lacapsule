@@ -13,6 +13,7 @@ import ScreenPartner from './screens/ScreenPartner';
 import ScreenBecomePartner from './screens/ScreenBecomePartner';
 import ScreenProfile from './screens/ScreenProfile';
 import ScreenBasket from './screens/ScreenBasket';
+import Footer from './components/Footer';
 
 
 //REDUX
@@ -37,25 +38,43 @@ function App() {
   return (
     <Provider store={ store }>
       <Elements stripe={ stripePromise }>
-        <Router>
-          <Switch>
-            <Route component={ ScreenHome } path="/" exact />
-            <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
-            <Route component={ ScreenLogin } path="/connexion"  />
-            <Route component={ ScreenSearch } path="/recherche"  />                    
-            <Route component={ ScreenInfo } path="/info"  />
-            <Route component={ ScreenPartner } path="/partenaire/:experienceID"  />
-            <Route component={ ScreenBecomePartner } path="/partenaire/"  />
-            <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
-            <Route component={ ScreenProfile } path="/profil"  />
-            <Route component={ ScreenBasket } path="/panier"  />
-            <Route component={ScreenSuggestions} path="/suggestions"  />  
-          </Switch>
-        </Router>
+
+        <div style={ styles.page_container }>
+          <div style={ styles.content_wrapper}>
+            <Router>
+              <Switch>
+                <Route component={ ScreenHome } path="/" exact />
+                <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
+                <Route component={ ScreenLogin } path="/connexion"  />
+                <Route component={ ScreenSearch } path="/recherche"  />                    
+                <Route component={ ScreenInfo } path="/info"  />
+                <Route component={ ScreenPartner } path="/partenaire/:experienceID"  />
+                <Route component={ ScreenBecomePartner } path="/partenaire/"  />
+                <Route component={ ScreenRoadPlanner } path="/roadPlanner"  />
+                <Route component={ ScreenProfile } path="/profil"  />
+                <Route component={ ScreenBasket } path="/panier"  />
+                <Route component={ScreenSuggestions} path="/suggestions"  />  
+              </Switch>
+            </Router>
+          </div>
+          <Footer />
+        </div>
       </Elements>
     </Provider>
+
 
   );
 }
 
 export default App;
+
+const styles = {
+  page_container: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh'
+  },
+  content_wrap: {
+    flex: 2
+  }
+}

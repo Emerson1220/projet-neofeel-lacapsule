@@ -4,8 +4,6 @@ import { Card } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAddressCard, faAward, faGift, faThumbsUp, faWallet } from '@fortawesome/free-solid-svg-icons'
 
-const { Meta } = Card;
-
 const Neopass = () => {
 
     return (
@@ -15,7 +13,7 @@ const Neopass = () => {
 
                 <div style={{ display: 'flex', width: 'auto', height: '12%', justifyContent: 'center', alignItems: 'center', marginTop: '2%', marginBottom: '2%', borderRadius:'15px' }}>
                     <h2 className='title' style={{ marginRight: '5%', fontWeight: 'bold', color: '#fff' }}>NEOPASS</h2>
-                    <img style={{ width: '25%' }} src='../images/pictos/voyagez-8.png' />
+                    <img style={{ width: '25%' }} src='../images/pictos/voyagez-8.png' alt=''/>
                 </div>
 
                 <Card
@@ -23,7 +21,7 @@ const Neopass = () => {
                     bodyStyle={{borderRadius:'15px'}}
                     cover={
                         <img
-                            alt="image"
+                            alt="neopass"
                             src="../images/CARTE.png.webp"
                         />
                     }

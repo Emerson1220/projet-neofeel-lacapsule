@@ -23,9 +23,6 @@ const ScreenBasket =  () => {
         base: {
             fontSize: '16px',
             color: 'rgb(16, 98, 113)',
-            '::placeholder': {
-            color: 'rgb(16, 98, 113, 0.4)',
-            },
         },
         invalid: {
             color: '#9e2146',

@@ -85,12 +85,12 @@ function Nav(props) {
         greeting = <h2 style={{ color: '#106271', marginBottom: 0, marginLeft: '20%', whiteSpace: 'nowrap' }}>Bienvenue, {props.user.firstName}!</h2>
         connectIcon = <Link to ={'/profil'} style={{marginRight:'3%'}}>
                         <FontAwesomeIcon size='2x' icon={faUserCircle} style={{ color: '#106271' }}/>
-                     </Link>
+                        </Link>
 
     }
 
     return (
-        <div style={{ width: '100%', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#FFF', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.2)' }}>
+        <div style={{ width: '100vw', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#FFF', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.2)' }}>
             <div style={{ display: 'flex', height: '100%', alignItems: 'center', marginLeft: '1%' }}>
                 <Link style={{ height: '100%' }} to={'/'}>
                     <img
