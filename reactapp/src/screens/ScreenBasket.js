@@ -224,7 +224,7 @@ const ScreenBasket = () => {
                 <div className='summary' >
                     <Divider orientation='center' style={styles.divider}>Mon Neopass</Divider>
                     <div style={styles.neopassContainer}>
-                        <div style={{ height: '100px', width: '200px', backgroundColor: 'blue', borderRadius: '5px' }}>
+                        <div style={{ height: '100px', width: '200px', borderRadius: '15px' }}>
                             <img style={{ width: '100%', borderRadius: '15px' }} src='./images/neopassRecto.png'  alt="neopass"/>
                         </div>
                         <div style={{ color: 'white' }}>
