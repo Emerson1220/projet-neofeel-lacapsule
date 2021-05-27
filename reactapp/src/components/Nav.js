@@ -90,8 +90,8 @@ function Nav(props) {
     }
 
     return (
-        <div style={{ width: '100%', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#FFF', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.2)' }}>
-            <div style={{ display: 'flex', height: '100%', alignItems: 'center', marginLeft: '1%' }}>
+        <div style={{ width: '100%', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#FFF', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.2)', boxSizing: 'border-box' }}>
+            <div style={{ display: 'flex', height: '100%', alignItems: 'center', paddingLeft: '1%', boxSizing: 'border-box' }}>
                 <Link style={{ height: '100%' }} to={'/'}>
                     <img
                         style={{ margin: '1%', padding: '1%' }}
@@ -99,7 +99,7 @@ function Nav(props) {
                         src="/images/LOGO.png" alt="logo" />
                 </Link>
 
-                <div style={{ display: "flex", flexDirection: 'column', height: '90%', justifyContent: 'space-around', }}>
+                <div style={{ display: "flex", flexDirection: 'column', height: '90%', justifyContent: 'space-around', width: '50%' }}>
                     <button
                         style={{ height: '20%', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none' }}
                         onClick={() => openInNewTab("https://www.facebook.com/lespritdepartage/")}>
@@ -134,7 +134,7 @@ function Nav(props) {
                 </div>
                 {greeting}
             </div>
-            <div style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', marginRight: '1%', height: '100%', width: '35%' }}>
+            <div style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', height: '100%', width: '50%', boxSizing: 'border-box' }}>
                 <Link to={'/partenaire'}>
                     <Button className='devenezPartenaireButton' >Devenez Partenaire</Button>
                 </Link>
