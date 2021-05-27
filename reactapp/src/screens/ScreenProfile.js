@@ -40,7 +40,7 @@ const ScreenProfile = (props) => {
         var styleTripSuggest = { display: 'flex', flexDirection: ' column', width: '80%', margin: '2%', border: '2px solid rgba(224, 104, 104, 0.8)' }
 
         var suggestionNeofeel = <></>
-        if (roadtrip.type) {
+        if (roadtrip.type === 'admin') {
             suggestionNeofeel = <h3 style= {{color:'rgba(224, 104, 104, 0.8)'}}>Suggestion NEOFEEL</h3>
         }
 
@@ -84,7 +84,7 @@ const ScreenProfile = (props) => {
     return !props.user.token ?
         (<Redirect to="/connexion" />)
         : (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'scroll' }}>
                 <Nav />
                 <div style={{
                     width: '100%', height: '100vh', display: 'grid',
