@@ -74,7 +74,8 @@ const styles = {
   page_container: {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh'
+    minHeight: '100vh',
+    width: '100%'
   },
   content_wrap: {
     flex: 2

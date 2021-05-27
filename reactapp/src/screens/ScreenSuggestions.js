@@ -117,9 +117,6 @@ const ScreenSuggestions = (props) => {
         <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#fff', height: '100%' }}>
             <Nav />
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '3%', marginBottom: '3%' }}><h1>Nos Suggestions de Voyages</h1></div>
-            <select>
-                <option></option>
-            </select>
             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center' }}>
                 {SuggestionList}
             </div>
