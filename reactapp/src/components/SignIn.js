@@ -27,19 +27,32 @@ const SignIn = (props) => {
     const cookies = new Cookie();
 
     const signinUser = async() => {
+        let roadplanner = null;
+        if (props.roadplanner.experiences) {
+            roadplanner = {
+                name: 'mon voyage',
+                experiences: props.roadplanner.experiences.map(e => e._id)
+            }
+        }
+
+        let sendData = JSON.stringify({
+            user: data,
+            roadplanner: roadplanner
+        })
         let rawResponse = await fetch('/users/signin', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `email=${data.email}&password=${data.password}`
+            body: `data=${sendData}`
         });
         let response = await rawResponse.json();
+        console.log(response)
         if (response.result === true) {
             props.stayLogged(response.user)
-            if (response.currentRoadtrip !== 'none') {
+            if (response.currentRoadtrip !== 'none' && response.currentRoadtrip !== 'current') {
                 props.loadRoadplanner(response.currentRoadtrip)
-            }            
-        if (isChecked) {
-            cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
+                if (isChecked) {
+                    cookies.set('token', response.user.token, { path: '/', maxAge: 604800 })
+                    }
             }
         } else {
             setError(response.message);
@@ -180,7 +193,13 @@ function mapDispatchToProps(dispatch) {
         }
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        roadplanner: state.roadplanner
+    }
+}
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(SignIn);

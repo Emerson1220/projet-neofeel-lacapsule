@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import '../styles/basket.css'
 import Nav from '../components/Nav';
-import { Modal, Divider, Popover } from 'antd';
+import { Modal, Divider } from 'antd';
 import RedButton from '../components/RedButton'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
-import { set } from 'mongoose';
 
 const ScreenBasket = () => {
     const [visible, setVisible] = useState(false)
@@ -225,7 +224,7 @@ const ScreenBasket = () => {
                     <Divider orientation='center' style={styles.divider}>Mon Neopass</Divider>
                     <div style={styles.neopassContainer}>
                         <div style={{ height: '100px', width: '200px', backgroundColor: 'blue', borderRadius: '5px' }}>
-                            <img style={{ width: '100%', borderRadius: '15px' }} src='./images/neopassRecto.png' />
+                            <img style={{ width: '100%', borderRadius: '15px' }} src='./images/neopassRecto.png'  alt="neopass"/>
                         </div>
                         <div style={{ color: 'white' }}>
                             <h2 style={{color:'black'}}>NEOPASS Alsaces-Vosges</h2>

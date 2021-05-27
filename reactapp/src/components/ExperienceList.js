@@ -3,61 +3,35 @@ import '../App.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RedButton from './RedButton';
-import { Cascader, notification } from 'antd'
-/* TESTTTTT*/
+import { Menu, Dropdown, Button, notification, Modal } from 'antd'
+import { DownOutlined } from '@ant-design/icons'
+
+const { SubMenu } = Menu;
+
 const ExperienceList = (props) => {
-    const [voyageSelect, setVoyageSelect] = useState('');
+    const [visible, setVisible] = useState(false);
+    const [newTripName, setNewTripName] = useState('');
+    const [newTripExperience, setNewTripExperience] = useState(null);
+
+    const onMenuClick = ({ key }) => {
+        const data = JSON.parse(key)
+        if (data[0] === 'temp') {
+            !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.newRoadplanner(data[0], data[1]) : props.addExperience(data[0], data[1]) ;
+            openNotification('warning', 'Expérience ajoutée. Connectez-vous pour sauvegarder votre voyage.');
+        } else if (data[0] === 'new') {
+            setNewTripExperience(data[1]);
+            setVisible(true);
+        } else {
+            addExperienceToTrip(data[0], data[1])
+        }
+    }
     
-    //CASCADER
-    let options = [
-            {
-                value: 'new',
-                label: 'Mon voyage'
-            }
-        ]
-        
-        if (props.user.roadtrips) { 
-            let userTrips = props.user.roadtrips.filter(e => e.type !== 'admin').map(e => {
-                return {
-                    value: e._id,
-                    label: e.name
-                }
-            });
-
-            let savedTripsOption = {};
-
-            if (userTrips.length > 0) { 
-                savedTripsOption = {
-                    value: 'saved',
-                    label: "Vos voyages",
-                    children: userTrips
-                }
-            }
-
-            options = [
-            {
-                value: 'new',
-                label: 'Nouveau voyage'
-            },
-            savedTripsOption
-        ];
-    }
-
-    function displayRender(label) {
-        return label[label.length - 1];
-    }
-
-    const onChange = (value) => {
-        setVoyageSelect(value)
-    };
-
     //HTTP REQUESTS
-    const createNewTrip = async (experience) => {
-        let region = 'Alsace-Vosges';
-            let rawResponse = await fetch('/myroadplanner', {
-                method: "POST",
+    const createNewTrip = async (experience, name) => {
+        let rawResponse = await fetch('/myroadplanner', {
+            method: "POST",
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `token=${props.user.token}&name=Mon Voyage en ${region}&region=${region}&regionCode=${props.region}&experienceID=${experience._id}`
+                body: `token=${props.user.token}&name=${name}&region=${experience.region}&regionCode=${experience.regionCode}&experienceID=${experience._id}`
             });
             let response = await rawResponse.json();
             if (response.result === true) {
@@ -67,35 +41,32 @@ const ExperienceList = (props) => {
             } else {
                 openNotification('error', "Votre voyage n'a pas pu être crée. Veuillez réessayer.")
             }
-    }
-    
-    const addExperienceToTrip = async(experience) => {
-        let rawResponse = await fetch('/myroadplanner', {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `roadtripID=${voyageSelect[1]}&experienceID=${experience._id}`
-        })
-        let response = await rawResponse.json();
-        if(response.result === true) {
-            props.addExperience(response.roadtrip._id, experience)
-            openNotification('success', 'Expérience ajouté');
-        } else if (response.message === 'already exists') {
-            openNotification('warning', 'Votre voyage contient déjà cette expérience.')
-        } else {
-            openNotification('error', "L'ajout d'expérience n'a pas pu aboutir. Veuillez réessayer.")
         }
+        
+        const addExperienceToTrip = async(trip, experience) => {
+            if (props.user.token) {
+                let rawResponse = await fetch('/myroadplanner', {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `roadtripID=${trip}&experienceID=${experience._id}`
+                })
+                let response = await rawResponse.json();
+                if(response.result === true) {
+                    props.addExperience(response.roadtrip._id, experience)
+                    openNotification('success', 'Expérience ajouté');
+                } else if (response.message === 'already exists') {
+                    openNotification('warning', 'Votre voyage contient déjà cette expérience.')
+                } else {
+                    openNotification('error', "L'ajout d'expérience n'a pas pu aboutir. Veuillez réessayer.")
+                }
+            }
     }
 
     //FUNCTIONS
-    const chooseExperience = async(experience) => {
-        if (props.user.token) {
-            voyageSelect[0] === 'new' ? createNewTrip(experience) : addExperienceToTrip(experience);
-        } else {
-            !props.roadplanner.experiences || props.roadplanner.experiences.length === 0 ? props.newRoadplanner('temp', experience) : props.addExperience('temp', experience) ;
-            openNotification('warning', 'Expérience ajoutée. Connectez-vous pour sauvegarder votre voyage.');
-        }
+    const toggleModal = () => {
+        setVisible(!visible);
     }
-
+    
     const openNotification = (type, message) => {
         notification[type] ({
             description: message,
@@ -107,6 +78,26 @@ const ExperienceList = (props) => {
     var ExperienceListing = [];
     if (props.experiences) {
         ExperienceListing = props.experiences.map((experience, i) => {
+            let menu = (
+                <Menu onClick={ onMenuClick }>
+                    <Menu.Item key={ JSON.stringify(['temp', experience]) }>Mon voyage</Menu.Item>
+                </Menu>
+            )
+        
+            if (props.user.token) {
+                let userTrips = (
+                    props.user.roadtrips.filter(e => e.type !== 'admin').map(e => <Menu.Item key={ JSON.stringify([e._id, experience]) }>{ e.name }</Menu.Item>)
+                )
+                menu = (
+                    <Menu onClick={ onMenuClick }>
+                        <Menu.Item key={ JSON.stringify(['new', experience ]) }>Nouveau voyage</Menu.Item>
+                        <SubMenu title="Mes voyages">
+                            { userTrips }
+                        </SubMenu>
+                    </Menu>
+                )
+            }
+
             var pictos = experience.tags.map((image, j) => {
                 return (<img key={j} style={styles.picto} src={`images/pictos/${image}-8.png`} alt={image} />)
             })
@@ -169,16 +160,11 @@ const ExperienceList = (props) => {
 
                             <div style={{ textAlign: 'center', margin:'1rem', bottom:'0' }}>
                                 <h4 style={styles.h5}>Ajouter cette experience à votre voyage</h4>
-                                <Cascader
-                                options={ options }
-                                expandTrigger="hover"
-                                displayRender={ displayRender }
-                                onChange={ onChange }
-                                placeholder="Sélectionnez un voyage"
-                                />
-                                <RedButton
-                                title="+"
-                                onSelect={ ()=>chooseExperience(experience) }/>
+                                    <Dropdown overlay={ menu }>
+                                        <Button>
+                                            Sélectionnez un voyage <DownOutlined />
+                                        </Button>
+                                    </Dropdown>
                             </div>
 
                         </div>
@@ -191,7 +177,16 @@ const ExperienceList = (props) => {
     return (
         <div style={ styles.experiences_list_area }>
             {ExperienceListing}
-            
+            <Modal
+            title="Choisissez un nom pour votre nouveau voyage!"
+            visible={ visible }
+            onOK={ toggleModal }
+            onCancel={ toggleModal }
+            footer={ null }
+            bodyStyle={ styles.modal }>
+                    <input name="name" type='text' style={ styles.input } onChange={ (e)=>setNewTripName(e.target.value) } placeholder='mon prochain voyage'></input>
+                    <RedButton title="+" onSelect={ ()=>createNewTrip(newTripExperience, newTripName) }/>
+            </Modal>
         </div>
     )
 }
@@ -401,5 +396,18 @@ let styles = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end'
-    }
+    },
+
+    input: {
+        border: '2px solid #e06868',
+        color: 'black',
+        width: '80%'
+    },
+
+    modal: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
 }

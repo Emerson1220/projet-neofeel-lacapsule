@@ -35,16 +35,34 @@ const SignUp = (props) => {
     //FUNCTIONS
     //signin request
     const createUser = async() => {
+        let roadplanner = null;
+        if (props.roadplanner !== {}) {
+            roadplanner = {
+                name: 'mon voyage',
+                experiences: props.roadplanner.experiences.map(e => e._id)
+            }
+        }
+
+        let data = JSON.stringify({
+            user: user,
+            roadplanner: roadplanner
+        })
         let rawResponse = await fetch('/users/signup', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `firstName=${user.firstName}&lastName=${user.lastName}&email=${user.email}&password=${user.password}&pseudo=${user.pseudo}`
+            body: `data=${data}`
         })
         let response = await rawResponse.json();
         if (response.result === true) {
             props.stayLogged(response.user)
+            if (response.newRoadplanner !== null) {
+                props.loadRoadplanner({
+                    id: response.newRoadplanner,
+                    experiences: props.roadplanner.experiences
+                })
+            }
             if (isChecked) {
-                cookies.set('token', response.token, { path: '/', maxAge: 604800 })
+                cookies.set('token', response.token, { path: '/', maxAge: 604800 });
             }
         } else {
             setError(response.message);
@@ -66,7 +84,6 @@ const SignUp = (props) => {
     }
 
     const responseGoogle = async (res) => {
-        console.log(res)
         let rawResponse = await fetch(`/users/auth/google/signup/${res.accessToken}`);
         let response = await rawResponse.json();
         if (response.result === true) {
@@ -204,10 +221,19 @@ function mapDispatchToProps(dispatch) {
         stayLogged: function(user) {
             dispatch({ type: 'stayLogged', user: user })
         },
+        loadRoadplanner: function(roadplanner) {
+            dispatch({ type: 'loadRoadplanner', roadplanner: roadplanner})
+        }
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        roadplanner: state.roadplanner
     }
 }
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(SignUp);

@@ -18,7 +18,9 @@ function CardRoadPlanner(props) {
 
     //HTTP REQUESTS
     const deleteExperienceDB = async(experienceID) => {
-        let rawResponse = await fetch(`/myroadplanner/${props.roadplanner.id}/${experienceID}`);
+        let rawResponse = await fetch(`/myroadplanner/${props.user.token}/${props.roadplanner.id}/${experienceID}`,
+            {method: 'DELETE'
+        });
         let response = await rawResponse.json();
             if(response.result === true) {
                 props.deleteExperience(experienceID)
@@ -30,6 +32,7 @@ function CardRoadPlanner(props) {
         
         let rawResponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${data.latitude}&lon=${data.longitude}&appid=${api_key}&units=metric&lang=fr`);
         let response = await rawResponse.json();
+
         setWeather({
             temp: response.main.temp,
             desc: response.weather[0].description,
@@ -49,7 +52,7 @@ function CardRoadPlanner(props) {
 
     //DISPLAY
     const { experience } = props;
-    console.log(experience)
+
     var pictos = experience.tags.map((image, j) => {
         return (<img key={j} style={styles.liste_pictos} src={`images/pictos/${image}-8.png`} alt={image} />)
     })
@@ -70,7 +73,7 @@ function CardRoadPlanner(props) {
                             {pictos}
                         </div>
                         <div style={styles.liste_pictos_trash}>
-                            <FontAwesomeIcon size='2x' icon={faTrashAlt} onClick={ ()=>deleteExperience() } />
+                            <FontAwesomeIcon icon={faTrashAlt} onClick={ ()=>deleteExperience(experience._id) } />
                         </div>
                     </div>
                     <Link
@@ -136,8 +139,8 @@ function CardRoadPlanner(props) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        deleteExperience: function(data) {
-            dispatch({ type: 'deleteExperience', data: data })
+        deleteExperience: function(experienceID) {
+            dispatch({ type: 'deleteExperience', experienceID: experienceID })
         }
     }
 }
@@ -219,6 +222,7 @@ let styles = {
     liste_pictos_trash:{
         color:'#e06868',
         textAlign:'right',
+        cursor: 'pointer'
     },
 
     liste_info:{

@@ -30,7 +30,6 @@ import { createStore, combineReducers } from 'redux';
 //STRIPE
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { options } from 'less';
 
 const store = createStore(combineReducers({ region, activities, experiences, roadplanner, user, suggestions }));
 

@@ -23,7 +23,7 @@ function ScreenRoadPlanner(props) {
     //STATE HOOKS
     const [experienceList, setExperienceList] = useState([]);
     const [total, setTotal] = useState(0);
-
+    
     //EFFECT HOOKS
     useEffect(() => {
         setExperienceList(props.roadplanner.experiences)
@@ -54,10 +54,56 @@ function ScreenRoadPlanner(props) {
         )
     }
 
+    let menu;
+    if (props.user.token) {
+        menu = 
+        <div style={styles.menu}>
+        <div style={{ borderRight: '1px solid grey' }}>
+            { warning }
+            <h3>Vous avez cumulé <span>{total}</span>€ d'avantages dans votre séléction!</h3>
+            <RedButton title='Achetez votre Neopass pour 60€'></RedButton>
+            <Popover content={content} >
+                <FontAwesomeIcon size='2x' icon={faInfoCircle} style={{marginLeft:'2%'}}/>
+            </Popover>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+            <h3>Mes voyages</h3>
+            <select style={ styles.select } placeholder="choisissez un voyage pour l'afficher" onChange={ (e)=>toggleRoadplanner(e.target.value) }>
+                { props.user.roadtrips.filter(e => e.creator === props.user._id).map(e => {
+                    return <option value={ e._id }>{ e.name }</option>
+                }) }
+            </select>
+        </div>
+    </div>
+    } else {
+        menu =                     
+        <div style={styles.menu_temp}>
+        <div>
+            { warning }
+            <h3>Vous avez cumulé <span>{total}</span>€ d'avantages dans votre séléction!</h3>
+            <RedButton title='Achetez votre Neopass pour 60€'></RedButton>
+            <Popover content={content} >
+                <FontAwesomeIcon size='2x' icon={faInfoCircle} style={{marginLeft:'2%'}}/>
+            </Popover>
+        </div>
+    </div>
+    }
+
     //FUNCTIONS
-    const getTotal = (arr) => {
+    const getTotal = arr => {
         return arr.reduce((a, c) => { return a + c.advantageAmount }, 0);
     }
+
+    const toggleRoadplanner = value => {
+        let roadtripSelect = props.user.roadtrips.find(e => e._id === value );
+        let roadtripLoad = {
+            id: value,
+            experiences: roadtripSelect.days[0].experiences,
+            name: roadtripSelect.name
+        };
+        props.toggleRoadplanner(roadtripLoad);
+    }
+
 
     return (
         <div>
@@ -69,25 +115,7 @@ function ScreenRoadPlanner(props) {
                 </div>
 
                 <div style={styles.list}>
-                    <div style={styles.menu}>
-                        <div style={{ borderRight: '1px solid grey' }}>
-                            { warning }
-                            <h3>Vous avez cumulé <span>{total}</span>€ d'avantages dans votre séléction!</h3>
-                            <Link to={'/panier'}>
-                            <RedButton title='Achetez votre Neopass pour 60€'></RedButton>
-                            </Link>
-                            <Popover content={content} >
-                                <FontAwesomeIcon size='2x' icon={faInfoCircle} style={{marginLeft:'2%', color:'#e06868 '}}/>
-                            </Popover>
-                        </div>
-                        <div>
-                            <h3>Mes voyages</h3>
-                            <select style={ styles.select } placeholder="choisissez un voyage pour l'afficher">
-                                <option>Voyage 1</option>
-                                <option>Voyage 2</option>
-                            </select>
-                        </div>
-                    </div>
+                    { menu }
                     <div style={styles.experiences_list_area}>
                         {cards}
                     </div>
@@ -97,6 +125,13 @@ function ScreenRoadPlanner(props) {
     )
 };
 
+function mapDispatchToProps(dispatch) {
+    return {
+        toggleRoadplanner: function(roadplanner) {
+            dispatch({ type: 'toggleRoadplanner', roadplanner: roadplanner })
+        }
+    }
+}
 
 function mapStateToProps(state) {
     return { user: state.user, roadplanner: state.roadplanner }
@@ -104,7 +139,7 @@ function mapStateToProps(state) {
 
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(ScreenRoadPlanner);
 
 let styles = {
@@ -127,7 +162,7 @@ let styles = {
 
     list:{
         display: 'grid',
-        gridTemplateRows: '15% 85%',
+        gridTemplateRows: '20% 80%',
         flexWrap: 'wrap',
         height: '100%'
     },
@@ -154,6 +189,21 @@ let styles = {
         gridTemplateColumns: '1fr 1fr'
     },
 
+    menu_temp:{
+        textAlign: 'center',
+        color: '#fff',
+        width: '95%',
+        padding: '.5rem',
+        margin: '1rem',
+        borderRadius: '0.7rem',
+        border: '2px solid #e06868',
+        alignSelf: 'center',
+        justifySelf: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
     experiences_list_area: {
         display: 'grid',
         gridTemplateColumns: 'repeat(1, 1fr)',
@@ -167,7 +217,8 @@ let styles = {
 
     select: {
         border: '2px solid #e06868',
-        color: 'black'
+        color: 'black',
+        width: '60%'
     }
 
 }
