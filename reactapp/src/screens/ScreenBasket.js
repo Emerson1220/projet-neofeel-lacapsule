@@ -71,12 +71,10 @@ const ScreenBasket = () => {
             })
     
             const clientSecret = response.clientSecret;
-            console.log(clientSecret)
         
             const {paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: paymentMethodReq.paymentMethod.id
             });
-            console.log(paymentIntent)
 
             if (paymentIntent.status === 'succeeded'){
                 setPaymentMethod(true)

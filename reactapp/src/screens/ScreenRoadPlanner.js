@@ -61,7 +61,9 @@ function ScreenRoadPlanner(props) {
         <div style={{ borderRight: '1px solid grey' }}>
             { warning }
             <h3>Vous avez cumulé <span>{total}</span>€ d'avantages dans votre séléction!</h3>
-            <RedButton title='Achetez votre Neopass pour 60€'></RedButton>
+            <Link to={'/panier'}>
+                <RedButton title='Achetez votre Neopass pour 60€'></RedButton>
+            </Link>
             <Popover content={content} >
                 <FontAwesomeIcon size='2x' icon={faInfoCircle} style={{marginLeft:'2%'}}/>
             </Popover>

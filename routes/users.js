@@ -35,7 +35,6 @@ router.post('/signup', async function(req, res, next) {
     });
 
     let newRoadplanner = null;
-    console.log(roadplanner)
     if (roadplanner !== null) {
       roadplannerCreate = new Roadtrip({
         name: roadplanner.name,

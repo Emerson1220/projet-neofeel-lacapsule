@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Nav from '../components/Nav'
-import { Card, Collapse } from 'antd';
+import { Card, Collapse, notification } from 'antd';
 import '../styles/suggestion.css'
 import RedButton from '../components/RedButton';
 
@@ -12,6 +12,13 @@ const { Panel } = Collapse;
 function callback(key) {
     console.log(key);
 }
+
+const openNotification = (type, message) => {
+    notification[type] ({
+        description: message,
+        placement: 'bottomRight'
+    })
+};
 
 const ScreenSuggestions = (props) => {
     //EFFECT HOOKS
@@ -46,7 +53,8 @@ const ScreenSuggestions = (props) => {
             });
             let response = await rawResponse.json();
             if(response.result === true) {
-                props.saveSuggestion(suggestion)
+                props.saveSuggestion(suggestion);
+                openNotification('success', 'Voyage ajouté à votre profil!')
             }
         }
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../styles/Home.css'
 import '../styles/login.css'
 
@@ -28,9 +28,6 @@ const SignUp = (props) => {
     const [isChecked, setIsChecked] = useState(false);
     const [error, setError] = useState('');
 
-    useEffect(()=> {
-        console.log(props.user)
-    }, [props.user])
     //COOKIE MANAGEMENT
     const cookies = new Cookie();
 
