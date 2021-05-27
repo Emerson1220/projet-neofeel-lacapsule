@@ -79,7 +79,7 @@ const ScreenSuggestions = (props) => {
                     </Panel>)
                 })
                 /* Days */
-                return (<Panel key={k} className="site-collapse-custom-panel" showArrow='false' header={day.name} style={{ width: '1200px', maxWidth: '100%' }}>
+                return (<Panel key={k} className="site-collapse-custom-panel" showArrow='false' header={day.name} style={{ width: '1200px', maxWidth: '100%'}}>
                     <Collapse defaultActiveKey="0" style={{}}>
                         {dayExperienceList}
                     </Collapse>

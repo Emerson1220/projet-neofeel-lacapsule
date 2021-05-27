@@ -1,5 +1,5 @@
 .site-collapse-custom-panel{
-    background: rgba(16, 98, 113, 0.5);
+    background: linear-gradient( 0.25turn, #106271, 20%, #FFF);
     border: 0;
     font-weight: bold;
 }

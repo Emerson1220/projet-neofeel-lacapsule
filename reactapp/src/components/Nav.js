@@ -81,7 +81,7 @@ function Nav(props) {
             </Link>
     } else {
         connectButton =
-            <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap', marginRight: '3%' }} onClick={() => logOut()}>Déconnexion</h2>
+            <h2 height={'33%'} style={{ color: '#106271', marginBottom: 0, whiteSpace: 'nowrap', marginRight: '3%', cursor:'pointer' }}  onClick={() => logOut()}>Déconnexion</h2>
         greeting = <h2 style={{ color: '#106271', marginBottom: 0, marginLeft: '20%', whiteSpace: 'nowrap' }}>Bienvenue, {props.user.firstName}!</h2>
         connectIcon = <Link to ={'/profil'} style={{marginRight:'3%'}}>
                         <FontAwesomeIcon size='2x' icon={faUserCircle} style={{ color: '#106271' }}/>
@@ -90,7 +90,7 @@ function Nav(props) {
     }
 
     return (
-        <div style={{ width: '100vw', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#FFF', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.2)' }}>
+        <div style={{ width: '100%', height: '90px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#FFF', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.2)' }}>
             <div style={{ display: 'flex', height: '100%', alignItems: 'center', marginLeft: '1%' }}>
                 <Link style={{ height: '100%' }} to={'/'}>
                     <img
@@ -105,7 +105,7 @@ function Nav(props) {
                         onClick={() => openInNewTab("https://www.facebook.com/lespritdepartage/")}>
                         <img
                             height={'100%'}
-                            style={{ marginLeft: '10px', padding: 0 }}
+                            style={{ marginLeft: '10px', padding: 0, cursor:'pointer' }}
                             src="/images/facebookColor.png"
                             alt='picto facebook'
                         />
@@ -115,13 +115,13 @@ function Nav(props) {
                         onClick={() => openInNewTab("https://www.youtube.com/channel/UCHdHavcCfpXR8wLhgK3t0qQ")} >
                         <img
                             height={'100%'}
-                            style={{ marginLeft: '10px', color: '#FF0000' }}
+                            style={{ marginLeft: '10px', color: '#FF0000', cursor:'pointer' }}
                             src="/images/youtubeColor.png"
                             alt="picto youtube"
                         />
                     </button>
                     <button
-                        style={{ height: '20%', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none' }}
+                        style={{ height: '20%', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', cursor:'pointer' }}
                         onClick={() => openInNewTab("https://www.instagram.com/neofeeltravel/")}
                     >
                         <img
@@ -134,7 +134,7 @@ function Nav(props) {
                 </div>
                 {greeting}
             </div>
-            <div style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', marginRight: '1%', height: '100%', width: '40%' }}>
+            <div style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', marginRight: '1%', height: '100%', width: '35%' }}>
                 <Link to={'/partenaire'}>
                     <Button className='devenezPartenaireButton' >Devenez Partenaire</Button>
                 </Link>
