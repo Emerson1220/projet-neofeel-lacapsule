@@ -254,7 +254,7 @@ router.post('/addtrip', async function(req, res, next) {
         let data = req.body;
         let user = await User.findOne({ token: data.token });
         user.roadtrips.push(data.roadtripID);
-
+        
         let userSave = await user.save();
         res.json({ result: true, user: userSave })
     } catch(err) {

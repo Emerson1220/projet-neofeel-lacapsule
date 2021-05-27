@@ -28,7 +28,6 @@ const SignUp = (props) => {
     const [isChecked, setIsChecked] = useState(false);
     const [error, setError] = useState('');
 
-
     //COOKIE MANAGEMENT
     const cookies = new Cookie();
 
@@ -36,7 +35,7 @@ const SignUp = (props) => {
     //signin request
     const createUser = async() => {
         let roadplanner = null;
-        if (props.roadplanner !== {}) {
+        if (props.roadplanner !== {} && props.roadplanner.experiences) {
             roadplanner = {
                 name: 'mon voyage',
                 experiences: props.roadplanner.experiences.map(e => e._id)

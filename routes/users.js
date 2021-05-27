@@ -41,13 +41,12 @@ router.post('/signup', async function(req, res, next) {
         days: [{ name: 'experiences', experiences: roadplanner.experiences }]
       })
       await roadplannerCreate.save();
-
       newRoadplanner = roadplannerCreate._id;
       newUser.roadtrips.push(roadplannerCreate);
     }
 
     await newUser.save();
-    res.json({ result: true, user: newUser, newRoadplanner: newRoadplanner._id })
+    res.json({ result: true, user: newUser, newRoadplanner: newRoadplanner })
   } catch (err) {
     console.log(err)
     if (err.code === 11000) {
@@ -93,7 +92,7 @@ router.post('/signin', async function(req, res, next) {
     if (roadplanner !== null) {
       let newRoadplanner = new Roadtrip({
         name: roadplanner.name,
-        days: [{ name: 'experience', experiences: roadplanner.experiences }]
+        days: [{ name: 'experiences', experiences: roadplanner.experiences }]
       })
       await newRoadplanner.save();
 
@@ -111,7 +110,6 @@ router.post('/signin', async function(req, res, next) {
         }
     }
     }
-
     
     res.json({ result: true, user: userFind, currentRoadtrip: currentRoadtrip })
 

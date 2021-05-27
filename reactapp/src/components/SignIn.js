@@ -45,7 +45,6 @@ const SignIn = (props) => {
             body: `data=${sendData}`
         });
         let response = await rawResponse.json();
-        console.log(response)
         if (response.result === true) {
             props.stayLogged(response.user)
             if (response.currentRoadtrip !== 'none' && response.currentRoadtrip !== 'current') {

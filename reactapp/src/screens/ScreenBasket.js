@@ -71,12 +71,10 @@ const ScreenBasket = () => {
             })
     
             const clientSecret = response.clientSecret;
-            console.log(clientSecret)
         
             const {paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: paymentMethodReq.paymentMethod.id
             });
-            console.log(paymentIntent)
 
             if (paymentIntent.status === 'succeeded'){
                 setPaymentMethod(true)
@@ -102,9 +100,10 @@ const ScreenBasket = () => {
             onCancel={() => toggleModal()}
             bodyStyle={{ background: 'linear-gradient(#106271, #FFF)', padding: '8%', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.4)' }}
         >
-            <h2 style={{ color: 'black' }}>Confirmation de votre commande</h2>
+            <h2 style={{ color: 'black' }}>Confirmation de votre commande.</h2>
             <h4> Votre commande a bien été prise en compte.<br/>
                  Vous recevrez un mail de confirmation dans les prochaines minutes. </h4>
+                 <img style={{display:'flex',marginLeft:'24%', width:'50%'}}src='./images/LOGOcontracter.png'/>
         </Modal>
     } else {
         
@@ -223,7 +222,7 @@ const ScreenBasket = () => {
                 <div className='summary' >
                     <Divider orientation='center' style={styles.divider}>Mon Neopass</Divider>
                     <div style={styles.neopassContainer}>
-                        <div style={{ height: '100px', width: '200px', backgroundColor: 'blue', borderRadius: '5px' }}>
+                        <div style={{ height: '100px', width: '200px', borderRadius: '15px' }}>
                             <img style={{ width: '100%', borderRadius: '15px' }} src='./images/neopassRecto.png'  alt="neopass"/>
                         </div>
                         <div style={{ color: 'white' }}>
