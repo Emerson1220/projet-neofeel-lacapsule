@@ -304,7 +304,7 @@ const styles = {
         alignItems: 'center',
         flexDirection: 'column',
         paddingTop: '3%',
-
+        height: '100%'
 
     },
 
