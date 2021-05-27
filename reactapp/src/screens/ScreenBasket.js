@@ -102,9 +102,10 @@ const ScreenBasket = () => {
             onCancel={() => toggleModal()}
             bodyStyle={{ background: 'linear-gradient(#106271, #FFF)', padding: '8%', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.4)' }}
         >
-            <h2 style={{ color: 'black' }}>Confirmation de votre commande</h2>
+            <h2 style={{ color: 'black' }}>Confirmation de votre commande.</h2>
             <h4> Votre commande a bien été prise en compte.<br/>
                  Vous recevrez un mail de confirmation dans les prochaines minutes. </h4>
+                 <img style={{display:'flex',marginLeft:'24%', width:'50%'}}src='./images/LOGOcontracter.png'/>
         </Modal>
     } else {
         

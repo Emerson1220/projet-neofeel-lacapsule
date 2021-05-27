@@ -58,7 +58,11 @@ const ScreenSuggestions = (props) => {
     if (props.suggestions) {
 
         SuggestionList = props.suggestions.map((suggestion, i) => {
-            const button = <RedButton onSelect={ ()=>addTrip(suggestion) } title='Ajouter ce voyage'></RedButton>
+            const button = 
+            <div style={{display:'flex', width:'100%' }}>
+                <h3 style={{display:'flex', margin:0, paddingRight:'2%', whiteSpace:'nowrap', justifyContent:'center', alignItems:'center', fontWeight:'bold'}}>Durée du séjour: {suggestion.duration} jours</h3>
+                <RedButton onSelect={ ()=>addTrip(suggestion) } title='Ajouter ce voyage'></RedButton>
+                </div>
             var total = 0;
             var pictos = suggestion.tags.map((image, j) => {
                 return (<img key={j} src={`/images/pictos/${image}-8.png`} alt={image} />)
@@ -89,7 +93,7 @@ const ScreenSuggestions = (props) => {
             return (
                 <div key={i} className="site-card-border-less-wrapper">
                     <Card title={suggestion.name}
-                        headStyle={{ fontSize: '1.3rem', fontWeight: 'bold', }}
+                        headStyle={{ fontSize: '1.3rem', fontWeight: 'bold', width:'100%' }}
                         bordered={true}
                         bodyStyle={{ width: '100%' }}
                         size='default'
