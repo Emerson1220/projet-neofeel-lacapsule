@@ -251,7 +251,7 @@ const ScreenPartner = (props) => {
                                 <div style={styles.information_bloc} >
                                     <h4 style={styles.h4}>Localisation</h4>
                                     <div>
-                                        <iframe title={ experience.name } style={styles.location_map} src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d649788.5753409272!2d-0.5724199684037448!3d52.92186340524542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604d94c3b82ab%3A0x62077a554c8e9a8e!2sPetty%20France%2C%20Westminster%2C%20London%2C%20UK!5e0!3m2!1sen!2sbd!4v1572346566908!5m2!1sen!2sbd" />
+                                        <iframe title={ experience.name } style={styles.location_map} src="https://www.google.com/maps/d/embed?mid=1E5I772fuim3E8fP-DtQZccmkpMCgw9gE&hl=fr" />
                                     </div>
                                 </div>
 
