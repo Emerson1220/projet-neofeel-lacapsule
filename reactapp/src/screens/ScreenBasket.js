@@ -303,7 +303,7 @@ const styles = {
         alignItems: 'center',
         flexDirection: 'column',
         paddingTop: '3%',
-        height: '100%'
+        height: '100vh'
 
     },
 
