@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 
 const Footer = () => {
     return (
@@ -7,10 +8,15 @@ const Footer = () => {
                 <div style={ styles.col }>
                     <h3 style={ styles.header }>S'ORIENTER</h3>
                     <ul style={ styles.list_unstyled }>
+                        <Link to={'/'} style={{color:'#fff'}}>
                         <li>Accueil</li>
-                        <li>La boutique</li>
-                        <li>Le réseau</li>
+                        </Link>
+                        <Link to={'/recherche'}style={{color:'#fff'}}>
+                        <li>Le réseau</li>                        
+                        </Link>
+                        <Link to={'/info'} style={{color:'#fff'}}>
                         <li>Le concept</li>
+                        </Link>
                     </ul>
                 </div>
                 <div style={ styles.col }>
@@ -18,7 +24,9 @@ const Footer = () => {
                     <ul style={ styles.list_unstyled }>
                         <li>FAQ</li>
                         <li>Nous contacter</li>
+                        <Link to={'/partenaire'} style={{color:'#fff'}}>
                         <li>Devenir partenaire</li>
+                        </Link>
                     </ul>
                 </div>
                 <div style={ styles.col }>
@@ -26,7 +34,7 @@ const Footer = () => {
                     <ul style={ styles.list_unstyled }>
                         <li>Qu'est que le Neopass?</li>
                         <li>Quels sont les avantages?</li>
-                        <li>Comment bénéficier des mon avantage</li>
+                        <li>Comment bénéficier des avantage?</li>
                     </ul>
                 </div>
             </div>

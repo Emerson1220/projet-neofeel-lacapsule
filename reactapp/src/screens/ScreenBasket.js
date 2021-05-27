@@ -10,7 +10,7 @@ const ScreenBasket = () => {
     const [paymentInfo, setPaymentInfo] = useState({});
     const [total, setTotal] = useState(65);
     const [hover, setHover] = useState(false);
-    const [paymentMethod, setPaymentMethod] = useState(null)
+    const [paymentMethod, setPaymentMethod] = useState(false)
 
 
     const stripe = useStripe();
@@ -18,7 +18,8 @@ const ScreenBasket = () => {
 
     const toggleModal = () => {
         setVisible(!visible)
-        setPaymentMethod(!null)
+        
+       
     };
 
     const options = {
@@ -72,10 +73,15 @@ const ScreenBasket = () => {
             const clientSecret = response.clientSecret;
             console.log(clientSecret)
         
-            const confirm = await stripe.confirmCardPayment(clientSecret, {
+            const {paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: paymentMethodReq.paymentMethod.id
             });
-            console.log(confirm)
+            console.log(paymentIntent)
+
+            if (paymentIntent.status === 'succeeded'){
+                setPaymentMethod(true)
+            }
+            
     
         } catch (err) {
             console.log(err)
@@ -84,7 +90,7 @@ const ScreenBasket = () => {
 
     let modalContent;
 
-    if (paymentMethod === null) {
+    if (paymentMethod === true) {
         
         modalContent = 
         <Modal
@@ -97,7 +103,8 @@ const ScreenBasket = () => {
             bodyStyle={{ background: 'linear-gradient(#106271, #FFF)', padding: '8%', boxShadow: '1px 0px 45px rgba(16, 98, 113, 0.4)' }}
         >
             <h2 style={{ color: 'black' }}>Confirmation de votre commande</h2>
-            <h4> Votre commande a bien été prise en compte. Vous recevrez un mail de confirmation sur votre E-mail dans les prochaines minutes. </h4>
+            <h4> Votre commande a bien été prise en compte.<br/>
+                 Vous recevrez un mail de confirmation dans les prochaines minutes. </h4>
         </Modal>
     } else {
         
@@ -196,7 +203,7 @@ const ScreenBasket = () => {
                         />
                     </div>
 
-                    <button style={hover ? styles.buttonHover : styles.button} onClick={()=> setPaymentMethod(null)} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} htmlType='submit' disabled={!stripe}>
+                    <button style={hover ? styles.buttonHover : styles.button}  onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} htmlType='submit' disabled={!stripe}>
                         <h2 style={styles.buttonText}>Confirmer</h2>
                     </button>
 
@@ -220,12 +227,7 @@ const ScreenBasket = () => {
                             <img style={{ width: '100%', borderRadius: '15px' }} src='./images/neopassRecto.png'  alt="neopass"/>
                         </div>
                         <div style={{ color: 'white' }}>
-                            <h4 style={{ color: 'black' }}>Mes avantages sur mon prochain voyage</h4>
-                            <ul style={{ color: 'black', fontWeight: 'bold' }}>
-                                <li>avantage 1</li>
-                                <li>avantage 2</li>
-                                <li>avantage 3</li>
-                            </ul>
+                            <h2 style={{color:'black'}}>NEOPASS Alsaces-Vosges</h2>
                         </div>
                     </div>
                     <div style={styles.basket}>
