@@ -33,6 +33,7 @@ const PopoverContent = (props) => {
     
     //HTTP REQUESTS
     const createNewTrip = async (experience, name) => {
+        setVisible(!visible);
         let rawResponse = await fetch('/myroadplanner', {
             method: "POST",
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -41,8 +42,10 @@ const PopoverContent = (props) => {
             let response = await rawResponse.json();
             if (response.result === true) {
                 props.newRoadplanner(response.roadtrip._id, experience);
-                props.addRoadtripToUser(response.roadtrip)
+                props.addRoadtripToUser(response.roadtrip);
                 openNotification('success', 'Voyage enregistré!');
+                setNewTripName('');
+                setNewTripExperience(null);
             } else {
                 openNotification('error', "Votre voyage n'a pas pu être crée. Veuillez réessayer.")
             }
@@ -106,9 +109,9 @@ const PopoverContent = (props) => {
     let addContent = <></>
     if (props.mode === 'search') {
         addContent = 
-            <div style={{ textAlign: 'center', width: '50%',height: '100%', paddingLeft: '1%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div style={{ textAlign: 'center', width: '60%',height: '100%', paddingLeft: '1%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <h4 style={styles.h4}>Ajouter cette experience à un voyage</h4>
-                <div style={{ display: 'flex', width: '100%', alignItems: 'center'}}>
+                <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center'}}>
                     <Dropdown overlay={ menu }>
                         <Button>
                             Sélectionnez un voyage <DownOutlined />
@@ -175,7 +178,7 @@ const PopoverContent = (props) => {
             onCancel={ toggleModal }
             footer={ null }
             bodyStyle={ styles.modal }>
-                    <input name="name" type='text' style={ styles.input } onChange={ (e)=>setNewTripName(e.target.value) } placeholder='mon prochain voyage'></input>
+                    <input name="name" type='text' style={ styles.input } value={ newTripName } onChange={ (e)=>setNewTripName(e.target.value) } placeholder='mon prochain voyage'></input>
                     <RedButton title="+" onSelect={ ()=>createNewTrip(newTripExperience, newTripName) }/>
             </Modal>
     </div>
@@ -271,10 +274,11 @@ let styles = {
     },
 
     detail_title_location:{
-        padding:'0rem 0.5rem',
+        padding:'0.8rem 1.5rem',
         display: 'flex',
         justifyContent: 'space-between',
-        width: '100%'
+        width: '100%',
+        boxSizing: 'border-box'
     },
 
     detail_card:{
@@ -282,16 +286,19 @@ let styles = {
         flexDirection: 'column',
         background: '#ffffff',
         width: '45%',
-        paddingRight: '2%',
-        paddingLeft: '2%'
+        paddingRight: '0.8rem',
+        paddingLeft: '0.8rem',
+        paddingBottom: '0.5rem',
+        boxSizing: 'border-box'
     },
 
     detail_roadplanner_card:{
         display: 'flex',
         background: '#ffffff',
         width: '100%',
-        paddingRight: '2%',
-        paddingLeft: '2%',
+        paddingRight: '0.8rem',
+        paddingLeft: '0.8rem',
+        paddingBottom: '0.5rem',
         marginBottom: '1rem'
     },
 

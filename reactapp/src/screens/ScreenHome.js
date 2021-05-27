@@ -34,7 +34,7 @@ function ScreenHome(props) {
         return <Redirect to='/suggestions' />
     } else {
         return (
-            <div className="home" style={{ display: "flex", flexDirection: 'column', height: '100vh' }}>
+            <div className="home" style={{ display: "flex", flexDirection: 'column', height: '100vh', width: '100%' }}>
                 <Nav />
                 <div style={{
                     flexDirection: 'column', height: '100vh ', display: 'grid',

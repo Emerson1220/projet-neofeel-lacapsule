@@ -18,7 +18,6 @@ const { SubMenu } = Menu;
 
 const ScreenPartner = (props) => {
     //STATE HOOKS
-    const [voyageSelect, setVoyageSelect] = useState('');
     const [visible, setVisible] = useState(false);
     const [newTripName, setNewTripName] = useState('');
     const [newTripExperience, setNewTripExperience] = useState(null);
@@ -43,6 +42,7 @@ const ScreenPartner = (props) => {
     
     //HTTP REQUESTS
     const createNewTrip = async (experience, name) => {
+        setVisible(!visible);
         let rawResponse = await fetch('/myroadplanner', {
             method: "POST",
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -53,6 +53,8 @@ const ScreenPartner = (props) => {
                 props.newRoadplanner(response.roadtrip._id, experience);
                 props.addRoadtripToUser(response.roadtrip)
                 openNotification('success', 'Voyage enregistré!');
+                setNewTripName('');
+                setNewTripExperience(null);
             } else {
                 openNotification('error', "Votre voyage n'a pas pu être crée. Veuillez réessayer.")
             }
