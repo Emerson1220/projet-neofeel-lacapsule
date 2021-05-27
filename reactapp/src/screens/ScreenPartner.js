@@ -262,7 +262,7 @@ const ScreenPartner = (props) => {
                                         </div>
                                         <div>
                                             <p style={styles.p_description}>Adresse: <span>{address}</span></p>
-                                            <p style={styles.p_description}>Site internet: <span style={ styles.link_externe} onClick={ ()=>openInNewTab(experience.partner.website) }>{}</span></p>
+                                            <p style={styles.p_description}>Site internet: <span style={ styles.link_externe} onClick={ ()=>openInNewTab(experience.partner.website) }>{ experience.partner.website }</span></p>
                                             <p style={styles.p_description}>Page facebook: <span style={ styles.link_externe} onClick={ ()=>openInNewTab(experience.partner.facebook) }>{experience.partner.facebook}</span></p>
                                         </div>
                                     </div>
