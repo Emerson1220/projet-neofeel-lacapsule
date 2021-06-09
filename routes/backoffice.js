@@ -16,6 +16,7 @@ router.post('/manageexperiences', async function(req, res, next) {
     city: req.body.city,
     country: req.body.country
   }
+  
   let newPartner = new User({
     firstName: req.body.partnerFirstName,
     lastName: req.body.partnerLastName,
